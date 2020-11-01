@@ -12,6 +12,18 @@ class AddPatientPage extends StatefulWidget {
 }
 
 class _AddPatientPageState extends State<AddPatientPage> {
+  void _submitPatientRegisterForm({
+    @required String patientName,
+    @required String address,
+    @required String gender,
+    @required String dob,
+    @required double weight,
+    @required double height,
+    @required String patientTel,
+    @required String careTakerName,
+    @required String careTakerTel,
+    @required String careTakerRelationship,
+  }) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +31,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
         title: const Text('AbdoCare'),
         backgroundColor: Color(0xFFC37447),
       ),
-      body: PatientRegisterForm(),
+      body: PatientRegisterForm(
+        _submitPatientRegisterForm,
+      ),
       drawer: SideBar(),
     );
   }

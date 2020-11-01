@@ -2,6 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class PatientRegisterForm extends StatefulWidget {
+  PatientRegisterForm(this.submitFn);
+
+  final void Function({
+    @required String patientName,
+    @required String address,
+    @required String gender,
+    @required String dob,
+    @required double weight,
+    @required double height,
+    @required String patientTel,
+    @required String careTakerName,
+    @required String careTakerTel,
+    @required String careTakerRelationship,
+  }) submitFn;
+
   @override
   _PatientRegisterFormState createState() => _PatientRegisterFormState();
 }
@@ -11,9 +26,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   TextEditingController controller = TextEditingController();
   String pickedDate;
 
-  String _gender = '';
   String _patientName = '';
   String _address = '';
+  String _gender = '';
   String _dob;
   double _weight;
   double _height;
@@ -48,17 +63,19 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState.save();
+      widget.submitFn(
+        patientName: _patientName,
+        address: _address,
+        gender: _gender,
+        dob: _dob,
+        weight: _weight,
+        height: _height,
+        patientTel: _patientTel,
+        careTakerName: _careTakerName,
+        careTakerTel: _careTakerTel,
+        careTakerRelationship: _careTakerRelationship,
+      );
     }
-    print('ผู้ดูแล = ${_patientName}');
-    print(_patientTel);
-    print(_address);
-    print(_dob);
-    print(_weight);
-    print(_height);
-    print(_gender);
-    print(_careTakerName);
-    print(_careTakerTel);
-    print(_careTakerRelationship);
   }
 
   bool _isNumeric(String input) =>
