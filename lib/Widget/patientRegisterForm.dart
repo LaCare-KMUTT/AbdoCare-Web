@@ -22,11 +22,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
           ),
         ),
         Card(
-          margin: EdgeInsets.all(80),
+          margin: EdgeInsets.all(50),
           child: Padding(
             padding: EdgeInsets.all(30),
             child: Container(
-              height: 300,
+              height: 500,
               child: Column(
                 // mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,6 +270,103 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                  // SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 50, left: 50, right: 50),
+                    child: Divider(color: Colors.black54),
+                  ),
+                  // SizedBox(height: 10),//
+                  Container(
+                    height: 100,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'ข้อมูลผู้ดูแล',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          child: Row(
+                            children: <Widget>[
+                              Flexible(
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 100,
+                                      child: Text('ชื่อ-นามสกุล'),
+                                    ),
+                                    SizedBox(width: 20),
+                                    Flexible(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black26,
+                                                  width: 1),
+                                            ),
+                                            labelText: 'ชื่อ-นามสกุล'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 50),
+                              Flexible(
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 100,
+                                      child: Text('เบอร์โทร'),
+                                    ),
+                                    Flexible(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black26,
+                                                  width: 1),
+                                            ),
+                                            labelText: 'เบอร์โทร'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 50),
+                              Flexible(
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 150,
+                                      child: Text('มีความเกี่ยวข้องเป็น'),
+                                    ),
+                                    Flexible(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black26,
+                                                  width: 1),
+                                            ),
+                                            labelText:
+                                                'ความเกี่ยวข้องกับผู้ป่วย'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
