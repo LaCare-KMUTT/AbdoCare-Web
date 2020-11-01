@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PatientRegisterForm extends StatefulWidget {
   @override
@@ -6,8 +7,63 @@ class PatientRegisterForm extends StatefulWidget {
 }
 
 class _PatientRegisterFormState extends State<PatientRegisterForm> {
-  var _gender;
-  var _name;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController controller = TextEditingController();
+  String pickedDate;
+
+  String _gender = '';
+  String _patientName = '';
+  String _address = '';
+  String _dob;
+  double _weight;
+  double _height;
+  String _patientTel = '';
+  String _careTakerName = '';
+  String _careTakerRelationship = '';
+  String _careTakerTel;
+
+  String _convertDateTimeDisplay(String date) {
+    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    final DateFormat serverFormater = DateFormat('dd-MM-yyyy');
+    final DateTime displayDate = displayFormater.parse(date);
+    final String formatted = serverFormater.format(displayDate);
+    return formatted;
+  }
+
+  Future _selectDate() async {
+    DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime(1900),
+        lastDate: new DateTime.now().add(Duration(days: 365)));
+    if (picked != null)
+      setState(() {
+        _dob = _convertDateTimeDisplay(picked.toString());
+        controller.text = _dob;
+      });
+  }
+
+  void _trySubmit() {
+    final isValid = _formKey.currentState.validate();
+    FocusScope.of(context).unfocus();
+    if (isValid) {
+      _formKey.currentState.save();
+    }
+    print('ผู้ดูแล = ${_patientName}');
+    print(_patientTel);
+    print(_address);
+    print(_dob);
+    print(_weight);
+    print(_height);
+    print(_gender);
+    print(_careTakerName);
+    print(_careTakerTel);
+    print(_careTakerRelationship);
+  }
+
+  bool _isNumeric(String input) =>
+      input == null ? false : double.tryParse(input) != null;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -28,27 +84,28 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
               padding: EdgeInsets.all(30),
               child: Container(
                 height: 500,
-                child: Column(
-                  // mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'ข้อมูลผู้ป่วย',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 15),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: Text(
-                        'ข้อมูลส่วนตัว',
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'ข้อมูลผู้ป่วย',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    SizedBox(height: 15),
-                    Flexible(
-                      child: Padding(
+                      SizedBox(height: 15),
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 40),
-                        child: Form(
+                        child: Text(
+                          'ข้อมูลส่วนตัว',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Flexible(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 40),
                           child: Row(
                             children: <Widget>[
                               Flexible(
@@ -64,6 +121,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                           SizedBox(width: 20),
                                           Flexible(
                                             child: TextFormField(
+                                              validator: (value) {
+                                                return value.isEmpty
+                                                    ? 'กรุณากรอกชื่อนามสกุล'
+                                                    : null;
+                                              },
                                               decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
@@ -72,6 +134,8 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                         width: 1),
                                                   ),
                                                   labelText: 'ชื่อ-นามสกุล'),
+                                              onSaved: (value) =>
+                                                  _patientName = value,
                                             ),
                                           ),
                                         ],
@@ -90,6 +154,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                           SizedBox(width: 20),
                                           Flexible(
                                             child: TextFormField(
+                                              validator: (value) {
+                                                return value.isEmpty
+                                                    ? 'กรุณากรอกที่อยู่ของผู้ป่วย'
+                                                    : null;
+                                              },
                                               decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
@@ -98,6 +167,8 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                         width: 1),
                                                   ),
                                                   labelText: 'ที่อยู่'),
+                                              onSaved: (value) =>
+                                                  _address = value,
                                               maxLines: 5,
                                               minLines: 1,
                                             ),
@@ -121,6 +192,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                           ),
                                           Flexible(
                                             child: DropdownButtonFormField(
+                                              validator: (value) => value ==
+                                                      null
+                                                  ? 'กรุณาเลือกเพศของผู้ป่วย'
+                                                  : null,
                                               decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
@@ -129,7 +204,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                         width: 1),
                                                   ),
                                                   labelText: 'เพศ'),
-                                              value: _gender,
+                                              onSaved: (value) {
+                                                _gender = value;
+                                              },
+                                              // value: _gender,
                                               items: [
                                                 'ชาย',
                                                 'หญิง',
@@ -163,6 +241,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                           ),
                                           Flexible(
                                             child: TextFormField(
+                                              validator: (value) {
+                                                return value.isEmpty
+                                                    ? 'กรุณากรอกน้ำหนัก'
+                                                    : !_isNumeric(value)
+                                                        ? 'กรุณากรอกเฉพาะตัวเลขเท่านั้น'
+                                                        : null;
+                                              },
                                               decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
@@ -171,6 +256,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                         width: 1),
                                                   ),
                                                   labelText: 'น้ำหนัก'),
+                                              onSaved: (value) {
+                                                _weight = double.parse(value);
+                                              },
                                             ),
                                           ),
                                           Container(
@@ -193,6 +281,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                           ),
                                           Flexible(
                                             child: TextFormField(
+                                              validator: (value) {
+                                                return value.isEmpty
+                                                    ? 'กรุณากรอกเบอร์โทรศัพท์'
+                                                    : null;
+                                              },
                                               decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
@@ -201,6 +294,8 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                         width: 1),
                                                   ),
                                                   labelText: 'เบอร์โทร'),
+                                              onSaved: (value) =>
+                                                  _patientTel = value,
                                             ),
                                           ),
                                         ],
@@ -222,6 +317,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                           ),
                                           Flexible(
                                             child: TextFormField(
+                                              validator: (value) {
+                                                return value.isEmpty
+                                                    ? 'กรุณากรอกวันเกิด'
+                                                    : null;
+                                              },
+                                              controller: controller,
+                                              initialValue: pickedDate,
                                               decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
@@ -231,6 +333,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                   ),
                                                   labelText:
                                                       'วัน เดือน ปีเกิด'),
+                                              onTap: () {
+                                                FocusScope.of(context)
+                                                    .requestFocus(
+                                                        new FocusNode());
+                                                _selectDate();
+                                              },
                                             ),
                                           ),
                                         ],
@@ -246,6 +354,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                           ),
                                           Flexible(
                                             child: TextFormField(
+                                              validator: (value) {
+                                                return value.isEmpty
+                                                    ? 'กรุณากรอกส่วนสูง'
+                                                    : !_isNumeric(value)
+                                                        ? 'กรุณากรอกเฉพาะตัวเลขเท่านั้น'
+                                                        : null;
+                                              },
                                               decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
@@ -254,6 +369,8 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                         width: 1),
                                                   ),
                                                   labelText: 'ส่วนสูง'),
+                                              onSaved: (value) =>
+                                                  _height = double.parse(value),
                                             ),
                                           ),
                                           Container(
@@ -273,105 +390,130 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           ),
                         ),
                       ),
-                    ),
-                    // SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 50, left: 50, right: 50),
-                      child: Divider(color: Colors.black54),
-                    ),
-                    // SizedBox(height: 10),//
-                    Container(
-                      height: 100,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'ข้อมูลผู้ดูแล',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: Row(
-                              children: <Widget>[
-                                Flexible(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: 100,
-                                        child: Text('ชื่อ-นามสกุล'),
-                                      ),
-                                      SizedBox(width: 20),
-                                      Flexible(
-                                        child: TextFormField(
-                                          decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.black26,
-                                                    width: 1),
-                                              ),
-                                              labelText: 'ชื่อ-นามสกุล'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 50),
-                                Flexible(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: 100,
-                                        child: Text('เบอร์โทร'),
-                                      ),
-                                      Flexible(
-                                        child: TextFormField(
-                                          decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.black26,
-                                                    width: 1),
-                                              ),
-                                              labelText: 'เบอร์โทร'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 50),
-                                Flexible(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: 150,
-                                        child: Text('มีความเกี่ยวข้องเป็น'),
-                                      ),
-                                      Flexible(
-                                        child: TextFormField(
-                                          decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.black26,
-                                                    width: 1),
-                                              ),
-                                              labelText:
-                                                  'ความเกี่ยวข้องกับผู้ป่วย'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      // SizedBox(height: 10),
+                      Padding(
+                        padding:
+                            EdgeInsets.only(bottom: 50, left: 50, right: 50),
+                        child: Divider(color: Colors.black54),
                       ),
-                    ),
-                  ],
+                      // SizedBox(height: 10),//
+                      Container(
+                        height: 100,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'ข้อมูลผู้ดูแล',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              child: Row(
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 100,
+                                          child: Text('ชื่อ-นามสกุล'),
+                                        ),
+                                        SizedBox(width: 20),
+                                        Flexible(
+                                          child: TextFormField(
+                                            validator: (value) {
+                                              return value.isEmpty
+                                                  ? 'กรุณากรอกชื่อนามสกุลของผู้ดูแล'
+                                                  : null;
+                                            },
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.black26,
+                                                      width: 1),
+                                                ),
+                                                labelText: 'ชื่อ-นามสกุล'),
+                                            onSaved: (value) =>
+                                                _careTakerName = value,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 50),
+                                  Flexible(
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 100,
+                                          child: Text('เบอร์โทร'),
+                                        ),
+                                        Flexible(
+                                          child: TextFormField(
+                                            validator: (value) {
+                                              return value.isEmpty
+                                                  ? 'กรุณากรอกเบอร์โทรศัพท์ผู้ดูแล'
+                                                  : null;
+                                            },
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.black26,
+                                                      width: 1),
+                                                ),
+                                                labelText: 'เบอร์โทร'),
+                                            onSaved: (value) =>
+                                                _careTakerTel = value,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 50),
+                                  Flexible(
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 150,
+                                          child: Text('มีความเกี่ยวข้องเป็น'),
+                                        ),
+                                        Flexible(
+                                          child: TextFormField(
+                                            validator: (value) {
+                                              return value.isEmpty
+                                                  ? 'กรุณากรอกความสัมพันธ์กับผู้ป่วย'
+                                                  : null;
+                                            },
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.black26,
+                                                      width: 1),
+                                                ),
+                                                labelText:
+                                                    'ความเกี่ยวข้องกับผู้ป่วย'),
+                                            onSaved: (value) =>
+                                                _careTakerRelationship = value,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -379,7 +521,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
           Center(
             child: RaisedButton(
               padding: EdgeInsets.all(20),
-              onPressed: () {},
+              onPressed: _trySubmit,
               textColor: Colors.white,
               color: Colors.greenAccent,
               child: Text(
