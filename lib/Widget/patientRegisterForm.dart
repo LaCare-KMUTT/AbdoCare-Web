@@ -64,16 +64,16 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     if (isValid) {
       _formKey.currentState.save();
       widget.submitFn(
-        patientName: _patientName,
-        address: _address,
+        patientName: _patientName.trim(),
+        address: _address.trim(),
         gender: _gender,
         dob: _dob,
         weight: _weight,
         height: _height,
-        patientTel: _patientTel,
-        careTakerName: _careTakerName,
-        careTakerTel: _careTakerTel,
-        careTakerRelationship: _careTakerRelationship,
+        patientTel: _patientTel.trim(),
+        careTakerName: _careTakerName.trim(),
+        careTakerTel: _careTakerTel.trim(),
+        careTakerRelationship: _careTakerRelationship.trim(),
       );
     }
   }
