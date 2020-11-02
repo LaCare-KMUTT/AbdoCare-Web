@@ -74,7 +74,9 @@ flutter:
     - family: Prompt
       fonts:
         - asset: assets/fonts/Prompt-Bold.ttf
+          weight: 600
         - asset: assets/fonts/Prompt-Regular.ttf
+          weight: 400
         - asset: assets/fonts/Prompt-Light.ttf
   #
   # For details regarding fonts from package dependencies,
