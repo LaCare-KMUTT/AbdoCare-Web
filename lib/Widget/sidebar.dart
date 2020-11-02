@@ -4,8 +4,6 @@ class SideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // child: Container(
-      //   color: Color(0xFFC37447),
       child: LayoutBuilder(
         builder: (context, constraint) {
           return SingleChildScrollView(
@@ -61,7 +59,6 @@ class SideBar extends StatelessWidget {
             ),
           );
         },
-        //),
       ),
     );
   }
