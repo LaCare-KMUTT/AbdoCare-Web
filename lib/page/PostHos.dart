@@ -16,7 +16,7 @@ class _PostHosPageState extends State<PostHosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AbdoCare'),
+        title: const Text('Post-op @ Hospital'),
         backgroundColor: Color(0xFFC37447),
       ),
       body: PostHosTable(),

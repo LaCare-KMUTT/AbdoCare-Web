@@ -16,11 +16,11 @@ class _PostHosTableState extends State<PostHosTable> {
           height: 50,
         ),
         Center(
-          child: Text(
-            'Post-op @ Hospital',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
+            // child: Text(
+            //   'Post-op @ Hospital',
+            //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            // ),
+            ),
       ]),
     );
   }

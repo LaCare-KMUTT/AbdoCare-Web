@@ -28,7 +28,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AbdoCare'),
+        //title: const Text('AbdoCare'),
+        title: const Text('เพิ่มผู้ป่วย'),
         backgroundColor: Color(0xFFC37447),
       ),
       body: PatientRegisterForm(

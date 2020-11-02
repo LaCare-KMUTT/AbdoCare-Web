@@ -97,15 +97,15 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          SizedBox(
-            height: 50,
-          ),
-          Center(
-            child: Text(
-              'เพิ่มผู้ป่วย',
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-          ),
+          // SizedBox(
+          //   height: 50,
+          // ),
+          // Center(
+          //   child: Text(
+          //     'เพิ่มผู้ป่วย',
+          //     style: Theme.of(context).textTheme.bodyText2,
+          //   ),
+          // ),
           Card(
             margin: EdgeInsets.all(50),
             child: Padding(

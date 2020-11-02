@@ -12,7 +12,7 @@ class _PrePageState extends State<PrePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AbdoCare'),
+        title: const Text('Pre-op @ Hospital'),
         backgroundColor: Color(0xFFC37447),
       ),
       body: Padding(
@@ -20,10 +20,10 @@ class _PrePageState extends State<PrePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Pre-op @ Hospital',
-              style: TextStyle(fontSize: 18),
-            )
+            // Text(
+            //   'Pre-op @ Hospital',
+            //   style: TextStyle(fontSize: 18),
+            // )
           ],
         ),
       ),
