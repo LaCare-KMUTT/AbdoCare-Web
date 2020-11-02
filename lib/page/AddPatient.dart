@@ -16,6 +16,7 @@ class AddPatientPage extends StatefulWidget {
 
 class _AddPatientPageState extends State<AddPatientPage> {
   // final _auth = FirebaseAuth.instance;
+
   void _submitPatientRegisterForm({
     @required String patientName,
     @required String address,

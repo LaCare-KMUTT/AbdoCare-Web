@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 class PatientRegisterForm extends StatefulWidget {
   PatientRegisterForm(this.submitFn);
@@ -43,6 +44,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     return '$_patientTel$dummyUsername';
   }
 
+  String _generateUniqueKey(int length) {
+    var uuid = Uuid();
+    return uuid.v1().substring(0, length - 1);
+  }
+
   String _convertDateTimeDisplay(String date) {
     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
     final DateFormat serverFormater = DateFormat('dd-MM-yyyy');
@@ -81,7 +87,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
         username: _createDummyUsername(_patientTel.trim()),
-        password: '999999',
+        password: _generateUniqueKey(6),
       );
     }
   }
