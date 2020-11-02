@@ -22,7 +22,7 @@ class _PostComPageState extends State<PostComPage> {
           children: [
             Text(
               'Post-op @ Community',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             )
           ],
         ),
