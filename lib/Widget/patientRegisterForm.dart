@@ -16,6 +16,7 @@ class PatientRegisterForm extends StatefulWidget {
     @required String careTakerTel,
     @required String careTakerRelationship,
     @required String username,
+    @required String password,
   }) submitFn;
 
   @override
@@ -36,9 +37,8 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   String _careTakerName = '';
   String _careTakerRelationship = '';
   String _careTakerTel = '';
-  String _username = '';
 
-  String _createDummyUsername(String _patientTel){
+  String _createDummyUsername(String _patientTel) {
     String dummyUsername = '@abdoCare.com';
     return '$_patientTel$dummyUsername';
   }
@@ -80,10 +80,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         careTakerName: _careTakerName.trim(),
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
-        username:  _createDummyUsername(_patientTel.trim()),
+        username: _createDummyUsername(_patientTel.trim()),
+        password: '999999',
       );
-      
-      
     }
   }
 
@@ -349,7 +348,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                     : null;
                                               },
                                               controller: controller,
-                                              initialValue: pickedDate,
+                                              // initialValue: pickedDate,
                                               decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
