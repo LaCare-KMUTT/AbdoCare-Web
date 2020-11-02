@@ -23,6 +23,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required String careTakerName,
     @required String careTakerTel,
     @required String careTakerRelationship,
+    @required String username,
   }) {}
   @override
   Widget build(BuildContext context) {

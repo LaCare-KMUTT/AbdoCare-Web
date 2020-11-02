@@ -15,6 +15,7 @@ class PatientRegisterForm extends StatefulWidget {
     @required String careTakerName,
     @required String careTakerTel,
     @required String careTakerRelationship,
+    @required String username,
   }) submitFn;
 
   @override
@@ -24,18 +25,23 @@ class PatientRegisterForm extends StatefulWidget {
 class _PatientRegisterFormState extends State<PatientRegisterForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
-  String pickedDate;
-
+  String pickedDate = '';
   String _patientName = '';
   String _address = '';
   String _gender = '';
-  String _dob;
+  String _dob = '';
   double _weight;
   double _height;
   String _patientTel = '';
   String _careTakerName = '';
   String _careTakerRelationship = '';
-  String _careTakerTel;
+  String _careTakerTel = '';
+  String _username = '';
+
+  String _createDummyUsername(String _patientTel){
+    String dummyUsername = '@abdoCare.com';
+    return '$_patientTel$dummyUsername';
+  }
 
   String _convertDateTimeDisplay(String date) {
     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
@@ -74,7 +80,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         careTakerName: _careTakerName.trim(),
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
+        username:  _createDummyUsername(_patientTel.trim()),
       );
+      
+      
     }
   }
 
