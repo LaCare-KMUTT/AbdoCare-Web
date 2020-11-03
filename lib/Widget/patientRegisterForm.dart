@@ -46,7 +46,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
 
   String _generateUniqueKey(int length) {
     var uuid = Uuid();
-    return uuid.v1().substring(0, length - 1);
+    return uuid.v1().substring(0, length);
   }
 
   String _convertDateTimeDisplay(String date) {
