@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'page/AddPatient.dart';
 import 'page/Login.dart';
 import 'page/PostCom.dart';
 import 'page/PostHos.dart';
 import 'page/Pre.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
