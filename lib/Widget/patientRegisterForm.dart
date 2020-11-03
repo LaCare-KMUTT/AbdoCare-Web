@@ -96,6 +96,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       input == null ? false : double.tryParse(input) != null;
 
   @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
