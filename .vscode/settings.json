@@ -1,0 +1,19 @@
+{
+	// Causes the debug view to automatically appear when a breakpoint is hit. This
+	// setting is global and not configurable per-language.
+	"debug.openDebug": "openOnDebugBreak",
+    "dart.previewFlutterUiGuides" : true,
+    "dart.previewFlutterUiGuidesCustomTracking": true,
+	"[dart]": {
+        "editor.tabSize" : 2,
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true,
+		"editor.rulers": [80],
+		"editor.selectionHighlight": true,
+		"editor.suggest.snippetsPreventQuickSuggestions": false, 
+		"editor.suggestSelection": "first",
+		"editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false,
+        
+	}
+}
