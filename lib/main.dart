@@ -21,10 +21,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.amber,
         textTheme: TextTheme(
           bodyText1: TextStyle(
-              fontSize: 18.0, fontWeight: FontWeight.w400, color: Colors.black),
+              fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
           bodyText2: TextStyle(
-              fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black),
+              fontSize: 18.0,
+              fontWeight: FontWeight.normal,
+              color: Colors.black),
         ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       title: 'AbdoCare',
       routes: {

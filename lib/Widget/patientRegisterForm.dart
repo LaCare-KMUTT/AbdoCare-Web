@@ -120,14 +120,14 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                     children: <Widget>[
                       Text(
                         'ข้อมูลผู้ป่วย',
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       SizedBox(height: 15),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 40),
                         child: Text(
                           'ข้อมูลส่วนตัว',
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       SizedBox(height: 15),
@@ -148,7 +148,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'ชื่อ-นามสกุล',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                             ),
                                           ),
                                           SizedBox(width: 20),
@@ -186,7 +186,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'ที่อยู่',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                             ),
                                           ),
                                           SizedBox(width: 20),
@@ -230,7 +230,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'เพศ',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                             ),
                                           ),
                                           Flexible(
@@ -284,7 +284,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'น้ำหนัก',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                             ),
                                           ),
                                           Flexible(
@@ -315,7 +315,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'กิโลกรัม',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
@@ -332,7 +332,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'เบอร์โทร',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                             ),
                                           ),
                                           Flexible(
@@ -373,7 +373,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'วัน เดือน ปีเกิด',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                             ),
                                           ),
                                           Flexible(
@@ -415,7 +415,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'ส่วนสูง',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                             ),
                                           ),
                                           Flexible(
@@ -445,7 +445,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                               'เซนติเมตร',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText1,
+                                                  .bodyText2,
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
@@ -473,7 +473,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           children: <Widget>[
                             Text(
                               'ข้อมูลผู้ดูแล',
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyText1,
                             ),
                             SizedBox(
                               height: 15,
@@ -491,7 +491,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                             'ชื่อ-นามสกุล',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1,
+                                                .bodyText2,
                                           ),
                                         ),
                                         SizedBox(width: 20),
@@ -527,7 +527,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                             'เบอร์โทร',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1,
+                                                .bodyText2,
                                           ),
                                         ),
                                         Flexible(
@@ -562,7 +562,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                             'มีความเกี่ยวข้องเป็น',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText1,
+                                                .bodyText2,
                                           ),
                                         ),
                                         Flexible(
