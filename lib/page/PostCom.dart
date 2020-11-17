@@ -12,7 +12,7 @@ class _PostComPageState extends State<PostComPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AbdoCare'),
+        title: const Text('Post-op @ Community'),
         backgroundColor: Color(0xFFC37447),
       ),
       body: Padding(
@@ -20,10 +20,10 @@ class _PostComPageState extends State<PostComPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Post-op @ Community',
-              style: TextStyle(fontSize: 18),
-            )
+            // Text(
+            //   'Post-op @ Community',
+            //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // )
           ],
         ),
       ),

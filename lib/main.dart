@@ -17,7 +17,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: LoginPage(),
-      theme: ThemeData(fontFamily: "Prompt"),
+      theme: ThemeData(
+        fontFamily: "Prompt",
+        primaryColor: Color(0xFFC37447),
+        primarySwatch: Colors.amber,
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+              fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+          bodyText2: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.normal,
+              color: Colors.black),
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       title: 'AbdoCare',
       routes: {
         '/addPatient_page': (context) => AddPatientPage(),

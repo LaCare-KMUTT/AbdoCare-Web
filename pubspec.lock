@@ -247,6 +247,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4+1"
+  responsive_context:
+    dependency: transitive
+    description:
+      name: responsive_context
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
+  responsive_table:
+    dependency: "direct main"
+    description:
+      name: responsive_table
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1+8"
   sky_engine:
     dependency: transitive
     description: flutter

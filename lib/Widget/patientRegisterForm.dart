@@ -60,6 +60,17 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   Future _selectDate() async {
     DateTime picked = await showDatePicker(
         context: context,
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: const Color(0xFFC37447),
+              accentColor: const Color(0xFFC37447),
+              colorScheme: ColorScheme.light(primary: const Color(0xFFC37447)),
+              //buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            ),
+            child: child,
+          );
+        },
         initialDate: new DateTime.now(),
         firstDate: new DateTime(1900),
         lastDate: new DateTime.now().add(Duration(days: 365)));
@@ -107,15 +118,15 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          SizedBox(
-            height: 50,
-          ),
-          Center(
-            child: Text(
-              'เพิ่มผู้ป่วย',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
+          // SizedBox(
+          //   height: 50,
+          // ),
+          // Center(
+          //   child: Text(
+          //     'เพิ่มผู้ป่วย',
+          //     style: Theme.of(context).textTheme.bodyText2,
+          //   ),
+          // ),
           Card(
             margin: EdgeInsets.all(50),
             child: Padding(
@@ -130,14 +141,14 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                     children: <Widget>[
                       Text(
                         'ข้อมูลผู้ป่วย',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       SizedBox(height: 15),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 40),
                         child: Text(
                           'ข้อมูลส่วนตัว',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                       SizedBox(height: 15),
@@ -154,7 +165,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                         children: <Widget>[
                                           Container(
                                             width: 100,
-                                            child: Text('ชื่อ-นามสกุล'),
+                                            child: Text(
+                                              'ชื่อ-นามสกุล',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ),
                                           SizedBox(width: 20),
                                           Flexible(
@@ -187,7 +203,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                         children: <Widget>[
                                           Container(
                                             width: 100,
-                                            child: Text('ที่อยู่'),
+                                            child: Text(
+                                              'ที่อยู่',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ),
                                           SizedBox(width: 20),
                                           Flexible(
@@ -226,7 +247,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                         children: <Widget>[
                                           Container(
                                             width: 100,
-                                            child: Text('เพศ'),
+                                            child: Text(
+                                              'เพศ',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ),
                                           Flexible(
                                             child: DropdownButtonFormField(
@@ -275,7 +301,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                         children: <Widget>[
                                           Container(
                                             width: 100,
-                                            child: Text('น้ำหนัก'),
+                                            child: Text(
+                                              'น้ำหนัก',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ),
                                           Flexible(
                                             child: TextFormField(
@@ -303,6 +334,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                             width: 100,
                                             child: Text(
                                               'กิโลกรัม',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
@@ -315,7 +349,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                         children: <Widget>[
                                           Container(
                                             width: 100,
-                                            child: Text('เบอร์โทร'),
+                                            child: Text(
+                                              'เบอร์โทร',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ),
                                           Flexible(
                                             child: TextFormField(
@@ -351,7 +390,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                         children: <Widget>[
                                           Container(
                                             width: 100,
-                                            child: Text('วัน เดือน ปีเกิด'),
+                                            child: Text(
+                                              'วัน เดือน ปีเกิด',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ),
                                           Flexible(
                                             child: TextFormField(
@@ -388,7 +432,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                         children: <Widget>[
                                           Container(
                                             width: 100,
-                                            child: Text('ส่วนสูง'),
+                                            child: Text(
+                                              'ส่วนสูง',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ),
                                           Flexible(
                                             child: TextFormField(
@@ -415,6 +464,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                             width: 100,
                                             child: Text(
                                               'เซนติเมตร',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
                                               textAlign: TextAlign.end,
                                             ),
                                           ),
@@ -442,9 +494,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           children: <Widget>[
                             Text(
                               'ข้อมูลผู้ดูแล',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: Theme.of(context).textTheme.bodyText1,
                             ),
                             SizedBox(
                               height: 15,
@@ -458,7 +508,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                       children: <Widget>[
                                         Container(
                                           width: 100,
-                                          child: Text('ชื่อ-นามสกุล'),
+                                          child: Text(
+                                            'ชื่อ-นามสกุล',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2,
+                                          ),
                                         ),
                                         SizedBox(width: 20),
                                         Flexible(
@@ -489,7 +544,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                       children: <Widget>[
                                         Container(
                                           width: 100,
-                                          child: Text('เบอร์โทร'),
+                                          child: Text(
+                                            'เบอร์โทร',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2,
+                                          ),
                                         ),
                                         Flexible(
                                           child: TextFormField(
@@ -519,7 +579,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                       children: <Widget>[
                                         Container(
                                           width: 150,
-                                          child: Text('มีความเกี่ยวข้องเป็น'),
+                                          child: Text(
+                                            'มีความเกี่ยวข้องเป็น',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2,
+                                          ),
                                         ),
                                         Flexible(
                                           child: TextFormField(
