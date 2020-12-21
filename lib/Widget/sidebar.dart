@@ -40,10 +40,18 @@ class SideBar extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Icon(Icons.house),
-                      title: Text("Post-op@Community",
+                      title: Text("Post-op@Home",
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
-                        Navigator.pushNamed(context, '/PostCom_page');
+                        Navigator.pushNamed(context, '/PostHome_page');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.insert_invitation),
+                      title: Text("ตารางนัด",
+                          style: Theme.of(context).textTheme.bodyText2),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/Appointment_page');
                       },
                     ),
                     const Expanded(child: SizedBox()),
