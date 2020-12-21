@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.amber,
         textTheme: TextTheme(
           bodyText1: TextStyle(
-              fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+              fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
           bodyText2: TextStyle(
-              fontSize: 18.0,
+              fontSize: 16.0,
               fontWeight: FontWeight.normal,
               color: Colors.black),
         ),
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/addPatient_page': (context) => AddPatientPage(),
         '/Pre_page': (context) => PrePage(),
         '/PostHos_page': (context) => PostHosPage(),
-        '/PostCom_page': (context) => PostComPage(),
+        '/PostHome_page': (context) => PostHomePage(),
         '/Login_page': (context) => LoginPage()
       },
     );
