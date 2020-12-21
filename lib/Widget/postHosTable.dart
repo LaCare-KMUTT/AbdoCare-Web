@@ -49,20 +49,32 @@ class _PostHosTableState extends State<PostHosTable> {
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
-        text: "ออกซิเจน",
-        value: "o2",
+        text: "อุณหภูมิ",
+        value: "t",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.center),
+    DatatableHeader(
+        text: "อัตรา\nการหายใจ",
+        value: "r",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.center),
+    DatatableHeader(
+        text: "ชีพจร",
+        value: "hr",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
         text: "ความดัน",
-        value: "p",
+        value: "bp",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
-        text: "อุณหภูมิ",
-        value: "t",
+        text: "ออกซิเจน",
+        value: "o2",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
@@ -105,9 +117,11 @@ class _PostHosTableState extends State<PostHosTable> {
       "age": "22 ปี",
       "room": "3",
       "bed": "2",
-      "o2": "99%",
-      "p": "122",
       "t": "37.8",
+      "r": "26",
+      "hr": "122",
+      "bp": "90",
+      "o2": "99%",
       "status": "ปกติ"
     });
     temps.add({
@@ -118,9 +132,11 @@ class _PostHosTableState extends State<PostHosTable> {
       "age": "40 ปี",
       "room": "5",
       "bed": "1",
-      "o2": "89%",
-      "p": "130",
       "t": "38.8",
+      "r": "27",
+      "hr": "130",
+      "bp": "90",
+      "o2": "89%",
       "status": "รุนแรง"
     });
     temps.add({
@@ -131,9 +147,11 @@ class _PostHosTableState extends State<PostHosTable> {
       "age": "35 ปี",
       "room": "3",
       "bed": "1",
-      "o2": "96%",
-      "p": "125",
       "t": "36.4",
+      "r": "28",
+      "hr": "125",
+      "bp": "90",
+      "o2": "96%",
       "status": "ปกติ"
     });
 
