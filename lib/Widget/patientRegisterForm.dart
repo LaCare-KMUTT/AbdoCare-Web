@@ -17,6 +17,7 @@ class PatientRegisterForm extends StatefulWidget {
     @required String careTakerTel,
     @required String careTakerRelationship,
     @required String username,
+    @required String uniqueKey,
     @required String password,
   }) submitFn;
 
@@ -98,7 +99,8 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
         username: _createDummyUsername(_patientTel.trim()),
-        password: _generateUniqueKey(6),
+        uniqueKey: _generateUniqueKey(6),
+        password: '000000',
       );
     }
   }
