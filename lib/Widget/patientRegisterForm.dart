@@ -622,14 +622,20 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
             ),
           ),
           Center(
-            child: RaisedButton(
-              padding: EdgeInsets.all(20),
-              onPressed: _trySubmit,
-              textColor: Colors.white,
-              color: Colors.greenAccent,
-              child: Text(
-                'ยืนยัน',
-                style: TextStyle(fontSize: 15),
+            child: Container(
+              width: 100,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7.0),
+                ),
+                padding: EdgeInsets.all(20),
+                onPressed: _trySubmit,
+                textColor: Colors.white,
+                color: Color(0xFF2ED47A),
+                child: Text(
+                  'ยืนยัน',
+                  style: TextStyle(fontSize: 15),
+                ),
               ),
             ),
           ),
