@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'page/AddPatient.dart';
+import 'page/PatientList.dart';
 import 'page/Login.dart';
 import 'page/PostCom.dart';
 import 'page/PostHos.dart';
 import 'page/Pre.dart';
+import 'page/AddPatient.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +24,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.amber,
         textTheme: TextTheme(
           bodyText1: TextStyle(
-              fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+              fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
           bodyText2: TextStyle(
-              fontSize: 18.0,
+              fontSize: 16.0,
               fontWeight: FontWeight.normal,
               color: Colors.black),
         ),
@@ -33,11 +34,12 @@ class MyApp extends StatelessWidget {
       ),
       title: 'AbdoCare',
       routes: {
-        '/addPatient_page': (context) => AddPatientPage(),
+        '/PatientList_page': (context) => PatientListPage(),
         '/Pre_page': (context) => PrePage(),
         '/PostHos_page': (context) => PostHosPage(),
         '/PostCom_page': (context) => PostComPage(),
-        '/Login_page': (context) => LoginPage()
+        '/Login_page': (context) => LoginPage(),
+        '/addPatient_page': (context) => AddPatientPage()
       },
     );
   }
