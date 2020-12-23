@@ -59,6 +59,22 @@ class _AddPatientPageState extends State<AddPatientPage> {
     // });
 
     // tempApp.delete();
+    _firebaseService.createPatient(collection: 'Users', data: {
+      'name': patientName,
+      'address': address,
+      'gender': gender,
+      'dob': dob,
+      'weight': weight,
+      'height': height,
+      'patientTel': patientTel,
+      'careTakerName': careTakerName,
+      'careTakerTel': careTakerTel,
+      'careTakerRelationship': careTakerRelationship,
+      'username': username,
+      'uniqueKey': uniqueKey,
+      'password': password,
+      'role': 'patient',
+    });
   }
 
   @override

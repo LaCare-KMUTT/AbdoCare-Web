@@ -8,7 +8,7 @@ abstract class IFirebaseService {
   });
   Future<void> createPatient({
     @required String collection,
-    @required String docId,
+    String docId,
     @required Map<String, dynamic> data,
   });
   String getUserId();

@@ -13,19 +13,33 @@ class FirebaseService extends IFirebaseService {
     @required String docId,
     @required Map<String, dynamic> data,
   }) {}
+
+  Future<FirebaseApp> _createTempApp() async {
+    return await Firebase.initializeApp(
+        name: 'Temporary Register', options: Firebase.app().options);
+  }
+
+  void _deleteTempApp(FirebaseApp tempApp) {
+    tempApp.delete();
+  }
+
+  Future<UserCredential> _createTempAuthWithProvidedTempApp(
+      FirebaseApp tempApp, String username, String password) async {
+    return await FirebaseAuth.instanceFor(app: tempApp)
+        .createUserWithEmailAndPassword(email: username, password: password);
+  }
+
   Future<void> createPatient({
     @required String collection,
-    @required String docId,
+    String docId,
     @required Map<String, dynamic> data,
   }) async {
-    // FirebaseApp tempApp = await Firebase.initializeApp(
-    //     name: 'Temporary Register', options: Firebase.app().options);
-    // UserCredential tempAuthResult = await FirebaseAuth.instanceFor(app: tempApp)
-    //     .createUserWithEmailAndPassword(
-    //         email: data['username'], password: data['uniqueKey']);
-    var writeData = data.keys.toList();
-    print(writeData);
-    // _firestore.collection('Users').doc(tempAuthResult.user.uid).set({});
+    print('createUser using CreatePatient FirebaseInterface');
+    var tempApp = await _createTempApp();
+    var tempAuthResult = await _createTempAuthWithProvidedTempApp(
+        tempApp, data['username'], data['password']);
+    _firestore.collection('Users').doc(tempAuthResult.user.uid).set(data);
+    _deleteTempApp(tempApp);
   }
 
   String getUserId() => _auth.currentUser.uid;
