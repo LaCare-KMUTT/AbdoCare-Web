@@ -19,31 +19,31 @@ class SideBar extends StatelessWidget {
                       title: Text('รายชื่อผู้ป่วย',
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
-                        Navigator.pushNamed(context, '/PatientList_page');
+                        Navigator.pushNamed(context, '/patientList_page');
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.pending_actions),
-                      title: Text('Pre-op',
+                      title: Text('Pre-Operation',
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
-                        Navigator.pushNamed(context, '/Pre_page');
+                        Navigator.pushNamed(context, '/pre_page');
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.local_hospital),
-                      title: Text("Post-op@Hospital",
+                      title: Text("Post-Operation@Hospital",
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
-                        Navigator.pushNamed(context, '/PostHos_page');
+                        Navigator.pushNamed(context, '/postHos_page');
                       },
                     ),
                     ListTile(
                       leading: Icon(Icons.house),
-                      title: Text("Post-op@Home",
+                      title: Text("Post-Operation@Home",
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
-                        Navigator.pushNamed(context, '/PostHome_page');
+                        Navigator.pushNamed(context, '/postHome_page');
                       },
                     ),
                     ListTile(
@@ -51,7 +51,7 @@ class SideBar extends StatelessWidget {
                       title: Text("ตารางนัด",
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
-                        Navigator.pushNamed(context, '/Appointment_page');
+                        Navigator.pushNamed(context, '/appointment_page');
                       },
                     ),
                     const Expanded(child: SizedBox()),
