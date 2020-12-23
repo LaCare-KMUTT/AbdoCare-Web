@@ -16,10 +16,10 @@ class SideBar extends StatelessWidget {
                       leading: Icon(
                         Icons.account_circle_rounded,
                       ),
-                      title: Text('เพิ่มผู้ป่วยใหม่',
+                      title: Text('รายชื่อผู้ป่วย',
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
-                        Navigator.pushNamed(context, '/addPatient_page');
+                        Navigator.pushNamed(context, '/PatientList_page');
                       },
                     ),
                     ListTile(

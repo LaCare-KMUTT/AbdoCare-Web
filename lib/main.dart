@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'page/patientList.dart';
 import 'page/addPatient.dart';
 import 'page/login.dart';
-
 import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       title: 'AbdoCare',
       routes: {
+        '/patientList_page': (context) => PatientListPage(),
         '/addPatient_page': (context) => AddPatientPage(),
         '/pre_page': (context) => PrePage(),
         '/postHos_page': (context) => PostHosPage(),
