@@ -18,14 +18,14 @@ class FirebaseService extends IFirebaseService {
     @required String docId,
     @required Map<String, dynamic> data,
   }) async {
-    // FirebaseApp tempApp = await Firebase.initializeApp(
-    //     name: 'Temporary Register', options: Firebase.app().options);
-    // UserCredential tempAuthResult = await FirebaseAuth.instanceFor(app: tempApp)
-    //     .createUserWithEmailAndPassword(
-    //         email: data['username'], password: data['uniqueKey']);
+    FirebaseApp tempApp = await Firebase.initializeApp(
+        name: 'Temporary Register', options: Firebase.app().options);
+    UserCredential tempAuthResult = await FirebaseAuth.instanceFor(app: tempApp)
+        .createUserWithEmailAndPassword(
+            email: data['username'], password: data['uniqueKey']);
     var writeData = data.keys.toList();
     print(writeData);
-    // _firestore.collection('Users').doc(tempAuthResult.user.uid).set({});
+    _firestore.collection('Users').doc(tempAuthResult.user.uid).set({});
   }
 
   String getUserId() => _auth.currentUser.uid;
