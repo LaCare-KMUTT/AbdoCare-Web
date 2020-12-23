@@ -17,7 +17,7 @@ class _PrePageState extends State<PrePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pre-op'),
+        title: const Text('Pre-Operation'),
         backgroundColor: Color(0xFFC37447),
       ),
       body: PreTable(),

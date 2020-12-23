@@ -50,19 +50,19 @@ class _PreTableState extends State<PreTable> {
         textAlign: TextAlign.center),
     DatatableHeader(
         text: "ออกซิเจน",
-        value: "o2",
+        value: "oxygen",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
         text: "ความดัน",
-        value: "p",
+        value: "pressure",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
         text: "อุณหภูมิ",
-        value: "t",
+        value: "temperature",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
@@ -105,9 +105,9 @@ class _PreTableState extends State<PreTable> {
       "age": "22 ปี",
       "room": "3",
       "bed": "2",
-      "o2": "99%",
-      "p": "122",
-      "t": "37.8",
+      "oxygen": "99%",
+      "pressure": "122",
+      "temperature": "37.8",
       "status": "ปกติ"
     });
     temps.add({
@@ -118,9 +118,9 @@ class _PreTableState extends State<PreTable> {
       "age": "40 ปี",
       "room": "5",
       "bed": "1",
-      "o2": "89%",
-      "p": "130",
-      "t": "38.8",
+      "oxygen": "89%",
+      "pressure": "130",
+      "temperature": "38.8",
       "status": "รุนแรง"
     });
     temps.add({
@@ -131,9 +131,9 @@ class _PreTableState extends State<PreTable> {
       "age": "35 ปี",
       "room": "3",
       "bed": "1",
-      "o2": "96%",
-      "p": "125",
-      "t": "36.4",
+      "oxygen": "96%",
+      "pressure": "125",
+      "temperature": "36.4",
       "status": "ปกติ"
     });
 

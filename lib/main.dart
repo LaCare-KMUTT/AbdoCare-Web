@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'page/AddPatient.dart';
-import 'page/Login.dart';
-import 'page/PostCom.dart';
-import 'page/PostHos.dart';
-import 'page/Pre.dart';
+import 'page/addPatient.dart';
+import 'page/login.dart';
+import 'page/postCom.dart';
+import 'page/postHos.dart';
+import 'page/pre.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,10 +34,10 @@ class MyApp extends StatelessWidget {
       title: 'AbdoCare',
       routes: {
         '/addPatient_page': (context) => AddPatientPage(),
-        '/Pre_page': (context) => PrePage(),
-        '/PostHos_page': (context) => PostHosPage(),
-        '/PostHome_page': (context) => PostHomePage(),
-        '/Login_page': (context) => LoginPage()
+        '/pre_page': (context) => PrePage(),
+        '/postHos_page': (context) => PostHosPage(),
+        '/postHome_page': (context) => PostComPage(),
+        '/login_page': (context) => LoginPage()
       },
     );
   }
