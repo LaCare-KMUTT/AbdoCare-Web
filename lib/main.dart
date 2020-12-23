@@ -7,6 +7,7 @@ import 'page/login.dart';
 import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
+import 'page/dashboard.dart';
 import 'services/service_locator.dart';
 
 void main() async {
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
         '/pre_page': (context) => PrePage(),
         '/postHos_page': (context) => PostHosPage(),
         '/postHome_page': (context) => PostHomePage(),
-        '/login_page': (context) => LoginPage()
+        '/login_page': (context) => LoginPage(),
+        '/dashboard_page': (context) => DashboardPage()
       },
     );
   }
