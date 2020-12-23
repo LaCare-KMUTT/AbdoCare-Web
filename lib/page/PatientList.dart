@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:AbdoCare_Web/Widget/sidebar.dart';
 
-import '../Widget/PatientListTable.dart';
+import '../Widget/patientListTable.dart';
 import '../Widget/sidebar.dart';
 
 class PatientListPage extends StatefulWidget {
