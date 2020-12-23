@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:responsive_table/responsive_table.dart';
 
-class PostHosTable extends StatefulWidget {
-  PostHosTable({Key key}) : super(key: key);
+class PreTable extends StatefulWidget {
+  PreTable({Key key}) : super(key: key);
   @override
-  _PostHosTableState createState() => _PostHosTableState();
+  _PreTableState createState() => _PreTableState();
 }
 
-class _PostHosTableState extends State<PostHosTable> {
+class _PreTableState extends State<PreTable> {
   List<DatatableHeader> _headers = [
     DatatableHeader(
         text: "HN",
@@ -49,32 +49,20 @@ class _PostHosTableState extends State<PostHosTable> {
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
-        text: "อุณหภูมิ",
-        value: "t",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "อัตรา\nการหายใจ",
-        value: "r",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ชีพจร",
-        value: "hr",
+        text: "ออกซิเจน",
+        value: "oxygen",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
         text: "ความดัน",
-        value: "bp",
+        value: "pressure",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
-        text: "ออกซิเจน",
-        value: "o2",
+        text: "อุณหภูมิ",
+        value: "temperature",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
@@ -117,11 +105,9 @@ class _PostHosTableState extends State<PostHosTable> {
       "age": "22 ปี",
       "room": "3",
       "bed": "2",
-      "t": "37.8",
-      "r": "26",
-      "hr": "122",
-      "bp": "90",
-      "o2": "99%",
+      "oxygen": "99%",
+      "pressure": "122",
+      "temperature": "37.8",
       "status": "ปกติ"
     });
     temps.add({
@@ -132,11 +118,9 @@ class _PostHosTableState extends State<PostHosTable> {
       "age": "40 ปี",
       "room": "5",
       "bed": "1",
-      "t": "38.8",
-      "r": "27",
-      "hr": "130",
-      "bp": "90",
-      "o2": "89%",
+      "oxygen": "89%",
+      "pressure": "130",
+      "temperature": "38.8",
       "status": "รุนแรง"
     });
     temps.add({
@@ -147,11 +131,9 @@ class _PostHosTableState extends State<PostHosTable> {
       "age": "35 ปี",
       "room": "3",
       "bed": "1",
-      "t": "36.4",
-      "r": "28",
-      "hr": "125",
-      "bp": "90",
-      "o2": "96%",
+      "oxygen": "96%",
+      "pressure": "125",
+      "temperature": "36.4",
       "status": "ปกติ"
     });
 
