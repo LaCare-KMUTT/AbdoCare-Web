@@ -30,6 +30,8 @@ dependencies:
   uuid: ^2.2.2
   intl: ^0.16.1
   responsive_table: ^0.1.1+8
+  get_it: ^5.0.3
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

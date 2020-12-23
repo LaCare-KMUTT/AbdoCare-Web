@@ -8,10 +8,13 @@ import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
 import 'page/dashboard.dart';
+import 'services/service_locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  setupServiceLocator();
+
   runApp(MyApp());
 }
 

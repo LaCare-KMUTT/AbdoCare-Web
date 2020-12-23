@@ -4,7 +4,6 @@ import 'package:AbdoCare_Web/Widget/sidebar.dart';
 
 import '../Widget/preTable.dart';
 import '../Widget/sidebar.dart';
-import '../Widget/appbar.dart';
 
 class PrePage extends StatefulWidget {
   @override
@@ -17,9 +16,9 @@ class _PrePageState extends State<PrePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BaseAppBar(
-        title: Text('Pre-Operation'),
-        appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Pre-Operation'),
+        backgroundColor: Color(0xFFC37447),
       ),
       body: PreTable(),
       drawer: SideBar(),
