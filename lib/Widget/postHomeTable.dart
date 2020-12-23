@@ -26,7 +26,7 @@ class _PostHomeTableState extends State<PostHomeTable> {
         textAlign: TextAlign.left),
     DatatableHeader(
         text: "ครั้งที่มารักษา",
-        value: "recovno",
+        value: "vn",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
@@ -44,13 +44,13 @@ class _PostHomeTableState extends State<PostHomeTable> {
         textAlign: TextAlign.center),
     DatatableHeader(
         text: "คะแนนความปวด",
-        value: "painscore",
+        value: "pain_score",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
         text: "ลักษณะแผลผ่าตัด",
-        value: "surtype",
+        value: "operation_type",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
@@ -89,40 +89,34 @@ class _PostHomeTableState extends State<PostHomeTable> {
       "id": i,
       "hn": "HN10001",
       "name": "นางสาวพรพิมล แก้วใส",
+      "vn": "1",
       "sex": "หญิง",
       "age": "22 ปี",
-      "room": "3",
-      "bed": "2",
-      "o2": "99%",
-      "p": "122",
-      "t": "37.8",
-      "status": "ปกติ"
+      "pain_score": "3",
+      "operation_type": "2",
+      "wound_img": "ได้รับรูปภาพ"
     });
     temps.add({
       "id": i,
       "hn": "HN10002",
       "name": "นางสาวยิ้มแย้ม แจ่มใส",
+      "vn": "1",
       "sex": "หญิง",
       "age": "40 ปี",
-      "room": "5",
-      "bed": "1",
-      "o2": "89%",
-      "p": "130",
-      "t": "38.8",
-      "status": "รุนแรง"
+      "pain_score": "5",
+      "operation_type": "1",
+      "wound_img": "-"
     });
     temps.add({
       "id": i,
       "hn": "HN10003",
       "name": "นายสามารถ สมาธิ",
+      "vn": "1",
       "sex": "ชาย",
       "age": "35 ปี",
-      "room": "3",
-      "bed": "1",
-      "o2": "96%",
-      "p": "125",
-      "t": "36.4",
-      "status": "ปกติ"
+      "pain_score": "3",
+      "operation_type": "1",
+      "wound_img": "-"
     });
 
     //i++;
