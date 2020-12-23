@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'page/addPatient.dart';
 import 'page/login.dart';
-import 'page/postCom.dart';
+
+import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         '/addPatient_page': (context) => AddPatientPage(),
         '/pre_page': (context) => PrePage(),
         '/postHos_page': (context) => PostHosPage(),
-        '/postHome_page': (context) => PostComPage(),
+        '/postHome_page': (context) => PostHomePage(),
         '/login_page': (context) => LoginPage()
       },
     );

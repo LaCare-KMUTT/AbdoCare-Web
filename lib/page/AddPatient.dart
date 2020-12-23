@@ -29,13 +29,14 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required String careTakerTel,
     @required String careTakerRelationship,
     @required String username,
+    @required String uniqueKey,
     @required String password,
   }) async {
     FirebaseApp tempApp = await Firebase.initializeApp(
         name: 'Temporary Register', options: Firebase.app().options);
 
     UserCredential authResult = await FirebaseAuth.instanceFor(app: tempApp)
-        .createUserWithEmailAndPassword(email: username, password: password);
+        .createUserWithEmailAndPassword(email: username, password: uniqueKey);
     FirebaseFirestore.instance
         .collection('Users')
         .doc(authResult.user.uid)
@@ -51,6 +52,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
       'careTakerTel': careTakerTel,
       'careTakerRelationship': careTakerRelationship,
       'username': username,
+      'uniqueKey': uniqueKey,
       'password': password,
       'role': 'patient',
     });
