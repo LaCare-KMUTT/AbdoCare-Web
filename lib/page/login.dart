@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
                 //ใส่ว่าช่องนี้จะใส่อะไรเป็นข้อความแนะนำ
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'username',
+                  labelText: 'Username',
                 ),
               ),
             ),
@@ -41,18 +41,20 @@ class _LoginPageState extends State<LoginPage> {
                 //ใส่ว่าช่องนี้จะใส่อะไรเป็นข้อความแนะนำ
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'password',
+                  labelText: 'Password',
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(50, 10, 50, 150),
+              padding: const EdgeInsets.fromLTRB(50, 20, 50, 150),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0)),
                     textColor: Colors.white,
-                    color: Color(0xFF33cc33),
+                    color: Color(0xFF2ED47A),
                     child: Text('เข้าสู่ระบบ', style: TextStyle(fontSize: 18)),
                     onPressed: () {
                       print('This is login button');
