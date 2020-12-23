@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../Widget/patientRegisterForm.dart';
 import '../Widget/sidebar.dart';
-<<<<<<< HEAD
 import '../services/service_locator.dart';
-=======
 import '../Widget/appbar.dart';
->>>>>>> 52b701c6f73324643a57e7056258b3e0b05baa01
 
 class AddPatientPage extends StatefulWidget {
   @override
