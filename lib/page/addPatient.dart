@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../Widget/patientRegisterForm.dart';
 import '../Widget/sidebar.dart';
-import '../services/service_locator.dart';
-import '../Widget/appbar.dart';
 
 class AddPatientPage extends StatefulWidget {
   @override
@@ -64,9 +62,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BaseAppBar(
-        title: Text('เพิ่มผู้ป่วย'),
-        appBar: AppBar(),
+      appBar: AppBar(
+        //title: const Text('AbdoCare'),
+        title: const Text('เพิ่มผู้ป่วย'),
+        backgroundColor: Color(0xFFC37447),
       ),
       body: PatientRegisterForm(
         _submitPatientRegisterForm,
