@@ -3,6 +3,7 @@ import 'package:AbdoCare_Web/Widget/sidebar.dart';
 
 import '../Widget/postHomeTable.dart';
 import '../Widget/sidebar.dart';
+import '../Widget/appbar.dart';
 
 class PostHomePage extends StatefulWidget {
   @override
@@ -15,9 +16,9 @@ class _PostHomePageState extends State<PostHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Post-op @ Home'),
-        backgroundColor: Color(0xFFC37447),
+      appBar: BaseAppBar(
+        title: Text('Post-Operation @ Home'),
+        appBar: AppBar(),
       ),
       body: PostHomeTable(),
       drawer: SideBar(),
