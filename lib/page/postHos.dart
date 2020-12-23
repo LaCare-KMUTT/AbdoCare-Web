@@ -20,18 +20,6 @@ class _PostHosPageState extends State<PostHosPage> {
         backgroundColor: Color(0xFFC37447),
       ),
       body: PostHosTable(),
-      // body: Padding(
-      //   padding: const EdgeInsets.only(top: 16),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       Text(
-      //         'Post-op @ Hospital',
-      //         style: TextStyle(fontSize: 18),
-      //       )
-      //     ],
-      //   ),
-      // ),
       drawer: SideBar(),
     );
   }

@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:responsive_table/responsive_table.dart';
 
-class PostHosTable extends StatefulWidget {
-  PostHosTable({Key key}) : super(key: key);
+class PostHomeTable extends StatefulWidget {
+  PostHomeTable({Key key}) : super(key: key);
   @override
-  _PostHosTableState createState() => _PostHosTableState();
+  _PostHomeTableState createState() => _PostHomeTableState();
 }
 
-class _PostHosTableState extends State<PostHosTable> {
+class _PostHomeTableState extends State<PostHomeTable> {
   List<DatatableHeader> _headers = [
     DatatableHeader(
         text: "HN",
@@ -25,6 +25,12 @@ class _PostHosTableState extends State<PostHosTable> {
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
+        text: "ครั้งที่มารักษา",
+        value: "vn",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.center),
+    DatatableHeader(
         text: "เพศ",
         value: "sex",
         show: true,
@@ -37,50 +43,20 @@ class _PostHosTableState extends State<PostHosTable> {
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
-        text: "ห้อง",
-        value: "room",
+        text: "คะแนนความปวด",
+        value: "pain_score",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
-        text: "เตียง",
-        value: "bed",
+        text: "ลักษณะแผลผ่าตัด",
+        value: "operation_type",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
     DatatableHeader(
-        text: "อุณหภูมิ",
-        value: "t",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "อัตรา\nการหายใจ",
-        value: "r",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ชีพจร",
-        value: "hr",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ความดัน",
-        value: "bp",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ออกซิเจน",
-        value: "o2",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "สถานะ",
-        value: "status",
+        text: "รูปแผลผ่าตัด",
+        value: "wound_img",
         show: true,
         sortable: true,
         textAlign: TextAlign.center),
@@ -113,46 +89,34 @@ class _PostHosTableState extends State<PostHosTable> {
       "id": i,
       "hn": "HN10001",
       "name": "นางสาวพรพิมล แก้วใส",
+      "vn": "1",
       "sex": "หญิง",
       "age": "22 ปี",
-      "room": "3",
-      "bed": "2",
-      "t": "37.8",
-      "r": "26",
-      "hr": "122",
-      "bp": "90",
-      "o2": "99%",
-      "status": "ปกติ"
+      "pain_score": "3",
+      "operation_type": "2",
+      "wound_img": "ได้รับรูปภาพ"
     });
     temps.add({
       "id": i,
       "hn": "HN10002",
       "name": "นางสาวยิ้มแย้ม แจ่มใส",
+      "vn": "1",
       "sex": "หญิง",
       "age": "40 ปี",
-      "room": "5",
-      "bed": "1",
-      "t": "38.8",
-      "r": "27",
-      "hr": "130",
-      "bp": "90",
-      "o2": "89%",
-      "status": "รุนแรง"
+      "pain_score": "5",
+      "operation_type": "1",
+      "wound_img": "-"
     });
     temps.add({
       "id": i,
       "hn": "HN10003",
       "name": "นายสามารถ สมาธิ",
+      "vn": "1",
       "sex": "ชาย",
       "age": "35 ปี",
-      "room": "3",
-      "bed": "1",
-      "t": "36.4",
-      "r": "28",
-      "hr": "125",
-      "bp": "90",
-      "o2": "96%",
-      "status": "ปกติ"
+      "pain_score": "3",
+      "operation_type": "1",
+      "wound_img": "-"
     });
 
     //i++;
