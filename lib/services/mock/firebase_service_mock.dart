@@ -3,6 +3,7 @@ import 'package:AbdoCare_Web/services/mock/mock_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseServiceMock extends IFirebaseService {
   final _firestore = FirebaseFirestore.instance;
@@ -46,9 +47,24 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<void> writeDataToFirestoreWithProvidedDoc(
+  Future<void> setDataToCollectionWithSpecificDoc(
       {String collection, String docId, Map<String, dynamic> data}) {
     // TODO: implement writeDataToFirestoreWithProvidedDoc
     throw UnimplementedError();
+  }
+
+  Future<bool> addDocumentToCollection({
+    @required String collection,
+    @required Map<String, dynamic> docData,
+  }) async {
+    bool isSuccess =
+        await _firestore.collection(collection).add(docData).then((value) {
+      print('Success add $docData to $collection collection');
+      return true;
+    }).catchError((onError) {
+      print('Failed to add $docData to $collection collection');
+      return false;
+    });
+    return isSuccess;
   }
 }
