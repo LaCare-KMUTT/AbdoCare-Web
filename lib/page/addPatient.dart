@@ -33,32 +33,6 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required String uniqueKey,
     @required String password,
   }) async {
-    // FirebaseApp tempApp = await Firebase.initializeApp(
-    //     name: 'Temporary Register', options: Firebase.app().options);
-
-    // UserCredential authResult = await FirebaseAuth.instanceFor(app: tempApp)
-    //     .createUserWithEmailAndPassword(email: username, password: uniqueKey);
-    // FirebaseFirestore.instance
-    //     .collection('Users')
-    //     .doc(authResult.user.uid)
-    //     .set({
-    //   'name': patientName,
-    //   'address': address,
-    //   'gender': gender,
-    //   'dob': dob,
-    //   'weight': weight,
-    //   'height': height,
-    //   'patientTel': patientTel,
-    //   'careTakerName': careTakerName,
-    //   'careTakerTel': careTakerTel,
-    //   'careTakerRelationship': careTakerRelationship,
-    //   'username': username,
-    //   'uniqueKey': uniqueKey,
-    //   'password': password,
-    //   'role': 'patient',
-    // });
-
-    // tempApp.delete();
     _firebaseService.createPatient(collection: 'Users', data: {
       'name': patientName,
       'address': address,
