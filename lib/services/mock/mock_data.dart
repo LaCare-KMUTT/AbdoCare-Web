@@ -28,7 +28,7 @@ class MockFirestore {
       'name': 'ทดสอบชื่อ',
       'surname': 'ทดสอบนามสกุล',
       'address': 'ทดสอบที่อยู่',
-      'dob': DateTime.utc(1999, DateTime.march, 12).toLocal(),
+      'dob': '1999-03-12',
       'gender': 'ชาย',
       'patientTel': randomedTel,
       'username': username,
