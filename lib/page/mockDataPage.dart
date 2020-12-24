@@ -1,9 +1,11 @@
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
+import 'package:AbdoCare_Web/services/mock/mock_data.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class MockDataPage extends StatelessWidget {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final _mockFirestore = new MockFirestore();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,9 @@ class MockDataPage extends StatelessWidget {
               child:
                   Text('สร้าง Patient Account', style: TextStyle(fontSize: 18)),
               onPressed: () {
-                _firebaseService
-                    .createPatient(collection: "test", data: {"test": "test"});
+                var mockedData = _mockFirestore.mockUsersCollection();
+                _firebaseService.createPatient(
+                    collection: 'Users', data: mockedData);
                 print('สร้าง Patient Account');
               },
             ),
