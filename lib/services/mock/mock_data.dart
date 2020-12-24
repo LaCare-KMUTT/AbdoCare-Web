@@ -22,7 +22,10 @@ class MockFirestore {
   }
 
   Map<String, dynamic> mockUsersCollection() {
-    String randomedTel = '08${_generateRandomNumber(8)}';
+    int randomTelLength = 8;
+    int uniqueKeyLength = 6;
+    int hnLength = 5;
+    String randomedTel = '08${_generateRandomNumber(randomTelLength)}';
     String username = '$randomedTel@abdocare.com';
     Map<String, dynamic> usersCollection = {
       'name': 'ทดสอบชื่อ',
@@ -33,8 +36,8 @@ class MockFirestore {
       'patientTel': randomedTel,
       'username': username,
       'password': '000000',
-      'uniqueKey': '${_generateUniqueKey(6)}',
-      'hn': 'hn${_generateRandomNumber(5)}',
+      'uniqueKey': '${_generateUniqueKey(uniqueKeyLength)}',
+      'hn': 'hn${_generateRandomNumber(hnLength)}',
     };
     return usersCollection;
   }
