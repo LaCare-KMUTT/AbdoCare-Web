@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../Widget/patientRegisterForm.dart';
 import '../Widget/sidebar.dart';
 import '../services/service_locator.dart';
-import '../Widget/appbar.dart';
 
 class AddPatientPage extends StatefulWidget {
   @override
@@ -15,7 +14,6 @@ class AddPatientPage extends StatefulWidget {
 }
 
 class _AddPatientPageState extends State<AddPatientPage> {
-  // final _auth = FirebaseAuth.instance;
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
 
   void _submitPatientRegisterForm({
@@ -33,32 +31,32 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required String uniqueKey,
     @required String password,
   }) async {
-    // FirebaseApp tempApp = await Firebase.initializeApp(
-    //     name: 'Temporary Register', options: Firebase.app().options);
-
-    // UserCredential authResult = await FirebaseAuth.instanceFor(app: tempApp)
-    //     .createUserWithEmailAndPassword(email: username, password: uniqueKey);
-    // FirebaseFirestore.instance
-    //     .collection('Users')
-    //     .doc(authResult.user.uid)
-    //     .set({
-    //   'name': patientName,
-    //   'address': address,
-    //   'gender': gender,
-    //   'dob': dob,
-    //   'weight': weight,
-    //   'height': height,
-    //   'patientTel': patientTel,
-    //   'careTakerName': careTakerName,
-    //   'careTakerTel': careTakerTel,
-    //   'careTakerRelationship': careTakerRelationship,
-    //   'username': username,
-    //   'uniqueKey': uniqueKey,
-    //   'password': password,
-    //   'role': 'patient',
-    // });
-
-    // tempApp.delete();
+    var patientUid =
+        await _firebaseService.createPatient(collection: 'Users', data: {
+      'name': patientName,
+      'address': address,
+      'gender': gender,
+      'dob': dob,
+      'patientTel': patientTel,
+      'username': username,
+      'uniqueKey': uniqueKey,
+      'password': password,
+    });
+    await _firebaseService.addSubCollection(
+      collection: 'Users',
+      docId: patientUid,
+      subCollection: 'an',
+      data: {
+        'an': 'testAnNumber',
+        'careTakerName': careTakerName,
+        'careTakerTel': careTakerTel,
+        'careTakerRelationship': careTakerRelationship,
+        'weight': weight,
+        'height': height,
+        'operationDate': DateTime.now()
+            .toString(), //TODO Change operationDate to be input not DateTime.now()
+      },
+    );
   }
 
   @override

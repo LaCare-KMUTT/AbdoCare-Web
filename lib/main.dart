@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/page/mockDataPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -13,7 +14,7 @@ import 'services/service_locator.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  setupServiceLocator();
+  setupServiceLocator(isMock: true);
 
   runApp(MyApp());
 }
@@ -45,7 +46,8 @@ class MyApp extends StatelessWidget {
         '/postHos_page': (context) => PostHosPage(),
         '/postHome_page': (context) => PostHomePage(),
         '/login_page': (context) => LoginPage(),
-        '/dashboard_page': (context) => DashboardPage()
+        '/dashboard_page': (context) => DashboardPage(),
+        '/mock': (context) => MockDataPage(),
       },
     );
   }
