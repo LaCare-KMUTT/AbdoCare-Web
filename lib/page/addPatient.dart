@@ -33,22 +33,31 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required String uniqueKey,
     @required String password,
   }) async {
-    _firebaseService.createPatient(collection: 'Users', data: {
+    var patientUid =
+        await _firebaseService.createPatient(collection: 'Users', data: {
       'name': patientName,
       'address': address,
       'gender': gender,
       'dob': dob,
-      'weight': weight,
-      'height': height,
       'patientTel': patientTel,
-      'careTakerName': careTakerName,
-      'careTakerTel': careTakerTel,
-      'careTakerRelationship': careTakerRelationship,
       'username': username,
       'uniqueKey': uniqueKey,
       'password': password,
-      'role': 'patient',
     });
+    await _firebaseService.addSubCollection(
+      collection: 'Users',
+      docId: patientUid,
+      subCollection: 'an',
+      data: {
+        'an': 'testAnNumber',
+        'careTakerName': careTakerName,
+        'careTakerTel': careTakerTel,
+        'careTakerRelationship': careTakerRelationship,
+        'weight': weight,
+        'height': height,
+        'operationDate': DateTime.now().toString(),
+      },
+    );
   }
 
   @override
