@@ -26,11 +26,18 @@ class MockDataPage extends StatelessWidget {
               color: Color(0xFF2ED47A),
               child:
                   Text('สร้าง Patient Account', style: TextStyle(fontSize: 18)),
-              onPressed: () {
-                var mockedData = _mockFirestore.mockUsersCollection();
-                _firebaseService.createPatient(
-                    collection: 'Users', data: mockedData);
+              onPressed: () async {
+                var mockedUserCollection = _mockFirestore.mockUsersCollection();
+                var paitentId = await _firebaseService.createPatient(
+                    collection: 'Users', data: mockedUserCollection);
                 print('สร้าง Patient Account');
+                var mockedAnSubCollection =
+                    _mockFirestore.mockAnSubCollectionOnCreatePatient();
+                await _firebaseService.addSubCollection(
+                    collection: 'Users',
+                    docId: paitentId,
+                    subCollection: 'an',
+                    data: mockedAnSubCollection);
               },
             ),
           ],

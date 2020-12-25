@@ -26,7 +26,7 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<void> createPatient(
+  Future<String> createPatient(
       {String collection, String docId, Map<String, dynamic> data}) async {
     print('create Temp User Throught Firebase Service Mock');
     print(data);
@@ -35,9 +35,16 @@ class FirebaseServiceMock extends IFirebaseService {
     var tempApp = await _createTempApp();
     var tempAuthResult = await _createTempAuthWithProvidedTempApp(
         tempApp, data['username'], data['password']);
-    _firestore.collection('Users').doc(tempAuthResult.user.uid).set(data);
+    var addedUserId = tempAuthResult.user.uid;
+    _firestore.collection('Users').doc(addedUserId).set(data);
     _deleteTempApp(tempApp);
+    var setRoleStatus = await _setRoleToUser(
+        uid: addedUserId, username: data['username'], role: 'patient');
+    setRoleStatus
+        ? print('success creating patient Mock')
+        : print('failed creating patient Mock');
     print('Success writing mock data');
+    return addedUserId;
   }
 
   @override
@@ -48,9 +55,20 @@ class FirebaseServiceMock extends IFirebaseService {
 
   @override
   Future<void> setDataToCollectionWithSpecificDoc(
-      {String collection, String docId, Map<String, dynamic> data}) {
-    // TODO: implement writeDataToFirestoreWithProvidedDoc
-    throw UnimplementedError();
+      {String collection, String docId, Map<String, dynamic> data}) async {
+    bool isSuccess = await _firestore
+        .collection(collection)
+        .doc(docId)
+        .set(data)
+        .then((value) {
+      print("Success on adding $data to $docId in collection $collection");
+      return true;
+    }).catchError((onError) {
+      print("Failed on adding $data to $docId in collection $collection");
+      print(onError);
+      return false;
+    });
+    return isSuccess;
   }
 
   Future<bool> addDocumentToCollection({
@@ -66,5 +84,63 @@ class FirebaseServiceMock extends IFirebaseService {
       return false;
     });
     return isSuccess;
+  }
+
+  Future<QuerySnapshot> searchDocumentByField({
+    @required String collection,
+    @required String field,
+    @required dynamic fieldValue,
+  }) async {
+    var doc = await _firestore
+        .collection(collection)
+        .where(field, isEqualTo: fieldValue)
+        .get();
+    print(doc.docs);
+    return doc;
+  }
+
+  Future<bool> _setRoleToUser({
+    @required String uid,
+    @required String username,
+    @required String role,
+  }) async {
+    bool isSuccess = await _firestore.collection('Roles').add({
+      'uid': uid,
+      'username': username,
+      'role': role,
+    }).then((value) {
+      print(
+          'successfully added role to $uid username: $username with role $role');
+      return true;
+    }).catchError((onError) {
+      print(
+          'ERROR! $onError on added role to $uid username: $username with role $role');
+      return false;
+    });
+    return isSuccess;
+  }
+
+  Future<DocumentSnapshot> searchDocumentByDocId(
+      {@required String collection, @required docId}) async {
+    return await _firestore.collection(collection).doc(docId).get();
+  }
+
+  Future<void> addSubCollection({
+    @required String collection,
+    @required String docId,
+    @required String subCollection,
+    @required Map<String, dynamic> data,
+  }) async {
+    return await _firestore
+        .collection(collection)
+        .doc(docId)
+        .collection(subCollection)
+        .add(data)
+        .then((value) => print(
+            ' success adding Mock Data $data to $subCollection subcollection of $collection which id = $docId'))
+        .catchError((onError) {
+      print(
+          'Error $onError adding Mock Data $data to $subCollection subcollection of $collection which id = $docId');
+    });
   }
 }

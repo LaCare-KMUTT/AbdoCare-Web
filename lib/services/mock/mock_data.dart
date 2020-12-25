@@ -22,10 +22,10 @@ class MockFirestore {
   }
 
   Map<String, dynamic> mockUsersCollection() {
-    int randomTelLength = 8;
-    int uniqueKeyLength = 6;
-    int hnLength = 5;
-    String randomedTel = '08${_generateRandomNumber(randomTelLength)}';
+    const RANDOM_TEL_LENGTH = 8;
+    const UNIQUE_KEY_LENGTH = 6;
+    const HN_LENGTH = 5;
+    String randomedTel = '08${_generateRandomNumber(RANDOM_TEL_LENGTH)}';
     String username = '$randomedTel@abdocare.com';
     Map<String, dynamic> usersCollection = {
       'name': 'ทดสอบชื่อ',
@@ -36,9 +36,27 @@ class MockFirestore {
       'patientTel': randomedTel,
       'username': username,
       'password': '000000',
-      'uniqueKey': '${_generateUniqueKey(uniqueKeyLength)}',
-      'hn': 'hn${_generateRandomNumber(hnLength)}',
+      'uniqueKey': '${_generateUniqueKey(UNIQUE_KEY_LENGTH)}',
+      'hn': 'hn${_generateRandomNumber(HN_LENGTH)}',
     };
     return usersCollection;
+  }
+
+  Map<String, dynamic> mockAnSubCollectionOnCreatePatient() {
+    const RANDOM_TEL_LENGTH = 8;
+    const AN_LENGTH = 5;
+
+    String randomedTel = '08${_generateRandomNumber(RANDOM_TEL_LENGTH)}';
+
+    Map<String, dynamic> anSubCollectionDataOnCreatePatient = {
+      'careTakerName': 'ทดสอบผู้ดูแล',
+      'careTakerSurname': 'ทดสอบนามสกุลผู้ดูแล',
+      'careTakerTel': randomedTel,
+      'height': 170,
+      'weight': 70,
+      'an': 'an${_generateRandomNumber(AN_LENGTH)}',
+      'operationDate': DateTime.now().toString(),
+    };
+    return anSubCollectionDataOnCreatePatient;
   }
 }
