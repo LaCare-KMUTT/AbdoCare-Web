@@ -43,7 +43,28 @@ class FirebaseService extends IFirebaseService {
         .createUserWithEmailAndPassword(email: username, password: password);
   }
 
-  Future<void> createPatient({
+  Future<bool> _setRoleToUser({
+    @required String uid,
+    @required String username,
+    @required String role,
+  }) async {
+    bool isSuccess = await _firestore.collection('Roles').add({
+      'uid': uid,
+      'username': username,
+      'role': role,
+    }).then((value) {
+      print(
+          'successfully added role to $uid username: $username with role $role');
+      return true;
+    }).catchError((onError) {
+      print(
+          'ERROR! $onError on added role to $uid username: $username with role $role');
+      return false;
+    });
+    return isSuccess;
+  }
+
+  Future<String> createPatient({
     @required String collection,
     String docId,
     @required Map<String, dynamic> data,
@@ -52,8 +73,24 @@ class FirebaseService extends IFirebaseService {
     var tempApp = await _createTempApp();
     var tempAuthResult = await _createTempAuthWithProvidedTempApp(
         tempApp, data['username'], data['password']);
-    _firestore.collection('Users').doc(tempAuthResult.user.uid).set(data);
+    var addedUserId = tempAuthResult.user.uid;
+    _firestore
+        .collection('Users')
+        .doc(addedUserId)
+        .set(data)
+        .then((value) =>
+            print('Success setting $data for $addedUserId in Users collection'))
+        .catchError((onError) {
+      print(
+          '$onError having error in setting $data for $addedUserId in Users collection');
+    });
     _deleteTempApp(tempApp);
+    var setRoleStatus = await _setRoleToUser(
+        uid: addedUserId, username: data['username'], role: 'patient');
+    setRoleStatus
+        ? print('success creating patient')
+        : print('failed creating patient');
+    return addedUserId;
   }
 
   Future<bool> addDocumentToCollection({
@@ -72,4 +109,41 @@ class FirebaseService extends IFirebaseService {
   }
 
   String getUserId() => _auth.currentUser.uid;
+
+  Future<QuerySnapshot> searchDocumentByField({
+    @required String collection,
+    @required String field,
+    @required dynamic fieldValue,
+  }) async {
+    var doc = await _firestore
+        .collection(collection)
+        .where(field, isEqualTo: fieldValue)
+        .get();
+    print(doc.docs);
+    return doc;
+  }
+
+  Future<DocumentSnapshot> searchDocumentByDocId(
+      {@required String collection, @required docId}) async {
+    return await _firestore.collection(collection).doc(docId).get();
+  }
+
+  Future<void> addSubCollection({
+    @required String collection,
+    @required String docId,
+    @required String subCollection,
+    @required Map<String, dynamic> data,
+  }) async {
+    return await _firestore
+        .collection(collection)
+        .doc(docId)
+        .collection(subCollection)
+        .add(data)
+        .then((value) => print(
+            'success adding $data to $subCollection subcollection of $collection which id = $docId'))
+        .catchError((onError) {
+      print(
+          'Error $onError adding $data to $subCollection subcollection of $collection which id = $docId');
+    });
+  }
 }
