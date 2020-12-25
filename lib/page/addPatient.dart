@@ -53,7 +53,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
         'careTakerRelationship': careTakerRelationship,
         'weight': weight,
         'height': height,
-        'operationDate': DateTime.now().toString(),
+        'operationDate': DateTime.now()
+            .toString(), //TODO Change operationDate to be input not DateTime.now()
       },
     );
   }
