@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../Widget/patientRegisterForm.dart';
 import '../Widget/sidebar.dart';
 import '../services/service_locator.dart';
-import '../Widget/appbar.dart';
 
 class AddPatientPage extends StatefulWidget {
   @override
@@ -15,7 +14,6 @@ class AddPatientPage extends StatefulWidget {
 }
 
 class _AddPatientPageState extends State<AddPatientPage> {
-  // final _auth = FirebaseAuth.instance;
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
 
   void _submitPatientRegisterForm({
