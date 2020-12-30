@@ -34,7 +34,7 @@ class FirebaseServiceMock extends IFirebaseService {
     print(data['dob']);
     var tempApp = await _createTempApp();
     var tempAuthResult = await _createTempAuthWithProvidedTempApp(
-        tempApp, data['username'], data['password']);
+        tempApp, data['username'], data['uniqueKey']);
     var addedUserId = tempAuthResult.user.uid;
     _firestore.collection('Users').doc(addedUserId).set(data);
     _deleteTempApp(tempApp);

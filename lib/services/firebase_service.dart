@@ -72,7 +72,7 @@ class FirebaseService extends IFirebaseService {
     print('createUser using CreatePatient FirebaseInterface');
     var tempApp = await _createTempApp();
     var tempAuthResult = await _createTempAuthWithProvidedTempApp(
-        tempApp, data['username'], data['password']);
+        tempApp, data['username'], data['uniqueKey']);
     var addedUserId = tempAuthResult.user.uid;
     _firestore
         .collection('Users')
