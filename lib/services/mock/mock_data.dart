@@ -56,6 +56,14 @@ class MockFirestore {
       'weight': 70,
       'an': 'an${_generateRandomNumber(AN_LENGTH)}',
       'operationDate': DateTime.now().toString(),
+      'operationMethod': 'LAP+Operation',
+      'operationName': 'ผ่าตัดนิ่วในถุงน้ำดี',
+      'doctorName': 'ชื่อหมอ',
+      'previousIllness': 'Lung disease',
+      'bedNumber': '1234',
+      'roomType': 'ห้องเดี่ยว',
+      'roomNumber': '1234',
+      'state': 'pre-operation',
     };
     return anSubCollectionDataOnCreatePatient;
   }
