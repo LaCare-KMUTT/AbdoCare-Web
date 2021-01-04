@@ -143,4 +143,9 @@ class FirebaseServiceMock extends IFirebaseService {
           'Error $onError adding Mock Data $data to $subCollection subcollection of $collection which id = $docId');
     });
   }
+
+  @override
+  Future<List<QueryDocumentSnapshot>> getUserList() {
+    throw UnimplementedError();
+  }
 }

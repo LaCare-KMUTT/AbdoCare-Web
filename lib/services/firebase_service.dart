@@ -146,4 +146,9 @@ class FirebaseService extends IFirebaseService {
           'Error $onError adding $data to $subCollection subcollection of $collection which id = $docId');
     });
   }
+
+  Future<List<QueryDocumentSnapshot>> getUserList() async {
+    var data = await _firestore.collection('Users').get();
+    return data.docs;
+  }
 }
