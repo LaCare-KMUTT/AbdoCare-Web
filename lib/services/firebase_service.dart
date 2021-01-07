@@ -151,4 +151,42 @@ class FirebaseService extends IFirebaseService {
     var data = await _firestore.collection('Users').get();
     return data.docs;
   }
+<<<<<<< Updated upstream
+=======
+
+  Future<Map<String, dynamic>> getLatestAnSubCollection({
+    @required String docId,
+  }) async {
+    var anSubCollection = await _firestore
+        .collection('Users')
+        .doc(docId)
+        .collection('an')
+        .orderBy('operationDate', descending: true)
+        .limit(1)
+        .get()
+        .then((querySnapshot) => querySnapshot.docs.first.data());
+    return anSubCollection;
+  }
+
+  Future<List<Map<String, dynamic>>> getDocumentData(
+      {@required String collection,
+      @required String docId,
+      String subCollection,
+      String subCollectionDocId}) async {
+    if (subCollection != null && subCollectionDocId != null) {
+      var gg = await _firestore
+          .collection(collection)
+          .doc(docId)
+          .get()
+          .then(((querySnapshot) => querySnapshot.data()));
+    } else {
+      var ee = await _firestore
+          .collection(collection)
+          .doc(docId)
+          .collection(subCollection)
+          .get()
+          .then((querySnapshot) => querySnapshot.docs.first.data());
+    }
+  }
+>>>>>>> Stashed changes
 }
