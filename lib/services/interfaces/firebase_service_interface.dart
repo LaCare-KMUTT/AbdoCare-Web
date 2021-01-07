@@ -36,4 +36,5 @@ abstract class IFirebaseService {
     @required String subCollection,
     @required Map<String, dynamic> data,
   });
+  Future<List<QueryDocumentSnapshot>> getUserList();
 }
