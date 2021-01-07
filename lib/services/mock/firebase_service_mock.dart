@@ -148,4 +148,10 @@ class FirebaseServiceMock extends IFirebaseService {
   Future<List<QueryDocumentSnapshot>> getUserList() {
     throw UnimplementedError();
   }
+
+  @override
+  Future<Map<String, dynamic>> getLatestAnSubCollection({String docId}) {
+    // TODO: implement getAnSubCollection
+    throw UnimplementedError();
+  }
 }

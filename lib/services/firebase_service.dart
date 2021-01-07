@@ -151,4 +151,18 @@ class FirebaseService extends IFirebaseService {
     var data = await _firestore.collection('Users').get();
     return data.docs;
   }
+
+  Future<Map<String, dynamic>> getLatestAnSubCollection({
+    @required String docId,
+  }) async {
+    var anSubCollection = await _firestore
+        .collection('Users')
+        .doc(docId)
+        .collection('an')
+        .orderBy('operationDate', descending: true)
+        .limit(1)
+        .get()
+        .then((querySnapshot) => querySnapshot.docs.first.data());
+    return anSubCollection;
+  }
 }
