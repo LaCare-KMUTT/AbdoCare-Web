@@ -69,7 +69,7 @@ class _PatientListTableState extends State<PatientListTable> {
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       Row(
                         children: [
                           Expanded(
@@ -113,54 +113,6 @@ class _PatientListTableState extends State<PatientListTable> {
                       FutureBuilder<List<QueryDocumentSnapshot>>(
                         future: _firebaseService.getUserList(),
                         builder: buildUserList,
-                        // {
-                        // (context, snapshot)
-                        //   return Row(
-                        //     children: <Widget>[
-                        //       Expanded(
-                        //         child: Column(
-                        //           children: [
-                        //             Text('HN5678'),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //       Expanded(
-                        //         child: Column(
-                        //           children: [
-                        //             Text('นางสาว นกน้อย บินเก่ง'),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //       Expanded(
-                        //         child: Column(
-                        //           children: [
-                        //             Text('Post-op@Hospital'),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //       Container(
-                        //         child: Container(
-                        //           width: 100,
-                        //           child: RaisedButton(
-                        //             shape: RoundedRectangleBorder(
-                        //                 borderRadius:
-                        //                     BorderRadius.circular(7.0)),
-                        //             textColor: Colors.white,
-                        //             color: Color(0xFFF69E51),
-                        //             child: Text('แก้ไข',
-                        //                 style: TextStyle(fontSize: 16)),
-                        //             onPressed: () {
-                        //               print('This is edit patient button');
-                        //               setState(() {});
-                        //               Navigator.pushNamed(
-                        //                   context, '/addPatient_page');
-                        //             },
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   );
-                        // }
                       ),
                     ],
                   ),
@@ -221,10 +173,19 @@ class _PatientListTableState extends State<PatientListTable> {
               Expanded(
                 child: Column(
                   children: <Widget>[
-                    ListTile(
-                      // Access the fields as defined in FireStore
-                      title: Text(user.get('hn')),
-                    ),
+                    FutureBuilder<Map<String, dynamic>>(
+                        future: _firebaseService.getLatestAnSubCollection(
+                            docId: user.id),
+                        builder: (context, anSnapshot) {
+                          if (!anSnapshot.hasData) {
+                            return Text('loading...');
+                          }
+                          return ListTile(
+                            title: anSnapshot.data['operationMethod'] != null
+                                ? Text(anSnapshot.data['operationMethod'])
+                                : Text('-'),
+                          );
+                        }),
                   ],
                 ),
               ),
