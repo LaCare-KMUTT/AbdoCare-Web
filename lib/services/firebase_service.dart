@@ -186,4 +186,5 @@ class FirebaseService extends IFirebaseService {
           .then((querySnapshot) => querySnapshot.docs.first.data());
     }
   }
+
 }
