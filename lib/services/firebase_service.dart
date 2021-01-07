@@ -151,8 +151,6 @@ class FirebaseService extends IFirebaseService {
     var data = await _firestore.collection('Users').get();
     return data.docs;
   }
-<<<<<<< Updated upstream
-=======
 
   Future<Map<String, dynamic>> getLatestAnSubCollection({
     @required String docId,
@@ -188,5 +186,4 @@ class FirebaseService extends IFirebaseService {
           .then((querySnapshot) => querySnapshot.docs.first.data());
     }
   }
->>>>>>> Stashed changes
 }
