@@ -14,6 +14,7 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: beta
+    - run: flutter downgrade 1.23.0-18.1.pre
     - run: flutter config --enable-web
     - run: flutter pub get
 #     - run: flutter test
