@@ -188,4 +188,27 @@ class FirebaseService extends IFirebaseService {
         .then((querySnapshot) => querySnapshot.docs.first.data());
     return anSubCollection;
   }
+
+  Future<bool> signIn(
+      {@required String username, @required String password}) async {
+    var loginResult = await _auth
+        .signInWithEmailAndPassword(email: username, password: password)
+        .then((result) {
+      print('${result.user.email} has logined!');
+      return true;
+    }).catchError((onError) {
+      print('$onError : Failed login!');
+      return false;
+    });
+    print('login finished!');
+    return loginResult;
+  }
+
+  Future<void> signOut() async {
+    if (_auth.currentUser != null) {
+      var signingOutUserId = _auth.currentUser.uid;
+      await _auth.signOut();
+      print('Firebase User : $signingOutUserId has signed Out!');
+    }
+  }
 }

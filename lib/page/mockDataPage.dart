@@ -21,7 +21,8 @@ class MockDataPage extends StatelessWidget {
           children: <Widget>[
             RaisedButton(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7.0)),
+                borderRadius: BorderRadius.circular(7.0),
+              ),
               textColor: Colors.white,
               color: Color(0xFF2ED47A),
               child:
@@ -42,18 +43,35 @@ class MockDataPage extends StatelessWidget {
             ),
             RaisedButton(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(7.0)),
+                borderRadius: BorderRadius.circular(7.0),
+              ),
               textColor: Colors.white,
               color: Color(0xFF2ED47A),
-              child: Text('สร้าง Medical Team Account',
-                  style: TextStyle(fontSize: 18)),
+              child: Text(
+                'สร้าง Medical Team Account',
+                style: TextStyle(fontSize: 18),
+              ),
               onPressed: () async {
                 var mockedMedicalTeamCollection =
                     _mockFirestore.mockMedicalTeamCollection();
                 await _firebaseService.createMedicalTeam(
                     data: mockedMedicalTeamCollection);
               },
-            )
+            ),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(7.0),
+              ),
+              textColor: Colors.white,
+              color: Color(0xFF2ED47A),
+              child: Text(
+                'Logout med team',
+                style: TextStyle(fontSize: 18),
+              ),
+              onPressed: () async {
+                await _firebaseService.signOut();
+              },
+            ),
           ],
         ),
       ),

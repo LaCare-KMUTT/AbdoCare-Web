@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../services/interfaces/firebase_service_interface.dart';
+import '../services/service_locator.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -8,6 +11,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +29,8 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 200, 50, 0),
               child: TextField(
-                //ทำให้textไปตรงกลางของช่อง
+                controller: _usernameController,
                 textAlign: TextAlign.center,
-                //ใส่ว่าช่องนี้จะใส่อะไรเป็นข้อความแนะนำ
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Username',
@@ -34,11 +40,9 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 20, 50, 0),
               child: TextField(
-                //Hide code
+                controller: _passwordController,
                 obscureText: true,
-                //ทำให้textไปตรงกลางของช่อง
                 textAlign: TextAlign.center,
-                //ใส่ว่าช่องนี้จะใส่อะไรเป็นข้อความแนะนำ
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
@@ -56,8 +60,12 @@ class _LoginPageState extends State<LoginPage> {
                     textColor: Colors.white,
                     color: Color(0xFF2ED47A),
                     child: Text('เข้าสู่ระบบ', style: TextStyle(fontSize: 18)),
-                    onPressed: () {
+                    onPressed: () async {
                       print('This is login button');
+                      await _firebaseService.signIn(
+                          username: _usernameController.text.trim(),
+                          password: _passwordController.text.trim());
+
                       setState(() {});
                       Navigator.pushNamed(context, '/postHos_page');
                     },

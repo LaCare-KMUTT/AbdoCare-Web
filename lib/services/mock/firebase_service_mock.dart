@@ -181,4 +181,32 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getAnSubCollection
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> signIn(
+      {String username = 'medtest1@abdocare.com',
+      String password = 'abdc1234'}) async {
+    username = 'medtest1@abdocare.com';
+    password = 'abdc1234';
+
+    var loginResult = await _auth
+        .signInWithEmailAndPassword(email: username, password: password)
+        .then((result) {
+      print('${result.user.email} has logined!');
+      return true;
+    }).catchError((onError) {
+      print('$onError : Failed login!');
+      return false;
+    });
+    print('login finished!');
+    return loginResult;
+  }
+
+  Future<void> signOut() async {
+    if (_auth.currentUser != null) {
+      var signingOutUserId = _auth.currentUser.uid;
+      await _auth.signOut();
+      print('Firebase User : $signingOutUserId has signed Out!');
+    }
+  }
 }
