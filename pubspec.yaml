@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+    
   firebase_core: "^0.5.0+1"
   firebase_auth: "^0.18.1+2"
   cloud_functions: "^0.7.0-dev.2"
@@ -33,6 +34,8 @@ dependencies:
   intl: ^0.16.1
   responsive_table: ^0.1.1+8
   get_it: ^5.0.3
+  flutter_rounded_date_picker: ^1.0.5
+  buddhist_datetime_dateformat: ^1.0.3
   charts_flutter: ^0.9.0
 
 
@@ -41,7 +44,6 @@ dependencies:
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
-  
   flutter_test:
     sdk: flutter
     
