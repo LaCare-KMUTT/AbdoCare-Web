@@ -14,6 +14,9 @@ class _LoginPageState extends State<LoginPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _validateUsername = false;
+  bool _validatePassword = false;
+  bool _signInResult;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Username',
+                  errorText: _validateUsername ? 'กรุณากรอก username' : null,
                 ),
               ),
             ),
@@ -46,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
+                  errorText: _validatePassword ? 'กรุณากรอก password' : null,
                 ),
               ),
             ),
@@ -61,13 +66,32 @@ class _LoginPageState extends State<LoginPage> {
                     color: Color(0xFF2ED47A),
                     child: Text('เข้าสู่ระบบ', style: TextStyle(fontSize: 18)),
                     onPressed: () async {
-                      print('This is login button');
-                      await _firebaseService.signIn(
-                          username: _usernameController.text.trim(),
-                          password: _passwordController.text.trim());
+                      setState(() {
+                        _usernameController.text.isEmpty
+                            ? _validateUsername = true
+                            : _validateUsername = false;
 
-                      setState(() {});
-                      Navigator.pushNamed(context, '/postHos_page');
+                        _passwordController.text.isEmpty
+                            ? _validatePassword = true
+                            : _validatePassword = false;
+                      });
+                      print('This is login button');
+
+                      var signInResult = false;
+                      if (_validatePassword && _validateUsername == true) {
+                        signInResult = await _firebaseService.signIn(
+                            username: _usernameController.text.trim(),
+                            password: _passwordController.text.trim());
+                      }
+                      setState(() {
+                        _signInResult = signInResult;
+                      });
+
+                      if (_signInResult == true) {
+                        Navigator.pushNamed(context, '/postHos_page');
+                      } else {
+                        _showErrorSignInDialog();
+                      }
                     },
                   ),
                 ],
@@ -96,5 +120,26 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _showErrorSignInDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login Failed'),
+            content:
+                Text('Sth went wrong please provide some UI for me please.'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('close'),
+                onPressed: () {
+                  print('close button');
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }
