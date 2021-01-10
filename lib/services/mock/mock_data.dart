@@ -67,4 +67,17 @@ class MockFirestore {
     };
     return anSubCollectionDataOnCreatePatient;
   }
+
+  Map<String, dynamic> mockMedicalTeamCollection() {
+    const MED_ID_LENGTH = 4;
+    Map<String, dynamic> mockMedicalTeamCollection = {
+      'name': 'ชื่อพยาบาล',
+      'surname': 'นามสกุลพยาบาล',
+      'medicalId': 'MD${_generateRandomNumber(MED_ID_LENGTH)}',
+      'username': 'medtest1@abdocare.com',
+      'password': 'abdc1234',
+      'ward': '1'
+    };
+    return mockMedicalTeamCollection;
+  }
 }

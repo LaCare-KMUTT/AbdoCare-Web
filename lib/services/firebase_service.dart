@@ -93,6 +93,29 @@ class FirebaseService extends IFirebaseService {
     return addedUserId;
   }
 
+  Future<void> createMedicalTeam({Map<String, dynamic> data}) async {
+    print('create temp user via Firebase Service Mock');
+    var tempApp = await _createTempApp();
+    var tempAuthResult = await _createTempAuthWithProvidedTempApp(
+        tempApp, data['username'], data['password']);
+    var addedUserId = tempAuthResult.user.uid;
+    _firestore
+        .collection('MedicalTeams')
+        .doc(addedUserId)
+        .set(data)
+        .then((value) {
+      print('successfully create Medical Team Mock');
+    }).catchError((onError) {
+      print('$onError Failed Creating Medical Team Mock');
+    });
+    _deleteTempApp(tempApp);
+    var setRoleStatus = await _setRoleToUser(
+        uid: addedUserId, username: data['username'], role: 'Medical Team');
+    setRoleStatus
+        ? print('Success set role to ${data['username']} as medical team')
+        : print('failed setting role to ${data['username']} as medical team');
+  }
+
   Future<bool> addDocumentToCollection({
     @required String collection,
     @required Map<String, dynamic> docData,

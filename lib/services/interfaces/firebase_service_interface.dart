@@ -14,6 +14,8 @@ abstract class IFirebaseService {
     @required Map<String, dynamic> data,
   });
 
+  Future<void> createMedicalTeam({Map<String, dynamic> data});
+
   String getUserId();
 
   Future<bool> addDocumentToCollection({

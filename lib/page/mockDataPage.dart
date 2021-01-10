@@ -40,6 +40,20 @@ class MockDataPage extends StatelessWidget {
                     data: mockedAnSubCollection);
               },
             ),
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7.0)),
+              textColor: Colors.white,
+              color: Color(0xFF2ED47A),
+              child: Text('สร้าง Medical Team Account',
+                  style: TextStyle(fontSize: 18)),
+              onPressed: () async {
+                var mockedMedicalTeamCollection =
+                    _mockFirestore.mockMedicalTeamCollection();
+                await _firebaseService.createMedicalTeam(
+                    data: mockedMedicalTeamCollection);
+              },
+            )
           ],
         ),
       ),

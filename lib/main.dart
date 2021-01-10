@@ -14,7 +14,7 @@ import 'services/service_locator.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  setupServiceLocator(isMock: false);
+  setupServiceLocator(isMock: true);
 
   runApp(MyApp());
 }
