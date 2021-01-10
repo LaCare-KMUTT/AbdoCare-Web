@@ -78,7 +78,8 @@ class _LoginPageState extends State<LoginPage> {
                       print('This is login button');
 
                       var signInResult = false;
-                      if (_validatePassword && _validateUsername == true) {
+                      if (_validatePassword == false &&
+                          _validateUsername == false) {
                         signInResult = await _firebaseService.signIn(
                             username: _usernameController.text.trim(),
                             password: _passwordController.text.trim());
@@ -87,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                         _signInResult = signInResult;
                       });
 
-                      if (_signInResult == true) {
+                      if (_signInResult) {
                         Navigator.pushNamed(context, '/postHos_page');
                       } else {
                         _showErrorSignInDialog();
