@@ -1,7 +1,11 @@
-import 'dart:ui';
 import 'dart:math';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:responsive_table/responsive_table.dart';
+
+import '../services/interfaces/firebase_service_interface.dart';
+import '../services/service_locator.dart';
 
 class PostHosTable extends StatefulWidget {
   PostHosTable({Key key}) : super(key: key);
@@ -93,6 +97,7 @@ class _PostHosTableState extends State<PostHosTable> {
   bool _isSearch = false;
   List<Map<String, dynamic>> _source = List<Map<String, dynamic>>();
   List<Map<String, dynamic>> _selecteds = List<Map<String, dynamic>>();
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
   //String _selectableKey = "id";
 
   String _sortColumn;
@@ -101,6 +106,7 @@ class _PostHosTableState extends State<PostHosTable> {
   bool _showSelect = false;
 
   List<Map<String, dynamic>> _generateData({int n: 100}) {
+    final d = _firebaseService.getDocumentData(collection: null, docId: null);
     final List source = List.filled(n, Random.secure());
     List<Map<String, dynamic>> temps = List<Map<String, dynamic>>();
     var i = _source.length;

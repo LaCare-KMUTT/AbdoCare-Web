@@ -171,20 +171,26 @@ class FirebaseService extends IFirebaseService {
       @required String docId,
       String subCollection,
       String subCollectionDocId}) async {
-    if (subCollection != null && subCollectionDocId != null) {
-      var gg = await _firestore
-          .collection(collection)
-          .doc(docId)
-          .get()
-          .then(((querySnapshot) => querySnapshot.data()));
-    } else {
-      var ee = await _firestore
-          .collection(collection)
-          .doc(docId)
-          .collection(subCollection)
-          .get()
-          .then((querySnapshot) => querySnapshot.docs.first.data());
-    }
-  }
+    var userList = await this.getUserList();
+    print(userList.length);
+    var mapResult = userList.map((e) {
+      return e.data();
+    });
+    print(mapResult.length);
 
+    // if (subCollection != null && subCollectionDocId != null) {
+    //   var gg = await _firestore
+    //       .collection(collection)
+    //       .doc(docId)
+    //       .get()
+    //       .then(((querySnapshot) => querySnapshot.data()));
+    // } else {
+    //   var ee = await _firestore
+    //       .collection(collection)
+    //       .doc(docId)
+    //       .collection(subCollection)
+    //       .get()
+    //       .then((querySnapshot) => querySnapshot.docs.first.data());
+    // }
+  }
 }

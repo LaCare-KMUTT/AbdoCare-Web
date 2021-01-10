@@ -41,4 +41,10 @@ abstract class IFirebaseService {
   Future<Map<String, dynamic>> getLatestAnSubCollection({
     @required String docId,
   });
+
+  Future<List<Map<String, dynamic>>> getDocumentData(
+      {@required String collection,
+      @required String docId,
+      String subCollection,
+      String subCollectionDocId});
 }
