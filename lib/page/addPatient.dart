@@ -1,9 +1,8 @@
-import 'package:AbdoCare_Web/Widget/sidebar.dart';
-import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:flutter/material.dart';
 
-import '../Widget/patientRegisterForm.dart';
+import '../Widget/patient_list/patientRegisterForm.dart';
 import '../Widget/sidebar.dart';
+import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
 
 class AddPatientPage extends StatefulWidget {

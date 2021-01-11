@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../services/interfaces/firebase_service_interface.dart';
+import '../services/service_locator.dart';
+
 class SideBar extends StatelessWidget {
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -60,11 +65,10 @@ class SideBar extends StatelessWidget {
                       leading: Icon(Icons.exit_to_app),
                       title: Text("ออกจากระบบ",
                           style: Theme.of(context).textTheme.bodyText2),
-                      // onTap: () {
-                      //   Navigator.pushReplacementNamed(
-                      //       context, '/Login_page');
-                      // },
-                      onTap: () => Navigator.pushReplacementNamed(context, '/'),
+                      onTap: () async {
+                        await _firebaseService.signOut();
+                        Navigator.pushReplacementNamed(context, '/');
+                      },
                     )
                   ],
                 ),

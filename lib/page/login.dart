@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../services/interfaces/firebase_service_interface.dart';
+import '../services/service_locator.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -8,6 +11,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _validateUsername = false;
+  bool _validatePassword = false;
+  bool _signInResult;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,26 +32,25 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 200, 50, 0),
               child: TextField(
-                //ทำให้textไปตรงกลางของช่อง
+                controller: _usernameController,
                 textAlign: TextAlign.center,
-                //ใส่ว่าช่องนี้จะใส่อะไรเป็นข้อความแนะนำ
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Username',
+                  errorText: _validateUsername ? 'กรุณากรอก username' : null,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 20, 50, 0),
               child: TextField(
-                //Hide code
+                controller: _passwordController,
                 obscureText: true,
-                //ทำให้textไปตรงกลางของช่อง
                 textAlign: TextAlign.center,
-                //ใส่ว่าช่องนี้จะใส่อะไรเป็นข้อความแนะนำ
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
+                  errorText: _validatePassword ? 'กรุณากรอก password' : null,
                 ),
               ),
             ),
@@ -56,10 +65,34 @@ class _LoginPageState extends State<LoginPage> {
                     textColor: Colors.white,
                     color: Color(0xFF2ED47A),
                     child: Text('เข้าสู่ระบบ', style: TextStyle(fontSize: 18)),
-                    onPressed: () {
+                    onPressed: () async {
+                      setState(() {
+                        _usernameController.text.isEmpty
+                            ? _validateUsername = true
+                            : _validateUsername = false;
+
+                        _passwordController.text.isEmpty
+                            ? _validatePassword = true
+                            : _validatePassword = false;
+                      });
                       print('This is login button');
-                      setState(() {});
-                      Navigator.pushNamed(context, '/postHos_page');
+
+                      var signInResult = false;
+                      if (_validatePassword == false &&
+                          _validateUsername == false) {
+                        signInResult = await _firebaseService.signIn(
+                            username: _usernameController.text.trim(),
+                            password: _passwordController.text.trim());
+                      }
+                      setState(() {
+                        _signInResult = signInResult;
+                      });
+
+                      if (_signInResult) {
+                        Navigator.pushNamed(context, '/postHos_page');
+                      } else {
+                        _showErrorSignInDialog();
+                      }
                     },
                   ),
                 ],
@@ -88,5 +121,26 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _showErrorSignInDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login Failed'),
+            content:
+                Text('Sth went wrong please provide some UI for me please.'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('close'),
+                onPressed: () {
+                  print('close button');
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }

@@ -8,6 +8,7 @@ import 'interfaces/firebase_service_interface.dart';
 class FirebaseService extends IFirebaseService {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
     @required String docId,
@@ -91,6 +92,29 @@ class FirebaseService extends IFirebaseService {
         ? print('success creating patient')
         : print('failed creating patient');
     return addedUserId;
+  }
+
+  Future<void> createMedicalTeam({Map<String, dynamic> data}) async {
+    print('create temp user via Firebase Service Mock');
+    var tempApp = await _createTempApp();
+    var tempAuthResult = await _createTempAuthWithProvidedTempApp(
+        tempApp, data['username'], data['password']);
+    var addedUserId = tempAuthResult.user.uid;
+    _firestore
+        .collection('MedicalTeams')
+        .doc(addedUserId)
+        .set(data)
+        .then((value) {
+      print('successfully create Medical Team Mock');
+    }).catchError((onError) {
+      print('$onError Failed Creating Medical Team Mock');
+    });
+    _deleteTempApp(tempApp);
+    var setRoleStatus = await _setRoleToUser(
+        uid: addedUserId, username: data['username'], role: 'Medical Team');
+    setRoleStatus
+        ? print('Success set role to ${data['username']} as medical team')
+        : print('failed setting role to ${data['username']} as medical team');
   }
 
   Future<bool> addDocumentToCollection({
@@ -192,5 +216,28 @@ class FirebaseService extends IFirebaseService {
     //       .get()
     //       .then((querySnapshot) => querySnapshot.docs.first.data());
     // }
+  }
+
+  Future<bool> signIn(
+      {@required String username, @required String password}) async {
+    var loginResult = await _auth
+        .signInWithEmailAndPassword(email: username, password: password)
+        .then((result) {
+      print('${result.user.email} has logined!');
+      return true;
+    }).catchError((onError) {
+      print('$onError : Failed login!');
+      return false;
+    });
+    print('login finished!');
+    return loginResult;
+  }
+
+  Future<void> signOut() async {
+    if (_auth.currentUser != null) {
+      var signingOutUserId = _auth.currentUser.uid;
+      await _auth.signOut();
+      print('Firebase User : $signingOutUserId has signed Out!');
+    }
   }
 }
