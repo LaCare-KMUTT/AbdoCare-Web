@@ -3,11 +3,32 @@ import 'package:AbdoCare_Web/services/mock/mock_data.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
-class MockDataPage extends StatelessWidget {
+class MockDataPage extends StatefulWidget {
+  @override
+  _MockDataPageState createState() => _MockDataPageState();
+}
+
+class _MockDataPageState extends State<MockDataPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+
   final _mockFirestore = new MockFirestore();
+
   var _anController = TextEditingController();
+
   var _hnController = TextEditingController();
+
+  var _buttonEnabled = false;
+  void _checkField() {
+    (_anController.text.trim().isEmpty && _hnController.text.trim().isEmpty)
+        ? setState(() {
+            _buttonEnabled = false;
+          })
+        : setState(() {
+            _buttonEnabled = true;
+          });
+    print(_buttonEnabled);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +88,9 @@ class MockDataPage extends StatelessWidget {
                     child: TextField(
                       controller: _anController,
                       decoration: InputDecoration(hintText: 'an'),
+                      onChanged: (text) {
+                        _checkField();
+                      },
                     ),
                   ),
                   Padding(
@@ -76,6 +100,9 @@ class MockDataPage extends StatelessWidget {
                     child: TextField(
                       controller: _hnController,
                       decoration: InputDecoration(hintText: 'hn'),
+                      onChanged: (text) {
+                        _checkField();
+                      },
                     ),
                   ),
                   Padding(
@@ -87,7 +114,12 @@ class MockDataPage extends StatelessWidget {
                     ),
                     textColor: Colors.white,
                     color: Color(0xFF2ED47A),
-                    onPressed: () {},
+                    onPressed: _buttonEnabled
+                        ? () {
+                            print(
+                                'an = ${_anController.text} , hn = ${_hnController.text}');
+                          }
+                        : null,
                     child: Text('Create form by provided HN AN '),
                   ),
                 ],
