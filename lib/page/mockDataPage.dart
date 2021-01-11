@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 class MockDataPage extends StatelessWidget {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final _mockFirestore = new MockFirestore();
-
+  var _anController = TextEditingController();
+  var _hnController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,19 +59,39 @@ class MockDataPage extends StatelessWidget {
                     data: mockedMedicalTeamCollection);
               },
             ),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(7.0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(50, 20, 20, 150),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      controller: _anController,
+                      decoration: InputDecoration(hintText: 'an'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _hnController,
+                      decoration: InputDecoration(hintText: 'hn'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                  ),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0),
+                    ),
+                    textColor: Colors.white,
+                    color: Color(0xFF2ED47A),
+                    onPressed: () {},
+                    child: Text('Create form by provided HN AN '),
+                  ),
+                ],
               ),
-              textColor: Colors.white,
-              color: Color(0xFF2ED47A),
-              child: Text(
-                'Logout med team',
-                style: TextStyle(fontSize: 18),
-              ),
-              onPressed: () async {
-                await _firebaseService.signOut();
-              },
             ),
           ],
         ),
