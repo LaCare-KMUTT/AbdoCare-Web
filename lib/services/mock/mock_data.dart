@@ -47,6 +47,8 @@ class MockFirestore {
     const AN_LENGTH = 5;
 
     String randomedTel = '08${_generateRandomNumber(RANDOM_TEL_LENGTH)}';
+    String an = 'an${_generateRandomNumber(AN_LENGTH)}';
+    // _an = an;
 
     Map<String, dynamic> anSubCollectionDataOnCreatePatient = {
       'careTakerName': 'ทดสอบผู้ดูแล',
@@ -54,7 +56,7 @@ class MockFirestore {
       'careTakerTel': randomedTel,
       'height': 170,
       'weight': 70,
-      'an': 'an${_generateRandomNumber(AN_LENGTH)}',
+      'an': an,
       'operationDate': DateTime.now().toString(),
       'operationMethod': 'LAP+Operation',
       'operationName': 'ผ่าตัดนิ่วในถุงน้ำดี',
@@ -79,5 +81,17 @@ class MockFirestore {
       'ward': '1'
     };
     return mockMedicalTeamCollection;
+  }
+
+  Map<String, dynamic> mockFormCollection() {
+    Map<String, dynamic> mockFormsCollection = {
+      'an': 'TBD',
+      'hn': 'TBD',
+      'creation': DateTime.now().toLocal().toString(),
+      'creator': 'พยาบาลนิรนาม',
+      'formName': 'ADL',
+      'patientStage': 'pre-operation',
+      'formData': {''},
+    };
   }
 }

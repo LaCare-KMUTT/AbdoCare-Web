@@ -8,6 +8,7 @@ import 'interfaces/firebase_service_interface.dart';
 class FirebaseService extends IFirebaseService {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
     @required String docId,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../Widget/appointmentListTable.dart';
-import '../Widget/sidebar.dart';
 import '../Widget/appbar.dart';
+import '../Widget/appointment/appointmentListTable.dart';
+import '../Widget/sidebar.dart';
 
 class AppointmentPage extends StatefulWidget {
   @override

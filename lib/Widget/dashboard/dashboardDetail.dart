@@ -1,7 +1,7 @@
-import 'package:AbdoCare_Web/Widget/dashboardGraph.dart';
+import 'package:AbdoCare_Web/Widget/dashboard/dashboardGraph.dart';
 import 'package:flutter/material.dart';
 
-import '../Widget/dashboardPatientDetail.dart';
+import 'dashboardPatientDetail.dart';
 
 class DashboardDetail extends StatefulWidget {
   DashboardDetail({Key key}) : super(key: key);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:AbdoCare_Web/Widget/sidebar.dart';
 
-import '../Widget/postHomeTable.dart';
+import '../Widget/post_operation_home/postHomeTable.dart';
 import '../Widget/sidebar.dart';
 
 class PostHomePage extends StatefulWidget {

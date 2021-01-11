@@ -110,19 +110,19 @@ class _PostHosTableState extends State<PostHosTable> {
 
     // mock up list
     temps.add({
-      "id": i,
-      "hn": "HN10001",
-      "name": "นางสาวพรพิมล แก้วใส",
-      "sex": "หญิง",
-      "age": "22 ปี",
-      "room": "3",
-      "bed": "2",
-      "t": "37.8",
-      "r": "26",
-      "hr": "122",
-      "bp": "90",
-      "o2": "99%",
-      "status": "ปกติ"
+      "id": i, // Id for Table.
+      "hn": "HN10001", //user
+      "name": "นางสาวพรพิมล แก้วใส", //user
+      "sex": "หญิง", // user
+      "age": "22 ปี", // user
+      "room": "3", //  An
+      "bed": "2", //an
+      "t": "37.8", // form
+      "r": "26", // form
+      "hr": "122", // form
+      "bp": "90", // form
+      "o2": "99%", // form
+      "status": "ปกติ" // คิดเอง
     });
     temps.add({
       "id": i,
