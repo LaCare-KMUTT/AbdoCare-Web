@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../services/interfaces/firebase_service_interface.dart';
-import '../services/service_locator.dart';
+import '../../services/interfaces/firebase_service_interface.dart';
+import '../../services/service_locator.dart';
 
 class PatientListTable extends StatefulWidget {
   PatientListTable({Key key}) : super(key: key);

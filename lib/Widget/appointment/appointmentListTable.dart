@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:buddhist_datetime_dateformat/buddhist_datetime_dateformat.dart';
-import '../Widget/addAppointment.dart';
+
+import 'addAppointment.dart';
 
 class AppointmentListTable extends StatefulWidget {
   AppointmentListTable({Key key}) : super(key: key);

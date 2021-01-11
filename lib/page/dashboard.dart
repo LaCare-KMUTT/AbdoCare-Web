@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:AbdoCare_Web/Widget/sidebar.dart';
 
-import '../Widget/sidebar.dart';
 import '../Widget/appbar.dart';
-import '../Widget/dashboardDetail.dart';
+import '../Widget/dashboard/dashboardDetail.dart';
+import '../Widget/sidebar.dart';
 
 class DashboardPage extends StatefulWidget {
   @override

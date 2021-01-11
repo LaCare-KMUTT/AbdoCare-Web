@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:AbdoCare_Web/Widget/sidebar.dart';
 
-import '../Widget/postHosTable.dart';
+import '../Widget/post_opeation_hospital/postHosTable.dart';
 import '../Widget/sidebar.dart';
 
 class PostHosPage extends StatefulWidget {
