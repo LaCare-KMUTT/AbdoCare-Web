@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:responsive_table/responsive_table.dart';
 
-import '../services/interfaces/firebase_service_interface.dart';
-import '../services/service_locator.dart';
+import '../../services/interfaces/firebase_service_interface.dart';
+import '../../services/service_locator.dart';
 
 class PostHosTable extends StatefulWidget {
   PostHosTable({Key key}) : super(key: key);
