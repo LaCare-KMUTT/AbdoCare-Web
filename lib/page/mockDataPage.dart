@@ -61,6 +61,11 @@ class _MockDataPageState extends State<MockDataPage> {
                     docId: patientId,
                     subCollection: 'an',
                     data: mockedAnSubCollection);
+                await _firebaseService.addSubCollection(
+                    collection: 'Users',
+                    docId: patientId,
+                    subCollection: 'an',
+                    data: mockedAnSubCollection);
               },
             ),
             RaisedButton(

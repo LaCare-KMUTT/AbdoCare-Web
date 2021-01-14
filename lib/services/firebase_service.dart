@@ -156,7 +156,6 @@ class FirebaseService extends IFirebaseService {
         .collection(collection)
         .where(field, isEqualTo: fieldValue)
         .get();
-    print(doc.docs);
     return doc;
   }
 
@@ -183,7 +182,12 @@ class FirebaseService extends IFirebaseService {
           collection: collection,
           docId: docId,
           data: {
-            subCollection: FieldValue.arrayUnion([subCollectionDocument.id])
+            subCollection: FieldValue.arrayUnion([
+              {
+                'an': subCollectionDocument.id,
+                'creation': DateTime.now().toLocal().toString()
+              }
+            ])
           });
     }).catchError((onError) {
       print(
@@ -210,40 +214,38 @@ class FirebaseService extends IFirebaseService {
     return anSubCollection;
   }
 
-  Future<List<Map<String, dynamic>>> getPostHosList(
-      {@required String collection,
-      @required String docId,
-      String subCollection,
-      String subCollectionDocId}) async {
+  Future<List<Map<String, dynamic>>> getPostHosList() async {
     var userList = await this.getUserList();
-    // print('get user list${userList.length}');
     var mapResult = userList.map((e) async {
-      var test = await this.getLatestAnSubCollection(docId: e.id);
-      var returnMap;
-      print(test);
-      print('data of userList');
-      print(e.data().runtimeType);
-      print('==========================');
-      return e.data();
-    });
-    print(mapResult);
-    // print('mapResult = ${mapResult.first}');
-    // print(mapResult.length);
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: e.id);
+      var anSubCollection = await this.getLatestAnSubCollection(docId: e.id);
+      var formCollection = await this.searchDocumentByField(
+          collection: 'Forms', field: 'an', fieldValue: anSubCollection['an']);
+      var filteredFormCollection = formCollection.docs
+          .where((element) => element.data()['an'] == anSubCollection['an'])
+          .map((e) => e.data()['formData']);
 
-    // if (subCollection != null && subCollectionDocId != null) {
-    //   var gg = await _firestore
-    //       .collection(collection)
-    //       .doc(docId)
-    //       .get()
-    //       .then(((querySnapshot) => querySnapshot.data()));
-    // } else {
-    //   var ee = await _firestore
-    //       .collection(collection)
-    //       .doc(docId)
-    //       .collection(subCollection)
-    //       .get()
-    //       .then((querySnapshot) => querySnapshot.docs.first.data());
-    // }
+      Map<String, dynamic> returnMap = {
+        'hn': userCollection.data()['hn'],
+        'name':
+            '${userCollection.data()['name']} ${userCollection.data()['surname']}',
+        'sex': userCollection.data()['gender'],
+        'age': 'FakeAge',
+        'room': anSubCollection['roomNumber'],
+        'bed': anSubCollection['bedNumber'],
+        't': filteredFormCollection.first['temperature'],
+        'r': filteredFormCollection.first['respirationRate'],
+        'hr': filteredFormCollection.first['heartRate'],
+        'bp': filteredFormCollection.first['bloodPressure'],
+        'o2': filteredFormCollection.first['oxygen'],
+        'status': filteredFormCollection.first['status'],
+      };
+      return returnMap;
+    });
+    var futureList = Future.wait(mapResult);
+    var returnValue = await futureList;
+    return returnValue;
   }
 
   Future<bool> signIn(

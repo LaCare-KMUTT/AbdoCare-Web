@@ -96,6 +96,7 @@ class MockFirestore {
         'respirationRate': 27,
         'bloodPressure': 90,
         'oxygen': 99,
+        'heartRate': 60,
         'status': 'รุนแรง',
       },
     };

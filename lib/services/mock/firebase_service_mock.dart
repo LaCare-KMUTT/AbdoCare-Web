@@ -216,11 +216,7 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getPostHosList(
-      {String collection,
-      String docId,
-      String subCollection,
-      String subCollectionDocId}) {
+  Future<List<Map<String, dynamic>>> getPostHosList() {
     // TODO: implement getPostHosList
     throw UnimplementedError();
   }

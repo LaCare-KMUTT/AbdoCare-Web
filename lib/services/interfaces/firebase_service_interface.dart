@@ -47,11 +47,7 @@ abstract class IFirebaseService {
     @required String docId,
   });
 
-  Future<List<Map<String, dynamic>>> getPostHosList(
-      {String collection,
-      String docId,
-      String subCollection,
-      String subCollectionDocId});
+  Future<List<Map<String, dynamic>>> getPostHosList();
   Future<bool> signIn({@required String username, @required String password});
   Future<void> signOut();
 }
