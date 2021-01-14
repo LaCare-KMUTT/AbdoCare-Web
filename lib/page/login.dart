@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
       style: alertStyle,
       title: "ขออภัยค่ะ",
       content: Text(
-        'ไม่สามารถลงทะเบียนได้เนื่องจากท่านกรอกข้อมูลไม่ถูกต้องค่ะ',
+        'ไม่สามารถเข้าสู่ระบบได้เนื่องจากท่านกรอกข้อมูลไม่ถูกต้องค่ะ',
         textAlign: TextAlign.center,
       ),
       buttons: [
