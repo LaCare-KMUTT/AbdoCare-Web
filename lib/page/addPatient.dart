@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Widget/patient_list/patientRegisterForm.dart';
+import '../Widget/appbar.dart';
 import '../Widget/sidebar.dart';
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
@@ -16,7 +17,10 @@ class _AddPatientPageState extends State<AddPatientPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
 
   void _submitPatientRegisterForm({
+    @required String hn,
+    @required String an,
     @required String patientName,
+    @required String patientSurname,
     @required String address,
     @required String gender,
     @required String dob,
@@ -24,6 +28,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required double height,
     @required String patientTel,
     @required String careTakerName,
+    @required String careTakerSurname,
     @required String careTakerTel,
     @required String careTakerRelationship,
     @required String username,
@@ -33,6 +38,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     var patientUid =
         await _firebaseService.createPatient(collection: 'Users', data: {
       'name': patientName,
+      'surname': patientSurname,
       'address': address,
       'gender': gender,
       'dob': dob,
@@ -48,10 +54,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
       data: {
         'an': 'testAnNumber',
         'careTakerName': careTakerName,
+        'careTakerSurname': careTakerSurname,
         'careTakerTel': careTakerTel,
         'careTakerRelationship': careTakerRelationship,
-        'weight': weight,
-        'height': height,
         'operationDate': DateTime.now()
             .toString(), //TODO Change operationDate to be input not DateTime.now()
       },
@@ -61,10 +66,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        //title: const Text('AbdoCare'),
-        title: const Text('เพิ่มผู้ป่วย'),
-        backgroundColor: Color(0xFFC37447),
+      appBar: BaseAppBar(
+        title: Text('เพิ่มผู้ป่วย'),
+        appBar: AppBar(),
       ),
       body: PatientRegisterForm(
         _submitPatientRegisterForm,

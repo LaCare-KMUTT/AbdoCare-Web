@@ -12,6 +12,13 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: title,
       centerTitle: true,
       backgroundColor: Color(0xFFC37447),
+      textTheme: TextTheme(
+        headline6: TextStyle(
+          fontFamily: 'Prompt',
+          color: Colors.white,
+          fontSize: 24,
+        ),
+      ),
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),

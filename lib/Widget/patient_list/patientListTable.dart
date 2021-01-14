@@ -31,10 +31,10 @@ class _PatientListTableState extends State<PatientListTable> {
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(7.0)),
-                        textColor: Colors.black,
-                        color: Color(0xFFDADADA),
+                        textColor: Colors.white,
+                        color: Colors.lightGreen,
                         padding: EdgeInsets.all(15),
-                        child: Text('ลงทะเบียนผู้ป่วยใน',
+                        child: Text('ลงทะเบียนผู้ป่วย',
                             style: TextStyle(fontSize: 16)),
                         onPressed: () {
                           print('This is add patient button');
