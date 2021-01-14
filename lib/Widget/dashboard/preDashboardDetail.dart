@@ -1,15 +1,16 @@
+import 'package:AbdoCare_Web/Widget/dashboard/PreDashboardPatientDetail.dart';
 import 'package:AbdoCare_Web/Widget/dashboard/dashboardGraph.dart';
+import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
+import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:flutter/material.dart';
 
-import 'dashboardPatientDetail.dart';
-
-class DashboardDetail extends StatefulWidget {
-  DashboardDetail({Key key}) : super(key: key);
+class PreDashboardDetail extends StatefulWidget {
+  PreDashboardDetail({Key key}) : super(key: key);
   @override
-  _DashboardDetailState createState() => _DashboardDetailState();
+  _PreDashboardDetailState createState() => _PreDashboardDetailState();
 }
 
-class _DashboardDetailState extends State<DashboardDetail> {
+class _PreDashboardDetailState extends State<PreDashboardDetail> {
   final ScrollController controller = ScrollController();
 
   Container myArticles(String heading) {
@@ -49,6 +50,7 @@ class _DashboardDetailState extends State<DashboardDetail> {
     );
   }
 
+  String dropdownValue = 'Post-Operation@Hospital';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,8 +60,72 @@ class _DashboardDetailState extends State<DashboardDetail> {
             Column(
               children: <Widget>[
                 SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black26)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          isExpanded: true,
+                          value: dropdownValue,
+                          items: <String>[
+                            'Pre-Operation',
+                            'Post-Operation@Hospital',
+                            'Post-Operation@Home'
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Center(
+                                  child: Text(value,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Color(0xFFC37447)))),
+                            );
+                          }).toList(),
+                          onChanged: (String newValue) {
+                            setState(() {
+                              dropdownValue = newValue;
+                              switch (newValue) {
+                                case "Pre-Operation":
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PrePatientDetail()),
+                                  );
+                                  break;
+                                case "Post-Operation@Hospital":
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostHosDashboardPage()),
+                                  );
+                                  break;
+                                case "Post-Operation@Home":
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostHomeDashboardPage()),
+                                  );
+                                  break;
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
                   // Vertical ListView
-                  child: PatientDetail(),
+                  child: PrePatientDetail(),
                 ),
                 // not in nsc scope
                 //

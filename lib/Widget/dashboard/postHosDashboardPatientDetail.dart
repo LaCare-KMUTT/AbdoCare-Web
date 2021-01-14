@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
-class PatientDetail extends StatelessWidget {
+class PostHosPatientDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
