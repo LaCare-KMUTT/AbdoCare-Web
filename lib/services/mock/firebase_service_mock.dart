@@ -98,19 +98,18 @@ class FirebaseServiceMock extends IFirebaseService {
     return isSuccess;
   }
 
-  Future<bool> addDocumentToCollection({
+  Future<DocumentReference> addDocumentToCollection({
     @required String collection,
     @required Map<String, dynamic> docData,
   }) async {
-    bool isSuccess =
-        await _firestore.collection(collection).add(docData).then((value) {
+    var doc = await _firestore.collection(collection).add(docData).then((doc) {
       print('Success add $docData to $collection collection');
-      return true;
+      return doc;
     }).catchError((onError) {
       print('Failed to add $docData to $collection collection');
-      return false;
+      return null;
     });
-    return isSuccess;
+    return doc;
   }
 
   Future<QuerySnapshot> searchDocumentByField({
@@ -163,11 +162,18 @@ class FirebaseServiceMock extends IFirebaseService {
         .doc(docId)
         .collection(subCollection)
         .add(data)
-        .then((value) => print(
-            ' success adding Mock Data $data to $subCollection subcollection of $collection which id = $docId'))
-        .catchError((onError) {
+        .then((subCollectionDocument) async {
       print(
-          'Error $onError adding Mock Data $data to $subCollection subcollection of $collection which id = $docId');
+          'success adding $data to $subCollection subcollection of $collection which id = $docId');
+      await this.updateDataToCollectionField(
+          collection: collection,
+          docId: docId,
+          data: {
+            subCollection: FieldValue.arrayUnion([subCollectionDocument.id])
+          });
+    }).catchError((onError) {
+      print(
+          'Error $onError adding $data to $subCollection subcollection of $collection which id = $docId');
     });
   }
 
@@ -179,16 +185,6 @@ class FirebaseServiceMock extends IFirebaseService {
   @override
   Future<Map<String, dynamic>> getLatestAnSubCollection({String docId}) {
     // TODO: implement getAnSubCollection
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<Map<String, dynamic>>> getDocumentData(
-      {String collection,
-      String docId,
-      String subCollection,
-      String subCollectionDocId}) {
-    // TODO: implement getDocumentData
     throw UnimplementedError();
   }
 
@@ -217,5 +213,29 @@ class FirebaseServiceMock extends IFirebaseService {
       await _auth.signOut();
       print('Firebase User : $signingOutUserId has signed Out!');
     }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getPostHosList(
+      {String collection,
+      String docId,
+      String subCollection,
+      String subCollectionDocId}) {
+    // TODO: implement getPostHosList
+    throw UnimplementedError();
+  }
+
+  Future<void> updateDataToCollectionField(
+      {String collection, String docId, Map<String, dynamic> data}) async {
+    await _firestore
+        .collection(collection)
+        .doc(docId)
+        .update(data)
+        .then((value) => print(
+            'success updating field ${data.keys} with value : ${data.values}'))
+        .catchError((onError) {
+      print(
+          '$onError cannot update field ${data.keys} with value : ${data.values}');
+    });
   }
 }

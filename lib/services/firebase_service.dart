@@ -29,6 +29,20 @@ class FirebaseService extends IFirebaseService {
     return isSuccess;
   }
 
+  Future<void> updateDataToCollectionField(
+      {String collection, String docId, Map<String, dynamic> data}) async {
+    await _firestore
+        .collection(collection)
+        .doc(docId)
+        .update(data)
+        .then((value) => print(
+            'success updating field ${data.keys} with value : ${data.values}'))
+        .catchError((onError) {
+      print(
+          '$onError cannot update field ${data.keys} with value : ${data.values}');
+    });
+  }
+
   Future<FirebaseApp> _createTempApp() async {
     return await Firebase.initializeApp(
         name: 'Temporary Register', options: Firebase.app().options);
@@ -117,19 +131,18 @@ class FirebaseService extends IFirebaseService {
         : print('failed setting role to ${data['username']} as medical team');
   }
 
-  Future<bool> addDocumentToCollection({
+  Future<DocumentReference> addDocumentToCollection({
     @required String collection,
     @required Map<String, dynamic> docData,
   }) async {
-    bool isSuccess =
-        await _firestore.collection(collection).add(docData).then((value) {
+    var doc = await _firestore.collection(collection).add(docData).then((doc) {
       print('Success add $docData to $collection collection');
-      return true;
+      return doc;
     }).catchError((onError) {
       print('Failed to add $docData to $collection collection');
-      return false;
+      return null;
     });
-    return isSuccess;
+    return doc;
   }
 
   String getUserId() => _auth.currentUser.uid;
@@ -163,9 +176,16 @@ class FirebaseService extends IFirebaseService {
         .doc(docId)
         .collection(subCollection)
         .add(data)
-        .then((value) => print(
-            'success adding $data to $subCollection subcollection of $collection which id = $docId'))
-        .catchError((onError) {
+        .then((subCollectionDocument) async {
+      print(
+          'success adding $data to $subCollection subcollection of $collection which id = $docId');
+      await this.updateDataToCollectionField(
+          collection: collection,
+          docId: docId,
+          data: {
+            subCollection: FieldValue.arrayUnion([subCollectionDocument.id])
+          });
+    }).catchError((onError) {
       print(
           'Error $onError adding $data to $subCollection subcollection of $collection which id = $docId');
     });
@@ -190,17 +210,25 @@ class FirebaseService extends IFirebaseService {
     return anSubCollection;
   }
 
-  Future<List<Map<String, dynamic>>> getDocumentData(
+  Future<List<Map<String, dynamic>>> getPostHosList(
       {@required String collection,
       @required String docId,
       String subCollection,
       String subCollectionDocId}) async {
     var userList = await this.getUserList();
-    print(userList.length);
-    var mapResult = userList.map((e) {
+    // print('get user list${userList.length}');
+    var mapResult = userList.map((e) async {
+      var test = await this.getLatestAnSubCollection(docId: e.id);
+      var returnMap;
+      print(test);
+      print('data of userList');
+      print(e.data().runtimeType);
+      print('==========================');
       return e.data();
     });
-    print(mapResult.length);
+    print(mapResult);
+    // print('mapResult = ${mapResult.first}');
+    // print(mapResult.length);
 
     // if (subCollection != null && subCollectionDocId != null) {
     //   var gg = await _firestore
