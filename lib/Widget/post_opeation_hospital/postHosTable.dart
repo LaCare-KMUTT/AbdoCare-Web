@@ -1,7 +1,11 @@
-import 'dart:ui';
 import 'dart:math';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:responsive_table/responsive_table.dart';
+
+import '../../services/interfaces/firebase_service_interface.dart';
+import '../../services/service_locator.dart';
 
 class PostHosTable extends StatefulWidget {
   PostHosTable({Key key}) : super(key: key);
@@ -10,6 +14,8 @@ class PostHosTable extends StatefulWidget {
 }
 
 class _PostHosTableState extends State<PostHosTable> {
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
+
   List<DatatableHeader> _headers = [
     DatatableHeader(
         text: "HN",
@@ -92,6 +98,7 @@ class _PostHosTableState extends State<PostHosTable> {
   int _currentPage = 1;
   bool _isSearch = false;
   List<Map<String, dynamic>> _source = List<Map<String, dynamic>>();
+
   List<Map<String, dynamic>> _selecteds = List<Map<String, dynamic>>();
   //String _selectableKey = "id";
 
@@ -100,70 +107,16 @@ class _PostHosTableState extends State<PostHosTable> {
   bool _isLoading = true;
   bool _showSelect = false;
 
-  List<Map<String, dynamic>> _generateData({int n: 100}) {
-    final List source = List.filled(n, Random.secure());
-    List<Map<String, dynamic>> temps = List<Map<String, dynamic>>();
-    var i = _source.length;
-    print(i);
-    // loop for print patients list
-    // for (var data in source) {
-
-    // mock up list
-    temps.add({
-      "id": i, // Id for Table.
-      "hn": "HN10001", //user
-      "name": "นางสาวพรพิมล แก้วใส", //user
-      "sex": "หญิง", // user
-      "age": "22 ปี", // user
-      "room": "3", //  An
-      "bed": "2", //an
-      "t": "37.8", // form
-      "r": "26", // form
-      "hr": "122", // form
-      "bp": "90", // form
-      "o2": "99%", // form
-      "status": "ปกติ" // คิดเอง
-    });
-    temps.add({
-      "id": i,
-      "hn": "HN10002",
-      "name": "นางสาวยิ้มแย้ม แจ่มใส",
-      "sex": "หญิง",
-      "age": "40 ปี",
-      "room": "5",
-      "bed": "1",
-      "t": "38.8",
-      "r": "27",
-      "hr": "130",
-      "bp": "90",
-      "o2": "89%",
-      "status": "รุนแรง"
-    });
-    temps.add({
-      "id": i,
-      "hn": "HN10003",
-      "name": "นายสามารถ สมาธิ",
-      "sex": "ชาย",
-      "age": "35 ปี",
-      "room": "3",
-      "bed": "1",
-      "t": "36.4",
-      "r": "28",
-      "hr": "125",
-      "bp": "90",
-      "o2": "96%",
-      "status": "ปกติ"
-    });
-
-    //i++;
-    //}
-    return temps;
+  Future<List<Map<String, dynamic>>> _generateData({int n: 100}) async {
+    final postHosList = await _firebaseService.getPostHosList();
+    return postHosList;
   }
 
   _initData() async {
     setState(() => _isLoading = true);
-    Future.delayed(Duration(seconds: 3)).then((value) {
-      _source.addAll(_generateData(n: 1000));
+    Future.delayed(Duration(seconds: 3)).then((value) async {
+      var a = await _generateData(n: 1000);
+      _source.addAll(a);
       setState(() => _isLoading = false);
     });
   }
