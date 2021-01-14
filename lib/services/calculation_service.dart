@@ -18,7 +18,6 @@ class CalculationService extends ICalculationService {
         age--;
       }
     }
-    print('age returned! $age');
     return age;
   }
 }
