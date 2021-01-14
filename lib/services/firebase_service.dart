@@ -1,13 +1,17 @@
+import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'interfaces/firebase_service_interface.dart';
+import 'service_locator.dart';
 
 class FirebaseService extends IFirebaseService {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  final ICalculationService _calculationService =
+      locator<ICalculationService>();
 
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
@@ -231,7 +235,8 @@ class FirebaseService extends IFirebaseService {
         'name':
             '${userCollection.data()['name']} ${userCollection.data()['surname']}',
         'sex': userCollection.data()['gender'],
-        'age': 'FakeAge',
+        'age': _calculationService.calculateAge(
+            birthDateString: userCollection.data()['dob']),
         'room': anSubCollection['roomNumber'],
         'bed': anSubCollection['bedNumber'],
         't': filteredFormCollection.first['temperature'],

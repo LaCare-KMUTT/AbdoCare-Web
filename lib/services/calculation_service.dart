@@ -1,7 +1,10 @@
 import 'interfaces/calculation_service_interface.dart';
 
 class CalculationService extends ICalculationService {
-  int calculateAge(DateTime birthDate) {
+  int calculateAge({DateTime birthDate, String birthDateString}) {
+    if (birthDateString != null && birthDate == null) {
+      birthDate = DateTime.parse(birthDateString);
+    }
     var currentDate = DateTime.now();
     var age = currentDate.year - birthDate.year;
     var month1 = currentDate.month;
@@ -15,6 +18,7 @@ class CalculationService extends ICalculationService {
         age--;
       }
     }
+    print('age returned! $age');
     return age;
   }
 }

@@ -1,3 +1,3 @@
 abstract class ICalculationService {
-  int calculateAge(DateTime birthDate);
+  int calculateAge({DateTime birthDate, String birthDateString});
 }
