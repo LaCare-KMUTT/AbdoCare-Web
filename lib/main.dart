@@ -8,6 +8,7 @@ import 'page/login.dart';
 import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
+import 'page/dashboard_pre.dart';
 import 'page/dashboard_postHos.dart';
 import 'page/dashboard_postHome.dart';
 import 'page/appointment.dart';
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
         '/postHos_page': (context) => PostHosPage(),
         '/postHome_page': (context) => PostHomePage(),
         '/login_page': (context) => LoginPage(),
+        '/dashboard_pre': (context) => PreDashboardPage(),
         '/dashboard_postHome': (context) => PostHomeDashboardPage(),
         '/dashboard_postHos': (context) => PostHosDashboardPage(),
         '/mock': (context) => MockDataPage(),

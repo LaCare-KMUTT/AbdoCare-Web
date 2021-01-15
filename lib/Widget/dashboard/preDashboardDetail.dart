@@ -1,8 +1,11 @@
-import 'package:AbdoCare_Web/Widget/dashboard/PreDashboardPatientDetail.dart';
-import 'package:AbdoCare_Web/Widget/dashboard/dashboardGraph.dart';
-import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
-import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:flutter/material.dart';
+
+import 'preDashboardPatientDetail.dart';
+import 'dashboardGraph.dart';
+
+import '../../page/dashboard_postHome.dart';
+import '../../page/dashboard_postHos.dart';
+import '../../page/dashboard_pre.dart';
 
 class PreDashboardDetail extends StatefulWidget {
   PreDashboardDetail({Key key}) : super(key: key);
@@ -50,7 +53,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
     );
   }
 
-  String dropdownValue = 'Post-Operation@Hospital';
+  String dropdownValue = 'Pre-Operation';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +99,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PrePatientDetail()),
+                                            PreDashboardPage()),
                                   );
                                   break;
                                 case "Post-Operation@Hospital":

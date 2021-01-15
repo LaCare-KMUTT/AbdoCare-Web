@@ -1,9 +1,10 @@
-import 'package:AbdoCare_Web/Widget/dashboard/dashboardGraph.dart';
 import 'package:flutter/material.dart';
 
-import 'preDashboardPatientDetail.dart';
+import 'dashboardGraph.dart';
 import 'postHomeDashboardPatientDetail.dart';
-import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
+
+import '../../page/dashboard_pre.dart';
+import '../../page/dashboard_postHome.dart';
 
 class PostHomeDashboardDetail extends StatefulWidget {
   PostHomeDashboardDetail({Key key}) : super(key: key);
@@ -98,7 +99,7 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PrePatientDetail()),
+                                            PreDashboardPage()),
                                   );
                                   break;
                                 case "Post-Operation@Hospital":

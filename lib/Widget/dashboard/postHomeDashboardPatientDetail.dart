@@ -18,7 +18,7 @@ class PostHomePatientDetail extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
                     child: Text(
                       'ข้อมูลส่วนตัว',
-                      style: TextStyle(color: Color(0xFFC37447)),
+                      style: TextStyle(fontSize: 18, color: Color(0xFFC37447)),
                     ),
                   ),
                   Row(
@@ -220,11 +220,10 @@ class PostHomePatientDetail extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    width: 100,
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
                     child: Text(
                       'ข้อมูลการรักษา',
-                      style: TextStyle(color: Color(0xFFC37447)),
+                      style: TextStyle(fontSize: 18, color: Color(0xFFC37447)),
                     ),
                   ),
                   Row(
