@@ -3,11 +3,11 @@ import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  setUpAll(() {
+    setupServiceLocator();
+    locator.allowReassignment = true;
+  });
   group('CalculateAge test', () {
-    setUpAll(() {
-      setupServiceLocator();
-      locator.allowReassignment = true;
-    });
     test('calculateAge should be able to calculate when string is injected',
         () {
       ICalculationService _calculationService = locator<ICalculationService>();
