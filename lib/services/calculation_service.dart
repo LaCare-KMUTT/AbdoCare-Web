@@ -1,4 +1,5 @@
 import 'interfaces/calculation_service_interface.dart';
+import 'package:intl/intl.dart';
 
 class CalculationService extends ICalculationService {
   int calculateAge({DateTime birthDate, String birthDateString}) {
@@ -19,5 +20,25 @@ class CalculationService extends ICalculationService {
       }
     }
     return age;
+  }
+
+  DateTime formatDate({DateTime date, String dateString}) {
+    if (date == null && dateString != null) {
+      date = DateTime.parse(dateString);
+    }
+    var buddhistYear = date.year + 543;
+    var normalYear = date.year;
+    DateFormat formatter;
+    if (date.hour == null || date.minute == null || date.second == null) {
+      formatter = DateFormat('yyyy-MM-dd');
+    } else {
+      formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    }
+    String formatted = formatter.format(date);
+    var formattedString =
+        formatted.replaceAll(normalYear.toString(), buddhistYear.toString());
+    var formattedDate = DateTime.parse(formattedString);
+    print('parse $date to $formattedDate');
+    return formattedDate;
   }
 }

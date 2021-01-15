@@ -28,4 +28,26 @@ void main() {
       expect(age, 21);
     });
   });
+
+  group('Format Date test', () {
+    test('formatDate should be able to format year to buddhist year', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var formattedDate =
+          _calculationService.formatDate(date: DateTime(1999, 03, 12));
+      expect(formattedDate, DateTime(2542, 03, 12));
+    });
+    test('formatDate should be able to format with time', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var formattedDate = _calculationService.formatDate(
+          date: DateTime(1999, 03, 12, 17, 58, 19));
+      expect(formattedDate, DateTime(2542, 03, 12, 17, 58, 19));
+    });
+
+    test('formatDate should be able to format date with string input', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var formattedDate =
+          _calculationService.formatDate(dateString: '1999-03-12');
+      expect(formattedDate, DateTime(2542, 03, 12));
+    });
+  });
 }
