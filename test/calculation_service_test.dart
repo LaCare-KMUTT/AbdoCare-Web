@@ -7,7 +7,7 @@ void main() {
     setupServiceLocator();
     locator.allowReassignment = true;
   });
-  group('CalculateAge test', () {
+  group('calculateAge test', () {
     test('calculateAge should be able to calculate when string is injected',
         () {
       ICalculationService _calculationService = locator<ICalculationService>();
@@ -29,25 +29,48 @@ void main() {
     });
   });
 
-  group('Format Date test', () {
+  group('formatDate test', () {
     test('formatDate should be able to format year to buddhist year', () {
       ICalculationService _calculationService = locator<ICalculationService>();
       var formattedDate =
           _calculationService.formatDate(date: DateTime(1999, 03, 12));
       expect(formattedDate, DateTime(2542, 03, 12));
     });
-    test('formatDate should be able to format with time', () {
+    test(
+        'formatDate should be able to format year to buddhist year when date has time',
+        () {
       ICalculationService _calculationService = locator<ICalculationService>();
       var formattedDate = _calculationService.formatDate(
           date: DateTime(1999, 03, 12, 17, 58, 19));
       expect(formattedDate, DateTime(2542, 03, 12, 17, 58, 19));
     });
 
-    test('formatDate should be able to format date with string input', () {
+    test('formatDate should be able to format date When receieve string input',
+        () {
       ICalculationService _calculationService = locator<ICalculationService>();
       var formattedDate =
           _calculationService.formatDate(dateString: '1999-03-12');
       expect(formattedDate, DateTime(2542, 03, 12));
+    });
+  });
+
+  group('formatDateToThaiString test', () {
+    test(
+        'formatDateToThaiString should be able to format when receieve DateTime',
+        () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var formattedDate = _calculationService.formatDateToThaiString(
+          date: DateTime(1999, 03, 12));
+      expect(formattedDate, 'วันศุกร์ที่ 12 มีนาคม พ.ศ. 2542');
+    });
+
+    test(
+        'formatDateToThaiString should be able to format when receieve String date',
+        () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var formattedDate =
+          _calculationService.formatDateToThaiString(dateString: '1999-03-12');
+      expect(formattedDate, 'วันศุกร์ที่ 12 มีนาคม พ.ศ. 2542');
     });
   });
 }
