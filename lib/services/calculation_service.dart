@@ -1,3 +1,5 @@
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'interfaces/calculation_service_interface.dart';
 import 'package:intl/intl.dart';
 
@@ -40,5 +42,18 @@ class CalculationService extends ICalculationService {
     var formattedDate = DateTime.parse(formattedString);
     print('parse $date to $formattedDate');
     return formattedDate;
+  }
+
+  String formatDateToThaiString({DateTime date, String dateString}) {
+    initializeDateFormatting();
+    if (date == null && dateString != null) {
+      date = DateTime.parse(dateString);
+    }
+    var buddhistYear = this.formatDate(date: date);
+    String formatted = DateFormat.yMMMMEEEEd('th').format(date);
+    String yearFormatted = formatted.replaceAll('ค.ศ.', 'พ.ศ.');
+    String returnVal = yearFormatted.replaceAll(
+        date.year.toString(), buddhistYear.year.toString());
+    return returnVal;
   }
 }
