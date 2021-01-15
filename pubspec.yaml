@@ -37,7 +37,8 @@ dependencies:
   flutter_rounded_date_picker: ^1.0.5
   buddhist_datetime_dateformat: ^1.0.3
   charts_flutter: ^0.9.0
-
+  step_progress_indicator: ^0.2.5+8
+  syncfusion_flutter_gauges: ^18.4.33
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
