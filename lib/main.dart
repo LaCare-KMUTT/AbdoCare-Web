@@ -1,25 +1,29 @@
 import 'package:AbdoCare_Web/page/mockDataPage.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
-import 'page/patientList.dart';
 import 'page/addPatient.dart';
+import 'page/appointment.dart';
 import 'page/login.dart';
+import 'page/patientList.dart';
 import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
 import 'page/dashboard_pre.dart';
 import 'page/dashboard_postHos.dart';
 import 'page/dashboard_postHome.dart';
-import 'page/appointment.dart';
 import 'services/service_locator.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  setupServiceLocator(isMock: false);
-
+  // ignore: await_only_futures
+  await setupServiceLocator(isMock: false);
+  Intl.defaultLocale = "th";
+  initializeDateFormatting();
   runApp(MyApp());
 }
 

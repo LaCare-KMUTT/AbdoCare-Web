@@ -1,9 +1,10 @@
 import 'dart:ui';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
-import 'package:buddhist_datetime_dateformat/buddhist_datetime_dateformat.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+
+import '../../services/interfaces/calculation_service_interface.dart';
+import '../../services/service_locator.dart';
 import 'addAppointment.dart';
 
 class AppointmentListTable extends StatefulWidget {
@@ -14,7 +15,7 @@ class AppointmentListTable extends StatefulWidget {
 
 class _AppointmentListTableState extends State<AppointmentListTable> {
   DateTime selectedDate = DateTime.now();
-  var customFormat = DateFormat.yMMMMEEEEd('th');
+  ICalculationService _calculationService = locator<ICalculationService>();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = await showRoundedDatePicker(
@@ -68,7 +69,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
 
   @override
   Widget build(BuildContext context) {
-    var toShow = customFormat.formatInBuddhistCalendarThai(selectedDate);
+    var toShow = _calculationService.formatDateToThaiString(date: selectedDate);
     return Scaffold(
       body: Container(
         child: ListView(

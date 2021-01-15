@@ -57,7 +57,7 @@ class MockFirestore {
       'height': 170,
       'weight': 70,
       'an': an,
-      'operationDate': DateTime.now().toString(),
+      'operationDate': DateTime.now(),
       'operationMethod': 'LAP+Operation',
       'operationName': 'ผ่าตัดนิ่วในถุงน้ำดี',
       'doctorName': 'ชื่อหมอ',
@@ -83,15 +83,23 @@ class MockFirestore {
     return mockMedicalTeamCollection;
   }
 
-  Map<String, dynamic> mockFormCollection() {
+  Map<String, dynamic> mockFormCollection({String an, String hn}) {
     Map<String, dynamic> mockFormsCollection = {
-      'an': 'TBD',
-      'hn': 'TBD',
-      'creation': DateTime.now().toLocal().toString(),
+      'an': an,
+      'hn': hn,
+      'creation': DateTime.now(),
       'creator': 'พยาบาลนิรนาม',
-      'formName': 'ADL',
+      'formName': 'testPostHosTable',
       'patientStage': 'pre-operation',
-      'formData': {''},
+      'formData': {
+        'temperature': 37.8,
+        'respirationRate': 27,
+        'bloodPressure': 90,
+        'oxygen': 99,
+        'heartRate': 60,
+        'status': 'รุนแรง',
+      },
     };
+    return mockFormsCollection;
   }
 }
