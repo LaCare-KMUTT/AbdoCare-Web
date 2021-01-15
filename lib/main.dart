@@ -16,7 +16,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await setupServiceLocator(isMock: false);
+  setupServiceLocator(isMock: false);
 
   runApp(MyApp());
 }
