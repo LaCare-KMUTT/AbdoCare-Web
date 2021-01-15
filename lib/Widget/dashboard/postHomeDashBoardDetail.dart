@@ -15,7 +15,6 @@ class PostHomeDashboardDetail extends StatefulWidget {
 
 class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
   final ScrollController controller = ScrollController();
-
   Container myArticles(String heading) {
     return Container(
       width: 160.0,
