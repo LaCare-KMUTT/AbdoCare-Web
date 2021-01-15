@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
-import 'package:buddhist_datetime_dateformat/buddhist_datetime_dateformat.dart';
+
+import '../../services/interfaces/calculation_service_interface.dart';
+import '../../services/service_locator.dart';
 
 class AddAppointmentPage extends StatefulWidget {
   AddAppointmentPage({Key key}) : super(key: key);
@@ -12,9 +13,9 @@ class AddAppointmentPage extends StatefulWidget {
 class _AddAppointmentPageState extends State<AddAppointmentPage> {
   final _formKey = GlobalKey<FormState>();
   TimeOfDay _time = TimeOfDay.now();
+  ICalculationService _calculationService = locator<ICalculationService>();
 
   DateTime _date = DateTime.now();
-  var customFormat = DateFormat.yMMMMEEEEd('th');
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime pickedDate = await showRoundedDatePicker(
@@ -210,7 +211,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                               20, 0, 20, 0),
                                           child: Center(
                                             child: Text(
-                                              "${customFormat.formatInBuddhistCalendarThai(_date)}",
+                                              "${_calculationService.formatDateToThaiString(date: _date)}",
                                               style: TextStyle(
                                                   color: Color(0xFFC37447)),
                                             ),
