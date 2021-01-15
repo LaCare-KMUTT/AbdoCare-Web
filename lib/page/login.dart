@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
@@ -30,10 +31,10 @@ class _LoginPageState extends State<LoginPage> {
           shrinkWrap: true,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(50, 200, 50, 0),
+              padding: const EdgeInsets.fromLTRB(300, 200, 300, 0),
               child: TextField(
                 controller: _usernameController,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Username',
@@ -42,11 +43,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(50, 20, 50, 0),
+              padding: const EdgeInsets.fromLTRB(300, 20, 300, 0),
               child: TextField(
                 controller: _passwordController,
                 obscureText: true,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
@@ -63,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7.0)),
                     textColor: Colors.white,
+                    padding: EdgeInsets.all(15),
                     color: Color(0xFF2ED47A),
                     child: Text('เข้าสู่ระบบ', style: TextStyle(fontSize: 18)),
                     onPressed: () async {
@@ -124,23 +126,43 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showErrorSignInDialog() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Login Failed'),
-            content:
-                Text('Sth went wrong please provide some UI for me please.'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('close'),
-                onPressed: () {
-                  print('close button');
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.grow,
+      descStyle: TextStyle(fontWeight: FontWeight.bold),
+      descTextAlign: TextAlign.center,
+      animationDuration: Duration(milliseconds: 0),
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        side: BorderSide(
+          color: Colors.grey[50],
+        ),
+      ),
+      titleStyle: TextStyle(
+        color: Color(0xFFC37447),
+      ),
+      alertAlignment: Alignment.center,
+    );
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      style: alertStyle,
+      title: "ขออภัยค่ะ",
+      content: Text(
+        'ไม่สามารถเข้าสู่ระบบได้เนื่องจากท่านกรอกข้อมูลไม่ถูกต้องค่ะ',
+        textAlign: TextAlign.center,
+      ),
+      buttons: [
+        DialogButton(
+          child: Text(
+            "ตกลง",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          color: Color(0xFFC37447),
+        ),
+      ],
+    ).show();
   }
 }

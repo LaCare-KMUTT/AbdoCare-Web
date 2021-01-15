@@ -1,0 +1,24 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Abdocare-Web Unit Test
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: beta
+        flutter-version: '1.23.0-18.1.pre'
+    - run: flutter pub get
+    - run: flutter test
+

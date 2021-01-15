@@ -8,6 +8,9 @@ abstract class IFirebaseService {
     @required Map<String, dynamic> data,
   });
 
+  Future<void> updateDataToCollectionField(
+      {String collection, String docId, Map<String, dynamic> data});
+
   Future<String> createPatient({
     @required String collection,
     String docId,
@@ -18,7 +21,7 @@ abstract class IFirebaseService {
 
   String getUserId();
 
-  Future<bool> addDocumentToCollection({
+  Future<DocumentReference> addDocumentToCollection({
     @required String collection,
     @required Map<String, dynamic> docData,
   });
@@ -44,6 +47,7 @@ abstract class IFirebaseService {
     @required String docId,
   });
 
+  Future<List<Map<String, dynamic>>> getPostHosList();
   Future<bool> signIn({@required String username, @required String password});
   Future<void> signOut();
 }

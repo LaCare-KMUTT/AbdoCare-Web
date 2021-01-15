@@ -1,13 +1,17 @@
+import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'interfaces/firebase_service_interface.dart';
+import 'service_locator.dart';
 
 class FirebaseService extends IFirebaseService {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  final ICalculationService _calculationService =
+      locator<ICalculationService>();
 
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
@@ -27,6 +31,20 @@ class FirebaseService extends IFirebaseService {
       return false;
     });
     return isSuccess;
+  }
+
+  Future<void> updateDataToCollectionField(
+      {String collection, String docId, Map<String, dynamic> data}) async {
+    await _firestore
+        .collection(collection)
+        .doc(docId)
+        .update(data)
+        .then((value) => print(
+            'success updating field ${data.keys} with value : ${data.values}'))
+        .catchError((onError) {
+      print(
+          '$onError cannot update field ${data.keys} with value : ${data.values}');
+    });
   }
 
   Future<FirebaseApp> _createTempApp() async {
@@ -117,19 +135,18 @@ class FirebaseService extends IFirebaseService {
         : print('failed setting role to ${data['username']} as medical team');
   }
 
-  Future<bool> addDocumentToCollection({
+  Future<DocumentReference> addDocumentToCollection({
     @required String collection,
     @required Map<String, dynamic> docData,
   }) async {
-    bool isSuccess =
-        await _firestore.collection(collection).add(docData).then((value) {
+    var doc = await _firestore.collection(collection).add(docData).then((doc) {
       print('Success add $docData to $collection collection');
-      return true;
+      return doc;
     }).catchError((onError) {
       print('Failed to add $docData to $collection collection');
-      return false;
+      return null;
     });
-    return isSuccess;
+    return doc;
   }
 
   String getUserId() => _auth.currentUser.uid;
@@ -143,7 +160,6 @@ class FirebaseService extends IFirebaseService {
         .collection(collection)
         .where(field, isEqualTo: fieldValue)
         .get();
-    print(doc.docs);
     return doc;
   }
 
@@ -163,9 +179,21 @@ class FirebaseService extends IFirebaseService {
         .doc(docId)
         .collection(subCollection)
         .add(data)
-        .then((value) => print(
-            'success adding $data to $subCollection subcollection of $collection which id = $docId'))
-        .catchError((onError) {
+        .then((subCollectionDocument) async {
+      print(
+          'success adding $data to $subCollection subcollection of $collection which id = $docId');
+      await this.updateDataToCollectionField(
+          collection: collection,
+          docId: docId,
+          data: {
+            subCollection: FieldValue.arrayUnion([
+              {
+                'an': subCollectionDocument.id,
+                'creation': DateTime.now().toLocal().toString()
+              }
+            ])
+          });
+    }).catchError((onError) {
       print(
           'Error $onError adding $data to $subCollection subcollection of $collection which id = $docId');
     });
@@ -188,6 +216,41 @@ class FirebaseService extends IFirebaseService {
         .get()
         .then((querySnapshot) => querySnapshot.docs.first.data());
     return anSubCollection;
+  }
+
+  Future<List<Map<String, dynamic>>> getPostHosList() async {
+    var userList = await this.getUserList();
+    var mapResult = userList.map((e) async {
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: e.id);
+      var anSubCollection = await this.getLatestAnSubCollection(docId: e.id);
+      var formCollection = await this.searchDocumentByField(
+          collection: 'Forms', field: 'an', fieldValue: anSubCollection['an']);
+      var filteredFormCollection = formCollection.docs
+          .where((element) => element.data()['an'] == anSubCollection['an'])
+          .map((e) => e.data()['formData']);
+
+      Map<String, dynamic> returnMap = {
+        'hn': userCollection.data()['hn'],
+        'name':
+            '${userCollection.data()['name']} ${userCollection.data()['surname']}',
+        'sex': userCollection.data()['gender'],
+        'age': _calculationService.calculateAge(
+            birthDateString: userCollection.data()['dob']),
+        'room': anSubCollection['roomNumber'],
+        'bed': anSubCollection['bedNumber'],
+        't': filteredFormCollection.first['temperature'],
+        'r': filteredFormCollection.first['respirationRate'],
+        'hr': filteredFormCollection.first['heartRate'],
+        'bp': filteredFormCollection.first['bloodPressure'],
+        'o2': filteredFormCollection.first['oxygen'],
+        'status': filteredFormCollection.first['status'],
+      };
+      return returnMap;
+    });
+    var futureList = Future.wait(mapResult);
+    var returnValue = await futureList;
+    return returnValue;
   }
 
   Future<bool> signIn(
