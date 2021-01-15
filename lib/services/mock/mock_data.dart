@@ -57,7 +57,7 @@ class MockFirestore {
       'height': 170,
       'weight': 70,
       'an': an,
-      'operationDate': DateTime.now().toString(),
+      'operationDate': DateTime.now(),
       'operationMethod': 'LAP+Operation',
       'operationName': 'ผ่าตัดนิ่วในถุงน้ำดี',
       'doctorName': 'ชื่อหมอ',
@@ -87,7 +87,7 @@ class MockFirestore {
     Map<String, dynamic> mockFormsCollection = {
       'an': an,
       'hn': hn,
-      'creation': DateTime.now().toLocal().toString(),
+      'creation': DateTime.now(),
       'creator': 'พยาบาลนิรนาม',
       'formName': 'testPostHosTable',
       'patientStage': 'pre-operation',
