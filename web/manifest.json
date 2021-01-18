@@ -1,6 +1,6 @@
 {
-    "name": "myapp",
-    "short_name": "myapp",
+    "name": "AbdoCare",
+    "short_name": "AbdoCare",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
