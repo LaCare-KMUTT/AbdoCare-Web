@@ -14,6 +14,7 @@ import 'page/dashboard_pre.dart';
 import 'page/dashboard_postHos.dart';
 import 'page/dashboard_postHome.dart';
 import 'services/service_locator.dart';
+import 'page/notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
         '/dashboard_postHos': (context) => PostHosDashboardPage(),
         '/mock': (context) => MockDataPage(),
         '/appointment_page': (context) => AppointmentPage(),
+        '/notification_page': (context) => NotificationPage(),
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

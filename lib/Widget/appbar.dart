@@ -33,7 +33,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
-                Navigator.pushNamed(context, '/notification_page');
+                Navigator.pushNamed(context, '/profile');
               }),
         ),
       ],
