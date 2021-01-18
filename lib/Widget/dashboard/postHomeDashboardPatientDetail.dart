@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
-class PatientDetail extends StatelessWidget {
+class PostHomePatientDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +18,7 @@ class PatientDetail extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
                     child: Text(
                       'ข้อมูลส่วนตัว',
-                      style: TextStyle(color: Color(0xFFC37447)),
+                      style: TextStyle(fontSize: 18, color: Color(0xFFC37447)),
                     ),
                   ),
                   Row(
@@ -220,11 +220,10 @@ class PatientDetail extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    width: 100,
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
                     child: Text(
                       'ข้อมูลการรักษา',
-                      style: TextStyle(color: Color(0xFFC37447)),
+                      style: TextStyle(fontSize: 18, color: Color(0xFFC37447)),
                     ),
                   ),
                   Row(
@@ -241,7 +240,7 @@ class PatientDetail extends StatelessWidget {
                         child: Container(
                           width: 200,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                          child: Text('Post-Operation@Hospital'),
+                          child: Text('Post-Operation@Home'),
                         ),
                       ),
                       Expanded(
@@ -366,132 +365,6 @@ class PatientDetail extends StatelessWidget {
                           width: 200,
                           margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                           child: Text('รู้สึกตัวดี'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.fromLTRB(90, 10, 0, 0),
-                          child: Text('อัตราชีพจร:', textAlign: TextAlign.end),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 200,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('90 bpm'),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child:
-                              Text('อัตราการหายใจ:', textAlign: TextAlign.end),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 200,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('26 bpm'),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('อุณหภูมิ:', textAlign: TextAlign.end),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 200,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('37.8 °C'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.fromLTRB(90, 10, 0, 0),
-                          child: Text('ออกซิเจน:', textAlign: TextAlign.end),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 200,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('99%'),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('ความดัน:', textAlign: TextAlign.end),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 200,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('120/80'),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('ADL Score:', textAlign: TextAlign.end),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 200,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('14'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.fromLTRB(90, 10, 0, 0),
-                          child: Text('หมายเลขห้อง:', textAlign: TextAlign.end),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 200,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('7'),
-                        ),
-                      ),
-                      Flexible(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          child:
-                              Text('หมายเลขเตียง:', textAlign: TextAlign.end),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 200,
-                          margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                          child: Text('1'),
                         ),
                       ),
                     ],

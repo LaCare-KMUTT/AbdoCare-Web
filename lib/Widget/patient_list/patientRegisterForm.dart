@@ -2,6 +2,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
 class PatientRegisterForm extends StatefulWidget {
   PatientRegisterForm(this.submitFn);
@@ -69,8 +70,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
 
   Future<DateTime> _selectDate(
       BuildContext context, DateTime currentValue) async {
-    final DateTime date = await showDatePicker(
+    final DateTime date = await showRoundedDatePicker(
         context: context,
+        era: EraMode.BUDDHIST_YEAR,
         locale: Locale('th', 'TH'),
         firstDate: DateTime(1900),
         initialDate: currentValue ?? DateTime.now(),
