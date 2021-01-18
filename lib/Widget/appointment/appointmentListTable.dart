@@ -6,6 +6,7 @@ import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/service_locator.dart';
 import 'addAppointment.dart';
+import 'editAppointment.dart';
 
 class AppointmentListTable extends StatefulWidget {
   AppointmentListTable({Key key}) : super(key: key);
@@ -226,20 +227,21 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                           Container(
                             child: Container(
                               width: 100,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7.0)),
-                                textColor: Colors.white,
-                                color: Color(0xFFF69E51),
-                                child: Text('แก้ไข',
-                                    style: TextStyle(fontSize: 16)),
-                                onPressed: () {
-                                  print('This is edit patient button');
-                                  setState(() {});
-                                  Navigator.pushNamed(
-                                      context, '/editAppointment_page');
-                                },
-                              ),
+                              child: EditAppointmentPage(),
+                              // RaisedButton(
+                              //   shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(7.0)),
+                              //   textColor: Colors.white,
+                              //   color: Color(0xFFF69E51),
+                              //   child: Text('แก้ไข',
+                              //       style: TextStyle(fontSize: 16)),
+                              //   onPressed: () {
+                              //     print('This is edit patient button');
+                              //     setState(() {});
+                              //     Navigator.pushNamed(
+                              //         context, '/editAppointment_page');
+                              //   },
+                              // ),
                             ),
                           ),
                         ],
