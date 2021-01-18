@@ -26,10 +26,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
     
-  firebase_core: "^0.5.0+1"
-  firebase_auth: "^0.18.1+2"
-  cloud_functions: "^0.7.0-dev.2"
-  cloud_firestore: "^0.14.1+3"
+  firebase_core: "^0.7.0"
+  firebase_auth: "^0.20.0+1"
+  cloud_functions: "^0.9.0"
+  cloud_firestore: "^0.16.0"
+  firebase_messaging: "^8.0.0-dev.14"
+
   uuid: ^2.2.2
   intl: ^0.16.1
   responsive_table: ^0.1.1+8
@@ -40,7 +42,7 @@ dependencies:
   syncfusion_flutter_gauges: ^18.4.33
   rflutter_alert: ^1.1.0
   datetime_picker_formfield: ^1.0.0
-
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
