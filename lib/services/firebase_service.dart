@@ -239,73 +239,62 @@ class FirebaseService extends IFirebaseService {
       var user = value.docs.first.data();
       var userForm = user['forms'];
       var vitalSign = userForm.map((elem) {
-        if (elem['formName'] == 'Vital Sign') {
+        if (elem['formName'] == formName) {
           return elem;
         }
       }).toList();
       return vitalSign;
     }).catchError((onError) {
-      print('$onError error in query based on stage');
+      print('$onError $userId does not have $formName ');
       return null;
     });
     if (filteredUserList != null) {
       filteredUserList.removeWhere((elem) => elem == null);
     }
-    print('filteredUserList  $filteredUserList');
     return filteredUserList;
   }
 
   Future<List<Map<String, dynamic>>> getPostHosList() async {
     var userList = await this.getUserList();
     var mapResult = userList.map((e) async {
-      var returnVal = await getFormIdBasedOnState(
+      var formVitalSign = await getFormIdBasedOnState(
           userId: e.id, stage: 'post-hos', formName: 'Vital Sign');
-      // print('returnVal for test $returnVal');
-      if (returnVal != null) {
-        if (returnVal.isNotEmpty) {
-          // print('returnVal = = = = == $returnVal');
-          // print('${returnVal.first}');
-          // print(returnVal.first['formName']);
-          // print(returnVal.first['formCreation'].toDate());
-          // print(returnVal.first['formId']);
-          var formsCollection = await _firestore
-              .collection('Forms')
-              .doc(returnVal.first['formId'])
-              .get()
-              .then((value) => value.data());
-          print(formsCollection);
-          var anSubCollection = await _firestore
-              .collection('Users')
-              .doc(e.id)
-              .collection('an')
-              .orderBy('operationDate', descending: true)
-              .limit(1)
-              .get()
-              .then((value) => value.docs.first.data());
-          print(anSubCollection);
-          var userCollection = await this
-              .searchDocumentByDocId(collection: 'Users', docId: e.id);
-          var map = {
-            'hn': userCollection.data()['hn'],
-            'name':
-                '${userCollection.data()['name']} ${userCollection.data()['surname']}',
-            'sex': userCollection.data()['gender'],
-            'age': _calculationService.calculateAge(
-                birthDateString: userCollection.data()['dob']),
-            'room': anSubCollection['roomNumber'],
-            'bed': anSubCollection['bedNumber'],
-            't': formsCollection['formData']['temperature'],
-            'hr': formsCollection['formData']['heartRate'],
-            'bp': formsCollection['formData']['bloodPressure'],
-            'r': formsCollection['formData']['respirationRate'],
-            'o2': formsCollection['formData']['oxygen'],
-            'status': formsCollection['formData']['status'],
-          };
-          // print('MAPPPP =>=>=>=>$map');
-          return map;
-        } else {
-          return null;
-        }
+      bool isAbleToMap = formVitalSign != null && formVitalSign.isNotEmpty;
+      if (isAbleToMap) {
+        var formsCollection = await _firestore
+            .collection('Forms')
+            .doc(formVitalSign.first['formId'])
+            .get()
+            .then((value) => value.data());
+        var anSubCollection = await _firestore
+            .collection('Users')
+            .doc(e.id)
+            .collection('an')
+            .orderBy('operationDate', descending: true)
+            .limit(1)
+            .get()
+            .then((value) => value.docs.first.data());
+        var userCollection =
+            await this.searchDocumentByDocId(collection: 'Users', docId: e.id);
+        var map = {
+          'hn': userCollection.data()['hn'],
+          'name':
+              '${userCollection.data()['name']} ${userCollection.data()['surname']}',
+          'sex': userCollection.data()['gender'],
+          'age': _calculationService.calculateAge(
+              birthDateString: userCollection.data()['dob']),
+          'room': anSubCollection['roomNumber'],
+          'bed': anSubCollection['bedNumber'],
+          't': formsCollection['formData']['temperature'],
+          'hr': formsCollection['formData']['heartRate'],
+          'bp': formsCollection['formData']['bloodPressure'],
+          'r': formsCollection['formData']['respirationRate'],
+          'o2': formsCollection['formData']['oxygen'],
+          'status': formsCollection['formData']['status'],
+        };
+        return map;
+      } else {
+        return null;
       }
     });
     var futureList = Future.wait(mapResult);
@@ -313,7 +302,6 @@ class FirebaseService extends IFirebaseService {
     if (returnValue != null) {
       returnValue.removeWhere((element) => element == null);
     }
-    print('returnValue = = = = =$returnValue');
     return returnValue;
   }
 
