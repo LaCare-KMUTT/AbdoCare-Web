@@ -9,29 +9,47 @@ class NotificationDetail extends StatefulWidget {
 
 class _NotificationDetailState extends State<NotificationDetail> {
   final FirebaseMessaging messaging = FirebaseMessaging.instance;
-  String _message = '';
 
   @override
   void initState() {
-    _registerOnFirebase();
-    getMessage();
     super.initState();
+    _requestPermission();
+    _registerOnFirebase();
+    _getMessage();
   }
 
   void _registerOnFirebase() {
-    messaging.getToken().then((String token) => print('Token : $token'));
+    messaging
+        .getToken(
+            vapidKey:
+                "BJ1Ff5Ha6wK1lf3C-gY_r3V-3o_Cwre7Iv7t0BdTPxylXl9Qmk6mGUQrY2_mhx0oKJncARPCrUuc6OPZvI8ovYk")
+        .then((String token) => print('Token : $token'));
   }
 
-  void getMessage() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  void _requestPermission() async {
+    final NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+  }
+
+  void _getMessage() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage messaging) {
       print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-      setState(() {
-        _message = message.notification.body;
-      });
-      print("onResume: $message");
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
+      print('Message data: ${messaging.data}');
+      print("onResume: $messaging");
+      if (messaging.notification != null) {
+        print(
+            'Message also contained a notification: ${messaging.notification}');
       }
     });
   }
@@ -50,7 +68,20 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
                       child: Card(
                           child: Center(
-                        child: Text("Message: $_message"),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(child: Text("ยังไม่อ่าน")),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Container(child: Text("อ่านแล้ว")),
+                              ],
+                            ),
+                          ],
+                        ),
                       )),
                     ),
                   ],
