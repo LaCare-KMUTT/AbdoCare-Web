@@ -104,33 +104,73 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 ),
               ),
             ]),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 50,
-                          width: double.infinity,
-                          child: RaisedButton(
-                            color: Colors.white,
-                            onPressed: () {
-                              _selectDate(context);
-                            },
-                            child: Text(
-                              "$toShow",
-                              style: TextStyle(
-                                  fontSize: 17, color: Color(0xFFC37447)),
+            Container(
+              child: Row(children: <Widget>[
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(100, 10, 0, 0),
+                        child: Card(
+                          child: Container(
+                            height: 50,
+                            child: IconButton(
+                              icon: Icon(Icons.chevron_left),
+                              color: Color(0xFFC37447),
+                              onPressed: () {},
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Card(
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              onPressed: () {
+                                _selectDate(context);
+                              },
+                              child: Text(
+                                "$toShow",
+                                style: TextStyle(
+                                    fontSize: 17, color: Color(0xFFC37447)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 100, 0),
+                        child: Card(
+                          child: Container(
+                            height: 50,
+                            child: IconButton(
+                              icon: Icon(Icons.chevron_right),
+                              color: Color(0xFFC37447),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ]),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
