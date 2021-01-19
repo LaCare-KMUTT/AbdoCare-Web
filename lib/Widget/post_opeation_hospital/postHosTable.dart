@@ -181,7 +181,7 @@ class _PostHosTableState extends State<PostHosTable> {
                   showSelect: _showSelect,
                   autoHeight: false,
                   onTabRow: (data) {
-                    Navigator.pushNamed(context, '/dashboard_page');
+                    Navigator.pushNamed(context, '/dashboard_postHos');
                     print(data);
                   },
                   onSort: (value) {

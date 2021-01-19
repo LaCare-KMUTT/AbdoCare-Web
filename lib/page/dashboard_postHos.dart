@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../Widget/appbar.dart';
-import '../Widget/dashboard/dashboardDetail.dart';
 import '../Widget/sidebar.dart';
+import '../Widget/dashboard/postHosDashboardDetail.dart';
 
-class DashboardPage extends StatefulWidget {
+class PostHosDashboardPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _DashboardPageState();
+    return _PostHosDashboardPageState();
   }
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _PostHosDashboardPageState extends State<PostHosDashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class _DashboardPageState extends State<DashboardPage> {
         title: Text('สรุปผลประจำวัน'),
         appBar: AppBar(),
       ),
-      body: DashboardDetail(),
+      body: PostHosDashboardDetail(),
       drawer: SideBar(),
     );
   }

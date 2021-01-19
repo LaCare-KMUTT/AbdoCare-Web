@@ -1,7 +1,9 @@
 import './linechart.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'ADL_chart.dart';
 import 'barchart.dart';
+import 'radial_gauge_chart .dart';
 
 class ShowDashboard extends StatefulWidget {
   @override
@@ -87,16 +89,55 @@ class _ShowDashboardState extends State<ShowDashboard> {
                     Container(
                       margin: EdgeInsets.all(10),
                       child: Text('พัฒนาการในแต่ละหัวข้อ',
-                          style: TextStyle(color: Color(0xFFC37447))),
+                          style: TextStyle(
+                              fontSize: 18, color: Color(0xFFC37447))),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
-                      child: BarChart(data: data),
+                      child: ADLChart(),
+                      //BarChart(data: data),
                     ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+            child: Container(
+              child: Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'ผลการประเมินการปฏิบัติกิจวัตรประจำวัน',
+                        style:
+                            TextStyle(fontSize: 18, color: Color(0xFFC37447)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
+                      child: PieChart(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+            child: Container(
+              child: Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
                     Container(
                       margin: EdgeInsets.all(10),
                       child: Text('ความเจ็บปวด',
-                          style: TextStyle(color: Color(0xFFC37447))),
+                          style: TextStyle(
+                              fontSize: 18, color: Color(0xFFC37447))),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),

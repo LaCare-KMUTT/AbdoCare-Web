@@ -5,12 +5,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'page/addPatient.dart';
 import 'page/appointment.dart';
-import 'page/dashboard.dart';
 import 'page/login.dart';
 import 'page/patientList.dart';
 import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
+import 'page/dashboard_pre.dart';
+import 'page/dashboard_postHos.dart';
+import 'page/dashboard_postHome.dart';
 import 'services/service_locator.dart';
 
 void main() async {
@@ -68,7 +70,9 @@ class MyApp extends StatelessWidget {
         '/postHos_page': (context) => PostHosPage(),
         '/postHome_page': (context) => PostHomePage(),
         '/login_page': (context) => LoginPage(),
-        '/dashboard_page': (context) => DashboardPage(),
+        '/dashboard_pre': (context) => PreDashboardPage(),
+        '/dashboard_postHome': (context) => PostHomeDashboardPage(),
+        '/dashboard_postHos': (context) => PostHosDashboardPage(),
         '/mock': (context) => MockDataPage(),
         '/appointment_page': (context) => AppointmentPage(),
       },
