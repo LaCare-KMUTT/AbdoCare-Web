@@ -1,9 +1,9 @@
-import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'interfaces/calculation_service_interface.dart';
 import 'interfaces/firebase_service_interface.dart';
 import 'service_locator.dart';
 
@@ -189,7 +189,8 @@ class FirebaseService extends IFirebaseService {
             subCollection: FieldValue.arrayUnion([
               {
                 'an': subCollectionDocument.id,
-                'creation': DateTime.now().toLocal().toString()
+                'creation':
+                    _calculationService.formatDate(date: DateTime.now()),
               }
             ])
           });
@@ -214,42 +215,105 @@ class FirebaseService extends IFirebaseService {
         .orderBy('operationDate', descending: true)
         .limit(1)
         .get()
-        .then((querySnapshot) => querySnapshot.docs.first.data());
+        .then((querySnapshot) {
+      var data = querySnapshot.docs.first.data();
+      var id = querySnapshot.docs.first.id;
+      data['id'] = id;
+      return data;
+    });
     return anSubCollection;
+  }
+
+  Future<List> getFormIdBasedOnState(
+      {@required String userId,
+      @required String stage,
+      @required String formName}) async {
+    var filteredUserList = await _firestore
+        .collection('Users')
+        .doc(userId)
+        .collection('an')
+        .orderBy('operationDate', descending: true)
+        .where('state', isEqualTo: stage)
+        .get()
+        .then((value) {
+      var user = value.docs.first.data();
+      var userForm = user['forms'];
+      var vitalSign = userForm.map((elem) {
+        if (elem['formName'] == 'Vital Sign') {
+          return elem;
+        }
+      }).toList();
+      return vitalSign;
+    }).catchError((onError) {
+      print('$onError error in query based on stage');
+      return null;
+    });
+    if (filteredUserList != null) {
+      filteredUserList.removeWhere((elem) => elem == null);
+    }
+    print('filteredUserList  $filteredUserList');
+    return filteredUserList;
   }
 
   Future<List<Map<String, dynamic>>> getPostHosList() async {
     var userList = await this.getUserList();
     var mapResult = userList.map((e) async {
-      var userCollection =
-          await this.searchDocumentByDocId(collection: 'Users', docId: e.id);
-      var anSubCollection = await this.getLatestAnSubCollection(docId: e.id);
-      var formCollection = await this.searchDocumentByField(
-          collection: 'Forms', field: 'an', fieldValue: anSubCollection['an']);
-      var filteredFormCollection = formCollection.docs
-          .where((element) => element.data()['an'] == anSubCollection['an'])
-          .map((e) => e.data()['formData']);
-
-      Map<String, dynamic> returnMap = {
-        'hn': userCollection.data()['hn'],
-        'name':
-            '${userCollection.data()['name']} ${userCollection.data()['surname']}',
-        'sex': userCollection.data()['gender'],
-        'age': _calculationService.calculateAge(
-            birthDateString: userCollection.data()['dob']),
-        'room': anSubCollection['roomNumber'],
-        'bed': anSubCollection['bedNumber'],
-        't': filteredFormCollection.first['temperature'],
-        'r': filteredFormCollection.first['respirationRate'],
-        'hr': filteredFormCollection.first['heartRate'],
-        'bp': filteredFormCollection.first['bloodPressure'],
-        'o2': filteredFormCollection.first['oxygen'],
-        'status': filteredFormCollection.first['status'],
-      };
-      return returnMap;
+      var returnVal = await getFormIdBasedOnState(
+          userId: e.id, stage: 'post-hos', formName: 'Vital Sign');
+      // print('returnVal for test $returnVal');
+      if (returnVal != null) {
+        if (returnVal.isNotEmpty) {
+          // print('returnVal = = = = == $returnVal');
+          // print('${returnVal.first}');
+          // print(returnVal.first['formName']);
+          // print(returnVal.first['formCreation'].toDate());
+          // print(returnVal.first['formId']);
+          var formsCollection = await _firestore
+              .collection('Forms')
+              .doc(returnVal.first['formId'])
+              .get()
+              .then((value) => value.data());
+          print(formsCollection);
+          var anSubCollection = await _firestore
+              .collection('Users')
+              .doc(e.id)
+              .collection('an')
+              .orderBy('operationDate', descending: true)
+              .limit(1)
+              .get()
+              .then((value) => value.docs.first.data());
+          print(anSubCollection);
+          var userCollection = await this
+              .searchDocumentByDocId(collection: 'Users', docId: e.id);
+          var map = {
+            'hn': userCollection.data()['hn'],
+            'name':
+                '${userCollection.data()['name']} ${userCollection.data()['surname']}',
+            'sex': userCollection.data()['gender'],
+            'age': _calculationService.calculateAge(
+                birthDateString: userCollection.data()['dob']),
+            'room': anSubCollection['roomNumber'],
+            'bed': anSubCollection['bedNumber'],
+            't': formsCollection['formData']['temperature'],
+            'hr': formsCollection['formData']['heartRate'],
+            'bp': formsCollection['formData']['bloodPressure'],
+            'r': formsCollection['formData']['respirationRate'],
+            'o2': formsCollection['formData']['oxygen'],
+            'status': formsCollection['formData']['status'],
+          };
+          // print('MAPPPP =>=>=>=>$map');
+          return map;
+        } else {
+          return null;
+        }
+      }
     });
     var futureList = Future.wait(mapResult);
     var returnValue = await futureList;
+    if (returnValue != null) {
+      returnValue.removeWhere((element) => element == null);
+    }
+    print('returnValue = = = = =$returnValue');
     return returnValue;
   }
 
@@ -274,5 +338,27 @@ class FirebaseService extends IFirebaseService {
       await _auth.signOut();
       print('Firebase User : $signingOutUserId has signed Out!');
     }
+  }
+
+  Future<void> updateFieldToSubCollection({
+    @required String collection,
+    @required String docId,
+    @required String subCollection,
+    @required String subCollectionDoc,
+    @required Map<String, dynamic> data,
+  }) async {
+    await _firestore
+        .collection(collection)
+        .doc(docId)
+        .collection(subCollection)
+        .doc(subCollectionDoc)
+        .update(data)
+        .then((value) {
+      print('success update data $data to collection $collection ');
+      print('docId = $docId, $subCollection $subCollectionDoc');
+    }).catchError((onError) {
+      print(
+          '$onError Failed on update $data to $collection $docId $subCollection $subCollectionDoc');
+    });
   }
 }
