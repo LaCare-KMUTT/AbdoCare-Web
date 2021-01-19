@@ -246,4 +246,10 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement updateFieldToSubCollection
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<Map<String, dynamic>>> getPostHomeList() {
+    // TODO: implement getPostHomeList
+    throw UnimplementedError();
+  }
 }

@@ -224,26 +224,26 @@ class FirebaseService extends IFirebaseService {
     return anSubCollection;
   }
 
-  Future<List> getFormIdBasedOnState(
+  Future<List> getFormListInAnBasedOnState(
       {@required String userId,
-      @required String stage,
+      @required String patientState,
       @required String formName}) async {
     var filteredUserList = await _firestore
         .collection('Users')
         .doc(userId)
         .collection('an')
         .orderBy('operationDate', descending: true)
-        .where('state', isEqualTo: stage)
+        .where('state', isEqualTo: patientState)
         .get()
         .then((value) {
       var user = value.docs.first.data();
       var userForm = user['forms'];
-      var vitalSign = userForm.map((elem) {
+      var formData = userForm.map((elem) {
         if (elem['formName'] == formName) {
           return elem;
         }
       }).toList();
-      return vitalSign;
+      return formData;
     }).catchError((onError) {
       print('$onError $userId does not have $formName ');
       return null;
@@ -257,8 +257,8 @@ class FirebaseService extends IFirebaseService {
   Future<List<Map<String, dynamic>>> getPostHosList() async {
     var userList = await this.getUserList();
     var mapResult = userList.map((e) async {
-      var formVitalSign = await getFormIdBasedOnState(
-          userId: e.id, stage: 'post-hos', formName: 'Vital Sign');
+      var formVitalSign = await getFormListInAnBasedOnState(
+          userId: e.id, patientState: 'post-hos', formName: 'Vital Sign');
       bool isAbleToMap = formVitalSign != null && formVitalSign.isNotEmpty;
       if (isAbleToMap) {
         var formsCollection = await _firestore
@@ -303,6 +303,82 @@ class FirebaseService extends IFirebaseService {
       returnValue.removeWhere((element) => element == null);
     }
     return returnValue;
+  }
+
+  Future<List<Map<String, dynamic>>> getPostHomeList() async {
+    var userList = await this.getUserList();
+    var mapResult = userList.map((user) async {
+      var formPain = await getFormListInAnBasedOnState(
+          userId: user.id, patientState: 'post-home', formName: 'pain');
+      var formSurgicalIncision = await getFormListInAnBasedOnState(
+          userId: user.id,
+          patientState: 'post-home',
+          formName: 'Surgical Incision');
+      //TODO enable this after has woundImg
+      // bool isAbleToMap = (formPain != null && formPain.isNotEmpty) &&
+      //     (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty);
+      bool isAbleToMap = (formPain != null && formPain.isNotEmpty);
+      if (isAbleToMap) {
+        //TODO Change formsId => formId after clearing DB
+        var formPainData = await _firestore
+            .collection('Forms')
+            .doc(formPain.first['formsId'])
+            .get()
+            .then((value) => value.data());
+        //TODO Use this After has woundImg
+        var formSurgicalIncisionData = await _firestore
+            .collection('Forms')
+            .doc(formSurgicalIncision.first['formId'])
+            .get()
+            .then((value) => value.data());
+        var anSubCollection = await _firestore
+            .collection('Users')
+            .doc(user.id)
+            .collection('an')
+            .orderBy('operationDate', descending: true)
+            .limit(1)
+            .get()
+            .then((value) => value.docs.first.data());
+        var userCollection = await this
+            .searchDocumentByDocId(collection: 'Users', docId: user.id);
+        var countAnSubCollection =
+            await getCountANSubCollection(userId: user.id);
+        var map = {
+          'hn': userCollection.data()['hn'],
+          'name':
+              '${userCollection.data()['name']} ${userCollection.data()['surname']}',
+          'vn': countAnSubCollection,
+          'sex': userCollection.data()['gender'],
+          'age': _calculationService.calculateAge(
+              birthDateString: userCollection.data()['dob']),
+          'pain_score': formPainData['formData']['Answer'],
+          'operation_type': anSubCollection['operationMethod'],
+          'wound_img': 'euei',
+        };
+        return map;
+      } else {
+        return null;
+      }
+    });
+
+    var futureList = Future.wait(mapResult);
+    var returnValue = await futureList;
+    if (returnValue != null) {
+      returnValue.removeWhere((element) => element == null);
+    }
+    return returnValue;
+  }
+
+  Future<int> getCountANSubCollection({@required String userId}) async {
+    var countAnSubCollection = await _firestore
+        .collection('Users')
+        .doc(userId)
+        .collection('an')
+        .orderBy('operationDate', descending: true)
+        .limit(1)
+        .get()
+        .then((value) => value.size);
+    return countAnSubCollection;
   }
 
   Future<bool> signIn(
