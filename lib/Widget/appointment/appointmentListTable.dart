@@ -6,6 +6,7 @@ import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/service_locator.dart';
 import 'addAppointment.dart';
+import 'editAppointment.dart';
 
 class AppointmentListTable extends StatefulWidget {
   AppointmentListTable({Key key}) : super(key: key);
@@ -103,33 +104,73 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 ),
               ),
             ]),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 50,
-                          width: double.infinity,
-                          child: RaisedButton(
-                            color: Colors.white,
-                            onPressed: () {
-                              _selectDate(context);
-                            },
-                            child: Text(
-                              "$toShow",
-                              style: TextStyle(
-                                  fontSize: 17, color: Color(0xFFC37447)),
+            Container(
+              child: Row(children: <Widget>[
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(100, 10, 0, 0),
+                        child: Card(
+                          child: Container(
+                            height: 50,
+                            child: IconButton(
+                              icon: Icon(Icons.chevron_left),
+                              color: Color(0xFFC37447),
+                              onPressed: () {},
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Card(
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            child: RaisedButton(
+                              color: Colors.white,
+                              onPressed: () {
+                                _selectDate(context);
+                              },
+                              child: Text(
+                                "$toShow",
+                                style: TextStyle(
+                                    fontSize: 17, color: Color(0xFFC37447)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 100, 0),
+                        child: Card(
+                          child: Container(
+                            height: 50,
+                            child: IconButton(
+                              icon: Icon(Icons.chevron_right),
+                              color: Color(0xFFC37447),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ]),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
@@ -226,20 +267,21 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                           Container(
                             child: Container(
                               width: 100,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7.0)),
-                                textColor: Colors.white,
-                                color: Color(0xFFF69E51),
-                                child: Text('แก้ไข',
-                                    style: TextStyle(fontSize: 16)),
-                                onPressed: () {
-                                  print('This is edit patient button');
-                                  setState(() {});
-                                  Navigator.pushNamed(
-                                      context, '/editAppointment_page');
-                                },
-                              ),
+                              child: EditAppointmentPage(),
+                              // RaisedButton(
+                              //   shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(7.0)),
+                              //   textColor: Colors.white,
+                              //   color: Color(0xFFF69E51),
+                              //   child: Text('แก้ไข',
+                              //       style: TextStyle(fontSize: 16)),
+                              //   onPressed: () {
+                              //     print('This is edit patient button');
+                              //     setState(() {});
+                              //     Navigator.pushNamed(
+                              //         context, '/editAppointment_page');
+                              //   },
+                              // ),
                             ),
                           ),
                         ],
