@@ -53,8 +53,24 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
 
   Future<DateTime> _yesterdayDate(BuildContext context) async {
     final DateTime yesterday = selectedDate.subtract(Duration(days: 1));
-    print(yesterday);
-    return yesterday;
+    if (yesterday != null && yesterday != selectedDate) {
+      setState(() {
+        selectedDate = yesterday;
+        print(selectedDate);
+      });
+    }
+    return selectedDate;
+  }
+
+  Future<DateTime> _tomorrowDate(BuildContext context) async {
+    final DateTime tomorrow = selectedDate.add(Duration(days: 1));
+    if (tomorrow != null && tomorrow != selectedDate) {
+      setState(() {
+        selectedDate = tomorrow;
+        print(selectedDate);
+      });
+    }
+    return selectedDate;
   }
 
   MaterialColor createMaterialColor(Color color) {
@@ -128,8 +144,6 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                               color: Color(0xFFC37447),
                               onPressed: () {
                                 _yesterdayDate(context);
-                                toShow = _calculationService
-                                    .formatDateToThaiString(date: yesterday);
                               },
                             ),
                           ),
@@ -192,7 +206,9 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                             child: IconButton(
                               icon: Icon(Icons.chevron_right),
                               color: Color(0xFFC37447),
-                              onPressed: () {},
+                              onPressed: () {
+                                _tomorrowDate(context);
+                              },
                             ),
                           ),
                         ),
