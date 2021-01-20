@@ -1,8 +1,13 @@
 import 'dart:math';
 
+import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:uuid/uuid.dart';
 
+import '../service_locator.dart';
+
 class MockFirestore {
+  final ICalculationService _calculationService =
+      locator<ICalculationService>();
   String _generateUniqueKey(int length) {
     var uuid = Uuid();
     return uuid.v1().substring(0, length);
@@ -84,12 +89,15 @@ class MockFirestore {
   }
 
   Map<String, dynamic> mockFormCollection({String an, String hn}) {
+    // var creation = DateTime.now();
+    var creation = _calculationService.formatDate(date: DateTime.now());
+    print(creation);
     Map<String, dynamic> mockFormsCollection = {
       'an': an,
       'hn': hn,
-      'creation': DateTime.now(),
+      'creation': creation,
       'creator': 'พยาบาลนิรนาม',
-      'formName': 'testPostHosTable',
+      'formName': 'Vital Sign',
       'patientStage': 'pre-operation',
       'formData': {
         'temperature': 37.8,

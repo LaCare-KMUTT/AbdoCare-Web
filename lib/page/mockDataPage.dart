@@ -1,8 +1,9 @@
-import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
-import 'package:AbdoCare_Web/services/mock/mock_data.dart';
-import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../services/interfaces/firebase_service_interface.dart';
+import '../services/mock/mock_data.dart';
+import '../services/service_locator.dart';
 
 class MockDataPage extends StatefulWidget {
   @override
@@ -121,19 +122,45 @@ class _MockDataPageState extends State<MockDataPage> {
                     color: Color(0xFF2ED47A),
                     onPressed: _buttonEnabled
                         ? () async {
-                            print(
-                                'an = ${_anController.text} , hn = ${_hnController.text}');
-                            var mockCollection =
+                            var mockFormCollection =
                                 _mockFirestore.mockFormCollection(
                                     an: _anController.text.trim(),
                                     hn: _hnController.text.trim());
-                            print(mockCollection);
-                            var form = _firebaseService.addDocumentToCollection(
-                                collection: 'Forms', docData: mockCollection);
-                            var user = _firebaseService.searchDocumentByField(
-                                collection: 'Users',
-                                field: 'hn',
-                                fieldValue: _hnController.text.trim());
+                            var form =
+                                await _firebaseService.addDocumentToCollection(
+                                    collection: 'Forms',
+                                    docData: mockFormCollection);
+                            var user =
+                                await _firebaseService.searchDocumentByField(
+                                    collection: 'Users',
+                                    field: 'hn',
+                                    fieldValue: _hnController.text.trim());
+                            var userId = user.docs.first.id;
+                            var anSubCollection = await _firebaseService
+                                .getLatestAnSubCollection(docId: userId);
+                            var data = {
+                              'forms': FieldValue.arrayUnion([
+                                {
+                                  'formId': form.id,
+                                  'formName': mockFormCollection['formName'],
+                                  'formCreation':
+                                      mockFormCollection['creation'],
+                                }
+                              ])
+                            };
+                            await _firebaseService
+                                .updateFieldToSubCollection(
+                                    collection: 'Users',
+                                    docId: user.docs.first.id,
+                                    subCollection: 'an',
+                                    subCollectionDoc: anSubCollection['id'],
+                                    data: data)
+                                .then((value) => print(
+                                    'success adding forms things to an subCollection'))
+                                .catchError((onError) {
+                              print(
+                                  '$onError on adding forms things to an subCollection');
+                            });
                           }
                         : null,
                     child: Text('Create form by provided HN AN '),
