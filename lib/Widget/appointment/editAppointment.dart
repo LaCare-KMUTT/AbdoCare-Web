@@ -97,7 +97,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
       textColor: Colors.white,
       color: Color(0xFFF69E51),
-      child: Text('แก้ไข', style: TextStyle(fontSize: 16)),
+      child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
       onPressed: () {
         showDialog(
             context: context,
@@ -146,7 +146,12 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                       Container(
                                         child: Column(
                                           children: [
-                                            Text('HN'),
+                                            Text(
+                                              'HN',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -154,7 +159,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                         flex: 2,
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              20, 8, 20, 8),
+                                              20, 8, 0, 8),
                                           child: TextFormField(
                                             decoration: InputDecoration(
                                               enabledBorder: OutlineInputBorder(
@@ -166,18 +171,27 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Text('AN'),
-                                          ],
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 20),
+                                        child: Container(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'AN',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Expanded(
                                         flex: 2,
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              20, 8, 20, 8),
+                                              20, 8, 0, 8),
                                           child: TextFormField(
                                             decoration: InputDecoration(
                                               enabledBorder: OutlineInputBorder(
@@ -200,7 +214,12 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                       Container(
                                         child: Column(
                                           children: [
-                                            Text('วันที่'),
+                                            Text(
+                                              'วันที่',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -213,6 +232,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                             child: Text(
                                               "${_calculationService.formatDateToThaiString(date: _date)}",
                                               style: TextStyle(
+                                                  fontSize: 18,
                                                   color: Color(0xFFC37447)),
                                             ),
                                           ),
@@ -220,7 +240,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            8, 0, 8, 0),
+                                            8, 0, 0, 0),
                                         child: Container(
                                           child: IconButton(
                                             icon: Icon(Icons.calendar_today),
@@ -244,7 +264,12 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                       Container(
                                         child: Column(
                                           children: [
-                                            Text('เวลา'),
+                                            Text(
+                                              'เวลา',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -257,6 +282,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                             child: Text(
                                               "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')} น.",
                                               style: TextStyle(
+                                                  fontSize: 18,
                                                   color: Color(0xFFC37447)),
                                             ),
                                           ),
@@ -264,7 +290,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            8, 8, 8, 8),
+                                            8, 8, 0, 8),
                                         child: Container(
                                           child: IconButton(
                                             icon: Icon(Icons.access_time),
@@ -288,7 +314,12 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                       Container(
                                         child: Column(
                                           children: [
-                                            Text('สาเหตุที่นัดหมาย'),
+                                            Text(
+                                              'สาเหตุที่นัดหมาย',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -315,7 +346,12 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                       Container(
                                         child: Column(
                                           children: [
-                                            Text('การเตรียมความพร้อม'),
+                                            Text(
+                                              'การเตรียมความพร้อม',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -340,7 +376,13 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 20),
                                     child: RaisedButton(
-                                      child: Text("ยืนยัน"),
+                                      padding: EdgeInsets.all(15),
+                                      child: Text(
+                                        'ยืนยัน',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                      ),
                                       onPressed: () {
                                         if (_formKey.currentState.validate()) {
                                           _formKey.currentState.save();

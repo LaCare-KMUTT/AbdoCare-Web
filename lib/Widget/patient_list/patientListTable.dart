@@ -35,7 +35,7 @@ class _PatientListTableState extends State<PatientListTable> {
                         color: Colors.lightGreen,
                         padding: EdgeInsets.all(15),
                         child: Text('ลงทะเบียนผู้ป่วย',
-                            style: TextStyle(fontSize: 16)),
+                            style: TextStyle(fontSize: 18)),
                         onPressed: () {
                           print('This is add patient button');
                           setState(() {});
@@ -64,7 +64,7 @@ class _PatientListTableState extends State<PatientListTable> {
               ),
             ]),
             Padding(
-              padding: const EdgeInsets.fromLTRB(40, 30, 40, 0),
+              padding: const EdgeInsets.fromLTRB(40, 10, 40, 0),
               child: Card(
                 child: Padding(
                   padding: EdgeInsets.all(20),
@@ -75,21 +75,30 @@ class _PatientListTableState extends State<PatientListTable> {
                           Expanded(
                             child: Column(
                               children: [
-                                Text('HN'),
+                                Text(
+                                  'HN',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
                               ],
                             ),
                           ),
                           Expanded(
                             child: Column(
                               children: [
-                                Text('ชื่อ-นามสกุล'),
+                                Text(
+                                  'ชื่อ-นามสกุล',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
                               ],
                             ),
                           ),
                           Expanded(
                             child: Column(
                               children: [
-                                Text('ขั้นตอนการรักษา'),
+                                Text(
+                                  'ขั้นตอนการรักษา',
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
                               ],
                             ),
                           ),
