@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'dart:math';
 import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
 import 'package:flutter/material.dart';
