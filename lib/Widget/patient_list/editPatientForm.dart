@@ -1201,7 +1201,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(7.0),
                           ),
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(15),
                           onPressed: _trySubmit,
                           textColor: Colors.white,
                           color: Color(0xFF2ED47A),
