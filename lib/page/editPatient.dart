@@ -31,12 +31,21 @@ class _EditPatientPageState extends State<EditPatientPage> {
     @required String careTakerSurname,
     @required String careTakerTel,
     @required String careTakerRelationship,
+    @required String operationDate,
+    @required String operationName,
+    @required String operationMethod,
+    @required String previousIllness,
+    @required String state,
+    @required String doctorName,
+    @required String bedNumber,
+    @required String roomNumber,
     @required String username,
     @required String uniqueKey,
     @required String password,
   }) async {
     var patientUid =
         await _firebaseService.createPatient(collection: 'Users', data: {
+      'hn': hn,
       'name': patientName,
       'surname': patientSurname,
       'address': address,
@@ -59,6 +68,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
         'careTakerRelationship': careTakerRelationship,
         'operationDate': DateTime.now()
             .toString(), //TODO Change operationDate to be input not DateTime.now()
+        'doctorName': doctorName,
+        'previousIllness': previousIllness,
+        'bedNumber': bedNumber,
+        'roomNumber': roomNumber,
       },
     );
   }
