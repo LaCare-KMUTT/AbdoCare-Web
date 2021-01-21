@@ -55,9 +55,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: createMaterialColor(Color(0xFFC37447)),
         textTheme: TextTheme(
           bodyText1: TextStyle(
-              fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
+              fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
           bodyText2: TextStyle(
-              fontSize: 16.0,
+              fontSize: 18.0,
               fontWeight: FontWeight.normal,
               color: Colors.black),
         ),

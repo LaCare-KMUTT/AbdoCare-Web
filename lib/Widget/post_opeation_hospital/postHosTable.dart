@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -115,8 +114,8 @@ class _PostHosTableState extends State<PostHosTable> {
   _initData() async {
     setState(() => _isLoading = true);
     Future.delayed(Duration(seconds: 3)).then((value) async {
-      var a = await _generateData(n: 1000);
-      _source.addAll(a);
+      var data = await _generateData(n: 1000);
+      _source.addAll(data);
       setState(() => _isLoading = false);
     });
   }

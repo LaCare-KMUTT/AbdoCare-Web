@@ -16,9 +16,10 @@ class AppointmentListTable extends StatefulWidget {
 
 class _AppointmentListTableState extends State<AppointmentListTable> {
   DateTime selectedDate = DateTime.now();
+  DateTime yesterday;
   ICalculationService _calculationService = locator<ICalculationService>();
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<DateTime> _selectDate(BuildContext context) async {
     final DateTime picked = await showRoundedDatePicker(
       context: context,
       locale: Locale('th', 'TH'),
@@ -41,11 +42,35 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
             BoxDecoration(color: Colors.orange[600], shape: BoxShape.circle),
       ),
     );
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
         print(selectedDate);
       });
+    }
+    return selectedDate;
+  }
+
+  Future<DateTime> _yesterdayDate(BuildContext context) async {
+    final DateTime yesterday = selectedDate.subtract(Duration(days: 1));
+    if (yesterday != null && yesterday != selectedDate) {
+      setState(() {
+        selectedDate = yesterday;
+        print(selectedDate);
+      });
+    }
+    return selectedDate;
+  }
+
+  Future<DateTime> _tomorrowDate(BuildContext context) async {
+    final DateTime tomorrow = selectedDate.add(Duration(days: 1));
+    if (tomorrow != null && tomorrow != selectedDate) {
+      setState(() {
+        selectedDate = tomorrow;
+        print(selectedDate);
+      });
+    }
+    return selectedDate;
   }
 
   MaterialColor createMaterialColor(Color color) {
@@ -104,73 +129,100 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 ),
               ),
             ]),
-            Container(
-              child: Row(children: <Widget>[
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(100, 10, 0, 0),
-                        child: Card(
-                          child: Container(
-                            height: 50,
-                            child: IconButton(
-                              icon: Icon(Icons.chevron_left),
-                              color: Color(0xFFC37447),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Card(
-                          child: Container(
-                            height: 50,
-                            width: double.infinity,
-                            child: RaisedButton(
-                              color: Colors.white,
-                              onPressed: () {
-                                _selectDate(context);
-                              },
-                              child: Text(
-                                "$toShow",
-                                style: TextStyle(
-                                    fontSize: 17, color: Color(0xFFC37447)),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
+              child: Container(
+                child: Card(
+                  child: Row(children: <Widget>[
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(400, 0, 0, 0),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.chevron_left,
+                                  size: 30,
+                                ),
+                                color: Color(0xFFC37447),
+                                onPressed: () {
+                                  _yesterdayDate(context);
+                                },
                               ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 100, 0),
-                        child: Card(
-                          child: Container(
-                            height: 50,
-                            child: IconButton(
-                              icon: Icon(Icons.chevron_right),
-                              color: Color(0xFFC37447),
-                              onPressed: () {},
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Container(
+                              height: 50,
+                              width: double.infinity,
+                              child: Center(
+                                child: Text(
+                                  "$toShow",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Color(0xFFC37447)),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.chevron_right,
+                                  size: 30,
+                                ),
+                                color: Color(0xFFC37447),
+                                onPressed: () {
+                                  _tomorrowDate(context);
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 350, 0),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              child: IconButton(
+                                icon: Icon(Icons.calendar_today),
+                                color: Color(0xFFC37447),
+                                onPressed: () {
+                                  _selectDate(context);
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ]),
                 ),
-              ]),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
@@ -268,20 +320,6 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                             child: Container(
                               width: 100,
                               child: EditAppointmentPage(),
-                              // RaisedButton(
-                              //   shape: RoundedRectangleBorder(
-                              //       borderRadius: BorderRadius.circular(7.0)),
-                              //   textColor: Colors.white,
-                              //   color: Color(0xFFF69E51),
-                              //   child: Text('แก้ไข',
-                              //       style: TextStyle(fontSize: 16)),
-                              //   onPressed: () {
-                              //     print('This is edit patient button');
-                              //     setState(() {});
-                              //     Navigator.pushNamed(
-                              //         context, '/editAppointment_page');
-                              //   },
-                              // ),
                             ),
                           ),
                         ],

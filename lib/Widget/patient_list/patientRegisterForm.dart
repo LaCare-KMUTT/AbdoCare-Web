@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
+import '../material.dart';
+
 class PatientRegisterForm extends StatefulWidget {
   PatientRegisterForm(this.submitFn);
 
@@ -71,12 +73,27 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   Future<DateTime> _selectDate(
       BuildContext context, DateTime currentValue) async {
     final DateTime date = await showRoundedDatePicker(
-        context: context,
-        era: EraMode.BUDDHIST_YEAR,
-        locale: Locale('th', 'TH'),
-        firstDate: DateTime(1900),
-        initialDate: currentValue ?? DateTime.now(),
-        lastDate: DateTime(2100));
+      context: context,
+      era: EraMode.BUDDHIST_YEAR,
+      locale: Locale('th', 'TH'),
+      firstDate: DateTime(DateTime.now().year - 10),
+      initialDate: currentValue ?? DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 356)),
+      theme: ThemeData(
+          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          fontFamily: "Prompt"),
+      height: 320,
+      styleDatePicker: MaterialRoundedDatePickerStyle(
+        paddingDatePicker: EdgeInsets.all(0),
+        paddingMonthHeader: EdgeInsets.all(20),
+        paddingActionBar: EdgeInsets.all(16),
+        backgroundHeaderMonth: Colors.grey[300],
+        textStyleCurrentDayOnCalendar:
+            TextStyle(color: Color(0xFFC37447), fontWeight: FontWeight.bold),
+        decorationDateSelected:
+            BoxDecoration(color: Colors.orange[600], shape: BoxShape.circle),
+      ),
+    );
     if (date != null)
       setState(() {
         _dob = _convertDateTimeDisplay(date.toString());

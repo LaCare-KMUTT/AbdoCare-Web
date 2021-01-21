@@ -3,6 +3,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
+import '../Widget/appbar.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -22,9 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFFC37447),
+      appBar: BaseAppBar(
         title: Text('AbdoCare'),
+        appBar: AppBar(),
       ),
       body: Container(
         child: ListView(
