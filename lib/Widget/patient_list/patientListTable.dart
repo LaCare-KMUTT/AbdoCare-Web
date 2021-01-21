@@ -156,7 +156,11 @@ class _PatientListTableState extends State<PatientListTable> {
                     children: <Widget>[
                       ListTile(
                         // Access the fields as defined in FireStore
-                        title: Text(user.get('hn')),
+                        title: Text(
+                          user.get('hn'),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                       ),
                     ],
                   ),
@@ -173,7 +177,11 @@ class _PatientListTableState extends State<PatientListTable> {
                     children: <Widget>[
                       ListTile(
                         // Access the fields as defined in FireStore
-                        title: Text(user.get('name')),
+                        title: Text(
+                          user.get('name'),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                       ),
                     ],
                   ),
@@ -187,15 +195,41 @@ class _PatientListTableState extends State<PatientListTable> {
                             docId: user.id),
                         builder: (context, anSnapshot) {
                           if (!anSnapshot.hasData) {
-                            return Text('loading...');
+                            return Text(
+                              'loading...',
+                              textAlign: TextAlign.center,
+                            );
                           }
                           return ListTile(
                             title: anSnapshot.data['operationMethod'] != null
-                                ? Text(anSnapshot.data['operationMethod'])
-                                : Text('-'),
+                                ? Text(
+                                    anSnapshot.data['operationMethod'],
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  )
+                                : Text(
+                                    '-',
+                                    textAlign: TextAlign.center,
+                                  ),
                           );
                         }),
                   ],
+                ),
+              ),
+              Container(
+                width: 100,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0)),
+                  textColor: Colors.white,
+                  color: Color(0xFFF69E51),
+                  child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
+                  onPressed: () {
+                    print('This is edit patient button');
+                    setState(() {});
+                    Navigator.pushNamed(context, '/editPatient_page');
+                  },
                 ),
               ),
             ],
