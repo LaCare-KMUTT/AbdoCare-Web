@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.fromLTRB(300, 200, 300, 0),
               child: TextField(
                 controller: _usernameController,
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Username',
@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextField(
                 controller: _passwordController,
                 obscureText: true,
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
@@ -61,42 +61,46 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0)),
-                    textColor: Colors.white,
-                    padding: EdgeInsets.all(15),
-                    color: Color(0xFF2ED47A),
-                    child: Text('เข้าสู่ระบบ', style: TextStyle(fontSize: 18)),
-                    onPressed: () async {
-                      setState(() {
-                        _usernameController.text.isEmpty
-                            ? _validateUsername = true
-                            : _validateUsername = false;
+                  Container(
+                    width: 150,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.0)),
+                      textColor: Colors.white,
+                      padding: EdgeInsets.all(15),
+                      color: Color(0xFF2ED47A),
+                      child:
+                          Text('เข้าสู่ระบบ', style: TextStyle(fontSize: 18)),
+                      onPressed: () async {
+                        setState(() {
+                          _usernameController.text.isEmpty
+                              ? _validateUsername = true
+                              : _validateUsername = false;
 
-                        _passwordController.text.isEmpty
-                            ? _validatePassword = true
-                            : _validatePassword = false;
-                      });
-                      print('This is login button');
+                          _passwordController.text.isEmpty
+                              ? _validatePassword = true
+                              : _validatePassword = false;
+                        });
+                        print('This is login button');
 
-                      var signInResult = false;
-                      if (_validatePassword == false &&
-                          _validateUsername == false) {
-                        signInResult = await _firebaseService.signIn(
-                            username: _usernameController.text.trim(),
-                            password: _passwordController.text.trim());
-                      }
-                      setState(() {
-                        _signInResult = signInResult;
-                      });
+                        var signInResult = false;
+                        if (_validatePassword == false &&
+                            _validateUsername == false) {
+                          signInResult = await _firebaseService.signIn(
+                              username: _usernameController.text.trim(),
+                              password: _passwordController.text.trim());
+                        }
+                        setState(() {
+                          _signInResult = signInResult;
+                        });
 
-                      if (_signInResult) {
-                        Navigator.pushNamed(context, '/postHos_page');
-                      } else {
-                        _showErrorSignInDialog();
-                      }
-                    },
+                        if (_signInResult) {
+                          Navigator.pushNamed(context, '/postHos_page');
+                        } else {
+                          _showErrorSignInDialog();
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
