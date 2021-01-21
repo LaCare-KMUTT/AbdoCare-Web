@@ -458,7 +458,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: DateTimeField(
                                       validator: (DateTime dateTime) {
                                         if (dateTime == null) {
-                                          return "กรุณากรอกสัน/เดือน/ปีเกิดของผู้ป่วย";
+                                          return "กรุณากรอกวัน/เดือน/ปีเกิดของผู้ป่วย";
                                         }
                                         return null;
                                       },
