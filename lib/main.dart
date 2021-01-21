@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'page/addPatient.dart';
+import 'page/editPatient.dart';
 import 'page/appointment.dart';
 import 'page/login.dart';
 import 'page/patientList.dart';
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/patientList_page': (context) => PatientListPage(),
         '/addPatient_page': (context) => AddPatientPage(),
+        '/editPatient_page': (context) => EditPatientPage(),
         '/pre_page': (context) => PrePage(),
         '/postHos_page': (context) => PostHosPage(),
         '/postHome_page': (context) => PostHomePage(),
