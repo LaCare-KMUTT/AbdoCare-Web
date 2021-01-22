@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
+import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
 import 'addAppointment.dart';
 import 'editAppointment.dart';
@@ -18,6 +20,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
   DateTime selectedDate = DateTime.now();
   DateTime yesterday;
   ICalculationService _calculationService = locator<ICalculationService>();
+  IFirebaseService _firebaseService = locator<IFirebaseService>();
 
   Future<DateTime> _selectDate(BuildContext context) async {
     final DateTime picked = await showRoundedDatePicker(
@@ -282,48 +285,9 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                         indent: 0,
                         endIndent: 0,
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              children: [
-                                Text('HN5678'),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              children: [
-                                Text('09.00'),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              children: [
-                                Text('นางสาว นกน้อย บินเก่ง'),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              children: [
-                                Text('LAP+Operation'),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Container(
-                              width: 100,
-                              child: EditAppointmentPage(),
-                            ),
-                          ),
-                        ],
-                      ),
+                      FutureBuilder<List<QueryDocumentSnapshot>>(
+                          future: _firebaseService.getAppointmentList(),
+                          builder: buildAppointmentList),
                     ],
                   ),
                 ),
@@ -333,5 +297,68 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
         ),
       ),
     );
+  }
+
+  Widget buildAppointmentList(BuildContext context,
+      AsyncSnapshot<List<QueryDocumentSnapshot>> snapshot) {
+    if (snapshot.hasData) {
+      return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: snapshot.data.length,
+        itemBuilder: (context, index) {
+          DocumentSnapshot appointment = snapshot.data[index];
+          return Row(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: <Widget>[
+                    Text('${appointment.get('hn')}'),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    Text('${appointment.get('time')}'),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: [
+                    Text('hello name'),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: <Widget>[
+                    Text('LAP+Operation'),
+                  ],
+                ),
+              ),
+              Container(
+                child: Container(
+                  width: 100,
+                  child: EditAppointmentPage(),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } else if (snapshot.connectionState == ConnectionState.done &&
+        !snapshot.hasData) {
+      return Center(
+        child: Text("No appointment found."),
+      );
+    } else {
+      return CircularProgressIndicator();
+    }
   }
 }

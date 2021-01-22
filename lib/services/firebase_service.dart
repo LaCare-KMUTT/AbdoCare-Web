@@ -425,4 +425,9 @@ class FirebaseService extends IFirebaseService {
           '$onError Failed on update $data to $collection $docId $subCollection $subCollectionDoc');
     });
   }
+
+  Future<List<QueryDocumentSnapshot>> getAppointmentList() async {
+    var data = await _firestore.collection('Appointments').get();
+    return data.docs;
+  }
 }
