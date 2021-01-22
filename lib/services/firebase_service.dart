@@ -143,7 +143,7 @@ class FirebaseService extends IFirebaseService {
       print('Success add $docData to $collection collection');
       return doc;
     }).catchError((onError) {
-      print('Failed to add $docData to $collection collection');
+      print('$onError Failed to add $docData to $collection collection');
       return null;
     });
     return doc;
