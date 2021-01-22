@@ -369,14 +369,6 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                           ],
                         ),
                       ),
-                      // Expanded(
-                      //   flex: 2,
-                      //   child: Column(
-                      //     children: <Widget>[
-                      //       Text('LAP+Operation'),
-                      //     ],
-                      //   ),
-                      // ),
                       Container(
                         child: Container(
                           width: 100,
