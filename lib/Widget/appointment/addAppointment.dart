@@ -407,6 +407,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                               .addDocumentToCollection(
                                                   collection: 'Appointments',
                                                   docData: dataToDB);
+                                          Navigator.pop(context);
                                         }
                                       },
                                     ),
