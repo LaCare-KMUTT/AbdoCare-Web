@@ -466,14 +466,14 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                         () {
                                           formm = format.format(date);
                                           _dob = formm;
-                                          print('operationDate: $_dob');
+                                          print('dob: $_dob');
                                         },
                                       ),
                                       onSaved: (date) => setState(
                                         () {
                                           formm = format.format(date);
                                           _dob = formm;
-                                          print('operationDate: $_dob');
+                                          print('dob: $_dob');
                                         },
                                       ),
                                     ),
