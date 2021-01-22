@@ -462,7 +462,20 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                         return date =
                                             _selectDate(context, currentValue);
                                       },
-                                      onSaved: (dateTime) => _dob = date,
+                                      onChanged: (date) => setState(
+                                        () {
+                                          formm = format.format(date);
+                                          _dob = formm;
+                                          print('operationDate: $_dob');
+                                        },
+                                      ),
+                                      onSaved: (date) => setState(
+                                        () {
+                                          formm = format.format(date);
+                                          _dob = formm;
+                                          print('operationDate: $_dob');
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
