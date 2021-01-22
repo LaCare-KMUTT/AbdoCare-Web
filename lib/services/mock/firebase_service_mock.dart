@@ -254,7 +254,8 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<List<QueryDocumentSnapshot>> getAppointmentList() {
+  Future<List<QueryDocumentSnapshot>> getAppointmentList(
+      {@required DateTime currentDate}) {
     // TODO: implement getAppointmentList
     throw UnimplementedError();
   }

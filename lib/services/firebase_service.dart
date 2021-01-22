@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'interfaces/calculation_service_interface.dart';
 import 'interfaces/firebase_service_interface.dart';
@@ -426,8 +427,32 @@ class FirebaseService extends IFirebaseService {
     });
   }
 
-  Future<List<QueryDocumentSnapshot>> getAppointmentList() async {
-    var data = await _firestore.collection('Appointments').get();
-    return data.docs;
+  Future<List<QueryDocumentSnapshot>> getAppointmentList(
+      {@required DateTime currentDate}) async {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    String formattedStart = formatter.format(currentDate);
+    var startWithOutTime = DateTime.parse(formattedStart);
+    var start = _calculationService.formatDate(date: startWithOutTime);
+    print(
+        'selected Date is ${_calculationService.formatDate(date: currentDate)}');
+    DateTime end = start.add(Duration(days: 1));
+    print('start == $start');
+    print('END = = $end');
+    print('start to UDfsifods == ${start.isBefore(end)}');
+    var data = await _firestore
+        .collection('Appointments')
+        .where('date', isGreaterThan: start)
+        .where('date', isLessThan: end)
+        .get()
+        .then((value) {
+      print(value.docs.first.data());
+      return value.docs;
+    }).catchError((onError) {
+      print('$onError WTF BRO');
+      return null;
+    });
+    print(data.length);
+    print('endFunction');
+    return data;
   }
 }

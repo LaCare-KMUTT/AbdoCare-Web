@@ -286,7 +286,8 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                         endIndent: 0,
                       ),
                       FutureBuilder<List<QueryDocumentSnapshot>>(
-                          future: _firebaseService.getAppointmentList(),
+                          future: _firebaseService.getAppointmentList(
+                              currentDate: selectedDate),
                           builder: buildAppointmentList),
                     ],
                   ),
@@ -308,48 +309,84 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
           DocumentSnapshot appointment = snapshot.data[index];
-          return Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: <Widget>[
-                    Text('${appointment.get('hn')}'),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    Text('${appointment.get('time')}'),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    Text('hello name'),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: <Widget>[
-                    Text('LAP+Operation'),
-                  ],
-                ),
-              ),
-              Container(
-                child: Container(
-                  width: 100,
-                  child: EditAppointmentPage(),
-                ),
-              ),
-            ],
-          );
+          return FutureBuilder<QuerySnapshot>(
+              future: _firebaseService.searchDocumentByField(
+                  collection: 'Users',
+                  field: 'hn',
+                  fieldValue: appointment.get('hn')),
+              builder: (context, user) {
+                if (!user.hasData) {
+                  return Text('Cannot find hn');
+                } else {
+                  return Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: <Widget>[
+                            Text('${appointment.get('hn')}'),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: <Widget>[
+                            Text('${appointment.get('time')}'),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                                '${user.data.docs.first.data()['name']} ${user.data.docs.first.data()['surname']}'),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: <Widget>[
+                            FutureBuilder<Map<String, dynamic>>(
+                                future:
+                                    _firebaseService.getLatestAnSubCollection(
+                                        docId: user.data.docs.first.id),
+                                builder: (context, anSnapshot) {
+                                  if (!anSnapshot.hasData) {
+                                    return Text('loading...');
+                                  }
+                                  return Column(
+                                    children: <Widget>[
+                                      anSnapshot.data['operationMethod'] != null
+                                          ? Text(anSnapshot
+                                              .data['operationMethod'])
+                                          : Text('-'),
+                                    ],
+                                  );
+                                }),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: <Widget>[
+                            Text('LAP+Operation'),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Container(
+                          width: 100,
+                          child: EditAppointmentPage(),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              });
         },
       );
     } else if (snapshot.connectionState == ConnectionState.done &&
