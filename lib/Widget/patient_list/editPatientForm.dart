@@ -1096,39 +1096,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: Container(
-                                    width: 150,
-                                    child: Text(
-                                      'ระดับความรู้สึกตัว:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 300,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        return value.isEmpty
-                                            ? 'กรุณากรอกระดับความรู้สึกตัว'
-                                            : null;
-                                      },
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText: 'ระดับความรู้สึกตัว'),
-                                      onSaved: (value) => _careTakerTel = value,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
                                   child: Text(
                                     'หมายเลขห้อง:\t\t\t',
                                     style:
@@ -1187,6 +1154,12 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                     ),
                                   ),
                                 ),
+                                Expanded(
+                                  flex: 2,
+                                  child: SizedBox(
+                                    width: 0,
+                                  ),
+                                )
                               ],
                             ),
                           ),
