@@ -390,8 +390,6 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                       onPressed: () {
                                         if (_formKey.currentState.validate()) {
                                           _formKey.currentState.save();
-                                          print(
-                                              '[$_an, $_hn, $_date, $_time, $_reason, $_preparation]');
                                           Map<String, dynamic> dataToDB = {
                                             'hn': _hn,
                                             'an': _an,
@@ -402,7 +400,6 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                             'reason': _reason,
                                             'preparation': _preparation,
                                           };
-                                          print('DataToDB $dataToDB');
                                           _firebaseService
                                               .addDocumentToCollection(
                                                   collection: 'Appointments',
