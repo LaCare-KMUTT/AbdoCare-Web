@@ -178,13 +178,13 @@ class _EditPatientFormState extends State<EditPatientForm> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Card(
                       margin: EdgeInsets.all(20),
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           Row(
-                            children: [
+                            children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -198,7 +198,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Text(
@@ -271,7 +271,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -390,7 +390,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -478,7 +478,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 20, 20),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -529,9 +529,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                     Card(
                       margin: EdgeInsets.only(left: 20, right: 20),
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           Row(
-                            children: [
+                            children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -545,7 +545,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -653,7 +653,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 8, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 3,
                                   child: Container(
@@ -728,7 +728,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 8, 20),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 3,
                                   child: SizedBox(
@@ -816,9 +816,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                     Card(
                       margin: EdgeInsets.all(20),
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           Row(
-                            children: [
+                            children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -832,7 +832,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -963,7 +963,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -1093,7 +1093,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 20, 20),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Text(
