@@ -1,3 +1,4 @@
+import '../../services/interfaces/firebase_service_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
@@ -13,6 +14,7 @@ class AddAppointmentPage extends StatefulWidget {
 
 class _AddAppointmentPageState extends State<AddAppointmentPage> {
   ICalculationService _calculationService = locator<ICalculationService>();
+  IFirebaseService _firebaseService = locator<IFirebaseService>();
 
   final _formKey = GlobalKey<FormState>();
   TimeOfDay _time = TimeOfDay.now();
@@ -390,6 +392,21 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           _formKey.currentState.save();
                                           print(
                                               '[$_an, $_hn, $_date, $_time, $_reason, $_preparation]');
+                                          Map<String, dynamic> dataToDB = {
+                                            'hn': _hn,
+                                            'an': _an,
+                                            'date': _date.toString(),
+                                            'time': _time
+                                                .toString()
+                                                .substring(10, 15),
+                                            'reason': _reason,
+                                            'preparation': _preparation,
+                                          };
+                                          print('DataToDB $dataToDB');
+                                          _firebaseService
+                                              .addDocumentToCollection(
+                                                  collection: 'Appointments',
+                                                  docData: dataToDB);
                                         }
                                       },
                                     ),
