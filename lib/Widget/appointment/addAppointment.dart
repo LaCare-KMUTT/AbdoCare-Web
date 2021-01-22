@@ -331,7 +331,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                       ),
                                     ),
                                     validator: (value) => value.isEmpty
-                                        ? 'กรุณากรอกหมายเลขสาเหตุ'
+                                        ? 'กรุณากรอกสาเหตุที่นัดหมาย'
                                         : null,
                                     onSaved: (value) => _reason = value,
                                   ),
@@ -369,7 +369,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                       ),
                                     ),
                                     validator: (value) => value.isEmpty
-                                        ? 'กรุณากรอกหมายเลขการเตรียมความพร้อม'
+                                        ? 'กรุณากรอกการเตรียมความพร้อม'
                                         : null,
                                     onSaved: (value) => _preparation = value,
                                   ),
