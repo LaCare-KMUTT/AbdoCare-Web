@@ -1154,12 +1154,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                    width: 0,
-                                  ),
-                                )
+                                Expanded(flex: 2, child: SizedBox(width: 0))
                               ],
                             ),
                           ),
