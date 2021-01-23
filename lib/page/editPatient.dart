@@ -85,6 +85,8 @@ class _EditPatientPageState extends State<EditPatientPage> {
 
   @override
   Widget build(BuildContext context) {
+    final String hn = ModalRoute.of(context).settings.arguments as String;
+    print('Print argument editPatient = $hn');
     return Scaffold(
       appBar: BaseAppBar(
         title: Text('แก้ไขข้อมูลผู้ป่วย'),

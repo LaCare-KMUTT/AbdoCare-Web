@@ -228,7 +228,8 @@ class _PatientListTableState extends State<PatientListTable> {
                   onPressed: () {
                     print('This is edit patient button');
                     setState(() {});
-                    Navigator.pushNamed(context, '/editPatient_page');
+                    Navigator.pushNamed(context, '/editPatient_page',
+                        arguments: user.get('hn'));
                   },
                 ),
               ),
