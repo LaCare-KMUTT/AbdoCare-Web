@@ -260,6 +260,11 @@ class FirebaseServiceMock extends IFirebaseService {
       String subCollection,
       String subCollectionDocId}) {
     // TODO: implement getSubCollectionSnapshot
+  }
+
+  Future<List<QueryDocumentSnapshot>> getAppointmentList(
+      {@required DateTime currentDate}) {
+    // TODO: implement getAppointmentList
     throw UnimplementedError();
   }
 }
