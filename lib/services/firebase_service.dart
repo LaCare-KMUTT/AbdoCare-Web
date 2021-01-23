@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'interfaces/calculation_service_interface.dart';
 import 'interfaces/firebase_service_interface.dart';
@@ -143,7 +144,7 @@ class FirebaseService extends IFirebaseService {
       print('Success add $docData to $collection collection');
       return doc;
     }).catchError((onError) {
-      print('Failed to add $docData to $collection collection');
+      print('$onError Failed to add $docData to $collection collection');
       return null;
     });
     return doc;
@@ -424,5 +425,26 @@ class FirebaseService extends IFirebaseService {
       print(
           '$onError Failed on update $data to $collection $docId $subCollection $subCollectionDoc');
     });
+  }
+
+  Future<List<QueryDocumentSnapshot>> getAppointmentList(
+      {@required DateTime currentDate}) async {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    String formattedStart = formatter.format(currentDate);
+    var startWithOutTime = DateTime.parse(formattedStart);
+    var start = _calculationService.formatDate(date: startWithOutTime);
+    DateTime end = start.add(Duration(days: 1));
+    var data = await _firestore
+        .collection('Appointments')
+        .where('date', isGreaterThanOrEqualTo: start)
+        .where('date', isLessThan: end)
+        .get()
+        .then((value) {
+      return value.docs;
+    }).catchError((onError) {
+      print('$onError getAppointmentList cannot query on something');
+      return null;
+    });
+    return data;
   }
 }

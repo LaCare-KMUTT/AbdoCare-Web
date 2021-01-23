@@ -62,4 +62,6 @@ abstract class IFirebaseService {
     @required String subCollectionDoc,
     @required Map<String, dynamic> data,
   });
+  Future<List<QueryDocumentSnapshot>> getAppointmentList(
+      {@required DateTime currentDate});
 }

@@ -40,7 +40,6 @@ class CalculationService extends ICalculationService {
     var formattedString =
         formatted.replaceAll(normalYear.toString(), buddhistYear.toString());
     var formattedDate = DateTime.parse(formattedString);
-    print('parse $date to $formattedDate');
     return formattedDate;
   }
 
