@@ -201,9 +201,9 @@ class _PatientListTableState extends State<PatientListTable> {
                             );
                           }
                           return ListTile(
-                            title: anSnapshot.data['operationMethod'] != null
+                            title: anSnapshot.data['state'] != null
                                 ? Text(
-                                    anSnapshot.data['operationMethod'],
+                                    anSnapshot.data['state'],
                                     textAlign: TextAlign.center,
                                     style:
                                         Theme.of(context).textTheme.bodyText2,

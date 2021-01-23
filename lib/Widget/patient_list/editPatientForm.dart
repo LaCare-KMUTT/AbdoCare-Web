@@ -17,8 +17,6 @@ class EditPatientForm extends StatefulWidget {
     @required String address,
     @required String gender,
     @required String dob,
-    @required double weight,
-    @required double height,
     @required String patientTel,
     @required String careTakerName,
     @required String careTakerSurname,
@@ -32,9 +30,9 @@ class EditPatientForm extends StatefulWidget {
     @required String doctorName,
     @required String bedNumber,
     @required String roomNumber,
-    @required String username,
-    @required String uniqueKey,
-    @required String password,
+    // @required String username,
+    // @required String uniqueKey,
+    // @required String password,
   }) submitFn;
 
   @override
@@ -52,8 +50,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
   String _address = '';
   String _gender = '';
   String _dob = '';
-  double _weight;
-  double _height;
   String _patientTel = '';
   String _careTakerName = '';
   String _careTakerSurname = '';
@@ -67,10 +63,10 @@ class _EditPatientFormState extends State<EditPatientForm> {
   String _doctorName = '';
   String _bedNumber = '';
   String _roomNumber = '';
-  String _createDummyUsername(String _patientTel) {
-    String dummyUsername = '@abdoCare.com';
-    return '$_patientTel$dummyUsername';
-  }
+  // String _createDummyUsername(String _patientTel) {
+  //   String dummyUsername = '@abdoCare.com';
+  //   return '$_patientTel$dummyUsername';
+  // }
 
   String _generateUniqueKey(int length) {
     var uuid = Uuid();
@@ -91,7 +87,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
       context: context,
       era: EraMode.BUDDHIST_YEAR,
       locale: Locale('th', 'TH'),
-      firstDate: DateTime(DateTime.now().year - 10),
+      firstDate: DateTime(DateTime.now().year - 100),
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 356)),
       theme: ThemeData(
@@ -131,8 +127,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
         address: _address.trim(),
         gender: _gender,
         dob: _dob,
-        weight: _weight,
-        height: _height,
         patientTel: _patientTel.trim(),
         careTakerName: _careTakerName,
         careTakerSurname: _careTakerSurname,
@@ -146,9 +140,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
         doctorName: _doctorName,
         bedNumber: _bedNumber,
         roomNumber: _roomNumber,
-        username: _createDummyUsername(_patientTel.trim()),
-        uniqueKey: _generateUniqueKey(6),
-        password: '000000',
+        //username: _createDummyUsername(_patientTel.trim()),
+        //uniqueKey: _generateUniqueKey(6),
+        //password: '000000',
       );
     }
   }
@@ -163,10 +157,10 @@ class _EditPatientFormState extends State<EditPatientForm> {
     super.dispose();
   }
 
+  var date;
   bool _enabled = false;
   @override
   Widget build(BuildContext context) {
-    var date;
     String formm;
     final format = DateFormat('dd/MM/yyyy');
     return Container(
@@ -179,8 +173,16 @@ class _EditPatientFormState extends State<EditPatientForm> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    Card(
-                      margin: EdgeInsets.all(20),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey[300],
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Column(
                         children: <Widget>[
                           Row(
@@ -539,8 +541,16 @@ class _EditPatientFormState extends State<EditPatientForm> {
                         ],
                       ),
                     ),
-                    Card(
-                      margin: EdgeInsets.only(left: 20, right: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey[300],
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
                       child: Column(
                         children: <Widget>[
                           Row(
@@ -556,7 +566,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
                               children: <Widget>[
                                 Expanded(
@@ -606,7 +616,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 2,
+                                  flex: 3,
                                   child: Container(
                                     width: 300,
                                     child: TextFormField(
@@ -664,170 +674,60 @@ class _EditPatientFormState extends State<EditPatientForm> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 8, 8),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    child: Text(
-                                      'ความเกี่ยวข้องกับผู้ป่วย:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
-                                    ),
+                            padding: const EdgeInsets.fromLTRB(0, 10, 8, 20),
+                            child: Row(children: <Widget>[
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  width: 150,
+                                  child: Text(
+                                    'ความเกี่ยวข้องกับผู้ป่วย:\t\t\t',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.end,
                                   ),
                                 ),
-                                Flexible(
-                                  flex: 1,
-                                  child: Radio(
-                                    value: 'สามี/ภรรยา',
-                                    groupValue: _careTakerRelationship,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        print(value);
-                                        _careTakerRelationship = value;
-                                      });
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  width: 300,
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      return value.isEmpty
+                                          ? 'กรุณากรอกความเกี่ยวข้องกับผู้ป่วย'
+                                          : null;
                                     },
+                                    decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.black26, width: 1),
+                                        ),
+                                        labelText: 'ความเกี่ยวข้องกับผู้ป่วย'),
+                                    onSaved: (value) =>
+                                        _careTakerRelationship = value,
                                   ),
                                 ),
-                                Expanded(flex: 2, child: Text('สามี/ภรรยา')),
-                                Flexible(
-                                  flex: 1,
-                                  child: Radio(
-                                    value: 'บุตร',
-                                    groupValue: _careTakerRelationship,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        print(value);
-                                        _careTakerRelationship = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                Expanded(flex: 2, child: Text('บุตร')),
-                                Flexible(
-                                  flex: 1,
-                                  child: Radio(
-                                    value: 'บิดา/มารดา',
-                                    groupValue: _careTakerRelationship,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        print(value);
-                                        _careTakerRelationship = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                Expanded(flex: 2, child: Text('บิดา/มารดา')),
-                                Flexible(
-                                  flex: 2,
-                                  child: Radio(
-                                    value: 'พี่ชาย/น้องชาย',
-                                    groupValue: _careTakerRelationship,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        print(value);
-                                        _careTakerRelationship = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                    flex: 2, child: Text('พี่ชาย/น้องชาย')),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 8, 8, 20),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 3,
-                                  child: SizedBox(
-                                    width: 0,
-                                  ),
-                                ),
-                                Flexible(
-                                  flex: 1,
-                                  child: Radio(
-                                    value: 'พี่สาว/น้องสาว',
-                                    groupValue: _careTakerRelationship,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        print(value);
-                                        _careTakerRelationship = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                Expanded(
-                                    flex: 2, child: Text('พี่สาว/น้องสาว')),
-                                Flexible(
-                                  flex: 1,
-                                  child: Radio(
-                                    value: 'ญาติ',
-                                    groupValue: _careTakerRelationship,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        print(value);
-                                        _careTakerRelationship = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                Expanded(flex: 2, child: Text('ญาติ')),
-                                Flexible(
-                                  flex: 1,
-                                  child: Radio(
-                                    value: 'อื่นๆ..',
-                                    groupValue: _careTakerRelationship,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        print(value);
-                                        _careTakerRelationship = value;
-                                        _enabled = true;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                Flexible(flex: 2, child: Text('อื่นๆ\t\t')),
-                                Expanded(
-                                  flex: 3,
-                                  child: AbsorbPointer(
-                                    absorbing: !_enabled,
-                                    child: TextFormField(
-                                      enabled: _enabled,
-                                      validator: (value) {
-                                        return value.isEmpty
-                                            ? 'กรุณากรอกความเกี่ยวข้องกับผู้ป่วย'
-                                            : null;
-                                      },
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText:
-                                              'ความเกี่ยวข้องกับผู้ป่วย'),
-                                      onSaved: (value) =>
-                                          _careTakerRelationship = value,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: SizedBox(width: 0),
-                                )
-                              ],
-                            ),
-                          ),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: SizedBox(width: 0),
+                              )
+                            ]),
+                          )
                         ],
                       ),
                     ),
-                    Card(
-                      margin: EdgeInsets.all(20),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey[300],
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
                       child: Column(
                         children: <Widget>[
                           Row(
@@ -908,39 +808,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                   child: Container(
                                     width: 100,
                                     child: Text(
-                                      'ชื่อแพทย์ที่รักษา:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 300,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        return value.isEmpty
-                                            ? 'กรุณากรอกชื่อชื่อแพทย์ที่รักษา'
-                                            : null;
-                                      },
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText: 'ชื่อแพทย์ที่รักษา'),
-                                      onSaved: (value) => _doctorName = value,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 100,
-                                    child: Text(
                                       'ชื่อการผ่าตัด:\t\t\t',
                                       style:
                                           Theme.of(context).textTheme.bodyText2,
@@ -970,6 +837,39 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                     ),
                                   ),
                                 ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    width: 100,
+                                    child: Text(
+                                      'ชื่อแพทย์ที่รักษา:\t\t\t',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    width: 300,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        return value.isEmpty
+                                            ? 'กรุณากรอกชื่อชื่อแพทย์ที่รักษา'
+                                            : null;
+                                      },
+                                      decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.black26,
+                                                width: 1),
+                                          ),
+                                          labelText: 'ชื่อแพทย์ที่รักษา'),
+                                      onSaved: (value) => _doctorName = value,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -977,6 +877,40 @@ class _EditPatientFormState extends State<EditPatientForm> {
                             padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
                               children: <Widget>[
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    width: 100,
+                                    child: Text(
+                                      'โรคร่วม:\t\t\t',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    width: 300,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        return value.isEmpty
+                                            ? 'กรุณากรอกโรคร่วม'
+                                            : null;
+                                      },
+                                      decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.black26,
+                                                width: 1),
+                                          ),
+                                          labelText: 'โรคร่วม'),
+                                      onSaved: (value) =>
+                                          _previousIllness = value,
+                                    ),
+                                  ),
+                                ),
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -1034,7 +968,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: DropdownButtonFormField(
                                     isExpanded: true,
                                     validator: (value) => value == null
@@ -1064,40 +998,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                         _gender = value;
                                       });
                                     },
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 100,
-                                    child: Text(
-                                      'โรคร่วม:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 300,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        return value.isEmpty
-                                            ? 'กรุณากรอกโรคร่วม'
-                                            : null;
-                                      },
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText: 'โรคร่วม'),
-                                      onSaved: (value) =>
-                                          _previousIllness = value,
-                                    ),
                                   ),
                                 ),
                               ],
@@ -1167,7 +1067,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                     ),
                                   ),
                                 ),
-                                Expanded(flex: 2, child: SizedBox(width: 0))
+                                Expanded(flex: 3, child: SizedBox(width: 0))
                               ],
                             ),
                           ),
@@ -1183,7 +1083,13 @@ class _EditPatientFormState extends State<EditPatientForm> {
                             borderRadius: BorderRadius.circular(7.0),
                           ),
                           padding: EdgeInsets.all(15),
-                          onPressed: _trySubmit,
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              //_formKey.currentState.save();
+                              _trySubmit();
+                              Navigator.pop(context);
+                            }
+                          },
                           textColor: Colors.white,
                           color: Color(0xFF2ED47A),
                           child: Text(

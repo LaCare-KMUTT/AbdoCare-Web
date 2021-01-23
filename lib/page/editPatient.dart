@@ -15,7 +15,6 @@ class EditPatientPage extends StatefulWidget {
 
 class _EditPatientPageState extends State<EditPatientPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-
   void _submitEditPatientForm({
     @required String hn,
     @required String an,
@@ -24,8 +23,6 @@ class _EditPatientPageState extends State<EditPatientPage> {
     @required String address,
     @required String gender,
     @required String dob,
-    @required double weight,
-    @required double height,
     @required String patientTel,
     @required String careTakerName,
     @required String careTakerSurname,
@@ -39,27 +36,37 @@ class _EditPatientPageState extends State<EditPatientPage> {
     @required String doctorName,
     @required String bedNumber,
     @required String roomNumber,
-    @required String username,
-    @required String uniqueKey,
-    @required String password,
+    // @required String username,
+    // @required String uniqueKey,
+    //@required String password,
   }) async {
-    var patientUid =
-        await _firebaseService.createPatient(collection: 'Users', data: {
-      'hn': hn,
-      'name': patientName,
-      'surname': patientSurname,
-      'address': address,
-      'gender': gender,
-      'dob': dob,
-      'patientTel': patientTel,
-      'username': username,
-      'uniqueKey': uniqueKey,
-      'password': password,
-    });
-    await _firebaseService.addSubCollection(
+    // var document = await _firebaseService.searchDocumentByField(
+    //     collection: 'User', field: 'hn', fieldValue: hn);
+    // var docid = document.docs;
+    // print('docid: $docid');
+
+    var subCollectionDocument = await _firebaseService.searchDocumentByDocId(
+        collection: 'User', docId: 'R52s1d4MCSU7ldYfpY6sqAMe1qv2');
+    print(subCollectionDocument.id);
+
+    await _firebaseService.updateDataToCollectionField(
+        collection: 'Users',
+        docId: 'R52s1d4MCSU7ldYfpY6sqAMe1qv2',
+        data: {
+          'hn': hn,
+          'name': patientName,
+          'surname': patientSurname,
+          'address': address,
+          'gender': gender,
+          'dob': dob,
+          'patientTel': patientTel,
+        });
+
+    await _firebaseService.updateFieldToSubCollection(
       collection: 'Users',
-      docId: patientUid,
+      docId: 'R52s1d4MCSU7ldYfpY6sqAMe1qv2',
       subCollection: 'an',
+      subCollectionDoc: 'U2hCfDabehXhzm4voQeF',
       data: {
         'an': 'testAnNumber',
         'careTakerName': careTakerName,

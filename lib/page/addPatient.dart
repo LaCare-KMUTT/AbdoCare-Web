@@ -24,8 +24,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required String address,
     @required String gender,
     @required String dob,
-    @required double weight,
-    @required double height,
+    @required String state,
     @required String patientTel,
     @required String careTakerName,
     @required String careTakerSurname,
@@ -37,6 +36,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
   }) async {
     var patientUid =
         await _firebaseService.createPatient(collection: 'Users', data: {
+      'hn': hn,
       'name': patientName,
       'surname': patientSurname,
       'address': address,
@@ -53,6 +53,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
       subCollection: 'an',
       data: {
         'an': 'testAnNumber',
+        'state': 'Pre-Operation',
         'careTakerName': careTakerName,
         'careTakerSurname': careTakerSurname,
         'careTakerTel': careTakerTel,
