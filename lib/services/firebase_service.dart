@@ -433,26 +433,18 @@ class FirebaseService extends IFirebaseService {
     String formattedStart = formatter.format(currentDate);
     var startWithOutTime = DateTime.parse(formattedStart);
     var start = _calculationService.formatDate(date: startWithOutTime);
-    print(
-        'selected Date is ${_calculationService.formatDate(date: currentDate)}');
     DateTime end = start.add(Duration(days: 1));
-    print('start == $start');
-    print('END = = $end');
-    print('start to UDfsifods == ${start.isBefore(end)}');
     var data = await _firestore
         .collection('Appointments')
-        .where('date', isGreaterThan: start)
+        .where('date', isGreaterThanOrEqualTo: start)
         .where('date', isLessThan: end)
         .get()
         .then((value) {
-      print(value.docs.first.data());
       return value.docs;
     }).catchError((onError) {
-      print('$onError WTF BRO');
+      print('$onError getAppointmentList cannot query on something');
       return null;
     });
-    print(data.length);
-    print('endFunction');
     return data;
   }
 }
