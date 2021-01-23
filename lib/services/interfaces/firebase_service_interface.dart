@@ -63,7 +63,7 @@ abstract class IFirebaseService {
     @required Map<String, dynamic> data,
   });
 
-  Future<Map<String, dynamic>> getSubCollectionSnapshot({
+  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot({
     @required String collection,
     @required String docId,
     @required String subCollection,

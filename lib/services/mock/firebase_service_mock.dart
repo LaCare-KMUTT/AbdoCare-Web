@@ -254,7 +254,7 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<Map<String, dynamic>> getSubCollectionSnapshot(
+  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot(
       {String collection,
       String docId,
       String subCollection,

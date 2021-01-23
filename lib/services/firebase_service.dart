@@ -169,7 +169,7 @@ class FirebaseService extends IFirebaseService {
     return await _firestore.collection(collection).doc(docId).get();
   }
 
-  Future<Map<String, dynamic>> getSubCollectionSnapshot({
+  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot({
     @required String collection,
     @required String docId,
     @required String subCollection,

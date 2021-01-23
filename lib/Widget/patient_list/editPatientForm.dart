@@ -199,7 +199,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
             _fetchAnId(userCollection.data.docs.first.id);
             print('fuck you${userCollection.data.docs.first.id.runtimeType}');
             return FutureBuilder<Map<String, dynamic>>(
-                future: _firebaseService.getSubCollectionSnapshot(
+                future: _firebaseService.getLatestSubCollectionSnapshot(
                     collection: 'Users',
                     docId: '${userCollection.data.docs.first.id}',
                     subCollection: 'an',
