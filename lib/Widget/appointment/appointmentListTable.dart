@@ -7,6 +7,7 @@ import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
+import '../material.dart';
 import 'addAppointment.dart';
 import 'editAppointment.dart';
 
@@ -76,29 +77,13 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
     return selectedDate;
   }
 
-  MaterialColor createMaterialColor(Color color) {
-    List strengths = <double>[.05];
-    Map swatch = <int, Color>{};
-    final int r = color.red, g = color.green, b = color.blue;
-
-    for (int i = 1; i < 10; i++) {
-      strengths.add(0.1 * i);
-    }
-    strengths.forEach((strength) {
-      final double ds = 0.5 - strength;
-      swatch[(strength * 1000).round()] = Color.fromRGBO(
-        r + ((ds < 0 ? r : (255 - r)) * ds).round(),
-        g + ((ds < 0 ? g : (255 - g)) * ds).round(),
-        b + ((ds < 0 ? b : (255 - b)) * ds).round(),
-        1,
-      );
-    });
-    return MaterialColor(color.value, swatch);
-  }
+  String selectedValue;
+  final List<DropdownMenuItem> items = [];
 
   @override
   Widget build(BuildContext context) {
     var toShow = _calculationService.formatDateToThaiString(date: selectedDate);
+
     return Scaffold(
       body: Container(
         child: ListView(
@@ -116,6 +101,12 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 ],
               ),
               Expanded(
+                  flex: 2,
+                  child: SizedBox(
+                    width: 0,
+                  )),
+              Expanded(
+                flex: 1,
                 child: Column(
                   children: <Widget>[
                     Padding(
@@ -124,10 +115,11 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                         alignment: Alignment.topRight,
                         child: Text(
                           'ค้นหาผู้ป่วย:',
+                          textAlign: TextAlign.right,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -137,42 +129,31 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
               child: Container(
                 child: Card(
                   child: Row(children: <Widget>[
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(400, 0, 0, 0),
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.chevron_left,
-                                  size: 30,
-                                ),
-                                color: Color(0xFFC37447),
-                                onPressed: () {
-                                  _yesterdayDate(context);
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
+                    Expanded(
+                        flex: 1,
+                        child: SizedBox(
+                          width: 0,
+                        )),
+                    Expanded(
+                      flex: 1,
                       child: Column(
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Container(
-                              height: 50,
-                              width: double.infinity,
-                              child: Center(
-                                child: Text(
-                                  "$toShow",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Color(0xFFC37447)),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.chevron_left,
+                                    size: 30,
+                                  ),
+                                  color: Color(0xFFC37447),
+                                  onPressed: () {
+                                    _yesterdayDate(context);
+                                  },
                                 ),
                               ),
                             ),
@@ -180,43 +161,75 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                         ],
                       ),
                     ),
-                    Container(
+                    Expanded(
+                      flex: 2,
                       child: Column(
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.chevron_right,
-                                  size: 30,
+                            child: Center(
+                              child: Container(
+                                height: 50,
+                                width: double.infinity,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "$toShow",
+                                    style: TextStyle(
+                                        fontSize: 18, color: Color(0xFFC37447)),
+                                  ),
                                 ),
-                                color: Color(0xFFC37447),
-                                onPressed: () {
-                                  _tomorrowDate(context);
-                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.chevron_right,
+                                    size: 30,
+                                  ),
+                                  color: Color(0xFFC37447),
+                                  onPressed: () {
+                                    _tomorrowDate(context);
+                                  },
+                                ),
                               ),
                             ),
                           )
                         ],
                       ),
                     ),
-                    Container(
+                    Expanded(
+                      flex: 1,
                       child: Column(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 350, 0),
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              child: IconButton(
-                                icon: Icon(Icons.calendar_today),
-                                color: Color(0xFFC37447),
-                                onPressed: () {
-                                  _selectDate(context);
-                                },
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                child: IconButton(
+                                  icon: Icon(Icons.calendar_today),
+                                  color: Color(0xFFC37447),
+                                  onPressed: () {
+                                    _selectDate(context);
+                                  },
+                                ),
                               ),
                             ),
                           )
@@ -269,11 +282,8 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                             ),
                           ),
                           Container(
-                            width: 100,
-                            child: Column(
-                              children: [
-                                Text(' '),
-                              ],
+                            child: SizedBox(
+                              width: 100,
                             ),
                           ),
                         ],
@@ -318,64 +328,63 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 if (!user.hasData) {
                   return Text('Cannot find hn');
                 } else {
-                  return Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: <Widget>[
-                            Text('${appointment.get('hn')}'),
-                          ],
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: <Widget>[
+                              Text('${appointment.get('hn')}'),
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: <Widget>[
-                            Text('${appointment.get('time')}'),
-                          ],
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: <Widget>[
+                              Text('${appointment.get('time')}'),
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                                '${user.data.docs.first.data()['name']} ${user.data.docs.first.data()['surname']}'),
-                          ],
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                  '${user.data.docs.first.data()['name']} ${user.data.docs.first.data()['surname']}'),
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          children: <Widget>[
-                            FutureBuilder<Map<String, dynamic>>(
-                                future:
-                                    _firebaseService.getLatestAnSubCollection(
-                                        docId: user.data.docs.first.id),
-                                builder: (context, anSnapshot) {
-                                  if (!anSnapshot.hasData) {
-                                    return Text('loading...');
-                                  }
-                                  return Column(
-                                    children: <Widget>[
-                                      anSnapshot.data['operationMethod'] != null
-                                          ? Text(anSnapshot
-                                              .data['operationMethod'])
-                                          : Text('-'),
-                                    ],
-                                  );
-                                }),
-                          ],
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            children: <Widget>[
+                              FutureBuilder<Map<String, dynamic>>(
+                                  future:
+                                      _firebaseService.getLatestAnSubCollection(
+                                          docId: user.data.docs.first.id),
+                                  builder: (context, anSnapshot) {
+                                    if (!anSnapshot.hasData) {
+                                      return Text('loading...');
+                                    }
+                                    return Column(
+                                      children: <Widget>[
+                                        anSnapshot.data['operationMethod'] !=
+                                                null
+                                            ? Text(anSnapshot
+                                                .data['operationMethod'])
+                                            : Text('-'),
+                                      ],
+                                    );
+                                  }),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: Container(
-                          width: 100,
-                          child: EditAppointmentPage(),
-                        ),
-                      ),
-                    ],
+                        Container(width: 100, child: EditAppointmentPage()),
+                      ],
+                    ),
                   );
                 }
               });
