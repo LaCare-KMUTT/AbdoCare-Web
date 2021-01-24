@@ -197,6 +197,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
             return Text('HELLO WORLD');
           } else {
             _fetchAnId(userCollection.data.docs.first.id);
+            var user = userCollection.data.docs.first;
             print('fuck you${userCollection.data.docs.first.id.runtimeType}');
             return FutureBuilder<Map<String, dynamic>>(
                 future: _firebaseService.getLatestSubCollectionSnapshot(
@@ -209,7 +210,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                     return Text('anSubCollection doesn\'t have data');
                   } else {
                     print(_anId);
-
                     print('Waow za here $anSubCollection');
                     return Container(
                       child: ListView(
@@ -363,6 +363,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             ? 'กรุณากรอกชื่อผู้ป่วย'
                                                             : null;
                                                       },
+                                                      initialValue:
+                                                          user.get('name'),
                                                       decoration:
                                                           InputDecoration(
                                                               enabledBorder:
@@ -402,6 +404,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             ? 'กรุณากรอกนามสกุลผู้ป่วย'
                                                             : null;
                                                       },
+                                                      initialValue:
+                                                          user.get('surname'),
                                                       decoration:
                                                           InputDecoration(
                                                               enabledBorder:
@@ -441,16 +445,22 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             null
                                                         ? 'กรุณาเลือกเพศของผู้ป่วย'
                                                         : null,
+                                                    hint: DropdownMenuItem(
+                                                      child: Text(
+                                                        user.get('gender'),
+                                                      ),
+                                                      value: user.get('gender'),
+                                                    ),
                                                     decoration: InputDecoration(
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                                  color: Colors
-                                                                      .black26,
-                                                                  width: 1),
-                                                        ),
-                                                        labelText: 'เพศ'),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Colors.black26,
+                                                            width: 1),
+                                                      ),
+                                                      //
+                                                    ),
                                                     onSaved: (value) {
                                                       _gender = value;
                                                     },
@@ -504,6 +514,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             ? 'กรุณากรอกเบอร์โทร'
                                                             : null;
                                                       },
+                                                      initialValue: user
+                                                          .get('patientTel'),
                                                       decoration:
                                                           InputDecoration(
                                                               enabledBorder:
@@ -538,6 +550,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: DateTimeField(
+                                                      initialValue: user
+                                                          .get('dob')
+                                                          .toDate(),
                                                       validator:
                                                           (DateTime dateTime) {
                                                         if (dateTime == null) {
@@ -620,6 +635,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
+                                                      initialValue:
+                                                          user.get('address'),
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกที่อยู่ของผู้ป่วย'
@@ -704,6 +721,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                              'careTakerName'],
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกชื่อผู้ดูแล'
@@ -744,6 +764,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                              'careTakerSurname'],
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกนามสกุลผู้ดูแล'
@@ -784,6 +807,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                              'careTakerTel'],
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกเบอร์โทร'
@@ -830,6 +856,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                 child: Container(
                                                   width: 300,
                                                   child: TextFormField(
+                                                    initialValue: anSubCollection
+                                                            .data[
+                                                        'careTakerRelationship'],
                                                     validator: (value) {
                                                       return value.isEmpty
                                                           ? 'กรุณากรอกความเกี่ยวข้องกับผู้ป่วย'
@@ -910,6 +939,10 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: DateTimeField(
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                                  'operationDate']
+                                                              .toDate(),
                                                       validator:
                                                           (DateTime dateTime) {
                                                         if (dateTime == null) {
@@ -982,6 +1015,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                              'operationName'],
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกชื่อการผ่าตัด'
@@ -1027,6 +1063,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             ? 'กรุณากรอกชื่อชื่อแพทย์ที่รักษา'
                                                             : null;
                                                       },
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                              'doctorName'],
                                                       decoration:
                                                           InputDecoration(
                                                               enabledBorder:
@@ -1069,6 +1108,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                              'previousIllness'],
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกโรคร่วม'
@@ -1113,17 +1155,26 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             null
                                                         ? 'กรุณาเลือกประเภทการผ่าตัด'
                                                         : null,
+                                                    hint: DropdownMenuItem(
+                                                      child: Text(
+                                                        anSubCollection.data[
+                                                            'operationMethod'],
+                                                      ),
+                                                      value: anSubCollection
+                                                              .data[
+                                                          'operationMethod'],
+                                                    ),
                                                     decoration: InputDecoration(
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                                  color: Colors
-                                                                      .black26,
-                                                                  width: 1),
-                                                        ),
-                                                        labelText:
-                                                            'ประเภทการผ่าตัด'),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Colors.black26,
+                                                            width: 1),
+                                                      ),
+                                                      // labelText:
+                                                      //     'ประเภทการผ่าตัด')
+                                                    ),
                                                     onSaved: (value) {
                                                       _operationMethod = value;
                                                     },
@@ -1169,16 +1220,16 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                         ? 'กรุณาเลือกขั้นตอนการรักษา'
                                                         : null,
                                                     decoration: InputDecoration(
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                                  color: Colors
-                                                                      .black26,
-                                                                  width: 1),
-                                                        ),
-                                                        labelText:
-                                                            'ขั้นตอนการรักษา'),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                Colors.black26,
+                                                            width: 1),
+                                                      ),
+                                                      // labelText:
+                                                      //     'ขั้นตอนการรักษา'),
+                                                    ),
                                                     onSaved: (value) {
                                                       _state = value;
                                                     },
@@ -1224,6 +1275,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                              'bedNumber'],
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกหมายเลขห้อง'
@@ -1260,6 +1314,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
+                                                      initialValue:
+                                                          anSubCollection.data[
+                                                              'bedNumber'],
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกหมายเลขเตียง'
