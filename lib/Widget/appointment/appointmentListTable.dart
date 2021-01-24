@@ -363,7 +363,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                   return Text('Cannot find hn');
                 } else {
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(top: 16),
                     child: Row(
                       children: <Widget>[
                         Expanded(
