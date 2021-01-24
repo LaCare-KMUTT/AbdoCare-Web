@@ -133,17 +133,20 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 50, 105, 0),
+                        padding: const EdgeInsets.fromLTRB(8, 50, 0, 0),
                         child: Container(
-                          height: 50,
                           child: TextField(
                             decoration: InputDecoration(
+                                isDense: true,
+                                enabledBorder: const OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.black26, width: 0.0)),
                                 contentPadding: EdgeInsets.all(10.0),
                                 border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(7.0))),
                                 prefixIcon: Icon(Icons.search),
-                                hintText: 'HN...'),
+                                hintText: 'HN'),
                             onChanged: (val) {
                               setState(() {
                                 hn = val;
@@ -153,6 +156,18 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 50, 105, 0),
+                  child: Container(
+                    child: RaisedButton(
+                      child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
+                      padding: EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.0)),
+                      onPressed: () {},
+                    ),
                   ),
                 ),
               ]),
