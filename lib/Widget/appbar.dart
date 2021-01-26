@@ -19,6 +19,17 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 24,
         ),
       ),
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: 'เมนู',
+          );
+        },
+      ),
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
