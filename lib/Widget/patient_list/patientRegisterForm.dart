@@ -71,7 +71,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       locale: Locale('th', 'TH'),
       firstDate: DateTime(DateTime.now().year - 100),
       initialDate: currentValue ?? DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 356)),
+      lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
           primarySwatch: createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
