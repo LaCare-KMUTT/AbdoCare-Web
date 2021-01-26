@@ -226,8 +226,6 @@ class _PatientListTableState extends State<PatientListTable> {
                   color: Color(0xFFF69E51),
                   child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
                   onPressed: () {
-                    print('This is edit patient button');
-                    setState(() {});
                     Navigator.pushNamed(context, '/editPatient_page',
                         arguments: user.get('hn'));
                   },

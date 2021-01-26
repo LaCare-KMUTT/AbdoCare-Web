@@ -3,7 +3,6 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/interfaces/firebase_service_interface.dart';
@@ -98,7 +97,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
         controller.text =
             _calculationService.formatDateToThaiString(date: date);
       });
-    print(_dob);
     return date;
   }
 
@@ -132,9 +130,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
     }
   }
 
-  bool _isNumeric(String input) =>
-      input == null ? false : double.tryParse(input) != null;
-
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -166,7 +161,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
   Widget build(BuildContext context) {
     final String hn = ModalRoute.of(context).settings.arguments as String;
 
-    String formm;
     final format = DateFormat('dd/MM/yyyy');
 
     return FutureBuilder<QuerySnapshot>(
@@ -174,7 +168,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
             collection: 'Users', field: 'hn', fieldValue: hn),
         builder: (context, userCollection) {
           if (!userCollection.hasData) {
-            return Text('User collection doesn\'t have data');
+            print('userCollection does\'t have data in editPatientForm');
+            return CircularProgressIndicator();
           } else {
             _fetchAnId(userCollection.data.docs.first.id);
             var user = userCollection.data.docs.first;
@@ -186,7 +181,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                     subCollectionDocId: _anId),
                 builder: (context, anSubCollection) {
                   if (!anSubCollection.hasData) {
-                    return Text('anSubCollection doesn\'t have data');
+                    print('anSubCollection doesn\'t have data');
+                    return CircularProgressIndicator();
                   } else {
                     return Container(
                       child: ListView(
@@ -566,7 +562,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                                   .formatDate(
                                                                       date:
                                                                           date);
-                                                          print('dob: $_dob');
                                                         },
                                                       ),
                                                     ),
@@ -949,8 +944,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                                   .formatDate(
                                                                       date:
                                                                           date);
-                                                          print(
-                                                              'operationDate: $_operationDate');
                                                         },
                                                       ),
                                                     ),
@@ -1186,8 +1179,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                                 Colors.black26,
                                                             width: 1),
                                                       ),
-                                                      // labelText:
-                                                      //     'ขั้นตอนการรักษา'),
                                                     ),
                                                     onSaved: (value) {
                                                       _state = value;
@@ -1319,7 +1310,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                           onPressed: () async {
                                             if (_formKey.currentState
                                                 .validate()) {
-                                              // _formKey.currentState.save();
                                               _trySubmit();
                                               Navigator.pop(context);
                                             }
