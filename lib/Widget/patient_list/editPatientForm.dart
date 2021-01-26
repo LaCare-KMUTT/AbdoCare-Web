@@ -3,8 +3,8 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 
+import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
 import '../material.dart';
@@ -19,13 +19,13 @@ class EditPatientForm extends StatefulWidget {
     @required String patientSurname,
     @required String address,
     @required String gender,
-    @required String dob,
+    @required DateTime dob,
     @required String patientTel,
     @required String careTakerName,
     @required String careTakerSurname,
     @required String careTakerTel,
     @required String careTakerRelationship,
-    @required String operationDate,
+    @required DateTime operationDate,
     @required String operationName,
     @required String operationMethod,
     @required String previousIllness,
@@ -33,9 +33,6 @@ class EditPatientForm extends StatefulWidget {
     @required String doctorName,
     @required String bedNumber,
     @required String roomNumber,
-    // @required String username,
-    // @required String uniqueKey,
-    // @required String password,
   }) submitFn;
 
   @override
@@ -44,6 +41,8 @@ class EditPatientForm extends StatefulWidget {
 
 class _EditPatientFormState extends State<EditPatientForm> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final ICalculationService _calculationService =
+      locator<ICalculationService>();
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
   String pickedDate = '';
@@ -53,13 +52,13 @@ class _EditPatientFormState extends State<EditPatientForm> {
   String _patientSurname = '';
   String _address = '';
   String _gender = '';
-  String _dob = '';
+  DateTime _dob;
   String _patientTel = '';
   String _careTakerName = '';
   String _careTakerSurname = '';
   String _careTakerRelationship = '';
   String _careTakerTel = '';
-  String _operationDate = '';
+  DateTime _operationDate;
   String _operationName = '';
   String _operationMethod = '';
   String _previousIllness = '';
@@ -67,23 +66,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
   String _doctorName = '';
   String _bedNumber = '';
   String _roomNumber = '';
-  // String _createDummyUsername(String _patientTel) {
-  //   String dummyUsername = '@abdoCare.com';
-  //   return '$_patientTel$dummyUsername';
-  // }
-
-  String _generateUniqueKey(int length) {
-    var uuid = Uuid();
-    return uuid.v1().substring(0, length);
-  }
-
-  String _convertDateTimeDisplay(String date) {
-    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-    final DateFormat serverFormater = DateFormat('dd-MM-yyyy');
-    final DateTime displayDate = displayFormater.parse(date);
-    final String formatted = serverFormater.format(displayDate);
-    return formatted;
-  }
 
   Future<DateTime> _selectDate(
       BuildContext context, DateTime currentValue) async {
@@ -111,8 +93,9 @@ class _EditPatientFormState extends State<EditPatientForm> {
     );
     if (date != null)
       setState(() {
-        _dob = _convertDateTimeDisplay(date.toString());
-        controller.text = _dob;
+        _dob = _calculationService.formatDate(date: date);
+        controller.text =
+            _calculationService.formatDateToThaiString(date: date);
       });
     print(_dob);
     return date;
@@ -144,9 +127,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
         doctorName: _doctorName,
         bedNumber: _bedNumber,
         roomNumber: _roomNumber,
-        //username: _createDummyUsername(_patientTel.trim()),
-        //uniqueKey: _generateUniqueKey(6),
-        //password: '000000',
       );
     }
   }
@@ -162,7 +142,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
   }
 
   var date;
-  bool _enabled = false;
   String _anId;
 
   void _fetchAnId(String userId) {
@@ -172,12 +151,13 @@ class _EditPatientFormState extends State<EditPatientForm> {
       var anId = await _firebaseService
           .getLatestAnSubCollection(docId: userId)
           .then((value) {
-        print('here is a fcking value $value');
         return value['id'];
       });
-      setState(() {
-        _anId = anId;
-      });
+      if (this.mounted) {
+        setState(() {
+          _anId = anId;
+        });
+      }
     });
   }
 
@@ -185,7 +165,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
   Widget build(BuildContext context) {
     final String hn = ModalRoute.of(context).settings.arguments as String;
 
-    print('Print argument in editPatientForm = $hn');
     String formm;
     final format = DateFormat('dd/MM/yyyy');
 
@@ -194,11 +173,10 @@ class _EditPatientFormState extends State<EditPatientForm> {
             collection: 'Users', field: 'hn', fieldValue: hn),
         builder: (context, userCollection) {
           if (!userCollection.hasData) {
-            return Text('HELLO WORLD');
+            return Text('User collection doesn\'t have data');
           } else {
             _fetchAnId(userCollection.data.docs.first.id);
             var user = userCollection.data.docs.first;
-            print('fuck you${userCollection.data.docs.first.id.runtimeType}');
             return FutureBuilder<Map<String, dynamic>>(
                 future: _firebaseService.getLatestSubCollectionSnapshot(
                     collection: 'Users',
@@ -209,8 +187,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                   if (!anSubCollection.hasData) {
                     return Text('anSubCollection doesn\'t have data');
                   } else {
-                    print(_anId);
-                    print('Waow za here $anSubCollection');
                     return Container(
                       child: ListView(
                         children: <Widget>[
@@ -459,7 +435,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                                 Colors.black26,
                                                             width: 1),
                                                       ),
-                                                      //
                                                     ),
                                                     onSaved: (value) {
                                                       _gender = value;
@@ -585,18 +560,22 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       onChanged: (date) =>
                                                           setState(
                                                         () {
-                                                          formm = format
-                                                              .format(date);
-                                                          _dob = formm;
+                                                          _dob =
+                                                              _calculationService
+                                                                  .formatDate(
+                                                                      date:
+                                                                          date);
                                                           print('dob: $_dob');
                                                         },
                                                       ),
                                                       onSaved: (date) =>
                                                           setState(
                                                         () {
-                                                          formm = format
-                                                              .format(date);
-                                                          _dob = formm;
+                                                          _dob =
+                                                              _calculationService
+                                                                  .formatDate(
+                                                                      date:
+                                                                          date);
                                                           print('dob: $_dob');
                                                         },
                                                       ),
@@ -975,10 +954,11 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       onChanged: (date) =>
                                                           setState(
                                                         () {
-                                                          formm = format
-                                                              .format(date);
                                                           _operationDate =
-                                                              formm;
+                                                              _calculationService
+                                                                  .formatDate(
+                                                                      date:
+                                                                          date);
                                                           print(
                                                               'operationDate: $_operationDate');
                                                         },
@@ -986,10 +966,11 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       onSaved: (date) =>
                                                           setState(
                                                         () {
-                                                          formm = format
-                                                              .format(date);
                                                           _operationDate =
-                                                              formm;
+                                                              _calculationService
+                                                                  .formatDate(
+                                                                      date:
+                                                                          date);
                                                           print(
                                                               'operationDate: $_operationDate');
                                                         },
@@ -1360,7 +1341,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                           onPressed: () async {
                                             if (_formKey.currentState
                                                 .validate()) {
-                                              //_formKey.currentState.save();
+                                              // _formKey.currentState.save();
                                               _trySubmit();
                                               Navigator.pop(context);
                                             }

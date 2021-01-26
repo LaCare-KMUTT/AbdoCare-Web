@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:AbdoCare_Web/page/patientList.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
+import '../../services/interfaces/calculation_service_interface.dart';
+import '../../services/service_locator.dart';
 import '../material.dart';
 
 class PatientRegisterForm extends StatefulWidget {
@@ -19,7 +20,7 @@ class PatientRegisterForm extends StatefulWidget {
     @required String patientSurname,
     @required String address,
     @required String gender,
-    @required String dob,
+    @required DateTime dob,
     @required String patientTel,
     @required String careTakerName,
     @required String careTakerSurname,
@@ -35,6 +36,7 @@ class PatientRegisterForm extends StatefulWidget {
 }
 
 class _PatientRegisterFormState extends State<PatientRegisterForm> {
+  ICalculationService _calculationService = locator<ICalculationService>();
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
 
@@ -44,7 +46,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   String _patientSurname = '';
   String _address = '';
   String _gender = '';
-  String _dob = '';
+  DateTime _dob;
   String _patientTel = '';
   String _careTakerName = '';
   String _careTakerSurname = '';
@@ -61,21 +63,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     return uuid.v1().substring(0, length);
   }
 
-  String _convertDateTimeDisplay(String date) {
-    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-    final DateFormat serverFormater = DateFormat('dd-MM-yyyy');
-    final DateTime displayDate = displayFormater.parse(date);
-    final String formatted = serverFormater.format(displayDate);
-    return formatted;
-  }
-
   Future<DateTime> _selectDate(
       BuildContext context, DateTime currentValue) async {
     final DateTime date = await showRoundedDatePicker(
       context: context,
       era: EraMode.BUDDHIST_YEAR,
       locale: Locale('th', 'TH'),
-      firstDate: DateTime(DateTime.now().year - 10),
+      firstDate: DateTime(DateTime.now().year - 100),
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 356)),
       theme: ThemeData(
@@ -95,8 +89,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     );
     if (date != null)
       setState(() {
-        _dob = _convertDateTimeDisplay(date.toString());
-        controller.text = _dob;
+        _dob = _calculationService.formatDate(date: date);
+        controller.text =
+            _calculationService.formatDateToThaiString(date: _dob);
       });
     print(_dob);
     return date;
@@ -149,7 +144,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
                         border: Border(
@@ -163,7 +158,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                       child: Column(
                         children: [
                           Row(
-                            children: [
+                            children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -692,15 +687,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           padding: EdgeInsets.all(15),
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              //_formKey.currentState.save();
                               _trySubmit();
                               Navigator.pop(context);
                             }
                           },
-                          // onPressed: () {
-                          //   _trySubmit();
-                          //   Navigator.pop(context);
-                          // },
                           textColor: Colors.white,
                           color: Color(0xFF2ED47A),
                           child: Text(
