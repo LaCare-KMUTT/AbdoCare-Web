@@ -3,6 +3,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/interfaces/firebase_service_interface.dart';
@@ -557,17 +558,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             _selectDate(context,
                                                                 currentValue);
                                                       },
-                                                      onChanged: (date) =>
-                                                          setState(
-                                                        () {
-                                                          _dob =
-                                                              _calculationService
-                                                                  .formatDate(
-                                                                      date:
-                                                                          date);
-                                                          print('dob: $_dob');
-                                                        },
-                                                      ),
                                                       onSaved: (date) =>
                                                           setState(
                                                         () {
@@ -951,18 +941,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             _selectDate(context,
                                                                 currentValue);
                                                       },
-                                                      onChanged: (date) =>
-                                                          setState(
-                                                        () {
-                                                          _operationDate =
-                                                              _calculationService
-                                                                  .formatDate(
-                                                                      date:
-                                                                          date);
-                                                          print(
-                                                              'operationDate: $_operationDate');
-                                                        },
-                                                      ),
                                                       onSaved: (date) =>
                                                           setState(
                                                         () {
@@ -1228,7 +1206,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                         .toList(),
                                                     onChanged: (value) {
                                                       setState(() {
-                                                        _gender = value;
+                                                        _state = value;
                                                       });
                                                     },
                                                   ),
