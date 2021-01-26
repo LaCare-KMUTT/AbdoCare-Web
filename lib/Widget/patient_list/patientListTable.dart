@@ -14,122 +14,181 @@ class PatientListTable extends StatefulWidget {
 
 class _PatientListTableState extends State<PatientListTable> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-
+  String hn = '';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: ListView(
-          children: <Widget>[
-            Row(children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
-                    child: Container(
-                      width: 180,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7.0)),
-                        textColor: Colors.white,
-                        color: Colors.lightGreen,
-                        padding: EdgeInsets.all(15),
-                        child: Text('ลงทะเบียนผู้ป่วย',
-                            style: TextStyle(fontSize: 18)),
-                        onPressed: () {
-                          print('This is add patient button');
-                          setState(() {});
-                          Navigator.pushNamed(context, '/addPatient_page');
-                        },
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Expanded(
-                flex: 1,
-                child: Column(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        body: Container(
+          child: ListView(
+            children: <Widget>[
+              Row(children: <Widget>[
+                Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          'ค้นหาผู้ป่วย:',
-                          style: Theme.of(context).textTheme.bodyText2,
+                      padding: const EdgeInsets.fromLTRB(105, 50, 100, 0),
+                      child: Container(
+                        width: 180,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0)),
+                          textColor: Colors.white,
+                          color: Colors.lightGreen,
+                          padding: EdgeInsets.all(15),
+                          child: Text('ลงทะเบียนผู้ป่วย',
+                              style: TextStyle(fontSize: 18)),
+                          onPressed: () {
+                            print('This is add patient button');
+                            setState(() {});
+                            Navigator.pushNamed(context, '/addPatient_page');
+                          },
                         ),
                       ),
                     )
                   ],
                 ),
-              ),
-            ]),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(40, 10, 40, 0),
-              child: Card(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
+                Expanded(
+                  flex: 2,
+                  child: SizedBox(
+                    width: 0,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
                   child: Column(
                     children: <Widget>[
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  'HN',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(100, 50, 0, 0),
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Text(
+                            'ค้นหาผู้ป่วย:',
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  'ชื่อ-นามสกุล',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 50, 0, 0),
+                        child: Container(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                isDense: true,
+                                enabledBorder: const OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.black26, width: 0.0)),
+                                contentPadding: EdgeInsets.all(10.0),
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(7.0))),
+                                prefixIcon: Icon(Icons.search),
+                                hintText: 'HN'),
+                            onChanged: (val) {
+                              setState(() {
+                                hn = val;
+                              });
+                            },
                           ),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  'ขั้นตอนการรักษา',
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: 100,
-                            child: Column(
-                              children: [
-                                Text(' '),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.grey[300],
-                        height: 20,
-                        thickness: 1,
-                        indent: 0,
-                        endIndent: 0,
-                      ),
-                      FutureBuilder<List<QueryDocumentSnapshot>>(
-                        future: _firebaseService.getUserList(),
-                        builder: buildUserList,
+                        ),
                       ),
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 50, 105, 0),
+                  child: Container(
+                    child: RaisedButton(
+                      child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
+                      padding: EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.0)),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ]),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
+                child: Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'HN',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'ชื่อ-นามสกุล',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'ขั้นตอนการรักษา',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: SizedBox(
+                                width: 100,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.grey[300],
+                          height: 20,
+                          thickness: 1,
+                          indent: 0,
+                          endIndent: 0,
+                        ),
+                        FutureBuilder<List<QueryDocumentSnapshot>>(
+                          future: _firebaseService.getUserList(),
+                          builder: buildUserList,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -147,12 +206,8 @@ class _PatientListTableState extends State<PatientListTable> {
           return Row(
             children: <Widget>[
               Expanded(
+                flex: 1,
                 child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(width: 2.0, color: Colors.grey[300]),
-                    ),
-                  ),
                   child: Column(
                     children: <Widget>[
                       ListTile(
@@ -168,18 +223,15 @@ class _PatientListTableState extends State<PatientListTable> {
                 ),
               ),
               Expanded(
+                flex: 2,
                 child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(width: 2.0, color: Colors.grey[300]),
-                    ),
-                  ),
                   child: Column(
                     children: <Widget>[
                       ListTile(
                         // Access the fields as defined in FireStore
                         title: Text(
-                          user.get('name'),
+                          //user.get('name'),
+                          '${user.get('name')} ${user.get('surname')}',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
@@ -189,6 +241,7 @@ class _PatientListTableState extends State<PatientListTable> {
                 ),
               ),
               Expanded(
+                flex: 2,
                 child: Column(
                   children: <Widget>[
                     FutureBuilder<Map<String, dynamic>>(
