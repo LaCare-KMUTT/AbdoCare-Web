@@ -93,7 +93,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         controller.text =
             _calculationService.formatDateToThaiString(date: _dob);
       });
-    print(_dob);
     return date;
   }
 
@@ -127,7 +126,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     controller.dispose();
     super.dispose();
   }
