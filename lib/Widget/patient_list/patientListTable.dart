@@ -47,6 +47,7 @@ class _PatientListTableState extends State<PatientListTable> {
                 ],
               ),
               Expanded(
+                flex: 1,
                 child: Column(
                   children: <Widget>[
                     Padding(
