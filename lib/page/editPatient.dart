@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../Widget/appbar.dart';
 import '../Widget/patient_list/editPatientForm.dart';
 import '../Widget/sidebar.dart';
-import '../services/interfaces/calculation_service_interface.dart';
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
 
@@ -16,8 +15,7 @@ class EditPatientPage extends StatefulWidget {
 
 class _EditPatientPageState extends State<EditPatientPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  final ICalculationService _calculationService =
-      locator<ICalculationService>();
+
   var _currentHn = '';
   void _submitEditPatientForm({
     @required String hn,
@@ -60,13 +58,6 @@ class _EditPatientPageState extends State<EditPatientPage> {
           'dob': dob,
           'patientTel': patientTel,
         });
-
-    print('====> Here is updatingField to subCollection');
-    print(
-        '$hn, $an,$patientName, $patientSurname, $address, $gender, $dob, $patientTel');
-    print(
-        '$an, $careTakerName, $careTakerSurname, $careTakerTel, $careTakerRelationship, $operationDate, $operationName, $operationMethod, $doctorName, $previousIllness, $bedNumber, $roomNumber, $state');
-    print('=======================e=e=e=e=e=e=e=');
     await _firebaseService.updateFieldToSubCollection(
       collection: 'Users',
       docId: userCollectionId,
@@ -94,7 +85,6 @@ class _EditPatientPageState extends State<EditPatientPage> {
   Widget build(BuildContext context) {
     final String currentHn =
         ModalRoute.of(context).settings.arguments as String;
-    print('Print argument editPatient = $currentHn');
     setState(() {
       _currentHn = currentHn;
     });
