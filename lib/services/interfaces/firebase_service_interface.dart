@@ -62,6 +62,13 @@ abstract class IFirebaseService {
     @required String subCollectionDoc,
     @required Map<String, dynamic> data,
   });
+
+  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot({
+    @required String collection,
+    @required String docId,
+    @required String subCollection,
+    @required String subCollectionDocId,
+  });
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate});
 }

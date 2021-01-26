@@ -77,234 +77,283 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
     return selectedDate;
   }
 
-  String selectedValue;
-  final List<DropdownMenuItem> items = [];
+  String hn = "";
 
   @override
   Widget build(BuildContext context) {
     var toShow = _calculationService.formatDateToThaiString(date: selectedDate);
-
-    return Scaffold(
-      body: Container(
-        child: ListView(
-          children: <Widget>[
-            Row(children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(105, 50, 100, 0),
-                    child: Container(
-                      width: 100,
-                      child: AddAppointmentPage(),
-                    ),
-                  )
-                ],
-              ),
-              Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                    width: 0,
-                  )),
-              Expanded(
-                flex: 1,
-                child: Column(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        body: Container(
+          child: ListView(
+            children: <Widget>[
+              Row(children: <Widget>[
+                Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(100, 50, 100, 0),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          'ค้นหาผู้ป่วย:',
-                          textAlign: TextAlign.right,
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
+                      padding: const EdgeInsets.fromLTRB(105, 50, 100, 0),
+                      child: Container(
+                        width: 100,
+                        child: AddAppointmentPage(),
                       ),
-                    ),
+                    )
                   ],
                 ),
-              ),
-            ]),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
-              child: Container(
-                child: Card(
-                  child: Row(children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          width: 0,
-                        )),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.chevron_left,
-                                    size: 30,
-                                  ),
-                                  color: Color(0xFFC37447),
-                                  onPressed: () {
-                                    _yesterdayDate(context);
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Center(
-                              child: Container(
-                                height: 50,
-                                width: double.infinity,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "$toShow",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Color(0xFFC37447)),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.chevron_right,
-                                    size: 30,
-                                  ),
-                                  color: Color(0xFFC37447),
-                                  onPressed: () {
-                                    _tomorrowDate(context);
-                                  },
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                child: IconButton(
-                                  icon: Icon(Icons.calendar_today),
-                                  color: Color(0xFFC37447),
-                                  onPressed: () {
-                                    _selectDate(context);
-                                  },
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ]),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
-              child: Card(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
+                Expanded(
+                    flex: 2,
+                    child: SizedBox(
+                      width: 0,
+                    )),
+                Expanded(
+                  flex: 1,
                   child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              children: [
-                                Text('HN'),
-                              ],
-                            ),
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(100, 50, 0, 0),
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Text(
+                            'ค้นหาผู้ป่วย:',
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              children: [
-                                Text('เวลา'),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              children: [
-                                Text('ชื่อ-นามสกุล'),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              children: [
-                                Text('ลักษณะแผลผ่าตัด'),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: SizedBox(
-                              width: 100,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      Divider(
-                        color: Colors.grey[300],
-                        height: 20,
-                        thickness: 1,
-                        indent: 0,
-                        endIndent: 0,
-                      ),
-                      FutureBuilder<List<QueryDocumentSnapshot>>(
-                          future: _firebaseService.getAppointmentList(
-                              currentDate: selectedDate),
-                          builder: buildAppointmentList),
                     ],
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 50, 0, 0),
+                        child: Container(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                isDense: true,
+                                enabledBorder: const OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: Colors.black26, width: 0.0)),
+                                contentPadding: EdgeInsets.all(10.0),
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(7.0))),
+                                prefixIcon: Icon(Icons.search),
+                                hintText: 'HN'),
+                            onChanged: (val) {
+                              setState(() {
+                                hn = val;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 50, 105, 0),
+                  child: Container(
+                    child: RaisedButton(
+                      child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
+                      padding: EdgeInsets.all(15),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.0)),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ]),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
+                child: Container(
+                  child: Card(
+                    child: Row(children: <Widget>[
+                      Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            width: 0,
+                          )),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.chevron_left,
+                                      size: 30,
+                                    ),
+                                    color: Color(0xFFC37447),
+                                    onPressed: () {
+                                      _yesterdayDate(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Center(
+                                child: Container(
+                                  height: 50,
+                                  width: double.infinity,
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "$toShow",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Color(0xFFC37447)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.chevron_right,
+                                      size: 30,
+                                    ),
+                                    color: Color(0xFFC37447),
+                                    onPressed: () {
+                                      _tomorrowDate(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  child: IconButton(
+                                    icon: Icon(Icons.calendar_today),
+                                    color: Color(0xFFC37447),
+                                    onPressed: () {
+                                      _selectDate(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ]),
+                  ),
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+                child: Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                children: [
+                                  Text('HN'),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                children: [
+                                  Text('เวลา'),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                children: [
+                                  Text('ชื่อ-นามสกุล'),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                children: [
+                                  Text('ลักษณะแผลผ่าตัด'),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: SizedBox(
+                                width: 100,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.grey[300],
+                          height: 20,
+                          thickness: 1,
+                          indent: 0,
+                          endIndent: 0,
+                        ),
+                        FutureBuilder<List<QueryDocumentSnapshot>>(
+                            future: _firebaseService.getAppointmentList(
+                                currentDate: selectedDate),
+                            builder: buildAppointmentList),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -329,7 +378,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                   return Text('Cannot find hn');
                 } else {
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(top: 16),
                     child: Row(
                       children: <Widget>[
                         Expanded(

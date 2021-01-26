@@ -254,6 +254,14 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
+  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot(
+      {String collection,
+      String docId,
+      String subCollection,
+      String subCollectionDocId}) {
+    // TODO: implement getSubCollectionSnapshot
+  }
+
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate}) {
     // TODO: implement getAppointmentList

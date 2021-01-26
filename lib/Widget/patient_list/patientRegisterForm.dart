@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
+import '../../services/interfaces/calculation_service_interface.dart';
+import '../../services/service_locator.dart';
 import '../material.dart';
 
 class PatientRegisterForm extends StatefulWidget {
@@ -16,9 +20,7 @@ class PatientRegisterForm extends StatefulWidget {
     @required String patientSurname,
     @required String address,
     @required String gender,
-    @required String dob,
-    @required double weight,
-    @required double height,
+    @required DateTime dob,
     @required String patientTel,
     @required String careTakerName,
     @required String careTakerSurname,
@@ -34,18 +36,17 @@ class PatientRegisterForm extends StatefulWidget {
 }
 
 class _PatientRegisterFormState extends State<PatientRegisterForm> {
+  ICalculationService _calculationService = locator<ICalculationService>();
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
-  String pickedDate = '';
+
   String _hn = '';
   String _an = '';
   String _patientName = '';
   String _patientSurname = '';
   String _address = '';
   String _gender = '';
-  String _dob = '';
-  double _weight;
-  double _height;
+  DateTime _dob;
   String _patientTel = '';
   String _careTakerName = '';
   String _careTakerSurname = '';
@@ -62,23 +63,15 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     return uuid.v1().substring(0, length);
   }
 
-  String _convertDateTimeDisplay(String date) {
-    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-    final DateFormat serverFormater = DateFormat('dd-MM-yyyy');
-    final DateTime displayDate = displayFormater.parse(date);
-    final String formatted = serverFormater.format(displayDate);
-    return formatted;
-  }
-
   Future<DateTime> _selectDate(
       BuildContext context, DateTime currentValue) async {
     final DateTime date = await showRoundedDatePicker(
       context: context,
       era: EraMode.BUDDHIST_YEAR,
       locale: Locale('th', 'TH'),
-      firstDate: DateTime(DateTime.now().year - 10),
+      firstDate: DateTime(DateTime.now().year - 100),
       initialDate: currentValue ?? DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 356)),
+      lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
           primarySwatch: createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
@@ -96,10 +89,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     );
     if (date != null)
       setState(() {
-        _dob = _convertDateTimeDisplay(date.toString());
-        controller.text = _dob;
+        _dob = _calculationService.formatDate(date: date);
+        controller.text =
+            _calculationService.formatDateToThaiString(date: _dob);
       });
-    print(_dob);
     return date;
   }
 
@@ -116,8 +109,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         address: _address.trim(),
         gender: _gender,
         dob: _dob,
-        weight: _weight,
-        height: _height,
         patientTel: _patientTel.trim(),
         careTakerName: _careTakerName,
         careTakerSurname: _careTakerSurname,
@@ -135,7 +126,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     controller.dispose();
     super.dispose();
   }
@@ -152,13 +142,21 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  children: [
-                    Card(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey[300],
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
                       margin: EdgeInsets.all(20),
                       child: Column(
                         children: [
                           Row(
-                            children: [
+                            children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -170,7 +168,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 8, 50, 8),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
                               children: [
                                 Expanded(
@@ -204,7 +202,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: Text(
                                     'AN:\t\t\t',
                                     style:
@@ -234,22 +232,16 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 3,
                                   child: SizedBox(
                                     width: 100,
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: SizedBox(
-                                    width: 100,
-                                  ),
-                                )
                               ],
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 8, 50, 8),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
                               children: [
                                 Expanded(
@@ -298,7 +290,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 2,
+                                  flex: 3,
                                   child: Container(
                                     width: 300,
                                     child: TextFormField(
@@ -332,7 +324,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: DropdownButtonFormField(
                                     isExpanded: true,
                                     validator: (value) => value == null
@@ -368,44 +360,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 8, 50, 20),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
                               children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 100,
-                                    child: Text(
-                                      'ที่อยู่:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    width: 300,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        return value.isEmpty
-                                            ? 'กรุณากรอกที่อยู่ของผู้ป่วย'
-                                            : null;
-                                      },
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText: 'ที่อยู่'),
-                                      onSaved: (value) => _address = value,
-                                      maxLines: 5,
-                                      minLines: 1,
-                                    ),
-                                  ),
-                                ),
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -440,7 +397,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: Container(
                                     width: 150,
                                     child: Text(
@@ -452,13 +409,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: Container(
                                     width: 300,
                                     child: DateTimeField(
                                       validator: (DateTime dateTime) {
                                         if (dateTime == null) {
-                                          return "กรุณากรอกสัน/เดือน/ปีเกิดของผู้ป่วย";
+                                          return "กรุณากรอกวัน/เดือน/ปีเกิดของผู้ป่วย";
                                         }
                                         return null;
                                       },
@@ -480,18 +437,80 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     ),
                                   ),
                                 ),
+                                Expanded(
+                                  flex: 3,
+                                  child: SizedBox(
+                                    width: 100,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 20),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    width: 100,
+                                    child: Text(
+                                      'ที่อยู่:\t\t\t',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 6,
+                                  child: Container(
+                                    width: 300,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        return value.isEmpty
+                                            ? 'กรุณากรอกที่อยู่ของผู้ป่วย'
+                                            : null;
+                                      },
+                                      decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.black26,
+                                                width: 1),
+                                          ),
+                                          labelText: 'ที่อยู่'),
+                                      onSaved: (value) => _address = value,
+                                      maxLines: 5,
+                                      minLines: 1,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: SizedBox(
+                                    width: 100,
+                                  ),
+                                )
                               ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Card(
-                      margin: EdgeInsets.all(20),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey[300],
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      margin: EdgeInsets.only(left: 20, right: 20),
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           Row(
-                            children: [
+                            children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -503,9 +522,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(52, 8, 50, 8),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -611,66 +630,65 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 8, 8, 20),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 200,
-                                    child: Text(
-                                      'มีความเกี่ยวข้องเป็น:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
-                                    ),
+                            padding: const EdgeInsets.fromLTRB(0, 10, 20, 20),
+                            child: Row(children: <Widget>[
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  width: 150,
+                                  child: Text(
+                                    'ความเกี่ยวข้องกับผู้ป่วย:\t\t\t',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.end,
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    width: 250,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        return value.isEmpty
-                                            ? 'กรุณากรอกความสัมพันธ์กับผู้ป่วย'
-                                            : null;
-                                      },
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText:
-                                              'ความเกี่ยวข้องกับผู้ป่วย'),
-                                      onSaved: (value) =>
-                                          _careTakerRelationship = value,
-                                    ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  width: 300,
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      return value.isEmpty
+                                          ? 'กรุณากรอกความเกี่ยวข้องกับผู้ป่วย'
+                                          : null;
+                                    },
+                                    decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.black26, width: 1),
+                                        ),
+                                        labelText: 'ความเกี่ยวข้องกับผู้ป่วย'),
+                                    onSaved: (value) =>
+                                        _careTakerRelationship = value,
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 4,
-                                  child: SizedBox(
-                                    width: 100,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: SizedBox(width: 0),
+                              )
+                            ]),
+                          )
                         ],
                       ),
                     ),
                     Center(
                       child: Container(
                         width: 100,
-                        margin: EdgeInsets.all(30),
+                        margin: EdgeInsets.all(20),
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(7.0),
                           ),
-                          padding: EdgeInsets.all(10),
-                          onPressed: _trySubmit,
+                          padding: EdgeInsets.all(15),
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              _trySubmit();
+                              Navigator.pop(context);
+                            }
+                          },
                           textColor: Colors.white,
                           color: Color(0xFF2ED47A),
                           child: Text(
