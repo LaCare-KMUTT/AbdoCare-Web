@@ -362,6 +362,7 @@ class FirebaseService extends IFirebaseService {
             .searchDocumentByDocId(collection: 'Users', docId: user.id);
         var countAnSubCollection =
             await getCountANSubCollection(userId: user.id);
+
         var map = {
           'hn': userCollection.data()['hn'],
           'name':
@@ -369,7 +370,7 @@ class FirebaseService extends IFirebaseService {
           'vn': countAnSubCollection,
           'sex': userCollection.data()['gender'],
           'age': _calculationService.calculateAge(
-              birthDateString: userCollection.data()['dob']),
+              birthDate: userCollection.data()['dob'].toDate()),
           'pain_score': formPainData['formData']['Answer'],
           'operation_type': anSubCollection['operationMethod'],
           'wound_img': 'euei',
