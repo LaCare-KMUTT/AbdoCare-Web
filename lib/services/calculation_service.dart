@@ -8,7 +8,7 @@ class CalculationService extends ICalculationService {
     if (birthDateString != null && birthDate == null) {
       birthDate = DateTime.parse(birthDateString);
     }
-    var currentDate = DateTime.now();
+    var currentDate = this.formatDate(date: DateTime.now());
     var age = currentDate.year - birthDate.year;
     var month1 = currentDate.month;
     var month2 = birthDate.month;
