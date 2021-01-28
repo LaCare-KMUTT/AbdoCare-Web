@@ -550,9 +550,12 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                         FocusScope.of(context)
                                                             .requestFocus(
                                                                 new FocusNode());
-                                                        return date =
-                                                            _selectDate(context,
-                                                                currentValue);
+                                                        return date = _selectDate(
+                                                            context,
+                                                            _calculationService
+                                                                .formatDate(
+                                                                    date:
+                                                                        currentValue));
                                                       },
                                                       onSaved: (date) =>
                                                           setState(
