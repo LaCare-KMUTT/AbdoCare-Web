@@ -153,6 +153,7 @@ class _PostHomeTableState extends State<PostHomeTable> {
                     showSelect: _showSelect,
                     autoHeight: false,
                     onTabRow: (data) {
+                      Navigator.pushNamed(context, '/dashboard_postHome');
                       print(data);
                     },
                     onSort: (value) {
