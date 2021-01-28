@@ -295,21 +295,35 @@ class FirebaseService extends IFirebaseService {
             .then((value) => value.docs.first.data());
         var userCollection =
             await this.searchDocumentByDocId(collection: 'Users', docId: e.id);
+
+        var hnToMap = userCollection.data()['hn'];
+        var nameToMap =
+            '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+        var genderToMap = userCollection.data()['gender'];
+        var ageToMap = _calculationService.calculateAge(
+            birthDate: userCollection.data()['dob'].toDate());
+        var roomNumberToMap = anSubCollection['roomNumber'];
+        var bedNumberToMap = anSubCollection['bedNumber'];
+        var temperatureToMap = formsCollection['formData']['temperature'];
+        var respirationRateToMap =
+            formsCollection['formData']['respirationRate'];
+        var heartRateToMap = formsCollection['formData']['heartRate'];
+        var bloodPressureToMap = formsCollection['formData']['bloodPressure'];
+        var oxygenRateToMap = formsCollection['formData']['oxygen'];
+        var status = formsCollection['formData']['status'];
         var map = {
-          'hn': userCollection.data()['hn'],
-          'name':
-              '${userCollection.data()['name']} ${userCollection.data()['surname']}',
-          'sex': userCollection.data()['gender'],
-          'age': _calculationService.calculateAge(
-              birthDateString: userCollection.data()['dob']),
-          'room': anSubCollection['roomNumber'],
-          'bed': anSubCollection['bedNumber'],
-          't': formsCollection['formData']['temperature'],
-          'hr': formsCollection['formData']['heartRate'],
-          'bp': formsCollection['formData']['bloodPressure'],
-          'r': formsCollection['formData']['respirationRate'],
-          'o2': formsCollection['formData']['oxygen'],
-          'status': formsCollection['formData']['status'],
+          'hn': hnToMap,
+          'name': nameToMap,
+          'gender': genderToMap,
+          'age': ageToMap,
+          'room_number': roomNumberToMap,
+          'bed_number': bedNumberToMap,
+          'temperature': temperatureToMap,
+          'respiration_rate': respirationRateToMap,
+          'heart_rate': heartRateToMap,
+          'blood_pressure': bloodPressureToMap,
+          'oxygen_rate': oxygenRateToMap,
+          'status': status,
         };
         return map;
       } else {
