@@ -44,7 +44,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
   final ICalculationService _calculationService =
       locator<ICalculationService>();
   final _formKey = GlobalKey<FormState>();
-  TextEditingController controller = TextEditingController();
   String pickedDate = '';
   String _hn = '';
   String _an = '';
@@ -91,13 +90,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
             BoxDecoration(color: Colors.orange[600], shape: BoxShape.circle),
       ),
     );
-    if (date != null) {
-      setState(() {
-        controller.text =
-            _calculationService.formatDateToThaiString(date: date);
-      });
-    }
-    return date;
+    return _calculationService.formatDate(date: date);
   }
 
   void _trySubmit() {
@@ -128,13 +121,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
         roomNumber: _roomNumber,
       );
     }
-  }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    controller.dispose();
-    super.dispose();
   }
 
   var date;
@@ -546,22 +532,20 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                               labelText:
                                                                   'วัน/เดือน/ปี เกิด'),
                                                       onShowPicker: (context,
-                                                          currentValue) {
+                                                          currentValue) async {
                                                         FocusScope.of(context)
                                                             .requestFocus(
                                                                 new FocusNode());
-                                                        return date =
-                                                            _selectDate(context,
+                                                        var date =
+                                                            await _selectDate(
+                                                                context,
                                                                 currentValue);
+                                                        return date;
                                                       },
                                                       onSaved: (date) =>
                                                           setState(
                                                         () {
-                                                          _dob =
-                                                              _calculationService
-                                                                  .formatDate(
-                                                                      date:
-                                                                          date);
+                                                          _dob = date;
                                                         },
                                                       ),
                                                     ),
@@ -903,50 +887,50 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: DateTimeField(
-                                                      initialValue:
-                                                          anSubCollection.data[
-                                                                  'operationDate']
-                                                              .toDate(),
-                                                      validator:
-                                                          (DateTime dateTime) {
-                                                        if (dateTime == null) {
-                                                          return "กรุณากรอกวันที่รับการรักษา";
-                                                        }
-                                                        return null;
-                                                      },
-                                                      format: format,
-                                                      readOnly: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                              enabledBorder:
-                                                                  OutlineInputBorder(
-                                                                borderSide: BorderSide(
-                                                                    color: Colors
-                                                                        .black26,
-                                                                    width: 1),
-                                                              ),
-                                                              labelText:
-                                                                  'วันที่รับการรักษา'),
-                                                      onShowPicker: (context,
-                                                          currentValue) {
-                                                        FocusScope.of(context)
-                                                            .requestFocus(
-                                                                new FocusNode());
-                                                        return date =
-                                                            _selectDate(context,
-                                                                currentValue);
-                                                      },
-                                                      onSaved: (date) =>
-                                                          setState(
-                                                        () {
-                                                          _operationDate =
-                                                              _calculationService
-                                                                  .formatDate(
-                                                                      date:
-                                                                          date);
+                                                        initialValue:
+                                                            anSubCollection
+                                                                .data[
+                                                                    'operationDate']
+                                                                .toDate(),
+                                                        validator: (DateTime
+                                                            dateTime) {
+                                                          if (dateTime ==
+                                                              null) {
+                                                            return "กรุณากรอกวันที่รับการรักษา";
+                                                          }
+                                                          return null;
                                                         },
-                                                      ),
-                                                    ),
+                                                        format: format,
+                                                        readOnly: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                                enabledBorder:
+                                                                    OutlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      color: Colors
+                                                                          .black26,
+                                                                      width: 1),
+                                                                ),
+                                                                labelText:
+                                                                    'วันที่รับการรักษา'),
+                                                        onShowPicker: (context,
+                                                            currentValue) {
+                                                          FocusScope.of(context)
+                                                              .requestFocus(
+                                                                  new FocusNode());
+                                                          return date =
+                                                              _selectDate(
+                                                                  context,
+                                                                  currentValue);
+                                                        },
+                                                        onSaved: (date) {
+                                                          setState(
+                                                            () {
+                                                              _operationDate =
+                                                                  date;
+                                                            },
+                                                          );
+                                                        }),
                                                   ),
                                                 ),
                                                 Expanded(

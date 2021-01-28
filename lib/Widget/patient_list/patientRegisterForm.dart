@@ -92,8 +92,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       dateFormatted = _calculationService.formatDate(date: date);
       setState(() {
         _dob = dateFormatted;
-        controller.text =
-            _calculationService.formatDateToThaiString(date: _dob);
       });
     }
     return dateFormatted;
