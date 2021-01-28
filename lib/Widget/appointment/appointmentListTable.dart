@@ -97,13 +97,15 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
               Row(children: <Widget>[
                 Column(
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(screenSize.height / 7,
-                          screenSize.height / 20, screenSize.height / 70, 0),
-                      //padding: const EdgeInsets.fromLTRB(105, 50, 100, 0),
-                      child: Container(
-                        width: 100,
-                        child: AddAppointmentPage(),
+                    Container(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 9,
+                            screenSize.height / 20, screenSize.height / 70, 0),
+                        //padding: const EdgeInsets.fromLTRB(105, 50, 100, 0),
+                        child: Container(
+                          width: 180,
+                          child: AddAppointmentPage(),
+                        ),
                       ),
                     )
                   ],
@@ -119,7 +121,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                           alignment: Alignment.topRight,
                           child: Text(
                             'ค้นหาผู้ป่วย:',
-                            textAlign: TextAlign.right,
+                            //textAlign: TextAlign.right,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ),
@@ -160,7 +162,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                      0, screenSize.height / 20, screenSize.height / 7, 0),
+                      0, screenSize.height / 20, screenSize.height / 9, 0),
                   child: Container(
                     child: RaisedButton(
                       child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
