@@ -101,7 +101,6 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(screenSize.height / 9,
                             screenSize.height / 20, screenSize.height / 70, 0),
-                        //padding: const EdgeInsets.fromLTRB(105, 50, 100, 0),
                         child: Container(
                           width: 180,
                           child: AddAppointmentPage(),
@@ -121,7 +120,6 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                           alignment: Alignment.topRight,
                           child: Text(
                             'ค้นหาผู้ป่วย:',
-                            //textAlign: TextAlign.right,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ),
