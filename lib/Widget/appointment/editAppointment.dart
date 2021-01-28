@@ -24,7 +24,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
       locale: Locale('th', 'TH'),
       era: EraMode.BUDDHIST_YEAR,
       initialDate: DateTime.now(),
-      firstDate: DateTime(DateTime.now().year - 10),
+      firstDate: DateTime(DateTime.now().year - 200),
       lastDate: DateTime.now().add(Duration(days: 356)),
       theme: ThemeData(
           primarySwatch: createMaterialColor(Color(0xFFC37447)),

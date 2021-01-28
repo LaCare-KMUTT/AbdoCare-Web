@@ -69,7 +69,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       context: context,
       era: EraMode.BUDDHIST_YEAR,
       locale: Locale('th', 'TH'),
-      firstDate: DateTime(DateTime.now().year - 100),
+      firstDate: DateTime(DateTime.now().year - 200),
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
