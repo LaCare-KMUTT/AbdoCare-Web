@@ -363,17 +363,25 @@ class FirebaseService extends IFirebaseService {
         var countAnSubCollection =
             await getCountANSubCollection(userId: user.id);
 
+        var hnToMap = userCollection.data()['hn'];
+        var nameToMap =
+            '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+        var admissionCountToMap = countAnSubCollection;
+        var genderToMap = userCollection.data()['gender'];
+        var ageToMap = _calculationService.calculateAge(
+            birthDate: userCollection.data()['dob'].toDate());
+        var painScoreToMap = formPainData['formData']['Answer'];
+        var operationTypeToMap = anSubCollection['operationMethod'];
+        var woundImgToMap = 'DUMMY IMG';
         var map = {
-          'hn': userCollection.data()['hn'],
-          'name':
-              '${userCollection.data()['name']} ${userCollection.data()['surname']}',
-          'vn': countAnSubCollection,
-          'sex': userCollection.data()['gender'],
-          'age': _calculationService.calculateAge(
-              birthDate: userCollection.data()['dob'].toDate()),
-          'pain_score': formPainData['formData']['Answer'],
-          'operation_type': anSubCollection['operationMethod'],
-          'wound_img': 'euei',
+          'hn': hnToMap,
+          'name': nameToMap,
+          'admissionCount': admissionCountToMap,
+          'gender': genderToMap,
+          'age': ageToMap,
+          'pain_score': painScoreToMap,
+          'operation_type': operationTypeToMap,
+          'wound_img': woundImgToMap,
         };
         return map;
       } else {
