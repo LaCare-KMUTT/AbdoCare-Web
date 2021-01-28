@@ -82,6 +82,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
   @override
   Widget build(BuildContext context) {
     var toShow = _calculationService.formatDateToThaiString(date: selectedDate);
+    var screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -97,7 +98,9 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(105, 50, 100, 0),
+                      padding: EdgeInsets.fromLTRB(screenSize.height / 7,
+                          screenSize.height / 20, screenSize.height / 70, 0),
+                      //padding: const EdgeInsets.fromLTRB(105, 50, 100, 0),
                       child: Container(
                         width: 100,
                         child: AddAppointmentPage(),
@@ -106,16 +109,12 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                   ],
                 ),
                 Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      width: 0,
-                    )),
-                Expanded(
-                  flex: 1,
+                  flex: 3,
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(100, 50, 0, 0),
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 7,
+                            screenSize.height / 20, screenSize.height / 70, 0),
                         child: Align(
                           alignment: Alignment.topRight,
                           child: Text(
@@ -133,7 +132,8 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 50, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, screenSize.height / 20,
+                            screenSize.height / 70, 0),
                         child: Container(
                           child: TextField(
                             decoration: InputDecoration(
@@ -159,7 +159,8 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 50, 105, 0),
+                  padding: EdgeInsets.fromLTRB(
+                      0, screenSize.height / 20, screenSize.height / 7, 0),
                   child: Container(
                     child: RaisedButton(
                       child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
@@ -172,7 +173,8 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 ),
               ]),
               Padding(
-                padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
+                padding: EdgeInsets.fromLTRB(screenSize.height / 10,
+                    screenSize.height / 70, screenSize.height / 10, 0),
                 child: Container(
                   child: Card(
                     child: Row(children: <Widget>[
@@ -209,7 +211,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                         ),
                       ),
                       Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: Column(
                           children: <Widget>[
                             Padding(
@@ -289,7 +291,8 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+                padding: EdgeInsets.fromLTRB(
+                    screenSize.height / 10, 0, screenSize.height / 10, 0),
                 child: Card(
                   child: Padding(
                     padding: EdgeInsets.all(20),
