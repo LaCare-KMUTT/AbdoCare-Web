@@ -256,8 +256,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                                     width: 1),
                                                               ),
                                                               labelText: 'HN'),
-                                                      onSaved: (value) =>
-                                                          _hn = value,
+                                                      onSaved: (value) => _hn =
+                                                          value.toUpperCase(),
                                                     ),
                                                   ),
                                                 ),
@@ -294,8 +294,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                                     width: 1),
                                                               ),
                                                               labelText: 'AN'),
-                                                      onSaved: (value) =>
-                                                          _an = value,
+                                                      onSaved: (value) => _an =
+                                                          value.toUpperCase(),
                                                     ),
                                                   ),
                                                 ),
