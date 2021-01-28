@@ -277,7 +277,9 @@ class FirebaseService extends IFirebaseService {
     var userList = await this.getUserList();
     var mapResult = userList.map((e) async {
       var formVitalSign = await getFormListInAnBasedOnState(
-          userId: e.id, patientState: 'post-hos', formName: 'Vital Sign');
+          userId: e.id,
+          patientState: 'Post-Operation@Hospital',
+          formName: 'Vital Sign');
       bool isAbleToMap = formVitalSign != null && formVitalSign.isNotEmpty;
       if (isAbleToMap) {
         var formsCollection = await _firestore
@@ -342,10 +344,12 @@ class FirebaseService extends IFirebaseService {
     var userList = await this.getUserList();
     var mapResult = userList.map((user) async {
       var formPain = await getFormListInAnBasedOnState(
-          userId: user.id, patientState: 'post-home', formName: 'pain');
+          userId: user.id,
+          patientState: 'Post-Operation@Home',
+          formName: 'pain');
       var formSurgicalIncision = await getFormListInAnBasedOnState(
           userId: user.id,
-          patientState: 'post-home',
+          patientState: 'Post-Operation@Home',
           formName: 'Surgical Incision');
       //TODO enable this after has woundImg
       // bool isAbleToMap = (formPain != null && formPain.isNotEmpty) &&
