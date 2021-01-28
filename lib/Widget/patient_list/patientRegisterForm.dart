@@ -53,9 +53,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   String _careTakerRelationship = '';
   String _careTakerTel = '';
 
-  String _createDummyUsername(String _patientTel) {
+  String _createDummyUsername(String hn) {
     String dummyUsername = '@abdoCare.com';
-    return '$_patientTel$dummyUsername';
+    return '$hn$dummyUsername';
   }
 
   String _generateUniqueKey(int length) {
@@ -69,7 +69,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       context: context,
       era: EraMode.BUDDHIST_YEAR,
       locale: Locale('th', 'TH'),
-      firstDate: DateTime(DateTime.now().year - 100),
+      firstDate: DateTime(DateTime.now().year - 200),
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
@@ -87,13 +87,14 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
             BoxDecoration(color: Colors.orange[600], shape: BoxShape.circle),
       ),
     );
-    if (date != null)
+    var dateFormatted;
+    if (date != null) {
+      dateFormatted = _calculationService.formatDate(date: date);
       setState(() {
-        _dob = _calculationService.formatDate(date: date);
-        controller.text =
-            _calculationService.formatDateToThaiString(date: _dob);
+        _dob = dateFormatted;
       });
-    return date;
+    }
+    return dateFormatted;
   }
 
   void _trySubmit() {
@@ -114,7 +115,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         careTakerSurname: _careTakerSurname,
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
-        username: _createDummyUsername(_patientTel.trim()),
+        username: _createDummyUsername(_hn.trim()),
         uniqueKey: _generateUniqueKey(6),
         password: '000000',
       );
@@ -197,7 +198,8 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                 width: 1),
                                           ),
                                           labelText: 'HN'),
-                                      onSaved: (value) => _hn = value,
+                                      onSaved: (value) =>
+                                          _hn = value.toUpperCase(),
                                     ),
                                   ),
                                 ),
@@ -227,7 +229,8 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                 width: 1),
                                           ),
                                           labelText: 'AN'),
-                                      onSaved: (value) => _an = value,
+                                      onSaved: (value) =>
+                                          _an = value.toUpperCase(),
                                     ),
                                   ),
                                 ),

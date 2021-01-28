@@ -34,7 +34,7 @@ class _PatientListTableState extends State<PatientListTable> {
                   Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 7,
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 9,
                             screenSize.height / 20, screenSize.height / 70, 0),
                         child: Container(
                           width: 180,
@@ -113,7 +113,7 @@ class _PatientListTableState extends State<PatientListTable> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(
-                        0, screenSize.height / 20, screenSize.height / 7, 0),
+                        0, screenSize.height / 20, screenSize.height / 9, 0),
                     child: Container(
                       child: RaisedButton(
                         child: Text("ค้นหา", style: TextStyle(fontSize: 18)),

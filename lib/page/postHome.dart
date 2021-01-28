@@ -16,7 +16,7 @@ class _PostHomePageState extends State<PostHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-        title: Text('Post-op @ Home'),
+        title: Text('Post-Operation@Home'),
         appBar: AppBar(),
       ),
       body: PostHomeTable(),

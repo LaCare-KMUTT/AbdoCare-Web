@@ -67,7 +67,7 @@ class _PostHomeTableState extends State<PostHomeTable> {
 
   List<int> _perPages = [5, 10, 15, 100];
   int _total = 10; // total patient
-  int _currentPerPage;
+  int _currentPerPage = 10;
   int _currentPage = 1;
   bool _isSearch = false;
   List<Map<String, dynamic>> _source = List<Map<String, dynamic>>();
@@ -153,6 +153,7 @@ class _PostHomeTableState extends State<PostHomeTable> {
                     showSelect: _showSelect,
                     autoHeight: false,
                     onTabRow: (data) {
+                      Navigator.pushNamed(context, '/dashboard_postHome');
                       print(data);
                     },
                     onSort: (value) {

@@ -156,7 +156,8 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                                     width: 1),
                                               ),
                                             ),
-                                            onSaved: (value) => _hn = value,
+                                            onSaved: (value) =>
+                                                _hn = value.toUpperCase(),
                                             validator: (value) => value.isEmpty
                                                 ? 'กรุณากรอกหมายเลขHN '
                                                 : null,
@@ -195,7 +196,8 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                             validator: (value) => value.isEmpty
                                                 ? 'กรุณากรอกหมายเลขAN'
                                                 : null,
-                                            onSaved: (value) => _an = value,
+                                            onSaved: (value) =>
+                                                _an = value.toUpperCase(),
                                           ),
                                         ),
                                       ),
