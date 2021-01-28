@@ -53,9 +53,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   String _careTakerRelationship = '';
   String _careTakerTel = '';
 
-  String _createDummyUsername(String _patientTel) {
+  String _createDummyUsername(String hn) {
     String dummyUsername = '@abdoCare.com';
-    return '$_patientTel$dummyUsername';
+    return '$hn$dummyUsername';
   }
 
   String _generateUniqueKey(int length) {
@@ -114,7 +114,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         careTakerSurname: _careTakerSurname,
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
-        username: _createDummyUsername(_patientTel.trim()),
+        username: _createDummyUsername(_hn.trim()),
         uniqueKey: _generateUniqueKey(6),
         password: '000000',
       );
