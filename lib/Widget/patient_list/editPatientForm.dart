@@ -91,12 +91,12 @@ class _EditPatientFormState extends State<EditPatientForm> {
             BoxDecoration(color: Colors.orange[600], shape: BoxShape.circle),
       ),
     );
-    if (date != null)
+    if (date != null) {
       setState(() {
-        _dob = _calculationService.formatDate(date: date);
         controller.text =
             _calculationService.formatDateToThaiString(date: date);
       });
+    }
     return date;
   }
 

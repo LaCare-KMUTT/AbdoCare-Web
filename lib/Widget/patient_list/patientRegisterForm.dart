@@ -87,13 +87,16 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
             BoxDecoration(color: Colors.orange[600], shape: BoxShape.circle),
       ),
     );
-    if (date != null)
+    var dateFormatted;
+    if (date != null) {
+      dateFormatted = _calculationService.formatDate(date: date);
       setState(() {
-        _dob = _calculationService.formatDate(date: date);
+        _dob = dateFormatted;
         controller.text =
             _calculationService.formatDateToThaiString(date: _dob);
       });
-    return date;
+    }
+    return dateFormatted;
   }
 
   void _trySubmit() {
