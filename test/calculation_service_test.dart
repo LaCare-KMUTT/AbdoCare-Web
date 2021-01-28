@@ -12,9 +12,9 @@ void main() {
         () {
       ICalculationService _calculationService = locator<ICalculationService>();
 
-      var age = _calculationService.calculateAge(birthDateString: '1999-03-12');
+      var age = _calculationService.calculateAge(birthDateString: '2542-03-12');
       var ageWithTime =
-          _calculationService.calculateAge(birthDateString: '1999-03-12 10:00');
+          _calculationService.calculateAge(birthDateString: '2542-03-12 10:00');
       expect(age, 21);
       expect(ageWithTime, 21);
     });
@@ -24,7 +24,7 @@ void main() {
       ICalculationService _calculationService = locator<ICalculationService>();
 
       var age =
-          _calculationService.calculateAge(birthDate: DateTime(1999, 03, 12));
+          _calculationService.calculateAge(birthDate: DateTime(2542, 03, 12));
       expect(age, 21);
     });
   });
