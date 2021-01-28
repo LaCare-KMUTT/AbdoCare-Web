@@ -16,7 +16,7 @@ class _PostHosPageState extends State<PostHosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-        title: Text('Post-op @ Hospital'),
+        title: Text('Post-Operation@Hospital'),
         appBar: AppBar(),
       ),
       body: PostHosTable(),
