@@ -1,20 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
-import '../material.dart';
 import '../../services/interfaces/calculation_service_interface.dart';
+import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
+import '../material.dart';
 
 class EditAppointmentPage extends StatefulWidget {
-  EditAppointmentPage({Key key}) : super(key: key);
+  final String appointmentId;
+  EditAppointmentPage({
+    Key key,
+    @required this.appointmentId,
+  }) : super(key: key);
   @override
-  _EditAppointmentPageState createState() => _EditAppointmentPageState();
+  _EditAppointmentPageState createState() =>
+      _EditAppointmentPageState(appointmentId: appointmentId);
 }
 
 class _EditAppointmentPageState extends State<EditAppointmentPage> {
+  String appointmentId;
+  _EditAppointmentPageState({@required this.appointmentId});
+  IFirebaseService _firebaseService = locator<IFirebaseService>();
+  ICalculationService _calculationService = locator<ICalculationService>();
+
+  String _an = '';
+  String _hn = '';
+  String _reason = '';
+  String _preparation = '';
+
   final _formKey = GlobalKey<FormState>();
   TimeOfDay _time = TimeOfDay.now();
-  ICalculationService _calculationService = locator<ICalculationService>();
 
   DateTime _date = DateTime.now();
 
@@ -43,7 +59,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
     );
     if (pickedDate != null && pickedDate != _date)
       setState(() {
-        _date = pickedDate;
+        _date = _calculationService.formatDate(date: pickedDate);
         print(_date);
       });
   }
@@ -67,7 +83,6 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
     if (pickedTime != null && pickedTime != _time)
       setState(() {
         _time = pickedTime;
-
         print(_time);
       });
   }
@@ -83,304 +98,381 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return AlertDialog(
-                content: Container(
-                  width: 500,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      Stack(
-                        children: <Widget>[
-                          Positioned(
-                            right: 0.0,
-                            top: 0.0,
-                            child: InkResponse(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: CircleAvatar(
-                                child: Icon(Icons.close),
-                              ),
-                            ),
-                          ),
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
+              return FutureBuilder<DocumentSnapshot>(
+                  future: _firebaseService.searchDocumentByDocId(
+                      collection: 'Appointments', docId: appointmentId),
+                  builder: (context, appointment) {
+                    if (!appointment.hasData) {
+                      print('appointment $appointmentId \t have data');
+                      return CircularProgressIndicator();
+                    }
+                    _date = appointment.data.get('date').toDate();
+                    var timeString = appointment.data.get('time');
+                    _time = TimeOfDay(
+                        hour: int.parse(timeString.split(":")[0]),
+                        minute: int.parse(timeString.split(":")[1]));
+
+                    return AlertDialog(
+                      content: Container(
+                        width: 500,
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            Stack(
                               children: <Widget>[
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('แก้ไขวันนัด',
-                                          style: TextStyle(
-                                              fontSize: 24,
-                                              color: Color(0xFFC37447))),
+                                Positioned(
+                                  right: 0.0,
+                                  top: 0.0,
+                                  child: InkResponse(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: CircleAvatar(
+                                      child: Icon(Icons.close),
                                     ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'HN',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 8, 0, 8),
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.black26,
-                                                    width: 1),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20),
-                                        child: Container(
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                'AN',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText2,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 8, 0, 8),
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.black26,
-                                                    width: 1),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                  child: Row(
+                                Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'วันที่',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2,
+                                      Row(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('แก้ไขวันนัด',
+                                                style: TextStyle(
+                                                    fontSize: 24,
+                                                    color: Color(0xFFC37447))),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 8, 20, 8),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Text(
+                                                    'HN',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText2,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 8, 0, 8),
+                                                child: TextFormField(
+                                                  decoration: InputDecoration(
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.black26,
+                                                          width: 1),
+                                                    ),
+                                                  ),
+                                                  initialValue: appointment.data
+                                                      .get('hn'),
+                                                  onSaved: (value) =>
+                                                      _hn = value.toUpperCase(),
+                                                  validator: (value) =>
+                                                      value.isEmpty
+                                                          ? 'กรุณากรอกหมายเลขHN'
+                                                          : null,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20),
+                                              child: Container(
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Text(
+                                                      'AN',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText2,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 8, 0, 8),
+                                                child: TextFormField(
+                                                  decoration: InputDecoration(
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.black26,
+                                                          width: 1),
+                                                    ),
+                                                  ),
+                                                  initialValue: appointment.data
+                                                      .get('an'),
+                                                  validator: (value) =>
+                                                      value.isEmpty
+                                                          ? 'กรุณากรอกหมายเลขAN'
+                                                          : null,
+                                                  onSaved: (value) =>
+                                                      _an = value.toLowerCase(),
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 0, 20, 0),
-                                          child: Center(
-                                            child: Text(
-                                              "${_calculationService.formatDateToThaiString(date: _date)}",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Color(0xFFC37447)),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 8, 20, 8),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Text(
+                                                    'วันที่',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText2,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 0, 20, 0),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${_calculationService.formatDateToThaiString(date: _date, isBuddhist: false)}",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        color:
+                                                            Color(0xFFC37447)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      8, 0, 0, 0),
+                                              child: Container(
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                      Icons.calendar_today),
+                                                  onPressed: () {
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            new FocusNode());
+                                                    _selectDate(context);
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            8, 0, 0, 0),
-                                        child: Container(
-                                          child: IconButton(
-                                            icon: Icon(Icons.calendar_today),
+                                            20, 8, 20, 8),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Text(
+                                                    'เวลา',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText2,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 8, 20, 8),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')} น.",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        color:
+                                                            Color(0xFFC37447)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      8, 8, 0, 8),
+                                              child: Container(
+                                                child: IconButton(
+                                                  icon: Icon(Icons.access_time),
+                                                  onPressed: () {
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            new FocusNode());
+                                                    _selectTime(context);
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 8, 20, 0),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Text(
+                                                    'สาเหตุที่นัดหมาย',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText2,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 0, 20, 0),
+                                        child: TextFormField(
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black26,
+                                                  width: 1),
+                                            ),
+                                          ),
+                                          initialValue:
+                                              appointment.data.get('reason'),
+                                          validator: (value) => value.isEmpty
+                                              ? 'กรุณากรอกสาเหตุที่นัดหมาย'
+                                              : null,
+                                          onSaved: (value) => _reason = value,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 8, 20, 0),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Text(
+                                                    'การเตรียมความพร้อม',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText2,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 0, 20, 0),
+                                        child: TextFormField(
+                                          keyboardType: TextInputType.multiline,
+                                          maxLines: null,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black26,
+                                                  width: 1),
+                                            ),
+                                          ),
+                                          initialValue: appointment.data
+                                              .get('preparation'),
+                                          validator: (value) => value.isEmpty
+                                              ? 'กรุณากรอกการเตรียมความพร้อม'
+                                              : null,
+                                          onSaved: (value) =>
+                                              _preparation = value,
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 20),
+                                          child: RaisedButton(
+                                            padding: EdgeInsets.all(15),
+                                            child: Text(
+                                              'ยืนยัน',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                             onPressed: () {
-                                              FocusScope.of(context)
-                                                  .requestFocus(
-                                                      new FocusNode());
-                                              _selectDate(context);
+                                              if (_formKey.currentState
+                                                  .validate()) {
+                                                _formKey.currentState.save();
+                                                Map<String, dynamic> dataToDB =
+                                                    {
+                                                  'hn': _hn,
+                                                  'an': _an,
+                                                  'date': _date,
+                                                  'time': _time
+                                                      .toString()
+                                                      .substring(10, 15),
+                                                  'reason': _reason,
+                                                  'preparation': _preparation,
+                                                };
+                                                _firebaseService
+                                                    .updateDataToCollectionField(
+                                                        collection:
+                                                            'Appointments',
+                                                        docId: appointmentId,
+                                                        data: dataToDB);
+                                                Navigator.pop(context);
+                                              }
                                             },
                                           ),
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'เวลา',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Container(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 8, 20, 8),
-                                          child: Center(
-                                            child: Text(
-                                              "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')} น.",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Color(0xFFC37447)),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            8, 8, 0, 8),
-                                        child: Container(
-                                          child: IconButton(
-                                            icon: Icon(Icons.access_time),
-                                            onPressed: () {
-                                              FocusScope.of(context)
-                                                  .requestFocus(
-                                                      new FocusNode());
-                                              _selectTime(context);
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 8, 20, 0),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'สาเหตุที่นัดหมาย',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.black26, width: 1),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 8, 20, 0),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'การเตรียมความพร้อม',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: null,
-                                    decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.black26, width: 1),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 20),
-                                    child: RaisedButton(
-                                      padding: EdgeInsets.all(15),
-                                      child: Text(
-                                        'ยืนยัน',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2,
-                                      ),
-                                      onPressed: () {
-                                        if (_formKey.currentState.validate()) {
-                                          _formKey.currentState.save();
-                                        }
-                                      },
-                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              );
+                    );
+                  });
             });
       },
     );
