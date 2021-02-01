@@ -49,7 +49,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
     );
     if (pickedDate != null && pickedDate != _date)
       setState(() {
-        _date = pickedDate;
+        _date = _calculationService.formatDate(date: pickedDate);
         print('date via addAppointment$_date');
       });
   }
@@ -73,7 +73,6 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
     if (pickedTime != null && pickedTime != _time)
       setState(() {
         _time = pickedTime;
-
         print('Time via appoinment$_time');
       });
   }
@@ -211,7 +210,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                     children: <Widget>[
                                       Container(
                                         child: Column(
-                                          children: [
+                                          children: <Widget>[
                                             Text(
                                               'วันที่',
                                               style: Theme.of(context)
@@ -228,7 +227,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                               20, 0, 20, 0),
                                           child: Center(
                                             child: Text(
-                                              "${_calculationService.formatDateToThaiString(date: _date)}",
+                                              "${_calculationService.formatDateToThaiString(date: _date, isBuddhist: true)}",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   color: Color(0xFFC37447)),

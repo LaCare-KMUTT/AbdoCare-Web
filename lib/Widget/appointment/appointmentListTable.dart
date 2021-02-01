@@ -81,7 +81,8 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
 
   @override
   Widget build(BuildContext context) {
-    var toShow = _calculationService.formatDateToThaiString(date: selectedDate);
+    var toShow = _calculationService.formatDateToThaiString(
+        date: selectedDate, isBuddhist: true);
     var screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
@@ -303,7 +304,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                             Expanded(
                               flex: 1,
                               child: Column(
-                                children: [
+                                children: <Widget>[
                                   Text('HN'),
                                 ],
                               ),
@@ -311,7 +312,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                             Expanded(
                               flex: 1,
                               child: Column(
-                                children: [
+                                children: <Widget>[
                                   Text('เวลา'),
                                 ],
                               ),
@@ -319,7 +320,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                             Expanded(
                               flex: 2,
                               child: Column(
-                                children: [
+                                children: <Widget>[
                                   Text('ชื่อ-นามสกุล'),
                                 ],
                               ),
@@ -327,7 +328,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                             Expanded(
                               flex: 2,
                               child: Column(
-                                children: [
+                                children: <Widget>[
                                   Text('ลักษณะแผลผ่าตัด'),
                                 ],
                               ),
@@ -434,7 +435,12 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                             ],
                           ),
                         ),
-                        Container(width: 100, child: EditAppointmentPage()),
+                        Container(
+                          width: 100,
+                          child: EditAppointmentPage(
+                            appointmentId: appointment.id,
+                          ),
+                        ),
                       ],
                     ),
                   );
