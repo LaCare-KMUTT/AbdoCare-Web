@@ -68,6 +68,9 @@ class _AddPatientPageState extends State<AddPatientPage> {
         'bedNumber': '-',
         'roomNumber': '-',
         'state': 'Pre-Operation',
+        'weight': 0,
+        'height': 0,
+        'oldWeight': 0
       },
     );
   }
