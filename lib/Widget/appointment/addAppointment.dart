@@ -260,7 +260,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                     children: <Widget>[
                                       Container(
                                         child: Column(
-                                          children: [
+                                          children: <Widget>[
                                             Text(
                                               'เวลา',
                                               style: Theme.of(context)
