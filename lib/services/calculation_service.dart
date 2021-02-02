@@ -69,7 +69,6 @@ class CalculationService extends ICalculationService {
     String yearFormatted = formatted.replaceAll('ค.ศ.', 'พ.ศ.');
     var returnVal = yearFormatted.replaceAll(
         date.year.toString(), buddhistYear.year.toString());
-    print('format date to thai string output $returnVal');
     return returnVal;
   }
 }
