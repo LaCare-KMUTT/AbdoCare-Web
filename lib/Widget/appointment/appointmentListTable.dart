@@ -82,7 +82,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
   @override
   Widget build(BuildContext context) {
     var toShow = _calculationService.formatDateToThaiString(
-        date: selectedDate, isBuddhist: true);
+        date: selectedDate, isBuddhist: false);
     var screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {

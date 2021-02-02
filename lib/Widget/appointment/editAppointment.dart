@@ -30,11 +30,11 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
   String _preparation = '';
 
   final _formKey = GlobalKey<FormState>();
-  TimeOfDay _time = TimeOfDay.now();
+  TimeOfDay _time;
 
-  DateTime _date = DateTime.now();
+  DateTime _date;
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context, DateTime currentDate) async {
     final DateTime pickedDate = await showRoundedDatePicker(
       context: context,
       locale: Locale('th', 'TH'),
@@ -60,7 +60,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
     if (pickedDate != null && pickedDate != _date)
       setState(() {
         _date = _calculationService.formatDate(date: pickedDate);
-        print(_date);
+        print('date via edit appointment $_date');
       });
   }
 
@@ -103,14 +103,14 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                       collection: 'Appointments', docId: appointmentId),
                   builder: (context, appointment) {
                     if (!appointment.hasData) {
-                      print('appointment $appointmentId \t have data');
+                      print('appointment $appointmentId doesn\'t have data');
                       return CircularProgressIndicator();
                     }
-                    _date = appointment.data.get('date').toDate();
-                    var timeString = appointment.data.get('time');
-                    _time = TimeOfDay(
-                        hour: int.parse(timeString.split(":")[0]),
-                        minute: int.parse(timeString.split(":")[1]));
+                    // _date = appointment.data.get('date').toDate();
+                    // var timeString = appointment.data.get('time');
+                    // _time = TimeOfDay(
+                    //     hour: int.parse(timeString.split(":")[0]),
+                    //     minute: int.parse(timeString.split(":")[1]));
 
                     return AlertDialog(
                       content: Container(
@@ -260,13 +260,8 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                     const EdgeInsets.fromLTRB(
                                                         20, 0, 20, 0),
                                                 child: Center(
-                                                  child: Text(
-                                                    "${_calculationService.formatDateToThaiString(date: _date, isBuddhist: false)}",
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        color:
-                                                            Color(0xFFC37447)),
-                                                  ),
+                                                  child:
+                                                      dateHandler(appointment),
                                                 ),
                                               ),
                                             ),
@@ -282,7 +277,11 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                     FocusScope.of(context)
                                                         .requestFocus(
                                                             new FocusNode());
-                                                    _selectDate(context);
+                                                    _selectDate(
+                                                        context,
+                                                        appointment.data
+                                                            .get('date')
+                                                            .toDate());
                                                   },
                                                 ),
                                               ),
@@ -314,13 +313,8 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                     const EdgeInsets.fromLTRB(
                                                         20, 8, 20, 8),
                                                 child: Center(
-                                                  child: Text(
-                                                    "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')} น.",
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        color:
-                                                            Color(0xFFC37447)),
-                                                  ),
+                                                  child:
+                                                      timeHandler(appointment),
                                                 ),
                                               ),
                                             ),
@@ -451,6 +445,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                   'reason': _reason,
                                                   'preparation': _preparation,
                                                 };
+                                                print(dataToDB);
                                                 _firebaseService
                                                     .updateDataToCollectionField(
                                                         collection:
@@ -476,5 +471,45 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
             });
       },
     );
+  }
+
+  Widget timeHandler(AsyncSnapshot<DocumentSnapshot> appointment) {
+    if (_time == null) {
+      var time = appointment.data.get('time');
+      _time = TimeOfDay(
+          hour: int.parse(time.split(":")[0]),
+          minute: int.parse(time.split(":")[1]));
+
+      return Text('$time น.');
+    } else {
+      return Text(
+        "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')} น.",
+        style: TextStyle(fontSize: 18, color: Color(0xFFC37447)),
+      );
+    }
+  }
+
+  Widget dateHandler(AsyncSnapshot<DocumentSnapshot> appointment) {
+    print('date in Text Handler$_date');
+    if (_date == null) {
+      var date = appointment.data.get('date').toDate();
+      _date = date;
+      return Text(
+        "${_calculationService.formatDateToThaiString(date: date, isBuddhist: true)}",
+        style: TextStyle(
+          fontSize: 18,
+          color: Color(0xFFC37447),
+        ),
+      );
+    } else {
+      print('not null$_date');
+      return Text(
+        '${_calculationService.formatDateToThaiString(isBuddhist: true, date: _date)}',
+        style: TextStyle(
+          fontSize: 18,
+          color: Color(0xFFC37447),
+        ),
+      );
+    }
   }
 }
