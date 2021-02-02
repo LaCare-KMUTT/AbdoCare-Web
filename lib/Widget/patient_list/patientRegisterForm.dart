@@ -4,6 +4,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
@@ -689,9 +690,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           padding: EdgeInsets.all(15),
                           onPressed: () async {
                             _uniqueKey = _generateUniqueKey(6);
+
                             if (_formKey.currentState.validate()) {
                               _trySubmit();
-                              Navigator.pop(context);
+                              showAlertDialog(context, _uniqueKey, _hn);
                             }
                           },
                           textColor: Colors.white,
@@ -712,4 +714,88 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       ),
     );
   }
+}
+
+// void showAlertDialog(BuildContext context, String _uniqueKey, String _hn) {
+//   // Create button
+//   Widget okButton = FlatButton(
+//     child: Container(
+//       width: MediaQuery.of(context).size.width / 3,
+//       child: Center(
+//         child: Text("ตกลง",
+//             style: TextStyle(color: Color(0xFFC37447), fontSize: 18)),
+//       ),
+//     ),
+//     onPressed: () {
+//       Navigator.pushNamed(context, '/patientList_page');
+//     },
+//   );
+
+//   // Create AlertDialog
+//   AlertDialog alert = AlertDialog(
+//     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+//     title: Column(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         Padding(
+//           padding: const EdgeInsets.only(bottom: 10.0),
+//           child: Text('รหัสสำหรับลงทะเบียนแอปพลิเคชันมือถือ',
+//               style: TextStyle(
+//                   color: Color(0xFFC37447),
+//                   fontSize: 20,
+//                   fontWeight: FontWeight.bold)),
+//         ),
+//         Text("HN: $_hn", style: Theme.of(context).textTheme.bodyText2),
+//         Text("รหัสโค้ด: $_uniqueKey",
+//             style: Theme.of(context).textTheme.bodyText2),
+//       ],
+//     ),
+//     actions: [
+//       okButton,
+//     ],
+//   );
+//   // show the dialog
+//   showDialog(
+//     context: context,
+//     builder: (context) => alert,
+//   );
+// }
+void showAlertDialog(BuildContext context, String _uniqueKey, String _hn) {
+  var alertStyle = AlertStyle(
+    animationType: AnimationType.grow,
+    descStyle: TextStyle(fontWeight: FontWeight.bold),
+    descTextAlign: TextAlign.center,
+    animationDuration: Duration(milliseconds: 0),
+    alertBorder: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+      side: BorderSide(
+        color: Colors.grey[50],
+      ),
+    ),
+    titleStyle: TextStyle(
+      color: Color(0xFFC37447),
+    ),
+    alertAlignment: Alignment.center,
+  );
+  Alert(
+    context: context,
+    type: AlertType.success,
+    style: alertStyle,
+    title: "รหัสสำหรับลงทะเบียนแอปพลิเคชันมือถือ",
+    content: Text("HN: $_hn\nรหัสโค้ด: $_uniqueKey",
+        style: Theme.of(context).textTheme.bodyText2,
+        textAlign: TextAlign.center),
+    buttons: [
+      DialogButton(
+        child: Text(
+          "ตกลง",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, '/patientList_page');
+        },
+        color: Color(0xFFC37447),
+      ),
+    ],
+  ).show();
 }
