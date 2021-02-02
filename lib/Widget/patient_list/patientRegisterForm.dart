@@ -52,6 +52,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   String _careTakerSurname = '';
   String _careTakerRelationship = '';
   String _careTakerTel = '';
+  String _uniqueKey = '';
 
   String _createDummyUsername(String hn) {
     String dummyUsername = '@abdoCare.com';
@@ -116,7 +117,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
         username: _createDummyUsername(_hn.trim()),
-        uniqueKey: _generateUniqueKey(6),
+        uniqueKey: _uniqueKey,
         password: '000000',
       );
     }
@@ -687,6 +688,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           ),
                           padding: EdgeInsets.all(15),
                           onPressed: () async {
+                            _uniqueKey = _generateUniqueKey(6);
                             if (_formKey.currentState.validate()) {
                               _trySubmit();
                               Navigator.pop(context);
