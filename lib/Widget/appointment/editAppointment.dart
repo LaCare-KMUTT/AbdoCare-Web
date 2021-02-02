@@ -102,7 +102,14 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                   builder: (context, appointment) {
                     if (!appointment.hasData) {
                       print('appointment $appointmentId doesn\'t have data');
-                      return CircularProgressIndicator();
+                      return Center(
+                          heightFactor: 1,
+                          widthFactor: 1,
+                          child: SizedBox(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 4,
+                            ),
+                          ));
                     }
                     return AlertDialog(
                       content: Container(
