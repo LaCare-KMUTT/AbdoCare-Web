@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'interfaces/calculation_service_interface.dart';
@@ -43,15 +44,30 @@ class CalculationService extends ICalculationService {
     return formattedDate;
   }
 
-  String formatDateToThaiString({DateTime date, String dateString}) {
+  String formatDateToThaiString(
+      {DateTime date, String dateString, @required bool isBuddhist}) {
     initializeDateFormatting();
     if (date == null && dateString != null) {
       date = DateTime.parse(dateString);
     }
+    DateFormat formatter;
+    if (isBuddhist) {
+      var normalYear = date.year - 543;
+      var buddhistYear = date.year;
+      if (date.hour == null || date.minute == null || date.second == null) {
+        formatter = DateFormat('yyyy-MM-dd');
+      } else {
+        formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+      }
+      String formattedReverse = formatter.format(date);
+      String dateStringInChrist = formattedReverse.replaceAll(
+          buddhistYear.toString(), normalYear.toString());
+      date = DateTime.parse(dateStringInChrist);
+    }
     var buddhistYear = this.formatDate(date: date);
     String formatted = DateFormat.yMMMMEEEEd('th').format(date);
     String yearFormatted = formatted.replaceAll('ค.ศ.', 'พ.ศ.');
-    String returnVal = yearFormatted.replaceAll(
+    var returnVal = yearFormatted.replaceAll(
         date.year.toString(), buddhistYear.year.toString());
     return returnVal;
   }
