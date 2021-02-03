@@ -78,9 +78,19 @@ class _AddPatientPageState extends State<AddPatientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BaseAppBar(
-        title: Text('เพิ่มผู้ป่วย'),
-        appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'เพิ่มผู้ป่วย',
+          style: TextStyle(fontSize: 24),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () => Navigator.pushNamed(context, '/patientList_page'),
+        ),
       ),
       body: PatientRegisterForm(
         _submitPatientRegisterForm,
