@@ -716,50 +716,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   }
 }
 
-// void showAlertDialog(BuildContext context, String _uniqueKey, String _hn) {
-//   // Create button
-//   Widget okButton = FlatButton(
-//     child: Container(
-//       width: MediaQuery.of(context).size.width / 3,
-//       child: Center(
-//         child: Text("ตกลง",
-//             style: TextStyle(color: Color(0xFFC37447), fontSize: 18)),
-//       ),
-//     ),
-//     onPressed: () {
-//       Navigator.pushNamed(context, '/patientList_page');
-//     },
-//   );
-
-//   // Create AlertDialog
-//   AlertDialog alert = AlertDialog(
-//     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-//     title: Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.only(bottom: 10.0),
-//           child: Text('รหัสสำหรับลงทะเบียนแอปพลิเคชันมือถือ',
-//               style: TextStyle(
-//                   color: Color(0xFFC37447),
-//                   fontSize: 20,
-//                   fontWeight: FontWeight.bold)),
-//         ),
-//         Text("HN: $_hn", style: Theme.of(context).textTheme.bodyText2),
-//         Text("รหัสโค้ด: $_uniqueKey",
-//             style: Theme.of(context).textTheme.bodyText2),
-//       ],
-//     ),
-//     actions: [
-//       okButton,
-//     ],
-//   );
-//   // show the dialog
-//   showDialog(
-//     context: context,
-//     builder: (context) => alert,
-//   );
-// }
 void showAlertDialog(BuildContext context, String _uniqueKey, String _hn) {
   var alertStyle = AlertStyle(
     animationType: AnimationType.grow,
