@@ -1,8 +1,15 @@
+import 'dart:async';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../services/interfaces/calculation_service_interface.dart';
+import '../../services/service_locator.dart';
+import '../material.dart';
 
 class PatientRegisterForm extends StatefulWidget {
   PatientRegisterForm(this.submitFn);
@@ -14,9 +21,7 @@ class PatientRegisterForm extends StatefulWidget {
     @required String patientSurname,
     @required String address,
     @required String gender,
-    @required String dob,
-    @required double weight,
-    @required double height,
+    @required DateTime dob,
     @required String patientTel,
     @required String careTakerName,
     @required String careTakerSurname,
@@ -32,27 +37,27 @@ class PatientRegisterForm extends StatefulWidget {
 }
 
 class _PatientRegisterFormState extends State<PatientRegisterForm> {
+  ICalculationService _calculationService = locator<ICalculationService>();
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
-  String pickedDate = '';
+
   String _hn = '';
   String _an = '';
   String _patientName = '';
   String _patientSurname = '';
   String _address = '';
   String _gender = '';
-  String _dob = '';
-  double _weight;
-  double _height;
+  DateTime _dob;
   String _patientTel = '';
   String _careTakerName = '';
   String _careTakerSurname = '';
   String _careTakerRelationship = '';
   String _careTakerTel = '';
+  String _uniqueKey = '';
 
-  String _createDummyUsername(String _patientTel) {
+  String _createDummyUsername(String hn) {
     String dummyUsername = '@abdoCare.com';
-    return '$_patientTel$dummyUsername';
+    return '$hn$dummyUsername';
   }
 
   String _generateUniqueKey(int length) {
@@ -60,30 +65,38 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     return uuid.v1().substring(0, length);
   }
 
-  String _convertDateTimeDisplay(String date) {
-    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-    final DateFormat serverFormater = DateFormat('dd-MM-yyyy');
-    final DateTime displayDate = displayFormater.parse(date);
-    final String formatted = serverFormater.format(displayDate);
-    return formatted;
-  }
-
   Future<DateTime> _selectDate(
       BuildContext context, DateTime currentValue) async {
     final DateTime date = await showRoundedDatePicker(
-        context: context,
-        era: EraMode.BUDDHIST_YEAR,
-        locale: Locale('th', 'TH'),
-        firstDate: DateTime(1900),
-        initialDate: currentValue ?? DateTime.now(),
-        lastDate: DateTime(2100));
-    if (date != null)
+      context: context,
+      era: EraMode.BUDDHIST_YEAR,
+      locale: Locale('th', 'TH'),
+      firstDate: DateTime(DateTime.now().year - 200),
+      initialDate: currentValue ?? DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
+      theme: ThemeData(
+          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          fontFamily: "Prompt"),
+      height: 320,
+      styleDatePicker: MaterialRoundedDatePickerStyle(
+        paddingDatePicker: EdgeInsets.all(0),
+        paddingMonthHeader: EdgeInsets.all(20),
+        paddingActionBar: EdgeInsets.all(16),
+        backgroundHeaderMonth: Colors.grey[300],
+        textStyleCurrentDayOnCalendar:
+            TextStyle(color: Color(0xFFC37447), fontWeight: FontWeight.bold),
+        decorationDateSelected:
+            BoxDecoration(color: Colors.orange[600], shape: BoxShape.circle),
+      ),
+    );
+    var dateFormatted;
+    if (date != null) {
+      dateFormatted = _calculationService.formatDate(date: date);
       setState(() {
-        _dob = _convertDateTimeDisplay(date.toString());
-        controller.text = _dob;
+        _dob = dateFormatted;
       });
-    print(_dob);
-    return date;
+    }
+    return dateFormatted;
   }
 
   void _trySubmit() {
@@ -99,15 +112,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         address: _address.trim(),
         gender: _gender,
         dob: _dob,
-        weight: _weight,
-        height: _height,
         patientTel: _patientTel.trim(),
         careTakerName: _careTakerName,
         careTakerSurname: _careTakerSurname,
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
-        username: _createDummyUsername(_patientTel.trim()),
-        uniqueKey: _generateUniqueKey(6),
+        username: _createDummyUsername(_hn.trim()),
+        uniqueKey: _uniqueKey,
         password: '000000',
       );
     }
@@ -118,7 +129,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     controller.dispose();
     super.dispose();
   }
@@ -135,13 +145,21 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  children: [
-                    Card(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey[300],
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
                       margin: EdgeInsets.all(20),
                       child: Column(
                         children: [
                           Row(
-                            children: [
+                            children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -153,7 +171,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 8, 50, 8),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
                               children: [
                                 Expanded(
@@ -182,12 +200,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                 width: 1),
                                           ),
                                           labelText: 'HN'),
-                                      onSaved: (value) => _hn = value,
+                                      onSaved: (value) =>
+                                          _hn = value.toUpperCase(),
                                     ),
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: Text(
                                     'AN:\t\t\t',
                                     style:
@@ -212,27 +231,22 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                                 width: 1),
                                           ),
                                           labelText: 'AN'),
-                                      onSaved: (value) => _an = value,
+                                      onSaved: (value) =>
+                                          _an = value.toUpperCase(),
                                     ),
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 3,
                                   child: SizedBox(
                                     width: 100,
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: SizedBox(
-                                    width: 100,
-                                  ),
-                                )
                               ],
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 8, 50, 8),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
                               children: [
                                 Expanded(
@@ -281,7 +295,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 2,
+                                  flex: 3,
                                   child: Container(
                                     width: 300,
                                     child: TextFormField(
@@ -315,7 +329,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: DropdownButtonFormField(
                                     isExpanded: true,
                                     validator: (value) => value == null
@@ -351,44 +365,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 8, 50, 20),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
                               children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 100,
-                                    child: Text(
-                                      'ที่อยู่:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    width: 300,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        return value.isEmpty
-                                            ? 'กรุณากรอกที่อยู่ของผู้ป่วย'
-                                            : null;
-                                      },
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText: 'ที่อยู่'),
-                                      onSaved: (value) => _address = value,
-                                      maxLines: 5,
-                                      minLines: 1,
-                                    ),
-                                  ),
-                                ),
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -423,7 +402,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: Container(
                                     width: 150,
                                     child: Text(
@@ -435,13 +414,13 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: Container(
                                     width: 300,
                                     child: DateTimeField(
                                       validator: (DateTime dateTime) {
                                         if (dateTime == null) {
-                                          return "กรุณากรอกสัน/เดือน/ปีเกิดของผู้ป่วย";
+                                          return "กรุณากรอกวัน/เดือน/ปีเกิดของผู้ป่วย";
                                         }
                                         return null;
                                       },
@@ -463,18 +442,80 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     ),
                                   ),
                                 ),
+                                Expanded(
+                                  flex: 3,
+                                  child: SizedBox(
+                                    width: 100,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 20),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    width: 100,
+                                    child: Text(
+                                      'ที่อยู่:\t\t\t',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 6,
+                                  child: Container(
+                                    width: 300,
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        return value.isEmpty
+                                            ? 'กรุณากรอกที่อยู่ของผู้ป่วย'
+                                            : null;
+                                      },
+                                      decoration: InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.black26,
+                                                width: 1),
+                                          ),
+                                          labelText: 'ที่อยู่'),
+                                      onSaved: (value) => _address = value,
+                                      maxLines: 5,
+                                      minLines: 1,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: SizedBox(
+                                    width: 100,
+                                  ),
+                                )
                               ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Card(
-                      margin: EdgeInsets.all(20),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey[300],
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      margin: EdgeInsets.only(left: 20, right: 20),
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           Row(
-                            children: [
+                            children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -486,9 +527,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(52, 8, 50, 8),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
                             child: Row(
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   flex: 1,
                                   child: Container(
@@ -594,66 +635,67 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 8, 8, 20),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    width: 200,
-                                    child: Text(
-                                      'มีความเกี่ยวข้องเป็น:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
-                                    ),
+                            padding: const EdgeInsets.fromLTRB(0, 10, 20, 20),
+                            child: Row(children: <Widget>[
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  width: 150,
+                                  child: Text(
+                                    'ความเกี่ยวข้องกับผู้ป่วย:\t\t\t',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                    textAlign: TextAlign.end,
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Container(
-                                    width: 250,
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        return value.isEmpty
-                                            ? 'กรุณากรอกความสัมพันธ์กับผู้ป่วย'
-                                            : null;
-                                      },
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText:
-                                              'ความเกี่ยวข้องกับผู้ป่วย'),
-                                      onSaved: (value) =>
-                                          _careTakerRelationship = value,
-                                    ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  width: 300,
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      return value.isEmpty
+                                          ? 'กรุณากรอกความเกี่ยวข้องกับผู้ป่วย'
+                                          : null;
+                                    },
+                                    decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.black26, width: 1),
+                                        ),
+                                        labelText: 'ความเกี่ยวข้องกับผู้ป่วย'),
+                                    onSaved: (value) =>
+                                        _careTakerRelationship = value,
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 4,
-                                  child: SizedBox(
-                                    width: 100,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: SizedBox(width: 0),
+                              )
+                            ]),
+                          )
                         ],
                       ),
                     ),
                     Center(
                       child: Container(
                         width: 100,
-                        margin: EdgeInsets.all(30),
+                        margin: EdgeInsets.all(20),
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(7.0),
                           ),
-                          padding: EdgeInsets.all(10),
-                          onPressed: _trySubmit,
+                          padding: EdgeInsets.all(15),
+                          onPressed: () async {
+                            _uniqueKey = _generateUniqueKey(6);
+
+                            if (_formKey.currentState.validate()) {
+                              _trySubmit();
+                              showAlertDialog(context, _uniqueKey, _hn);
+                            }
+                          },
                           textColor: Colors.white,
                           color: Color(0xFF2ED47A),
                           child: Text(
@@ -672,4 +714,44 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       ),
     );
   }
+}
+
+void showAlertDialog(BuildContext context, String _uniqueKey, String _hn) {
+  var alertStyle = AlertStyle(
+    animationType: AnimationType.grow,
+    descStyle: TextStyle(fontWeight: FontWeight.bold),
+    descTextAlign: TextAlign.center,
+    animationDuration: Duration(milliseconds: 0),
+    alertBorder: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+      side: BorderSide(
+        color: Colors.grey[50],
+      ),
+    ),
+    titleStyle: TextStyle(
+      color: Color(0xFFC37447),
+    ),
+    alertAlignment: Alignment.center,
+  );
+  Alert(
+    context: context,
+    type: AlertType.success,
+    style: alertStyle,
+    title: "รหัสสำหรับลงทะเบียนแอปพลิเคชันมือถือ",
+    content: Text("HN: $_hn\nรหัสโค้ด: $_uniqueKey",
+        style: Theme.of(context).textTheme.bodyText2,
+        textAlign: TextAlign.center),
+    buttons: [
+      DialogButton(
+        child: Text(
+          "ตกลง",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, '/patientList_page');
+        },
+        color: Color(0xFFC37447),
+      ),
+    ],
+  ).show();
 }

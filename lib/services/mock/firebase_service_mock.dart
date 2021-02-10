@@ -1,9 +1,10 @@
-import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
-import 'package:AbdoCare_Web/services/mock/mock_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import '../interfaces/firebase_service_interface.dart';
+import 'mock_data.dart';
 
 class FirebaseServiceMock extends IFirebaseService {
   final _firestore = FirebaseFirestore.instance;
@@ -233,5 +234,37 @@ class FirebaseServiceMock extends IFirebaseService {
       print(
           '$onError cannot update field ${data.keys} with value : ${data.values}');
     });
+  }
+
+  @override
+  Future<void> updateFieldToSubCollection(
+      {String collection,
+      String docId,
+      String subCollection,
+      String subCollectionDoc,
+      Map<String, dynamic> data}) {
+    // TODO: implement updateFieldToSubCollection
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getPostHomeList() {
+    // TODO: implement getPostHomeList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot(
+      {String collection,
+      String docId,
+      String subCollection,
+      String subCollectionDocId}) {
+    // TODO: implement getSubCollectionSnapshot
+  }
+
+  Future<List<QueryDocumentSnapshot>> getAppointmentList(
+      {@required DateTime currentDate}) {
+    // TODO: implement getAppointmentList
+    throw UnimplementedError();
   }
 }

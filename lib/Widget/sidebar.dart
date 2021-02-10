@@ -67,7 +67,7 @@ class SideBar extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () async {
                         await _firebaseService.signOut();
-                        Navigator.pushReplacementNamed(context, '/');
+                        Navigator.pushReplacementNamed(context, '/login_page');
                       },
                     )
                   ],

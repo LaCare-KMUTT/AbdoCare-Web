@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../Widget/patient_list/patientRegisterForm.dart';
 import '../Widget/appbar.dart';
+import '../Widget/patient_list/patientRegisterForm.dart';
 import '../Widget/sidebar.dart';
+import '../services/interfaces/calculation_service_interface.dart';
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
 
@@ -15,6 +16,8 @@ class AddPatientPage extends StatefulWidget {
 
 class _AddPatientPageState extends State<AddPatientPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final ICalculationService _calculationService =
+      locator<ICalculationService>();
 
   void _submitPatientRegisterForm({
     @required String hn,
@@ -23,9 +26,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required String patientSurname,
     @required String address,
     @required String gender,
-    @required String dob,
-    @required double weight,
-    @required double height,
+    @required DateTime dob,
+    @required String state,
     @required String patientTel,
     @required String careTakerName,
     @required String careTakerSurname,
@@ -37,6 +39,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
   }) async {
     var patientUid =
         await _firebaseService.createPatient(collection: 'Users', data: {
+      'hn': hn,
       'name': patientName,
       'surname': patientSurname,
       'address': address,
@@ -52,13 +55,22 @@ class _AddPatientPageState extends State<AddPatientPage> {
       docId: patientUid,
       subCollection: 'an',
       data: {
-        'an': 'testAnNumber',
+        'an': an,
         'careTakerName': careTakerName,
         'careTakerSurname': careTakerSurname,
         'careTakerTel': careTakerTel,
         'careTakerRelationship': careTakerRelationship,
-        'operationDate': DateTime.now()
-            .toString(), //TODO Change operationDate to be input not DateTime.now()
+        'operationDate': _calculationService.formatDate(date: DateTime.now()),
+        'operationName': '-',
+        'operationMethod': '-',
+        'doctorName': '-',
+        'previousIllness': '-',
+        'bedNumber': '-',
+        'roomNumber': '-',
+        'state': 'Pre-Operation',
+        'weight': 0,
+        'height': 0,
+        'oldWeight': 0
       },
     );
   }
@@ -66,9 +78,19 @@ class _AddPatientPageState extends State<AddPatientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BaseAppBar(
-        title: Text('เพิ่มผู้ป่วย'),
-        appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'เพิ่มผู้ป่วย',
+          style: TextStyle(fontSize: 24),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () => Navigator.pushNamed(context, '/patientList_page'),
+        ),
       ),
       body: PatientRegisterForm(
         _submitPatientRegisterForm,

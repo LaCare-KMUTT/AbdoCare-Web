@@ -12,9 +12,9 @@ void main() {
         () {
       ICalculationService _calculationService = locator<ICalculationService>();
 
-      var age = _calculationService.calculateAge(birthDateString: '1999-03-12');
+      var age = _calculationService.calculateAge(birthDateString: '2542-03-12');
       var ageWithTime =
-          _calculationService.calculateAge(birthDateString: '1999-03-12 10:00');
+          _calculationService.calculateAge(birthDateString: '2542-03-12 10:00');
       expect(age, 21);
       expect(ageWithTime, 21);
     });
@@ -24,7 +24,7 @@ void main() {
       ICalculationService _calculationService = locator<ICalculationService>();
 
       var age =
-          _calculationService.calculateAge(birthDate: DateTime(1999, 03, 12));
+          _calculationService.calculateAge(birthDate: DateTime(2542, 03, 12));
       expect(age, 21);
     });
   });
@@ -45,7 +45,7 @@ void main() {
       expect(formattedDate, DateTime(2542, 03, 12, 17, 58, 19));
     });
 
-    test('formatDate should be able to format date When receieve string input',
+    test('formatDate should be able to format date When receive string input',
         () {
       ICalculationService _calculationService = locator<ICalculationService>();
       var formattedDate =
@@ -56,20 +56,36 @@ void main() {
 
   group('formatDateToThaiString test', () {
     test(
-        'formatDateToThaiString should be able to format when receieve DateTime',
+        'formatDateToThaiString should be able to format when receive DateTime in Christ year',
         () {
       ICalculationService _calculationService = locator<ICalculationService>();
       var formattedDate = _calculationService.formatDateToThaiString(
-          date: DateTime(1999, 03, 12));
+          date: DateTime(1999, 03, 12), isBuddhist: false);
       expect(formattedDate, 'วันศุกร์ที่ 12 มีนาคม พ.ศ. 2542');
     });
 
     test(
-        'formatDateToThaiString should be able to format when receieve String date',
+        'formatDateToThaiString should be able to format when receive String date in Christ year',
         () {
       ICalculationService _calculationService = locator<ICalculationService>();
-      var formattedDate =
-          _calculationService.formatDateToThaiString(dateString: '1999-03-12');
+      var formattedDate = _calculationService.formatDateToThaiString(
+          dateString: '1999-03-12', isBuddhist: false);
+      expect(formattedDate, 'วันศุกร์ที่ 12 มีนาคม พ.ศ. 2542');
+    });
+    test(
+        'formatDateToThaiString should be able to format when receive DateTime with Buddhist year',
+        () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var formattedDate = _calculationService.formatDateToThaiString(
+          date: DateTime(2542, 03, 12), isBuddhist: true);
+      expect(formattedDate, 'วันศุกร์ที่ 12 มีนาคม พ.ศ. 2542');
+    });
+    test(
+        'formatDateToThaiString should be able to format when receieve String date in Buddhist year',
+        () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var formattedDate = _calculationService.formatDateToThaiString(
+          dateString: '2542-03-12', isBuddhist: true);
       expect(formattedDate, 'วันศุกร์ที่ 12 มีนาคม พ.ศ. 2542');
     });
   });

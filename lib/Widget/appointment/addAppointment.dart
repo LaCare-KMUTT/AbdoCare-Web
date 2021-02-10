@@ -1,6 +1,8 @@
+import '../../services/interfaces/firebase_service_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
+import '../../Widget/material.dart';
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/service_locator.dart';
 
@@ -11,11 +13,16 @@ class AddAppointmentPage extends StatefulWidget {
 }
 
 class _AddAppointmentPageState extends State<AddAppointmentPage> {
+  ICalculationService _calculationService = locator<ICalculationService>();
+  IFirebaseService _firebaseService = locator<IFirebaseService>();
+
   final _formKey = GlobalKey<FormState>();
   TimeOfDay _time = TimeOfDay.now();
-  ICalculationService _calculationService = locator<ICalculationService>();
-
   DateTime _date = DateTime.now();
+  String _an = '';
+  String _hn = '';
+  String _reason = '';
+  String _preparation = '';
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime pickedDate = await showRoundedDatePicker(
@@ -42,8 +49,8 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
     );
     if (pickedDate != null && pickedDate != _date)
       setState(() {
-        _date = pickedDate;
-        print(_date);
+        _date = _calculationService.formatDate(date: pickedDate);
+        print('date via addAppointment$_date');
       });
   }
 
@@ -66,34 +73,14 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
     if (pickedTime != null && pickedTime != _time)
       setState(() {
         _time = pickedTime;
-
-        print(_time);
+        print('Time via appoinment$_time');
       });
-  }
-
-  MaterialColor createMaterialColor(Color color) {
-    List strengths = <double>[.05];
-    Map swatch = <int, Color>{};
-    final int r = color.red, g = color.green, b = color.blue;
-
-    for (int i = 1; i < 10; i++) {
-      strengths.add(0.1 * i);
-    }
-    strengths.forEach((strength) {
-      final double ds = 0.5 - strength;
-      swatch[(strength * 1000).round()] = Color.fromRGBO(
-        r + ((ds < 0 ? r : (255 - r)) * ds).round(),
-        g + ((ds < 0 ? g : (255 - g)) * ds).round(),
-        b + ((ds < 0 ? b : (255 - b)) * ds).round(),
-        1,
-      );
-    });
-    return MaterialColor(color.value, swatch);
   }
 
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
+      child: Text("เพิ่มนัด", style: TextStyle(fontSize: 18)),
       color: Colors.lightGreen,
       textColor: Colors.white,
       padding: EdgeInsets.all(15),
@@ -107,7 +94,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                   width: 500,
                   child: ListView(
                     shrinkWrap: true,
-                    children: [
+                    children: <Widget>[
                       Stack(
                         children: <Widget>[
                           Positioned(
@@ -128,7 +115,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Row(
-                                  children: [
+                                  children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text('เพิ่มวันนัด',
@@ -142,11 +129,16 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 8, 20, 8),
                                   child: Row(
-                                    children: [
+                                    children: <Widget>[
                                       Container(
                                         child: Column(
-                                          children: [
-                                            Text('HN'),
+                                          children: <Widget>[
+                                            Text(
+                                              'HN',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -154,7 +146,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                         flex: 2,
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              20, 8, 20, 8),
+                                              20, 8, 0, 8),
                                           child: TextFormField(
                                             decoration: InputDecoration(
                                               enabledBorder: OutlineInputBorder(
@@ -163,21 +155,35 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                                     width: 1),
                                               ),
                                             ),
+                                            onSaved: (value) =>
+                                                _hn = value.toUpperCase(),
+                                            validator: (value) => value.isEmpty
+                                                ? 'กรุณากรอกหมายเลขHN '
+                                                : null,
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        child: Column(
-                                          children: [
-                                            Text('AN'),
-                                          ],
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 20),
+                                        child: Container(
+                                          child: Column(
+                                            children: <Widget>[
+                                              Text(
+                                                'AN',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Expanded(
                                         flex: 2,
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              20, 8, 20, 8),
+                                              20, 8, 0, 8),
                                           child: TextFormField(
                                             decoration: InputDecoration(
                                               enabledBorder: OutlineInputBorder(
@@ -186,6 +192,11 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                                     width: 1),
                                               ),
                                             ),
+                                            validator: (value) => value.isEmpty
+                                                ? 'กรุณากรอกหมายเลขAN'
+                                                : null,
+                                            onSaved: (value) =>
+                                                _an = value.toUpperCase(),
                                           ),
                                         ),
                                       ),
@@ -199,8 +210,13 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                     children: <Widget>[
                                       Container(
                                         child: Column(
-                                          children: [
-                                            Text('วันที่'),
+                                          children: <Widget>[
+                                            Text(
+                                              'วันที่',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -211,8 +227,9 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                               20, 0, 20, 0),
                                           child: Center(
                                             child: Text(
-                                              "${_calculationService.formatDateToThaiString(date: _date)}",
+                                              "${_calculationService.formatDateToThaiString(date: _date, isBuddhist: true)}",
                                               style: TextStyle(
+                                                  fontSize: 18,
                                                   color: Color(0xFFC37447)),
                                             ),
                                           ),
@@ -220,7 +237,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            8, 0, 8, 0),
+                                            8, 0, 0, 0),
                                         child: Container(
                                           child: IconButton(
                                             icon: Icon(Icons.calendar_today),
@@ -240,11 +257,16 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 8, 20, 8),
                                   child: Row(
-                                    children: [
+                                    children: <Widget>[
                                       Container(
                                         child: Column(
-                                          children: [
-                                            Text('เวลา'),
+                                          children: <Widget>[
+                                            Text(
+                                              'เวลา',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -257,6 +279,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                             child: Text(
                                               "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')} น.",
                                               style: TextStyle(
+                                                  fontSize: 18,
                                                   color: Color(0xFFC37447)),
                                             ),
                                           ),
@@ -264,7 +287,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            8, 8, 8, 8),
+                                            8, 8, 0, 8),
                                         child: Container(
                                           child: IconButton(
                                             icon: Icon(Icons.access_time),
@@ -284,11 +307,16 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 8, 20, 0),
                                   child: Row(
-                                    children: [
+                                    children: <Widget>[
                                       Container(
                                         child: Column(
-                                          children: [
-                                            Text('สาเหตุที่นัดหมาย'),
+                                          children: <Widget>[
+                                            Text(
+                                              'สาเหตุที่นัดหมาย',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -305,17 +333,26 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                             color: Colors.black26, width: 1),
                                       ),
                                     ),
+                                    validator: (value) => value.isEmpty
+                                        ? 'กรุณากรอกสาเหตุที่นัดหมาย'
+                                        : null,
+                                    onSaved: (value) => _reason = value,
                                   ),
                                 ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 8, 20, 0),
                                   child: Row(
-                                    children: [
+                                    children: <Widget>[
                                       Container(
                                         child: Column(
-                                          children: [
-                                            Text('การเตรียมความพร้อม'),
+                                          children: <Widget>[
+                                            Text(
+                                              'การเตรียมความพร้อม',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -334,16 +371,43 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                             color: Colors.black26, width: 1),
                                       ),
                                     ),
+                                    validator: (value) => value.isEmpty
+                                        ? 'กรุณากรอกการเตรียมความพร้อม'
+                                        : null,
+                                    onSaved: (value) => _preparation = value,
                                   ),
                                 ),
                                 Container(
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 20),
                                     child: RaisedButton(
-                                      child: Text("ยืนยัน"),
+                                      padding: EdgeInsets.all(15),
+                                      child: Text(
+                                        'ยืนยัน',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                      ),
                                       onPressed: () {
                                         if (_formKey.currentState.validate()) {
                                           _formKey.currentState.save();
+                                          Map<String, dynamic> dataToDB = {
+                                            'hn': _hn,
+                                            'an': _an,
+                                            'date': _calculationService
+                                                .formatDate(date: _date),
+                                            'time': _time
+                                                .toString()
+                                                .substring(10, 15),
+                                            'reason': _reason,
+                                            'preparation': _preparation,
+                                          };
+                                          _firebaseService
+                                              .addDocumentToCollection(
+                                                  collection: 'Appointments',
+                                                  docData: dataToDB);
+                                          Navigator.pushNamed(
+                                              context, '/appointment_page');
                                         }
                                       },
                                     ),
@@ -360,7 +424,6 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
               );
             });
       },
-      child: Text("เพิ่มนัด", style: TextStyle(fontSize: 16)),
     );
   }
 }

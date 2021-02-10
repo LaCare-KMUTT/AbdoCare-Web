@@ -48,6 +48,27 @@ abstract class IFirebaseService {
   });
 
   Future<List<Map<String, dynamic>>> getPostHosList();
+
+  Future<List<Map<String, dynamic>>> getPostHomeList();
+
   Future<bool> signIn({@required String username, @required String password});
+
   Future<void> signOut();
+
+  Future<void> updateFieldToSubCollection({
+    @required String collection,
+    @required String docId,
+    @required String subCollection,
+    @required String subCollectionDoc,
+    @required Map<String, dynamic> data,
+  });
+
+  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot({
+    @required String collection,
+    @required String docId,
+    @required String subCollection,
+    @required String subCollectionDocId,
+  });
+  Future<List<QueryDocumentSnapshot>> getAppointmentList(
+      {@required DateTime currentDate});
 }
