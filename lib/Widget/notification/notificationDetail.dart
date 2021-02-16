@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class NotificationDetail extends StatefulWidget {
   NotificationDetail({Key key}) : super(key: key);
@@ -8,83 +7,208 @@ class NotificationDetail extends StatefulWidget {
 }
 
 class _NotificationDetailState extends State<NotificationDetail> {
-  final FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    _requestPermission();
-    _registerOnFirebase();
-    _getMessage();
-  }
-
-  void _registerOnFirebase() {
-    messaging
-        .getToken(
-            vapidKey:
-                "BJ1Ff5Ha6wK1lf3C-gY_r3V-3o_Cwre7Iv7t0BdTPxylXl9Qmk6mGUQrY2_mhx0oKJncARPCrUuc6OPZvI8ovYk")
-        .then((String token) => print('Token : $token'));
-  }
-
-  void _requestPermission() async {
-    final NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
-    } else {
-      print('User declined or has not accepted permission');
-    }
-  }
-
-  void _getMessage() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage messaging) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${messaging.data}');
-      print("onResume: $messaging");
-      if (messaging.notification != null) {
-        print(
-            'Message also contained a notification: ${messaging.notification}');
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         child: ListView(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
-                      child: Card(
-                          child: Center(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Container(child: Text("ยังไม่อ่าน")),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Container(child: Text("อ่านแล้ว")),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
+            Column(children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(screenSize.height / 15,
+                    screenSize.height / 20, screenSize.height / 15, 0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
+                            screenSize.height / 20, 0),
+                        child: RaisedButton(
+                            child:
+                                Text("ทั้งหมด", style: TextStyle(fontSize: 18)),
+                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7.0)),
+                            onPressed: () {}),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
+                            screenSize.height / 20, 0),
+                        child: RaisedButton(
+                            child: Text("Pre-Operation",
+                                style: TextStyle(fontSize: 18)),
+                            padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7.0)),
+                            onPressed: () {}),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
+                            screenSize.height / 20, 0),
+                        child: RaisedButton(
+                            child: Text("Post-Operation@Hospital",
+                                style: TextStyle(fontSize: 18)),
+                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7.0)),
+                            onPressed: () {}),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
+                            screenSize.height / 20, 0),
+                        child: RaisedButton(
+                            child: Text("Post-Operation@Home",
+                                style: TextStyle(fontSize: 18)),
+                            padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7.0)),
+                            onPressed: () {}),
+                      ),
                     ),
                   ],
+                ),
+              ),
+            ]),
+            Column(
+              children: <Widget>[
+                Container(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(screenSize.height / 15,
+                        screenSize.height / 70, screenSize.height / 15, 0),
+                    child: Card(
+                        child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                child: Text(
+                                  "ยังไม่อ่าน",
+                                  style: TextStyle(color: Color(0xFFC37447)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(screenSize.height / 20,
+                              8, screenSize.height / 20, 0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black12)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      "นางสาวพรพิมล แก้วใส",
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      "Post-op@Hospital",
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      "ไม่ผ่านแบบประเมินระบบปัสสาวะ",
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      "ห้อง3 เตียง2",
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      "16:29",
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                  child: Text(
+                                "อ่านแล้ว",
+                                style: TextStyle(color: Color(0xFFC37447)),
+                              )),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(screenSize.height / 20,
+                              8, screenSize.height / 20, 8),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black12)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      "นางสาวพรพิมล แก้วใส",
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      "Post-op@Hospital",
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      "ไม่ผ่านแบบประเมินระบบปัสสาวะ",
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      "ห้อง3 เตียง2",
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      "16:29",
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                  ),
                 ),
               ],
             ),
