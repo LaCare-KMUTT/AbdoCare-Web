@@ -33,6 +33,7 @@ class EditPatientForm extends StatefulWidget {
     @required String doctorName,
     @required String bedNumber,
     @required String roomNumber,
+    @required DateTime latestStateChange,
   }) submitFn;
 
   @override
@@ -65,6 +66,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
   String _doctorName = '';
   String _bedNumber = '';
   String _roomNumber = '';
+  DateTime _latestStateChange;
 
   Future<DateTime> _selectDate(
       BuildContext context, DateTime currentValue) async {
@@ -119,6 +121,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
         doctorName: _doctorName,
         bedNumber: _bedNumber,
         roomNumber: _roomNumber,
+        latestStateChange: _latestStateChange,
       );
     }
   }
@@ -155,7 +158,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
         builder: (context, userCollection) {
           if (!userCollection.hasData) {
             print('userCollection does\'t have data in editPatientForm');
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           } else {
             _fetchAnId(userCollection.data.docs.first.id);
             var user = userCollection.data.docs.first;
@@ -168,7 +171,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                 builder: (context, anSubCollection) {
                   if (!anSubCollection.hasData) {
                     print('anSubCollection doesn\'t have data');
-                    return CircularProgressIndicator();
+                    return Center(child: CircularProgressIndicator());
                   } else {
                     return Container(
                       child: ListView(
@@ -1182,6 +1185,12 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     onChanged: (value) {
                                                       setState(() {
                                                         _state = value;
+                                                        //TODO Check if select the same state will change this thing ?
+                                                        _latestStateChange =
+                                                            _calculationService
+                                                                .formatDate(
+                                                                    date: DateTime
+                                                                        .now());
                                                       });
                                                     },
                                                   ),
@@ -1295,7 +1304,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               _trySubmit();
-                                              Navigator.pop(context);
+                                              Navigator.pushNamed(
+                                                  context, '/patientList_page');
                                             }
                                           },
                                           textColor: Colors.white,

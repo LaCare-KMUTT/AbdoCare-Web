@@ -38,6 +38,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
     @required String doctorName,
     @required String bedNumber,
     @required String roomNumber,
+    @required DateTime latestStateChange,
   }) async {
     var document = await _firebaseService.searchDocumentByField(
         collection: 'Users', field: 'hn', fieldValue: _currentHn);
@@ -77,6 +78,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
         'bedNumber': bedNumber,
         'roomNumber': roomNumber,
         'state': state,
+        'latestStateChange': latestStateChange,
       },
     );
   }
