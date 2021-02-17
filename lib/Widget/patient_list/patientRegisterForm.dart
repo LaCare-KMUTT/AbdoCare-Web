@@ -4,6 +4,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
@@ -52,6 +53,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   String _careTakerSurname = '';
   String _careTakerRelationship = '';
   String _careTakerTel = '';
+  String _uniqueKey = '';
 
   String _createDummyUsername(String hn) {
     String dummyUsername = '@abdoCare.com';
@@ -116,7 +118,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         careTakerTel: _careTakerTel.trim(),
         careTakerRelationship: _careTakerRelationship.trim(),
         username: _createDummyUsername(_hn.trim()),
-        uniqueKey: _generateUniqueKey(6),
+        uniqueKey: _uniqueKey,
         password: '000000',
       );
     }
@@ -687,9 +689,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           ),
                           padding: EdgeInsets.all(15),
                           onPressed: () async {
+                            _uniqueKey = _generateUniqueKey(6);
+
                             if (_formKey.currentState.validate()) {
                               _trySubmit();
-                              Navigator.pop(context);
+                              showAlertDialog(context, _uniqueKey, _hn);
                             }
                           },
                           textColor: Colors.white,
@@ -710,4 +714,44 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       ),
     );
   }
+}
+
+void showAlertDialog(BuildContext context, String _uniqueKey, String _hn) {
+  var alertStyle = AlertStyle(
+    animationType: AnimationType.grow,
+    descStyle: TextStyle(fontWeight: FontWeight.bold),
+    descTextAlign: TextAlign.center,
+    animationDuration: Duration(milliseconds: 0),
+    alertBorder: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+      side: BorderSide(
+        color: Colors.grey[50],
+      ),
+    ),
+    titleStyle: TextStyle(
+      color: Color(0xFFC37447),
+    ),
+    alertAlignment: Alignment.center,
+  );
+  Alert(
+    context: context,
+    type: AlertType.success,
+    style: alertStyle,
+    title: "รหัสสำหรับลงทะเบียนแอปพลิเคชันมือถือ",
+    content: Text("HN: $_hn\nรหัสโค้ด: $_uniqueKey",
+        style: Theme.of(context).textTheme.bodyText2,
+        textAlign: TextAlign.center),
+    buttons: [
+      DialogButton(
+        child: Text(
+          "ตกลง",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, '/patientList_page');
+        },
+        color: Color(0xFFC37447),
+      ),
+    ],
+  ).show();
 }
