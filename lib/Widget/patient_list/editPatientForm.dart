@@ -33,6 +33,7 @@ class EditPatientForm extends StatefulWidget {
     @required String doctorName,
     @required String bedNumber,
     @required String roomNumber,
+    @required DateTime latestStateChange,
   }) submitFn;
 
   @override
@@ -65,6 +66,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
   String _doctorName = '';
   String _bedNumber = '';
   String _roomNumber = '';
+  DateTime _latestStateChange;
 
   Future<DateTime> _selectDate(
       BuildContext context, DateTime currentValue) async {
@@ -119,6 +121,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
         doctorName: _doctorName,
         bedNumber: _bedNumber,
         roomNumber: _roomNumber,
+        latestStateChange: _latestStateChange,
       );
     }
   }
@@ -1182,6 +1185,12 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     onChanged: (value) {
                                                       setState(() {
                                                         _state = value;
+                                                        //TODO Check if select the same state will change this thing ?
+                                                        _latestStateChange =
+                                                            _calculationService
+                                                                .formatDate(
+                                                                    date: DateTime
+                                                                        .now());
                                                       });
                                                     },
                                                   ),
