@@ -70,7 +70,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                         child: RaisedButton(
                             child: Text("Post-Operation@Home",
                                 style: TextStyle(fontSize: 18)),
-                            padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                            padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0)),
                             onPressed: () {}),
