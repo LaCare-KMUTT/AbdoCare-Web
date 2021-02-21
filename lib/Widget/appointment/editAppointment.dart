@@ -228,7 +228,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                           ? 'กรุณากรอกหมายเลขAN'
                                                           : null,
                                                   onSaved: (value) =>
-                                                      _an = value.toLowerCase(),
+                                                      _an = value.toUpperCase(),
                                                 ),
                                               ),
                                             ),
@@ -449,7 +449,8 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                             'Appointments',
                                                         docId: appointmentId,
                                                         data: dataToDB);
-                                                Navigator.pop(context);
+                                                Navigator.pushNamed(context,
+                                                    '/appointment_page');
                                               }
                                             },
                                           ),
