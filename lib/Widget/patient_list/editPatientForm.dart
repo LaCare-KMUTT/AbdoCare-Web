@@ -1182,6 +1182,17 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     onChanged: (value) {
                                                       setState(() {
                                                         _state = value;
+                                                        //TODO Check if select the same state will change this thing ?
+                                                        if (anSubCollection
+                                                                    .data[
+                                                                'state'] !=
+                                                            value) {
+                                                          _latestStateChange =
+                                                              _calculationService
+                                                                  .formatDate(
+                                                                      date: DateTime
+                                                                          .now());
+                                                        }
                                                       });
                                                     },
                                                   ),
