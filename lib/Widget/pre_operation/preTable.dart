@@ -33,12 +33,6 @@ class _PreTableState extends State<PreTable> {
     }
   }
 
-  onSelectedRow(bool selected, User user) async {
-    setState(() {
-      print('Selected ${user.hn} ${user.name}');
-    });
-  }
-
   DataTable dataBody() {
     var screenSize = MediaQuery.of(context).size;
     return DataTable(
@@ -102,28 +96,28 @@ class _PreTableState extends State<PreTable> {
                       Text(user.name),
                     ),
                     DataCell(
-                      Text(user.gender, textAlign: TextAlign.center),
+                      Text(user.gender),
                     ),
                     DataCell(
-                      Text(user.age, textAlign: TextAlign.center),
+                      Text(user.age),
                     ),
                     DataCell(
-                      Text(user.room, textAlign: TextAlign.center),
+                      Text(user.room),
                     ),
                     DataCell(
-                      Text(user.bed, textAlign: TextAlign.center),
+                      Text(user.bed),
                     ),
                     DataCell(
-                      Text(user.oxygen, textAlign: TextAlign.center),
+                      Text(user.oxygen),
                     ),
                     DataCell(
-                      Text(user.pressure, textAlign: TextAlign.center),
+                      Text(user.pressure),
                     ),
                     DataCell(
-                      Text(user.temperature, textAlign: TextAlign.center),
+                      Text(user.temperature),
                     ),
                     DataCell(
-                      Text(user.status, textAlign: TextAlign.center),
+                      Text(user.status),
                     ),
                   ]))
           .toList(),
