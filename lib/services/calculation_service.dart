@@ -71,4 +71,10 @@ class CalculationService extends ICalculationService {
         date.year.toString(), buddhistYear.year.toString());
     return returnVal;
   }
+
+  int calculateDayDifference(
+      {@required DateTime day, @required DateTime compareTo}) {
+    var duration = day.difference(compareTo).inDays;
+    return duration.abs();
+  }
 }
