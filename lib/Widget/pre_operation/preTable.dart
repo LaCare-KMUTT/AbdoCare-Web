@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import '../../services/interfaces/firebase_service_interface.dart';
+import '../../services/service_locator.dart';
 
 class PreTable extends StatefulWidget {
   PreTable({Key key}) : super(key: key);
@@ -8,6 +10,126 @@ class PreTable extends StatefulWidget {
 }
 
 class _PreTableState extends State<PreTable> {
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
+
+  List<User> users;
+  List<User> selectedUsers;
+  bool sort;
+  @override
+  void initState() {
+    sort = true;
+    selectedUsers = [];
+    users = User.getUsers();
+    super.initState();
+  }
+
+  onSort(int columnIndex, bool ascending) {
+    if (columnIndex == 0) {
+      if (ascending) {
+        users.sort((a, b) => a.hn.compareTo(b.hn));
+      } else {
+        users.sort((a, b) => b.hn.compareTo(a.hn));
+      }
+    }
+  }
+
+  onSelectedRow(bool selected, User user) async {
+    setState(() {
+      print('Selected ${user.hn} ${user.name}');
+    });
+  }
+
+  DataTable dataBody() {
+    var screenSize = MediaQuery.of(context).size;
+    return DataTable(
+      showCheckboxColumn: false,
+      columnSpacing: screenSize.width / 19,
+      headingRowHeight: 50,
+      headingTextStyle: TextStyle(
+          fontSize: 18,
+          fontFamily: 'Prompt',
+          color: Colors.black54,
+          fontStyle: FontStyle.italic),
+      sortAscending: sort,
+      sortColumnIndex: 0,
+      columns: [
+        DataColumn(
+            label: Text('HN'),
+            onSort: (columnIndex, ascending) {
+              setState(() {
+                sort = !sort;
+              });
+              onSort(columnIndex, ascending);
+            }),
+        DataColumn(
+          label: Text('ชื่อ-นามสกุล'),
+        ),
+        DataColumn(
+          label: Text('เพศ'),
+        ),
+        DataColumn(
+          label: Text('อายุ'),
+        ),
+        DataColumn(
+          label: Text('ห้อง'),
+        ),
+        DataColumn(
+          label: Text('เตียง'),
+        ),
+        DataColumn(
+          label: Text('ออกซิเจน'),
+        ),
+        DataColumn(
+          label: Text('ความดัน'),
+        ),
+        DataColumn(
+          label: Text('อุณหภูมิ'),
+        ),
+        DataColumn(
+          label: Text('สถานะ'),
+        ),
+      ],
+      rows: users
+          .map((user) => DataRow(
+                  onSelectChanged: (newValue) {
+                    print('Selected ${user.hn} ${user.name}');
+                  },
+                  cells: [
+                    DataCell(
+                      Text(user.hn),
+                    ),
+                    DataCell(
+                      Text(user.name),
+                    ),
+                    DataCell(
+                      Text(user.gender, textAlign: TextAlign.center),
+                    ),
+                    DataCell(
+                      Text(user.age, textAlign: TextAlign.center),
+                    ),
+                    DataCell(
+                      Text(user.room, textAlign: TextAlign.center),
+                    ),
+                    DataCell(
+                      Text(user.bed, textAlign: TextAlign.center),
+                    ),
+                    DataCell(
+                      Text(user.oxygen, textAlign: TextAlign.center),
+                    ),
+                    DataCell(
+                      Text(user.pressure, textAlign: TextAlign.center),
+                    ),
+                    DataCell(
+                      Text(user.temperature, textAlign: TextAlign.center),
+                    ),
+                    DataCell(
+                      Text(user.status, textAlign: TextAlign.center),
+                    ),
+                  ]))
+          .toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -85,8 +207,8 @@ class _PreTableState extends State<PreTable> {
             ),
           ]),
           Padding(
-            padding: EdgeInsets.fromLTRB(screenSize.height / 10,
-                screenSize.height / 70, screenSize.height / 10, 0),
+            padding: EdgeInsets.fromLTRB(screenSize.height / 20,
+                screenSize.height / 70, screenSize.height / 20, 0),
             child: Card(
               child: Container(
                 child: SizedBox(
@@ -95,83 +217,7 @@ class _PreTableState extends State<PreTable> {
                     child: Scrollbar(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          columnSpacing: screenSize.width / 19,
-                          headingRowHeight: 50,
-                          headingTextStyle: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Prompt',
-                              color: Colors.black54,
-                              fontStyle: FontStyle.italic),
-                          columns: const <DataColumn>[
-                            DataColumn(
-                              label: Text(
-                                'HN',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'ชื่อ-นามสกุล',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'เพศ',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'อายุ',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'ห้อง',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'เตียง',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'ออกซิเจน',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'ความดัน',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'อุณหภูมิ',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'สถานะ',
-                              ),
-                            ),
-                          ],
-                          rows: const <DataRow>[
-                            DataRow(
-                              cells: <DataCell>[
-                                DataCell(Text('HN1234')),
-                                DataCell(Text('วริศรา จิ๋วประดิษฐ์กุล')),
-                                DataCell(Text('หญิง')),
-                                DataCell(Text('23')),
-                                DataCell(Text('1')),
-                                DataCell(Text('1')),
-                                DataCell(Text('98')),
-                                DataCell(Text('99')),
-                                DataCell(Text('43')),
-                                DataCell(Text('ปกติ')),
-                              ],
-                            ),
-                          ],
-                        ),
+                        child: dataBody(),
                       ),
                     ),
                   ),
@@ -182,5 +228,67 @@ class _PreTableState extends State<PreTable> {
         ],
       ),
     );
+  }
+}
+
+class User {
+  String hn;
+  String name;
+  String gender;
+  String age;
+  String room;
+  String bed;
+  String oxygen;
+  String pressure;
+  String temperature;
+  String status;
+
+  User(
+      {this.hn,
+      this.name,
+      this.gender,
+      this.age,
+      this.room,
+      this.bed,
+      this.oxygen,
+      this.pressure,
+      this.temperature,
+      this.status});
+  static List<User> getUsers() {
+    return <User>[
+      User(
+          hn: "HN10001",
+          name: "วริศรา จิ๋วประดิษฐ์กุล",
+          gender: "หญิง",
+          age: "46",
+          room: "13",
+          bed: "1",
+          oxygen: "95",
+          pressure: "99",
+          temperature: "91",
+          status: "ปกติ"),
+      User(
+          hn: "HN10002",
+          name: "พรพิมล แก้วใส",
+          gender: "หญิง",
+          age: "37",
+          room: "10",
+          bed: "3",
+          oxygen: "98",
+          pressure: "94",
+          temperature: "98",
+          status: "ปกติ"),
+      User(
+          hn: "HN10003",
+          name: "ทวีศักดิ์ สายวงศ์",
+          gender: "ชาย",
+          age: "38",
+          room: "9",
+          bed: "2",
+          oxygen: "96",
+          pressure: "97",
+          temperature: "90",
+          status: "ปกติ"),
+    ];
   }
 }
