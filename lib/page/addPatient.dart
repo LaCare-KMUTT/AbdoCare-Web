@@ -36,6 +36,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     @required String username,
     @required String uniqueKey,
     @required String password,
+    @required DateTime latestStateChange,
   }) async {
     var patientUid =
         await _firebaseService.createPatient(collection: 'Users', data: {

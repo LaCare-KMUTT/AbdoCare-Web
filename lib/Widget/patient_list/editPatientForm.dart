@@ -402,6 +402,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   flex: 2,
                                                   child:
                                                       DropdownButtonFormField(
+                                                    value: user.get('gender'),
                                                     isExpanded: true,
                                                     validator: (value) => value ==
                                                             null
@@ -411,7 +412,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       child: Text(
                                                         user.get('gender'),
                                                       ),
-                                                      value: user.get('gender'),
                                                     ),
                                                     decoration: InputDecoration(
                                                       enabledBorder:
@@ -1089,6 +1089,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   flex: 1,
                                                   child:
                                                       DropdownButtonFormField(
+                                                    value: anSubCollection.data[
+                                                        'operationMethod'],
                                                     isExpanded: true,
                                                     validator: (value) => value ==
                                                             null
@@ -1099,9 +1101,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                         anSubCollection.data[
                                                             'operationMethod'],
                                                       ),
-                                                      value: anSubCollection
-                                                              .data[
-                                                          'operationMethod'],
                                                     ),
                                                     decoration: InputDecoration(
                                                       enabledBorder:
@@ -1111,8 +1110,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                                 Colors.black26,
                                                             width: 1),
                                                       ),
-                                                      // labelText:
-                                                      //     'ประเภทการผ่าตัด')
                                                     ),
                                                     onSaved: (value) {
                                                       _operationMethod = value;
@@ -1153,6 +1150,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   flex: 2,
                                                   child:
                                                       DropdownButtonFormField(
+                                                    value: anSubCollection
+                                                        .data['state'],
                                                     isExpanded: true,
                                                     validator: (value) => value ==
                                                             null
@@ -1169,6 +1168,19 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     ),
                                                     onSaved: (value) {
                                                       _state = value;
+                                                      anSubCollection.data[
+                                                                  'state'] ==
+                                                              value
+                                                          ? _latestStateChange =
+                                                              anSubCollection
+                                                                  .data[
+                                                                      'latestStateChange']
+                                                                  .toDate()
+                                                          : _latestStateChange =
+                                                              _calculationService
+                                                                  .formatDate(
+                                                                      date: DateTime
+                                                                          .now());
                                                     },
                                                     items: [
                                                       'Pre-Operation',
@@ -1185,12 +1197,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     onChanged: (value) {
                                                       setState(() {
                                                         _state = value;
-                                                        //TODO Check if select the same state will change this thing ?
-                                                        _latestStateChange =
-                                                            _calculationService
-                                                                .formatDate(
-                                                                    date: DateTime
-                                                                        .now());
                                                       });
                                                     },
                                                   ),
