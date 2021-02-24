@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Widget/appbar.dart';
 import '../Widget/patient_list/editPatientForm.dart';
-import '../Widget/sidebar.dart';
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
 

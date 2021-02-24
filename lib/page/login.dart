@@ -3,7 +3,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
-import '../Widget/appbar.dart';
 
 class LoginPage extends StatefulWidget {
   @override
