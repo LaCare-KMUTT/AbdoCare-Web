@@ -13,23 +13,61 @@ class _PreTableState extends State<PreTable> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
 
   List<User> users;
-  List<User> selectedUsers;
-  bool sort;
+  bool _sortAsc = true;
+  bool _sortRespirationRateAsc = true;
+  bool _sortHeartRateAsc = true;
+  bool _sortOxygenRateAsc = true;
+  bool _sortBloodPressureAsc = true;
+  bool _sortTemperatureAsc = true;
+  bool _sortStatusAsc = true;
+  int _sortColumnIndex = 11;
+
   @override
   void initState() {
-    sort = true;
-    selectedUsers = [];
     users = User.getUsers();
     super.initState();
   }
 
-  onSort(int columnIndex, bool ascending) {
-    if (columnIndex == 0) {
-      if (ascending) {
-        users.sort((a, b) => a.hn.compareTo(b.hn));
-      } else {
-        users.sort((a, b) => b.hn.compareTo(a.hn));
-      }
+  Color getTemperatureColor(double temperature) {
+    if (temperature < 36.0 || temperature > 37.0) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getRespirationRateColor(double respirationRate) {
+    if (respirationRate < 16 || respirationRate > 20) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getHeartRateColor(double heartRate) {
+    if (heartRate < 60 || heartRate > 100) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getBloodPressureColor(double bloodPressure) {
+    if (bloodPressure < 130) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getOxygenRateColor(double oxygenRate) {
+    if (oxygenRate < 95) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getStatusColor(String status) {
+    if (status == 'ผิดปกติ') {
+      return Colors.red;
+    } else {
+      return Colors.green;
     }
   }
 
@@ -37,50 +75,146 @@ class _PreTableState extends State<PreTable> {
     var screenSize = MediaQuery.of(context).size;
     return DataTable(
       showCheckboxColumn: false,
-      columnSpacing: screenSize.width / 19,
+      columnSpacing: screenSize.width / 37,
       headingRowHeight: 50,
       headingTextStyle: TextStyle(
           fontSize: 18,
           fontFamily: 'Prompt',
           color: Colors.black54,
           fontStyle: FontStyle.italic),
-      sortAscending: sort,
-      sortColumnIndex: 0,
+      sortAscending: _sortAsc,
+      sortColumnIndex: _sortColumnIndex,
       columns: [
         DataColumn(
-            label: Text('HN'),
-            onSort: (columnIndex, ascending) {
-              setState(() {
-                sort = !sort;
-              });
-              onSort(columnIndex, ascending);
-            }),
-        DataColumn(
-          label: Text('ชื่อ-นามสกุล'),
+          label: Expanded(child: Center(child: Text('HN'))),
         ),
         DataColumn(
-          label: Text('เพศ'),
+          label: Expanded(child: Text('ชื่อ-นามสกุล')),
         ),
         DataColumn(
-          label: Text('อายุ'),
+          label: Expanded(child: Center(child: Text('เพศ'))),
         ),
         DataColumn(
-          label: Text('ห้อง'),
+          label: Expanded(child: Center(child: Text('อายุ'))),
         ),
         DataColumn(
-          label: Text('เตียง'),
+          label: Expanded(child: Center(child: Text('ห้อง'))),
         ),
         DataColumn(
-          label: Text('ออกซิเจน'),
+          label: Expanded(child: Center(child: Text('เตียง'))),
         ),
         DataColumn(
-          label: Text('ความดัน'),
+          label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortRespirationRateAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortRespirationRateAsc;
+              }
+              users.sort(
+                  (a, b) => a.respirationRate.compareTo(b.respirationRate));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
         ),
         DataColumn(
-          label: Text('อุณหภูมิ'),
+          label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortTemperatureAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortTemperatureAsc;
+              }
+              users.sort((a, b) => a.temperature.compareTo(b.temperature));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
         ),
         DataColumn(
-          label: Text('สถานะ'),
+          label: Expanded(
+              child: Center(
+                  child: Text(
+            'ชีพจร',
+          ))),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortHeartRateAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortHeartRateAsc;
+              }
+              users.sort((a, b) => a.heartRate.compareTo(b.heartRate));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+        DataColumn(
+          label: Expanded(child: Center(child: Text('ความดัน'))),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortBloodPressureAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortBloodPressureAsc;
+              }
+              users.sort((a, b) => a.bloodPressure.compareTo(b.bloodPressure));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+        DataColumn(
+          label: Expanded(child: Text('ออกซิเจน')),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortOxygenRateAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortOxygenRateAsc;
+              }
+              users.sort((a, b) => a.oxygenRate.compareTo(b.oxygenRate));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+        DataColumn(
+          label: Expanded(child: Text('สถานะ')),
+          numeric: false,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortStatusAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortStatusAsc;
+              }
+              users.sort((a, b) => b.status.compareTo(a.status));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
         ),
       ],
       rows: users
@@ -89,35 +223,46 @@ class _PreTableState extends State<PreTable> {
                     print('Selected ${user.hn} ${user.name}');
                   },
                   cells: [
+                    DataCell(Text(user.hn)),
+                    DataCell(Text(user.name)),
+                    DataCell(Text(user.gender)),
+                    DataCell(Center(child: Text(user.age))),
+                    DataCell(Center(child: Text(user.roomNumber))),
+                    DataCell(Center(child: Text(user.bedNumber))),
                     DataCell(
-                      Text(user.hn),
+                      Text('${user.respirationRate.toString()}',
+                          style: TextStyle(
+                              color: getRespirationRateColor(
+                                  user.respirationRate))),
                     ),
                     DataCell(
-                      Text(user.name),
+                      Text('${user.temperature.toString()}',
+                          style: TextStyle(
+                              color: getTemperatureColor(user.temperature))),
                     ),
                     DataCell(
-                      Text(user.gender),
+                      Text('${user.heartRate.toString()}',
+                          style: TextStyle(
+                              color: getHeartRateColor(user.heartRate))),
                     ),
                     DataCell(
-                      Text(user.age),
+                      Text('${user.bloodPressure.toString()}',
+                          style: TextStyle(
+                              color:
+                                  getBloodPressureColor(user.bloodPressure))),
                     ),
                     DataCell(
-                      Text(user.room),
+                      Text('${user.oxygenRate.toString()}',
+                          style: TextStyle(
+                              color: getOxygenRateColor(user.oxygenRate))),
                     ),
                     DataCell(
-                      Text(user.bed),
-                    ),
-                    DataCell(
-                      Text(user.oxygen),
-                    ),
-                    DataCell(
-                      Text(user.pressure),
-                    ),
-                    DataCell(
-                      Text(user.temperature),
-                    ),
-                    DataCell(
-                      Text(user.status),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(user.status,
+                            style:
+                                TextStyle(color: getStatusColor(user.status))),
+                      ),
                     ),
                   ]))
           .toList(),
@@ -201,8 +346,8 @@ class _PreTableState extends State<PreTable> {
             ),
           ]),
           Padding(
-            padding: EdgeInsets.fromLTRB(screenSize.height / 20,
-                screenSize.height / 70, screenSize.height / 20, 0),
+            padding: EdgeInsets.fromLTRB(screenSize.height / 25,
+                screenSize.height / 70, screenSize.height / 25, 0),
             child: Card(
               child: Container(
                 child: SizedBox(
@@ -211,7 +356,7 @@ class _PreTableState extends State<PreTable> {
                     child: Scrollbar(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: dataBody(),
+                        child: FittedBox(child: dataBody()),
                       ),
                     ),
                   ),
@@ -230,24 +375,28 @@ class User {
   String name;
   String gender;
   String age;
-  String room;
-  String bed;
-  String oxygen;
-  String pressure;
-  String temperature;
+  String roomNumber;
+  String bedNumber;
+  double temperature;
+  double respirationRate;
+  double heartRate;
+  double bloodPressure;
+  double oxygenRate;
   String status;
-
-  User(
-      {this.hn,
-      this.name,
-      this.gender,
-      this.age,
-      this.room,
-      this.bed,
-      this.oxygen,
-      this.pressure,
-      this.temperature,
-      this.status});
+  User({
+    this.hn,
+    this.name,
+    this.gender,
+    this.age,
+    this.roomNumber,
+    this.bedNumber,
+    this.temperature,
+    this.respirationRate,
+    this.heartRate,
+    this.bloodPressure,
+    this.oxygenRate,
+    this.status,
+  });
   static List<User> getUsers() {
     return <User>[
       User(
@@ -255,34 +404,40 @@ class User {
           name: "วริศรา จิ๋วประดิษฐ์กุล",
           gender: "หญิง",
           age: "46",
-          room: "13",
-          bed: "1",
-          oxygen: "95",
-          pressure: "99",
-          temperature: "91",
+          roomNumber: "13",
+          bedNumber: "1",
+          temperature: 37,
+          respirationRate: 16,
+          heartRate: 100,
+          bloodPressure: 140,
+          oxygenRate: 97,
           status: "ปกติ"),
       User(
           hn: "HN10002",
           name: "พรพิมล แก้วใส",
           gender: "หญิง",
           age: "37",
-          room: "10",
-          bed: "3",
-          oxygen: "98",
-          pressure: "94",
-          temperature: "98",
-          status: "ปกติ"),
+          roomNumber: "10",
+          bedNumber: "3",
+          temperature: 38,
+          respirationRate: 20,
+          heartRate: 59,
+          bloodPressure: 120,
+          oxygenRate: 95,
+          status: "ผิดปกติ"),
       User(
           hn: "HN10003",
           name: "ทวีศักดิ์ สายวงศ์",
           gender: "ชาย",
           age: "38",
-          room: "9",
-          bed: "2",
-          oxygen: "96",
-          pressure: "97",
-          temperature: "90",
-          status: "ปกติ"),
+          roomNumber: "9",
+          bedNumber: "2",
+          temperature: 36,
+          respirationRate: 24,
+          heartRate: 91,
+          bloodPressure: 130,
+          oxygenRate: 99,
+          status: "ผิดปกติ"),
     ];
   }
 }
