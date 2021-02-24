@@ -1,7 +1,7 @@
 import 'dart:ui';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:responsive_table/responsive_table.dart';
+import '../../services/interfaces/firebase_service_interface.dart';
+import '../../services/service_locator.dart';
 
 class PreTable extends StatefulWidget {
   PreTable({Key key}) : super(key: key);
@@ -10,295 +10,434 @@ class PreTable extends StatefulWidget {
 }
 
 class _PreTableState extends State<PreTable> {
-  List<DatatableHeader> _headers = [
-    DatatableHeader(
-        text: "HN",
-        value: "hn",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ชื่อ-นามสกุล",
-        value: "name",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "เพศ",
-        value: "sex",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "อายุ",
-        value: "age",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ห้อง",
-        value: "room",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "เตียง",
-        value: "bed",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ออกซิเจน",
-        value: "oxygen",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ความดัน",
-        value: "pressure",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "อุณหภูมิ",
-        value: "temperature",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "สถานะ",
-        value: "status",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-  ];
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
 
-  List<int> _perPages = [5, 10, 15, 100];
-  int _total = 10; // total patient
-  int _currentPerPage = 10;
-  int _currentPage = 1;
-  bool _isSearch = false;
-  List<Map<String, dynamic>> _source = List<Map<String, dynamic>>();
-  List<Map<String, dynamic>> _selecteds = List<Map<String, dynamic>>();
-  //String _selectableKey = "id";
-
-  String _sortColumn;
-  bool _sortAscending = true;
-  bool _isLoading = true;
-  bool _showSelect = false;
-
-  List<Map<String, dynamic>> _generateData({int n: 100}) {
-    final List source = List.filled(n, Random.secure());
-    List<Map<String, dynamic>> temps = List<Map<String, dynamic>>();
-    var i = _source.length;
-    print(i);
-    // loop for print patients list
-    // for (var data in source) {
-
-    // mock up list
-    temps.add({
-      "id": i,
-      "hn": "HN10001",
-      "name": "นางสาวพรพิมล แก้วใส",
-      "sex": "หญิง",
-      "age": "22 ปี",
-      "room": "3",
-      "bed": "2",
-      "oxygen": "99%",
-      "pressure": "122",
-      "temperature": "37.8",
-      "status": "ปกติ"
-    });
-    temps.add({
-      "id": i,
-      "hn": "HN10002",
-      "name": "นางสาวยิ้มแย้ม แจ่มใส",
-      "sex": "หญิง",
-      "age": "40 ปี",
-      "room": "5",
-      "bed": "1",
-      "oxygen": "89%",
-      "pressure": "130",
-      "temperature": "38.8",
-      "status": "รุนแรง"
-    });
-    temps.add({
-      "id": i,
-      "hn": "HN10003",
-      "name": "นายสามารถ สมาธิ",
-      "sex": "ชาย",
-      "age": "35 ปี",
-      "room": "3",
-      "bed": "1",
-      "oxygen": "96%",
-      "pressure": "125",
-      "temperature": "36.4",
-      "status": "ปกติ"
-    });
-
-    //i++;
-    //}
-    return temps;
-  }
-
-  _initData() async {
-    setState(() => _isLoading = true);
-    Future.delayed(Duration(seconds: 3)).then((value) {
-      _source.addAll(_generateData(n: 1000));
-      setState(() => _isLoading = false);
-    });
-  }
+  List<User> users;
+  bool _sortAsc = true;
+  bool _sortRespirationRateAsc = true;
+  bool _sortHeartRateAsc = true;
+  bool _sortOxygenRateAsc = true;
+  bool _sortBloodPressureAsc = true;
+  bool _sortTemperatureAsc = true;
+  bool _sortStatusAsc = true;
+  int _sortColumnIndex = 11;
 
   @override
   void initState() {
+    users = User.getUsers();
     super.initState();
-    _initData();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Color getTemperatureColor(double temperature) {
+    if (temperature < 36.0 || temperature > 37.0) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getRespirationRateColor(double respirationRate) {
+    if (respirationRate < 16 || respirationRate > 20) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getHeartRateColor(double heartRate) {
+    if (heartRate < 60 || heartRate > 100) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getBloodPressureColor(double bloodPressure) {
+    if (bloodPressure < 130) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getOxygenRateColor(double oxygenRate) {
+    if (oxygenRate < 95) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getStatusColor(String status) {
+    if (status == 'ผิดปกติ') {
+      return Colors.red;
+    } else {
+      return Colors.green;
+    }
+  }
+
+  DataTable dataBody() {
+    var screenSize = MediaQuery.of(context).size;
+    return DataTable(
+      showCheckboxColumn: false,
+      columnSpacing: screenSize.width / 37,
+      headingRowHeight: 50,
+      headingTextStyle: TextStyle(
+          fontSize: 18,
+          fontFamily: 'Prompt',
+          color: Colors.black54,
+          fontStyle: FontStyle.italic),
+      sortAscending: _sortAsc,
+      sortColumnIndex: _sortColumnIndex,
+      columns: [
+        DataColumn(
+          label: Expanded(child: Center(child: Text('HN'))),
+        ),
+        DataColumn(
+          label: Expanded(child: Text('ชื่อ-นามสกุล')),
+        ),
+        DataColumn(
+          label: Expanded(child: Center(child: Text('เพศ'))),
+        ),
+        DataColumn(
+          label: Expanded(child: Center(child: Text('อายุ'))),
+        ),
+        DataColumn(
+          label: Expanded(child: Center(child: Text('ห้อง'))),
+        ),
+        DataColumn(
+          label: Expanded(child: Center(child: Text('เตียง'))),
+        ),
+        DataColumn(
+          label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortRespirationRateAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortRespirationRateAsc;
+              }
+              users.sort(
+                  (a, b) => a.respirationRate.compareTo(b.respirationRate));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+        DataColumn(
+          label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortTemperatureAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortTemperatureAsc;
+              }
+              users.sort((a, b) => a.temperature.compareTo(b.temperature));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+        DataColumn(
+          label: Expanded(
+              child: Center(
+                  child: Text(
+            'ชีพจร',
+          ))),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortHeartRateAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortHeartRateAsc;
+              }
+              users.sort((a, b) => a.heartRate.compareTo(b.heartRate));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+        DataColumn(
+          label: Expanded(child: Center(child: Text('ความดัน'))),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortBloodPressureAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortBloodPressureAsc;
+              }
+              users.sort((a, b) => a.bloodPressure.compareTo(b.bloodPressure));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+        DataColumn(
+          label: Expanded(child: Text('ออกซิเจน')),
+          numeric: true,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortOxygenRateAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortOxygenRateAsc;
+              }
+              users.sort((a, b) => a.oxygenRate.compareTo(b.oxygenRate));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+        DataColumn(
+          label: Expanded(child: Text('สถานะ')),
+          numeric: false,
+          onSort: (columnIndex, sortAscending) {
+            setState(() {
+              if (columnIndex == _sortColumnIndex) {
+                _sortAsc = _sortStatusAsc = sortAscending;
+              } else {
+                _sortColumnIndex = columnIndex;
+                _sortAsc = _sortStatusAsc;
+              }
+              users.sort((a, b) => b.status.compareTo(a.status));
+              if (!sortAscending) {
+                users = users.reversed.toList();
+              }
+            });
+          },
+        ),
+      ],
+      rows: users
+          .map((user) => DataRow(
+                  onSelectChanged: (newValue) {
+                    print('Selected ${user.hn} ${user.name}');
+                  },
+                  cells: [
+                    DataCell(Text(user.hn)),
+                    DataCell(Text(user.name)),
+                    DataCell(Text(user.gender)),
+                    DataCell(Center(child: Text(user.age))),
+                    DataCell(Center(child: Text(user.roomNumber))),
+                    DataCell(Center(child: Text(user.bedNumber))),
+                    DataCell(
+                      Text('${user.respirationRate.toString()}',
+                          style: TextStyle(
+                              color: getRespirationRateColor(
+                                  user.respirationRate))),
+                    ),
+                    DataCell(
+                      Text('${user.temperature.toString()}',
+                          style: TextStyle(
+                              color: getTemperatureColor(user.temperature))),
+                    ),
+                    DataCell(
+                      Text('${user.heartRate.toString()}',
+                          style: TextStyle(
+                              color: getHeartRateColor(user.heartRate))),
+                    ),
+                    DataCell(
+                      Text('${user.bloodPressure.toString()}',
+                          style: TextStyle(
+                              color:
+                                  getBloodPressureColor(user.bloodPressure))),
+                    ),
+                    DataCell(
+                      Text('${user.oxygenRate.toString()}',
+                          style: TextStyle(
+                              color: getOxygenRateColor(user.oxygenRate))),
+                    ),
+                    DataCell(
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(user.status,
+                            style:
+                                TextStyle(color: getStatusColor(user.status))),
+                      ),
+                    ),
+                  ]))
+          .toList(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-            Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(0),
-              constraints: BoxConstraints(
-                maxHeight: 700,
+    var screenSize = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: ListView(
+        children: [
+          Row(children: <Widget>[
+            Expanded(
+              flex: 5,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(screenSize.height / 7,
+                        screenSize.height / 20, screenSize.height / 70, 0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        'ค้นหาผู้ป่วย:',
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              child: Card(
-                elevation: 1,
-                shadowColor: Colors.black,
-                clipBehavior: Clip.none,
-                child: ResponsiveDatatable(
-                  actions: [
-                    if (_isSearch)
-                      Expanded(
-                          child: TextField(
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        0, screenSize.height / 20, screenSize.height / 70, 0),
+                    child: Container(
+                      child: TextField(
                         decoration: InputDecoration(
-                            prefixIcon: IconButton(
-                                icon: Icon(Icons.cancel),
-                                onPressed: () {
-                                  setState(() {
-                                    _isSearch = false;
-                                  });
-                                }),
-                            suffixIcon: IconButton(
-                                icon: Icon(Icons.search), onPressed: () {})),
-                      )),
-                    if (!_isSearch)
-                      IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: () {
-                            setState(() {
-                              _isSearch = true;
-                            });
-                          })
-                  ],
-                  headers: _headers,
-                  source: _source,
-                  selecteds: _selecteds,
-                  showSelect: _showSelect,
-                  autoHeight: false,
-                  onTabRow: (data) {
-                    print(data);
-                  },
-                  onSort: (value) {
-                    setState(() {
-                      _sortColumn = value;
-                      _sortAscending = !_sortAscending;
-                      if (_sortAscending) {
-                        _source.sort((a, b) =>
-                            b["$_sortColumn"].compareTo(a["$_sortColumn"]));
-                      } else {
-                        _source.sort((a, b) =>
-                            a["$_sortColumn"].compareTo(b["$_sortColumn"]));
-                      }
-                    });
-                  },
-                  sortAscending: _sortAscending,
-                  sortColumn: _sortColumn,
-                  isLoading: _isLoading,
-                  onSelect: (value, item) {
-                    print("$value  $item ");
-                    if (value) {
-                      setState(() => _selecteds.add(item));
-                    } else {
-                      setState(
-                          () => _selecteds.removeAt(_selecteds.indexOf(item)));
-                    }
-                  },
-                  onSelectAll: (value) {
-                    if (value) {
-                      setState(() => _selecteds =
-                          _source.map((entry) => entry).toList().cast());
-                    } else {
-                      setState(() => _selecteds.clear());
-                    }
-                  },
-                  footers: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Text("Rows per page:"),
-                    ),
-                    if (_perPages != null)
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: DropdownButton(
-                            value: _currentPerPage,
-                            items: _perPages
-                                .map((e) => DropdownMenuItem(
-                                      child: Text("$e"),
-                                      value: e,
-                                    ))
-                                .toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _currentPerPage = value;
-                              });
-                            }),
+                            isDense: true,
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.black26, width: 0.0)),
+                            contentPadding: EdgeInsets.all(10.0),
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7.0))),
+                            prefixIcon: Icon(Icons.search),
+                            hintText: 'HN'),
+                        onChanged: (val) {
+                          setState(() {
+                            // hn = val;
+                          });
+                        },
                       ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child:
-                          Text("$_currentPage - $_currentPerPage of $_total"),
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        size: 16,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _currentPage =
-                              _currentPage >= 2 ? _currentPage - 1 : 1;
-                        });
-                      },
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.arrow_forward_ios, size: 16),
-                      onPressed: () {
-                        setState(() {
-                          _currentPage++;
-                        });
-                      },
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                    )
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  0, screenSize.height / 20, screenSize.height / 9, 0),
+              child: Container(
+                child: RaisedButton(
+                  child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
+                  padding: EdgeInsets.all(15),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0)),
+                  onPressed: () {},
                 ),
               ),
             ),
-          ])),
+          ]),
+          Padding(
+            padding: EdgeInsets.fromLTRB(screenSize.height / 25,
+                screenSize.height / 70, screenSize.height / 25, 0),
+            child: Card(
+              child: Container(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Scrollbar(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: FittedBox(child: dataBody()),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+}
+
+class User {
+  String hn;
+  String name;
+  String gender;
+  String age;
+  String roomNumber;
+  String bedNumber;
+  double temperature;
+  double respirationRate;
+  double heartRate;
+  double bloodPressure;
+  double oxygenRate;
+  String status;
+  User({
+    this.hn,
+    this.name,
+    this.gender,
+    this.age,
+    this.roomNumber,
+    this.bedNumber,
+    this.temperature,
+    this.respirationRate,
+    this.heartRate,
+    this.bloodPressure,
+    this.oxygenRate,
+    this.status,
+  });
+  static List<User> getUsers() {
+    return <User>[
+      User(
+          hn: "HN10001",
+          name: "วริศรา จิ๋วประดิษฐ์กุล",
+          gender: "หญิง",
+          age: "46",
+          roomNumber: "13",
+          bedNumber: "1",
+          temperature: 37,
+          respirationRate: 16,
+          heartRate: 100,
+          bloodPressure: 140,
+          oxygenRate: 97,
+          status: "ปกติ"),
+      User(
+          hn: "HN10002",
+          name: "พรพิมล แก้วใส",
+          gender: "หญิง",
+          age: "37",
+          roomNumber: "10",
+          bedNumber: "3",
+          temperature: 38,
+          respirationRate: 20,
+          heartRate: 59,
+          bloodPressure: 120,
+          oxygenRate: 95,
+          status: "ผิดปกติ"),
+      User(
+          hn: "HN10003",
+          name: "ทวีศักดิ์ สายวงศ์",
+          gender: "ชาย",
+          age: "38",
+          roomNumber: "9",
+          bedNumber: "2",
+          temperature: 36,
+          respirationRate: 24,
+          heartRate: 91,
+          bloodPressure: 130,
+          oxygenRate: 99,
+          status: "ผิดปกติ"),
+    ];
   }
 }
