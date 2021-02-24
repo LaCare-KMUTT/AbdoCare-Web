@@ -26,10 +26,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
     
+  #Firebase Stuffs
   firebase_core: "^0.7.0"
   firebase_auth: "^0.20.0+1"
   cloud_functions: "^0.9.0"
   cloud_firestore: "^0.16.0"
+  firebase_storage: "^7.0.0"
+
   uuid: ^2.2.2
   # intl: ^0.17.0-nullsafety.2
   intl: ^0.16.1
