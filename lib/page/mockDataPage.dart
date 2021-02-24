@@ -1,9 +1,11 @@
+import 'package:AbdoCare_Web/services/interfaces/storage_service_interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/mock/mock_data.dart';
 import '../services/service_locator.dart';
+import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
 
 class MockDataPage extends StatefulWidget {
   @override
@@ -12,6 +14,9 @@ class MockDataPage extends StatefulWidget {
 
 class _MockDataPageState extends State<MockDataPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final IStorageService _storageService = locator<IStorageService>();
+
+  var _file;
 
   final _mockFirestore = new MockFirestore();
 
@@ -167,6 +172,30 @@ class _MockDataPageState extends State<MockDataPage> {
                   ),
                 ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+            ),
+            RaisedButton(
+              onPressed: () async {
+                // _storageService.startWebFilePicker();
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(7.0),
+              ),
+              child: Text('Upload Training'),
+            ),
+            Divider(
+              color: Colors.teal,
+            ),
+            RaisedButton(
+              color: Colors.purple,
+              elevation: 8.0,
+              textColor: Colors.white,
+              onPressed: () {
+                // _storageService.makeRequest();
+              },
+              child: Text('Send file to storage'),
             ),
           ],
         ),
