@@ -21,7 +21,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // ignore: await_only_futures
-  await setupServiceLocator(isMock: false);
+  await setupServiceLocator(isMock: true);
   runApp(MyApp());
 }
 
