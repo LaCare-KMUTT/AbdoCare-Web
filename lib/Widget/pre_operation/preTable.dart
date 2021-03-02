@@ -1,8 +1,9 @@
 import 'dart:ui';
+
 import 'package:AbdoCare_Web/models/pre_op_list_model.dart';
 import 'package:AbdoCare_Web/view_models/pre_op_list_view_model.dart';
 import 'package:flutter/material.dart';
-import '../../services/interfaces/firebase_service_interface.dart';
+
 import '../../services/service_locator.dart';
 
 class PreTable extends StatefulWidget {
@@ -12,7 +13,6 @@ class PreTable extends StatefulWidget {
 }
 
 class _PreTableState extends State<PreTable> {
-  final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final PreOpViewModel _preOpViewModel = locator<PreOpViewModel>();
 
   List<PreOpData> users = [];
