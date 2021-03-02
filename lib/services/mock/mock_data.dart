@@ -98,7 +98,7 @@ class MockFirestore {
       'creation': creation,
       'creator': 'พยาบาลนิรนาม',
       'formName': 'Vital Sign',
-      'patientStage': 'pre-operation',
+      'patientStage': 'Pre-Operation',
       'formData': {
         'temperature': 37.8,
         'respirationRate': 27,
