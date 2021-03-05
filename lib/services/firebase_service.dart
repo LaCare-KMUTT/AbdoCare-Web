@@ -352,15 +352,14 @@ class FirebaseService extends IFirebaseService {
           userId: user.id,
           patientState: 'Post-Operation@Home',
           formName: 'Surgical Incision');
-      //TODO enable this after has woundImg
-      // bool isAbleToMap = (formPain != null && formPain.isNotEmpty) &&
-      //     (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty);
-      bool isAbleToMap = (formPain != null && formPain.isNotEmpty);
+      bool isAbleToMap = (formPain != null && formPain.isNotEmpty) &&
+          (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty);
+      // bool isAbleToMap = (formPain != null && formPain.isNotEmpty);
       if (isAbleToMap) {
         //TODO Change formsId => formId after clearing DB
         var formPainData = await _firestore
             .collection('Forms')
-            .doc(formPain.first['formsId'])
+            .doc(formPain.first['formId'])
             .get()
             .then((value) => value.data());
         //TODO Use this After has woundImg
@@ -391,7 +390,7 @@ class FirebaseService extends IFirebaseService {
             birthDate: userCollection.data()['dob'].toDate());
         var painScoreToMap = formPainData['formData']['Answer'];
         var operationTypeToMap = anSubCollection['operationMethod'];
-        var woundImgToMap = 'DUMMY IMG';
+        var woundImgToMap = formSurgicalIncisionData['imgURL'];
         var map = {
           'hn': hnToMap,
           'name': nameToMap,
