@@ -78,9 +78,16 @@ class _PreTableState extends State<PreTable> {
               strokeWidth: 4,
             );
           } else {
+            if (users.isNotEmpty) {
+              users.clear();
+            }
             users.addAll(snapshot.data);
-            print('OH MY GOD ${users.first.hn}');
-            print('ทำไมไม่เวิคไอสัส ${users.length}');
+            users.forEach((element) {
+              int i = 0;
+              print(
+                  'This is the list users at the preTable.dart no. $i ${element.name}');
+              i = i + 1;
+            });
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 37,
@@ -115,15 +122,26 @@ class _PreTableState extends State<PreTable> {
                   label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
                   numeric: true,
                   onSort: (columnIndex, sortAscending) {
+                    users.forEach((element) {
+                      print(
+                          'list Before sorted by respirationRate ==>${element.name} ${element.hn}');
+                    });
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
                         _sortAsc = _sortRespirationRateAsc = sortAscending;
+                        print(
+                            '$_sortAsc $_sortRespirationRateAsc $sortAscending');
                       } else {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortRespirationRateAsc;
                       }
-                      users.sort((a, b) =>
-                          a.respirationRate.compareTo(b.respirationRate));
+                      _preOpViewModel.sortBy('respirationRate', sortAscending);
+                      // users.sort((a, b) =>
+                      //     a.respirationRate.compareTo(b.respirationRate));
+                      // users.forEach((element) {
+                      //   print(
+                      //       'list after sorted by respirationRate =>${element.name} ${element.hn}');
+                      // });
                       if (!sortAscending) {
                         users = users.reversed.toList();
                       }
@@ -229,7 +247,6 @@ class _PreTableState extends State<PreTable> {
                 ),
               ],
               rows: users.map((user) {
-                print('user in map ${user.hn}');
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
