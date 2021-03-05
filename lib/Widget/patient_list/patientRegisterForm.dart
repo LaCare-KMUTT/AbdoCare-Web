@@ -41,6 +41,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   ICalculationService _calculationService = locator<ICalculationService>();
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   String _hn = '';
   String _an = '';
@@ -76,7 +77,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          primarySwatch: _customMaterial.createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
       height: 320,
       styleDatePicker: MaterialRoundedDatePickerStyle(

@@ -5,6 +5,7 @@ import 'package:AbdoCare_Web/view_models/pre_op_list_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/service_locator.dart';
+import '../material.dart';
 
 class PreTable extends StatefulWidget {
   PreTable({Key key}) : super(key: key);
@@ -14,6 +15,7 @@ class PreTable extends StatefulWidget {
 
 class _PreTableState extends State<PreTable> {
   final PreOpViewModel _preOpViewModel = locator<PreOpViewModel>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   List<PreOpData> users = [];
   bool _sortAsc = true;
@@ -24,49 +26,6 @@ class _PreTableState extends State<PreTable> {
   bool _sortTemperatureAsc = true;
   bool _sortStatusAsc = true;
   int _sortColumnIndex = 11;
-
-  Color getTemperatureColor(double temperature) {
-    if (temperature < 36.0 || temperature > 37.0) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getRespirationRateColor(double respirationRate) {
-    if (respirationRate < 16 || respirationRate > 20) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getHeartRateColor(double heartRate) {
-    if (heartRate < 60 || heartRate > 100) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getBloodPressureColor(double bloodPressure) {
-    if (bloodPressure < 130) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getOxygenRateColor(double oxygenRate) {
-    if (oxygenRate < 95) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getStatusColor(String status) {
-    if (status == 'ผิดปกติ') {
-      return Colors.red;
-    } else {
-      return Colors.green;
-    }
-  }
 
   FutureBuilder dataBody() {
     var screenSize = MediaQuery.of(context).size;
@@ -226,36 +185,40 @@ class _PreTableState extends State<PreTable> {
                       DataCell(
                         Text('${user.respirationRate.toString()}',
                             style: TextStyle(
-                                color: getRespirationRateColor(
+                                color: CustomMaterial().getRespirationRateColor(
                                     user.respirationRate))),
                       ),
                       DataCell(
                         Text('${user.temperature.toString()}',
                             style: TextStyle(
-                                color: getTemperatureColor(user.temperature))),
+                                color: _customMaterial
+                                    .getTemperatureColor(user.temperature))),
                       ),
                       DataCell(
                         Text('${user.heartRate.toString()}',
                             style: TextStyle(
-                                color: getHeartRateColor(user.heartRate))),
+                                color: _customMaterial
+                                    .getHeartRateColor(user.heartRate))),
                       ),
                       DataCell(
                         Text('${user.bloodPressure.toString()}',
                             style: TextStyle(
-                                color:
-                                    getBloodPressureColor(user.bloodPressure))),
+                                color: _customMaterial.getBloodPressureColor(
+                                    user.bloodPressure))),
                       ),
                       DataCell(
                         Text('${user.oxygenRate.toString()}',
                             style: TextStyle(
-                                color: getOxygenRateColor(user.oxygenRate))),
+                                color: _customMaterial
+                                    .getOxygenRateColor(user.oxygenRate))),
                       ),
                       DataCell(
                         Align(
                           alignment: Alignment.center,
                           child: Text(user.status,
                               style: TextStyle(
-                                  color: getStatusColor(user.status))),
+                                  color: _customMaterial
+                                      .getStatusColor(user.status))),
                         ),
                       ),
                     ]);

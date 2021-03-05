@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Prompt",
         primaryColor: Color(0xFFC37447),
-        primarySwatch: createMaterialColor(Color(0xFFC37447)),
+        primarySwatch: CustomMaterial().createMaterialColor(Color(0xFFC37447)),
         textTheme: TextTheme(
           bodyText1: TextStyle(
               fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
