@@ -4,12 +4,12 @@ import 'package:AbdoCare_Web/services/service_locator.dart';
 
 class PreOpViewModel {
   PreOpViewModel() {
-    _initialize();
+    // _initialize();
   }
   final _firebaseService = locator<IFirebaseService>();
   List<PreOpData> userList = [];
 
-  void _initialize() async {
+  Future<void> _initialize() async {
     var preOpList = await _firebaseService.getPreOpList();
     preOpList.forEach((mapData) {
       userList.add(PreOpData(map: mapData));
@@ -17,6 +17,9 @@ class PreOpViewModel {
   }
 
   Future<List<PreOpData>> getUsers() async {
+    if (userList.length == 0) {
+      await _initialize();
+    }
     return userList;
   }
 
@@ -41,9 +44,10 @@ class PreOpViewModel {
         userList.sort((a, b) => a.status.compareTo(b.status));
         break;
     }
-    if (!isAsc) {
+    if (isAsc) {
       userList = userList.reversed.toList();
     }
+
     return userList;
   }
 }

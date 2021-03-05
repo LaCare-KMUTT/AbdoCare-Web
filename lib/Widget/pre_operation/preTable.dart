@@ -82,12 +82,6 @@ class _PreTableState extends State<PreTable> {
               users.clear();
             }
             users.addAll(snapshot.data);
-            users.forEach((element) {
-              int i = 0;
-              print(
-                  'This is the list users at the preTable.dart no. $i ${element.name}');
-              i = i + 1;
-            });
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 37,
@@ -99,7 +93,7 @@ class _PreTableState extends State<PreTable> {
                   fontStyle: FontStyle.italic),
               sortAscending: _sortAsc,
               sortColumnIndex: _sortColumnIndex,
-              columns: [
+              columns: <DataColumn>[
                 DataColumn(
                   label: Expanded(child: Center(child: Text('HN'))),
                 ),
@@ -129,22 +123,11 @@ class _PreTableState extends State<PreTable> {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
                         _sortAsc = _sortRespirationRateAsc = sortAscending;
-                        print(
-                            '$_sortAsc $_sortRespirationRateAsc $sortAscending');
                       } else {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortRespirationRateAsc;
                       }
                       _preOpViewModel.sortBy('respirationRate', sortAscending);
-                      // users.sort((a, b) =>
-                      //     a.respirationRate.compareTo(b.respirationRate));
-                      // users.forEach((element) {
-                      //   print(
-                      //       'list after sorted by respirationRate =>${element.name} ${element.hn}');
-                      // });
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
                     });
                   },
                 ),
@@ -159,11 +142,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortTemperatureAsc;
                       }
-                      users.sort(
-                          (a, b) => a.temperature.compareTo(b.temperature));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('temperature', sortAscending);
                     });
                   },
                 ),
@@ -182,10 +161,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortHeartRateAsc;
                       }
-                      users.sort((a, b) => a.heartRate.compareTo(b.heartRate));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('heartRate', sortAscending);
                     });
                   },
                 ),
@@ -200,11 +176,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortBloodPressureAsc;
                       }
-                      users.sort(
-                          (a, b) => a.bloodPressure.compareTo(b.bloodPressure));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('bloodPressure', sortAscending);
                     });
                   },
                 ),
@@ -219,11 +191,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortOxygenRateAsc;
                       }
-                      users
-                          .sort((a, b) => a.oxygenRate.compareTo(b.oxygenRate));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('oxygenRate', sortAscending);
                     });
                   },
                 ),
@@ -238,10 +206,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortStatusAsc;
                       }
-                      users.sort((a, b) => b.status.compareTo(a.status));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('status', sortAscending);
                     });
                   },
                 ),
