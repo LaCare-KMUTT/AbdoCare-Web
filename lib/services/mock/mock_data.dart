@@ -98,14 +98,14 @@ class MockFirestore {
       'creation': creation,
       'creator': 'พยาบาลนิรนาม',
       'formName': 'Vital Sign',
-      'patientStage': 'pre-operation',
+      'patientStage': 'Pre-Operation',
       'formData': {
-        'temperature': 37.8,
-        'respirationRate': 27,
-        'bloodPressure': 90,
-        'oxygen': 99,
-        'heartRate': 60,
-        'status': 'รุนแรง',
+        'temperature': 32.1,
+        'respirationRate': 50,
+        'bloodPressure': 85,
+        'oxygen': 88,
+        'heartRate': 14,
+        'status': 'ปกติ',
       },
     };
     return mockFormsCollection;

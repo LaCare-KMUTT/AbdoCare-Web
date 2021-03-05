@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 
+import '../view_models/pre_op_list_view_model.dart';
 import 'calculation_service.dart';
 import 'firebase_service.dart';
 import 'interfaces/calculation_service_interface.dart';
@@ -17,4 +18,5 @@ void setupServiceLocator({bool isMock = false}) {
           .registerLazySingleton<IFirebaseService>(() => FirebaseService());
   locator
       .registerLazySingleton<ICalculationService>(() => CalculationService());
+  locator.registerLazySingleton<PreOpViewModel>(() => PreOpViewModel());
 }

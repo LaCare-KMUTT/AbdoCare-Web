@@ -267,4 +267,10 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getAppointmentList
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<Map<String, dynamic>>> getPreOpList() {
+    // TODO: implement getPreOpList
+    throw UnimplementedError();
+  }
 }

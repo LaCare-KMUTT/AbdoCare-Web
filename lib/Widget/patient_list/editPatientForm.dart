@@ -954,9 +954,10 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
-                                                      initialValue:
-                                                          anSubCollection.data[
-                                                              'operationName'],
+                                                      initialValue: anSubCollection
+                                                                  .data[
+                                                              'operationName'] ??
+                                                          '-',
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกชื่อการผ่าตัด'
@@ -1004,7 +1005,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       },
                                                       initialValue:
                                                           anSubCollection.data[
-                                                              'doctorName'],
+                                                                  'doctorName'] ??
+                                                              '-',
                                                       decoration:
                                                           InputDecoration(
                                                               enabledBorder:
@@ -1047,9 +1049,10 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
-                                                      initialValue:
-                                                          anSubCollection.data[
-                                                              'previousIllness'],
+                                                      initialValue: anSubCollection
+                                                                  .data[
+                                                              'previousIllness'] ??
+                                                          '-',
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกโรคร่วม'
@@ -1099,7 +1102,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     hint: DropdownMenuItem(
                                                       child: Text(
                                                         anSubCollection.data[
-                                                            'operationMethod'],
+                                                                'operationMethod'] ??
+                                                            '-',
                                                       ),
                                                     ),
                                                     decoration: InputDecoration(
@@ -1115,6 +1119,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       _operationMethod = value;
                                                     },
                                                     items: [
+                                                      '-',
                                                       'Exploration',
                                                       'LAP+Operation',
                                                     ]

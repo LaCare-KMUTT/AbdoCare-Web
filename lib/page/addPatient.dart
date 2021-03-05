@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../Widget/appbar.dart';
 import '../Widget/patient_list/patientRegisterForm.dart';
 import '../Widget/sidebar.dart';
 import '../services/interfaces/calculation_service_interface.dart';
@@ -63,7 +62,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
         'careTakerRelationship': careTakerRelationship,
         'operationDate': _calculationService.formatDate(date: DateTime.now()),
         'operationName': '-',
-        'operationMethod': '-',
+        'operationMethod': 'TBD',
         'doctorName': '-',
         'previousIllness': '-',
         'bedNumber': '-',
