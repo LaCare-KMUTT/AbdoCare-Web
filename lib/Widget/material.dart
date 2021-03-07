@@ -58,10 +58,10 @@ class CustomMaterial {
   }
 
   Color getStatusColor(String status) {
-    if (status == 'ผิดปกติ') {
-      return Colors.red;
-    } else {
+    if (status == 'ปกติ') {
       return Colors.green;
+    } else {
+      return Colors.red;
     }
   }
 }
