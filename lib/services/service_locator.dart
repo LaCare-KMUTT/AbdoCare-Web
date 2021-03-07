@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../view_models/pre_op_list_view_model.dart';
@@ -19,4 +20,5 @@ void setupServiceLocator({bool isMock = false}) {
   locator
       .registerLazySingleton<ICalculationService>(() => CalculationService());
   locator.registerLazySingleton<PreOpViewModel>(() => PreOpViewModel());
+  locator.registerLazySingleton<CustomMaterial>(() => CustomMaterial());
 }

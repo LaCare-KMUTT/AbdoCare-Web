@@ -3,59 +3,51 @@ import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart
 import 'package:AbdoCare_Web/services/service_locator.dart';
 
 class PreOpViewModel {
-  PreOpViewModel();
-  Future<List<PreOpData>> getUsers() async {
-    final _firebaseService = locator<IFirebaseService>();
+  PreOpViewModel() {
+    // _initialize();
+  }
+  final _firebaseService = locator<IFirebaseService>();
+  List<PreOpData> userList = [];
 
-    List<PreOpData> userList = [];
-    // print('HELLO WOI');
+  Future<void> _initialize() async {
     var preOpList = await _firebaseService.getPreOpList();
-    // print('waowwwwwwww => $preOpList');
     preOpList.forEach((mapData) {
-      print('finally !   $mapData');
       userList.add(PreOpData(map: mapData));
     });
+  }
+
+  Future<List<PreOpData>> getUsers() async {
+    if (userList.length == 0) {
+      await _initialize();
+    }
     return userList;
-    // return <User>[
-    //   User(
-    //       hn: "HN10001",
-    //       name: "วริศรา จิ๋วประดิษฐ์กุล",
-    //       gender: "หญิง",
-    //       age: "46",
-    //       roomNumber: "13",
-    //       bedNumber: "1",
-    //       temperature: 37,
-    //       respirationRate: 16,
-    //       heartRate: 100,
-    //       bloodPressure: 140,
-    //       oxygenRate: 97,
-    //       status: "ปกติ"),
-    //   User(
-    //       hn: "HN10002",
-    //       name: "พรพิมล แก้วใส",
-    //       gender: "หญิง",
-    //       age: "37",
-    //       roomNumber: "10",
-    //       bedNumber: "3",
-    //       temperature: 38,
-    //       respirationRate: 20,
-    //       heartRate: 59,
-    //       bloodPressure: 120,
-    //       oxygenRate: 95,
-    //       status: "ผิดปกติ"),
-    //   User(
-    //       hn: "HN10003",
-    //       name: "ทวีศักดิ์ สายวงศ์",
-    //       gender: "ชาย",
-    //       age: "38",
-    //       roomNumber: "9",
-    //       bedNumber: "2",
-    //       temperature: 36,
-    //       respirationRate: 24,
-    //       heartRate: 91,
-    //       bloodPressure: 130,
-    //       oxygenRate: 99,
-    //       status: "ผิดปกติ"),
-    // ];
+  }
+
+  List<PreOpData> sortBy(String key, bool isAsc) {
+    switch (key) {
+      case 'temperature':
+        userList.sort((a, b) => a.temperature.compareTo(b.temperature));
+        break;
+      case 'respirationRate':
+        userList.sort((a, b) => a.respirationRate.compareTo(b.respirationRate));
+        break;
+      case 'heartRate':
+        userList.sort((a, b) => a.heartRate.compareTo(b.heartRate));
+        break;
+      case 'bloodPressure':
+        userList.sort((a, b) => a.bloodPressure.compareTo(b.bloodPressure));
+        break;
+      case 'oxygenRate':
+        userList.sort((a, b) => a.oxygenRate.compareTo(b.oxygenRate));
+        break;
+      case 'status':
+        userList.sort((a, b) => a.status.compareTo(b.status));
+        break;
+    }
+    if (isAsc) {
+      userList = userList.reversed.toList();
+    }
+
+    return userList;
   }
 }

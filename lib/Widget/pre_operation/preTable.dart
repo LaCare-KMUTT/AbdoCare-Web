@@ -5,6 +5,7 @@ import 'package:AbdoCare_Web/view_models/pre_op_list_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/service_locator.dart';
+import '../material.dart';
 
 class PreTable extends StatefulWidget {
   PreTable({Key key}) : super(key: key);
@@ -14,6 +15,7 @@ class PreTable extends StatefulWidget {
 
 class _PreTableState extends State<PreTable> {
   final PreOpViewModel _preOpViewModel = locator<PreOpViewModel>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   List<PreOpData> users = [];
   bool _sortAsc = true;
@@ -25,49 +27,6 @@ class _PreTableState extends State<PreTable> {
   bool _sortStatusAsc = true;
   int _sortColumnIndex = 11;
 
-  Color getTemperatureColor(double temperature) {
-    if (temperature < 36.0 || temperature > 37.0) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getRespirationRateColor(double respirationRate) {
-    if (respirationRate < 16 || respirationRate > 20) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getHeartRateColor(double heartRate) {
-    if (heartRate < 60 || heartRate > 100) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getBloodPressureColor(double bloodPressure) {
-    if (bloodPressure < 130) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getOxygenRateColor(double oxygenRate) {
-    if (oxygenRate < 95) {
-      return Colors.red;
-    }
-    return Colors.green;
-  }
-
-  Color getStatusColor(String status) {
-    if (status == 'ผิดปกติ') {
-      return Colors.red;
-    } else {
-      return Colors.green;
-    }
-  }
-
   FutureBuilder dataBody() {
     var screenSize = MediaQuery.of(context).size;
     return FutureBuilder<List<PreOpData>>(
@@ -78,9 +37,10 @@ class _PreTableState extends State<PreTable> {
               strokeWidth: 4,
             );
           } else {
+            if (users.isNotEmpty) {
+              users.clear();
+            }
             users.addAll(snapshot.data);
-            print('OH MY GOD ${users.first.hn}');
-            print('ทำไมไม่เวิคไอสัส ${users.length}');
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 37,
@@ -92,7 +52,7 @@ class _PreTableState extends State<PreTable> {
                   fontStyle: FontStyle.italic),
               sortAscending: _sortAsc,
               sortColumnIndex: _sortColumnIndex,
-              columns: [
+              columns: <DataColumn>[
                 DataColumn(
                   label: Expanded(child: Center(child: Text('HN'))),
                 ),
@@ -115,6 +75,10 @@ class _PreTableState extends State<PreTable> {
                   label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
                   numeric: true,
                   onSort: (columnIndex, sortAscending) {
+                    users.forEach((element) {
+                      print(
+                          'list Before sorted by respirationRate ==>${element.name} ${element.hn}');
+                    });
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
                         _sortAsc = _sortRespirationRateAsc = sortAscending;
@@ -122,11 +86,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortRespirationRateAsc;
                       }
-                      users.sort((a, b) =>
-                          a.respirationRate.compareTo(b.respirationRate));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('respirationRate', sortAscending);
                     });
                   },
                 ),
@@ -141,11 +101,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortTemperatureAsc;
                       }
-                      users.sort(
-                          (a, b) => a.temperature.compareTo(b.temperature));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('temperature', sortAscending);
                     });
                   },
                 ),
@@ -164,10 +120,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortHeartRateAsc;
                       }
-                      users.sort((a, b) => a.heartRate.compareTo(b.heartRate));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('heartRate', sortAscending);
                     });
                   },
                 ),
@@ -182,11 +135,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortBloodPressureAsc;
                       }
-                      users.sort(
-                          (a, b) => a.bloodPressure.compareTo(b.bloodPressure));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('bloodPressure', sortAscending);
                     });
                   },
                 ),
@@ -201,11 +150,7 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortOxygenRateAsc;
                       }
-                      users
-                          .sort((a, b) => a.oxygenRate.compareTo(b.oxygenRate));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('oxygenRate', sortAscending);
                     });
                   },
                 ),
@@ -220,16 +165,12 @@ class _PreTableState extends State<PreTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortStatusAsc;
                       }
-                      users.sort((a, b) => b.status.compareTo(a.status));
-                      if (!sortAscending) {
-                        users = users.reversed.toList();
-                      }
+                      _preOpViewModel.sortBy('status', sortAscending);
                     });
                   },
                 ),
               ],
               rows: users.map((user) {
-                print('user in map ${user.hn}');
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
@@ -244,36 +185,40 @@ class _PreTableState extends State<PreTable> {
                       DataCell(
                         Text('${user.respirationRate.toString()}',
                             style: TextStyle(
-                                color: getRespirationRateColor(
+                                color: CustomMaterial().getRespirationRateColor(
                                     user.respirationRate))),
                       ),
                       DataCell(
                         Text('${user.temperature.toString()}',
                             style: TextStyle(
-                                color: getTemperatureColor(user.temperature))),
+                                color: _customMaterial
+                                    .getTemperatureColor(user.temperature))),
                       ),
                       DataCell(
                         Text('${user.heartRate.toString()}',
                             style: TextStyle(
-                                color: getHeartRateColor(user.heartRate))),
+                                color: _customMaterial
+                                    .getHeartRateColor(user.heartRate))),
                       ),
                       DataCell(
                         Text('${user.bloodPressure.toString()}',
                             style: TextStyle(
-                                color:
-                                    getBloodPressureColor(user.bloodPressure))),
+                                color: _customMaterial.getBloodPressureColor(
+                                    user.bloodPressure))),
                       ),
                       DataCell(
                         Text('${user.oxygenRate.toString()}',
                             style: TextStyle(
-                                color: getOxygenRateColor(user.oxygenRate))),
+                                color: _customMaterial
+                                    .getOxygenRateColor(user.oxygenRate))),
                       ),
                       DataCell(
                         Align(
                           alignment: Alignment.center,
                           child: Text(user.status,
                               style: TextStyle(
-                                  color: getStatusColor(user.status))),
+                                  color: _customMaterial
+                                      .getStatusColor(user.status))),
                         ),
                       ),
                     ]);

@@ -44,6 +44,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final ICalculationService _calculationService =
       locator<ICalculationService>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
   final _formKey = GlobalKey<FormState>();
   String pickedDate = '';
   String _hn = '';
@@ -78,7 +79,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          primarySwatch: _customMaterial.createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
       height: 320,
       styleDatePicker: MaterialRoundedDatePickerStyle(
