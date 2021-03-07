@@ -59,6 +59,15 @@ class SideBar extends StatelessWidget {
                         Navigator.pushNamed(context, '/appointment_page');
                       },
                     ),
+                    ListTile(
+                      leading: Icon(Icons.favorite),
+                      title: Text("แบบประเมินจ้า",
+                          style: Theme.of(context).textTheme.bodyText2),
+                      onTap: () async {
+                        await _firebaseService.signOut();
+                        Navigator.pushReplacementNamed(context, '/forms');
+                      },
+                    ),
                     const Expanded(child: SizedBox()),
                     const Divider(height: 1.0, color: Colors.grey),
                     ListTile(
@@ -69,7 +78,7 @@ class SideBar extends StatelessWidget {
                         await _firebaseService.signOut();
                         Navigator.pushReplacementNamed(context, '/login_page');
                       },
-                    )
+                    ),
                   ],
                 ),
               ),
