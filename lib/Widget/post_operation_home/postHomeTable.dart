@@ -118,11 +118,8 @@ class _PostHomeTableState extends State<PostHomeTable> {
                       DataCell(Text(user.name)),
                       DataCell(Text(user.gender)),
                       DataCell(Center(child: Text(user.age))),
+                      DataCell(Text('${user.operationType.toString()}')),
                       DataCell(
-                          // Text('LAP+Operation'),
-                          Text('${user.operationType.toString()}')),
-                      DataCell(
-                        //Text('5')
                         Text('${user.painScore.toString()}',
                             style: TextStyle(
                                 color: _customMaterial
@@ -135,7 +132,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                                     .getWoundImgColor(user.woundImg))),
                       ),
                       DataCell(
-                        //Text('1')
                         Text('${user.admissionCount.toString()}'),
                       ),
                     ]);
