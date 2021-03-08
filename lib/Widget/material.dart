@@ -64,4 +64,18 @@ class CustomMaterial {
       return Colors.red;
     }
   }
+
+  Color getPainScoreColor(double painScore) {
+    if (painScore > 7) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  Color getWoundImgColor(String woundImg) {
+    if (woundImg == 'ได้รับรูปภาพ') {
+      return Colors.lightBlue;
+    }
+    return Colors.black;
+  }
 }
