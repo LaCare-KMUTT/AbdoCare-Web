@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                         });
 
                         if (_signInResult) {
-                          Navigator.pushNamed(context, '/postHome_page');
+                          Navigator.pushNamed(context, '/postHos_page');
                         } else {
                           _showErrorSignInDialog();
                         }
