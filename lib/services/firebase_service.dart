@@ -397,9 +397,9 @@ class FirebaseService extends IFirebaseService {
           'admissionCount': admissionCountToMap,
           'gender': genderToMap,
           'age': ageToMap,
-          'pain_score': painScoreToMap,
-          'operation_type': operationTypeToMap,
-          'wound_img': woundImgToMap,
+          'painScore': painScoreToMap,
+          'operationType': operationTypeToMap,
+          'woundImg': woundImgToMap,
         };
         return map;
       } else {
