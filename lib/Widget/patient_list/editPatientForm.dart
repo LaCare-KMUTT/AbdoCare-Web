@@ -1100,13 +1100,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             null
                                                         ? 'กรุณาเลือกประเภทการผ่าตัด'
                                                         : null,
-                                                    hint: DropdownMenuItem(
-                                                      child: Text(
-                                                        anSubCollection.data[
-                                                                'operationMethod'] ??
-                                                            '-',
-                                                      ),
-                                                    ),
                                                     decoration: InputDecoration(
                                                       enabledBorder:
                                                           OutlineInputBorder(

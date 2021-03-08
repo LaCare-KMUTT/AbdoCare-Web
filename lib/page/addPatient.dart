@@ -62,7 +62,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
         'careTakerRelationship': careTakerRelationship,
         'operationDate': _calculationService.formatDate(date: DateTime.now()),
         'operationName': '-',
-        'operationMethod': 'TBD',
+        'operationMethod': '-',
         'doctorName': '-',
         'previousIllness': '-',
         'bedNumber': '-',
