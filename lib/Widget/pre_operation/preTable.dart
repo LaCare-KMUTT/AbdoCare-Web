@@ -33,8 +33,11 @@ class _PreTableState extends State<PreTable> {
         future: _preOpViewModel.getUsers(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return CircularProgressIndicator(
-              strokeWidth: 4,
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+              ),
             );
           } else {
             if (users.isNotEmpty) {
