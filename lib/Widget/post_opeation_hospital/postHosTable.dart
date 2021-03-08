@@ -1,10 +1,11 @@
 import 'dart:ui';
 
+import 'package:AbdoCare_Web/models/post_hos_list_model.dart';
+import 'package:AbdoCare_Web/view_models/post_hos_list_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_table/responsive_table.dart';
 
-import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
+import '../material.dart';
 
 class PostHosTable extends StatefulWidget {
   PostHosTable({Key key}) : super(key: key);
@@ -13,262 +14,316 @@ class PostHosTable extends StatefulWidget {
 }
 
 class _PostHosTableState extends State<PostHosTable> {
-  final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final PostHosViewModel _postHosViewModel = locator<PostHosViewModel>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
-  List<DatatableHeader> _headers = [
-    DatatableHeader(
-        text: "HN",
-        value: "hn",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ชื่อ-นามสกุล",
-        value: "name",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "เพศ",
-        value: "gender",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "อายุ",
-        value: "age",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ห้อง",
-        value: "room_number",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "เตียง",
-        value: "bed_number",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "อุณหภูมิ",
-        value: "temperature",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "อัตรา\nการหายใจ",
-        value: "respiration_rate",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ชีพจร",
-        value: "heart_rate",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ความดัน",
-        value: "blood_pressure",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "ออกซิเจน",
-        value: "oxygen_rate",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "สถานะ",
-        value: "status",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-  ];
+  List<PostHosData> users = [];
+  bool _sortAsc = true;
+  bool _sortRespirationRateAsc = true;
+  bool _sortHeartRateAsc = true;
+  bool _sortOxygenRateAsc = true;
+  bool _sortBloodPressureAsc = true;
+  bool _sortTemperatureAsc = true;
+  bool _sortStatusAsc = true;
+  int _sortColumnIndex = 11;
 
-  List<int> _perPages = [5, 10, 15, 100];
-  int _total = 10; // total patient
-  int _currentPerPage = 10;
-  int _currentPage = 1;
-  bool _isSearch = false;
-  List<Map<String, dynamic>> _source = List<Map<String, dynamic>>();
-
-  List<Map<String, dynamic>> _selecteds = List<Map<String, dynamic>>();
-
-  String _sortColumn;
-  bool _sortAscending = true;
-  bool _isLoading = true;
-  bool _showSelect = false;
-
-  Future<List<Map<String, dynamic>>> _generateData({int n: 100}) async {
-    final postHosList = await _firebaseService.getPostHosList();
-    return postHosList;
-  }
-
-  _initData() async {
-    setState(() => _isLoading = true);
-    Future.delayed(Duration(seconds: 3)).then((value) async {
-      var data = await _generateData(n: 1000);
-      _source.addAll(data);
-      setState(() => _isLoading = false);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+  FutureBuilder dataBody() {
+    var screenSize = MediaQuery.of(context).size;
+    return FutureBuilder<List<PostHosData>>(
+        future: _postHosViewModel.getUsers(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+              ),
+            );
+          } else {
+            if (users.isNotEmpty) {
+              users.clear();
+            }
+            users.addAll(snapshot.data);
+            return DataTable(
+              showCheckboxColumn: false,
+              columnSpacing: screenSize.width / 37,
+              headingRowHeight: 50,
+              headingTextStyle: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Prompt',
+                  color: Colors.black54,
+                  fontStyle: FontStyle.italic),
+              sortAscending: _sortAsc,
+              sortColumnIndex: _sortColumnIndex,
+              columns: <DataColumn>[
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('HN'))),
+                ),
+                DataColumn(
+                  label: Expanded(child: Text('ชื่อ-นามสกุล')),
+                ),
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('เพศ'))),
+                ),
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('อายุ'))),
+                ),
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('ห้อง'))),
+                ),
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('เตียง'))),
+                ),
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
+                  numeric: true,
+                  onSort: (columnIndex, sortAscending) {
+                    users.forEach((element) {
+                      print(
+                          'list Before sorted by respirationRate ==>${element.name} ${element.hn}');
+                    });
+                    setState(() {
+                      if (columnIndex == _sortColumnIndex) {
+                        _sortAsc = _sortRespirationRateAsc = sortAscending;
+                      } else {
+                        _sortColumnIndex = columnIndex;
+                        _sortAsc = _sortRespirationRateAsc;
+                      }
+                      _postHosViewModel.sortBy(
+                          'respirationRate', sortAscending);
+                    });
+                  },
+                ),
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
+                  numeric: true,
+                  onSort: (columnIndex, sortAscending) {
+                    setState(() {
+                      if (columnIndex == _sortColumnIndex) {
+                        _sortAsc = _sortTemperatureAsc = sortAscending;
+                      } else {
+                        _sortColumnIndex = columnIndex;
+                        _sortAsc = _sortTemperatureAsc;
+                      }
+                      _postHosViewModel.sortBy('temperature', sortAscending);
+                    });
+                  },
+                ),
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('ชีพจร'))),
+                  numeric: true,
+                  onSort: (columnIndex, sortAscending) {
+                    setState(() {
+                      if (columnIndex == _sortColumnIndex) {
+                        _sortAsc = _sortHeartRateAsc = sortAscending;
+                      } else {
+                        _sortColumnIndex = columnIndex;
+                        _sortAsc = _sortHeartRateAsc;
+                      }
+                      _postHosViewModel.sortBy('heartRate', sortAscending);
+                    });
+                  },
+                ),
+                DataColumn(
+                  label: Expanded(child: Center(child: Text('ความดัน'))),
+                  numeric: true,
+                  onSort: (columnIndex, sortAscending) {
+                    setState(() {
+                      if (columnIndex == _sortColumnIndex) {
+                        _sortAsc = _sortBloodPressureAsc = sortAscending;
+                      } else {
+                        _sortColumnIndex = columnIndex;
+                        _sortAsc = _sortBloodPressureAsc;
+                      }
+                      _postHosViewModel.sortBy('bloodPressure', sortAscending);
+                    });
+                  },
+                ),
+                DataColumn(
+                  label: Expanded(child: Text('ออกซิเจน')),
+                  numeric: true,
+                  onSort: (columnIndex, sortAscending) {
+                    setState(() {
+                      if (columnIndex == _sortColumnIndex) {
+                        _sortAsc = _sortOxygenRateAsc = sortAscending;
+                      } else {
+                        _sortColumnIndex = columnIndex;
+                        _sortAsc = _sortOxygenRateAsc;
+                      }
+                      _postHosViewModel.sortBy('oxygenRate', sortAscending);
+                    });
+                  },
+                ),
+                DataColumn(
+                  label: Expanded(child: Text('สถานะ')),
+                  numeric: false,
+                  onSort: (columnIndex, sortAscending) {
+                    setState(() {
+                      if (columnIndex == _sortColumnIndex) {
+                        _sortAsc = _sortStatusAsc = sortAscending;
+                      } else {
+                        _sortColumnIndex = columnIndex;
+                        _sortAsc = _sortStatusAsc;
+                      }
+                      _postHosViewModel.sortBy('status', sortAscending);
+                    });
+                  },
+                ),
+              ],
+              rows: users.map((user) {
+                return DataRow(
+                    onSelectChanged: (newValue) {
+                      print('Selected ${user.hn} ${user.name}');
+                    },
+                    cells: [
+                      DataCell(Text(user.hn)),
+                      DataCell(Text(user.name)),
+                      DataCell(Text(user.gender)),
+                      DataCell(Center(child: Text(user.age))),
+                      DataCell(Center(child: Text(user.roomNumber))),
+                      DataCell(Center(child: Text(user.bedNumber))),
+                      DataCell(
+                        Text('${user.respirationRate.toString()}',
+                            style: TextStyle(
+                                color: CustomMaterial().getRespirationRateColor(
+                                    user.respirationRate))),
+                      ),
+                      DataCell(
+                        Text('${user.temperature.toString()}',
+                            style: TextStyle(
+                                color: _customMaterial
+                                    .getTemperatureColor(user.temperature))),
+                      ),
+                      DataCell(
+                        Text('${user.heartRate.toString()}',
+                            style: TextStyle(
+                                color: _customMaterial
+                                    .getHeartRateColor(user.heartRate))),
+                      ),
+                      DataCell(
+                        Text('${user.bloodPressure.toString()}',
+                            style: TextStyle(
+                                color: _customMaterial.getBloodPressureColor(
+                                    user.bloodPressure))),
+                      ),
+                      DataCell(
+                        Text('${user.oxygenRate.toString()}',
+                            style: TextStyle(
+                                color: _customMaterial
+                                    .getOxygenRateColor(user.oxygenRate))),
+                      ),
+                      DataCell(
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(user.status,
+                              style: TextStyle(
+                                  color: _customMaterial
+                                      .getStatusColor(user.status))),
+                        ),
+                      ),
+                    ]);
+              }).toList(),
+            );
+          }
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(0),
-                constraints: BoxConstraints(
-                  maxHeight: 700,
+    var screenSize = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: ListView(
+        children: [
+          Row(children: <Widget>[
+            Expanded(
+              flex: 5,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(screenSize.height / 7,
+                        screenSize.height / 20, screenSize.height / 70, 0),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        'ค้นหาผู้ป่วย:',
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        0, screenSize.height / 20, screenSize.height / 70, 0),
+                    child: Container(
+                      child: TextField(
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.black26, width: 0.0)),
+                            contentPadding: EdgeInsets.all(10.0),
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7.0))),
+                            prefixIcon: Icon(Icons.search),
+                            hintText: 'HN'),
+                        onChanged: (val) {
+                          setState(() {
+                            // hn = val;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  0, screenSize.height / 20, screenSize.height / 9, 0),
+              child: Container(
+                child: RaisedButton(
+                  child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
+                  padding: EdgeInsets.all(15),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0)),
+                  onPressed: () {},
                 ),
-                child: Card(
-                  elevation: 1,
-                  shadowColor: Colors.black,
-                  clipBehavior: Clip.none,
-                  child: ResponsiveDatatable(
-                    actions: [
-                      if (_isSearch)
-                        Expanded(
-                            child: TextField(
-                          decoration: InputDecoration(
-                              prefixIcon: IconButton(
-                                  icon: Icon(Icons.cancel),
-                                  onPressed: () {
-                                    setState(() {
-                                      _isSearch = false;
-                                    });
-                                  }),
-                              suffixIcon: IconButton(
-                                  icon: Icon(Icons.search), onPressed: () {})),
-                        )),
-                      if (!_isSearch)
-                        IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: () {
-                              setState(() {
-                                _isSearch = true;
-                              });
-                            })
-                    ],
-                    headers: _headers,
-                    source: _source,
-                    selecteds: _selecteds,
-                    showSelect: _showSelect,
-                    autoHeight: false,
-                    onTabRow: (data) {
-                      Navigator.pushNamed(context, '/dashboard_postHos');
-                      print(data);
-                    },
-                    onSort: (value) {
-                      setState(() {
-                        _sortColumn = value;
-                        _sortAscending = !_sortAscending;
-                        if (_sortAscending) {
-                          _source.sort((a, b) =>
-                              b["$_sortColumn"].compareTo(a["$_sortColumn"]));
-                        } else {
-                          _source.sort((a, b) =>
-                              a["$_sortColumn"].compareTo(b["$_sortColumn"]));
-                        }
-                      });
-                    },
-                    sortAscending: _sortAscending,
-                    sortColumn: _sortColumn,
-                    isLoading: _isLoading,
-                    onSelect: (value, item) {
-                      print("$value  $item ");
-                      if (value) {
-                        setState(() => _selecteds.add(item));
-                      } else {
-                        setState(() =>
-                            _selecteds.removeAt(_selecteds.indexOf(item)));
-                      }
-                    },
-                    onSelectAll: (value) {
-                      if (value) {
-                        setState(() => _selecteds =
-                            _source.map((entry) => entry).toList().cast());
-                      } else {
-                        setState(() => _selecteds.clear());
-                      }
-                    },
-                    footers: <Widget>[
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Text("Rows per page:"),
+              ),
+            ),
+          ]),
+          Padding(
+            padding: EdgeInsets.fromLTRB(screenSize.height / 25,
+                screenSize.height / 70, screenSize.height / 25, 0),
+            child: Card(
+              child: Container(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Scrollbar(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: FittedBox(child: dataBody()),
                       ),
-                      if (_perPages != null)
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          child: DropdownButton(
-                              value: _currentPerPage,
-                              items: _perPages
-                                  .map((e) => DropdownMenuItem(
-                                        child: Text("$e"),
-                                        value: e,
-                                      ))
-                                  .toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _currentPerPage = value;
-                                });
-                              }),
-                        ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child:
-                            Text("$_currentPage - $_currentPerPage of $_total"),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          size: 16,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _currentPage =
-                                _currentPage >= 2 ? _currentPage - 1 : 1;
-                          });
-                        },
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.arrow_forward_ios, size: 16),
-                        onPressed: () {
-                          setState(() {
-                            _currentPage++;
-                          });
-                        },
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                      )
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ]),
+            ),
+          ),
+        ],
       ),
     );
   }
