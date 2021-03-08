@@ -46,7 +46,7 @@ class _PreTableState extends State<PreTable> {
             users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
-              columnSpacing: screenSize.width / 37,
+              columnSpacing: screenSize.width / 35,
               headingRowHeight: 50,
               headingTextStyle: TextStyle(
                   fontSize: 18,
@@ -182,36 +182,47 @@ class _PreTableState extends State<PreTable> {
                       DataCell(Text(user.hn)),
                       DataCell(Text(user.name)),
                       DataCell(Text(user.gender)),
-                      DataCell(Center(child: Text(user.age))),
+                      DataCell(Center(
+                          child: Text(
+                        user.age,
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ))),
                       DataCell(Center(child: Text(user.roomNumber))),
                       DataCell(Center(child: Text(user.bedNumber))),
                       DataCell(
                         Text('${user.respirationRate.toString()}',
                             style: TextStyle(
-                                color: CustomMaterial().getRespirationRateColor(
+                                fontSize: 17,
+                                color: _customMaterial.getRespirationRateColor(
                                     user.respirationRate))),
                       ),
                       DataCell(
                         Text('${user.temperature.toString()}',
                             style: TextStyle(
+                                fontSize: 17,
                                 color: _customMaterial
                                     .getTemperatureColor(user.temperature))),
                       ),
                       DataCell(
                         Text('${user.heartRate.toString()}',
                             style: TextStyle(
+                                fontSize: 17,
                                 color: _customMaterial
                                     .getHeartRateColor(user.heartRate))),
                       ),
                       DataCell(
                         Text('${user.bloodPressure.toString()}',
                             style: TextStyle(
+                                fontSize: 17,
                                 color: _customMaterial.getBloodPressureColor(
                                     user.bloodPressure))),
                       ),
                       DataCell(
                         Text('${user.oxygenRate.toString()}',
                             style: TextStyle(
+                                fontSize: 17,
                                 color: _customMaterial
                                     .getOxygenRateColor(user.oxygenRate))),
                       ),
