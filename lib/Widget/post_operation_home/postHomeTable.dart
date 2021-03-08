@@ -66,17 +66,16 @@ class _PostHomeTableState extends State<PostHomeTable> {
                 ),
                 DataColumn(
                   label:
-                      Expanded(child: Center(child: Text('ครั้งที่มารักษา'))),
-                  numeric: true,
+                      Expanded(child: Center(child: Text('ลักษณะแผลผ่าตัด'))),
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('คะแนนความปวด'))),
                   numeric: true,
                   onSort: (columnIndex, sortAscending) {
-                    // users.forEach((element) {
-                    //   print(
-                    //       'list Before sorted by painScore ==>${element.name} ${element.hn}');
-                    // });
+                    users.forEach((element) {
+                      print(
+                          'list Before sorted by painScore ==>${element.name} ${element.hn}');
+                    });
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
                         _sortAsc = _sortPainScore = sortAscending;
@@ -89,10 +88,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                   },
                 ),
                 DataColumn(
-                  label:
-                      Expanded(child: Center(child: Text('ลักษณะแผลผ่าตัด'))),
-                ),
-                DataColumn(
                   label: Expanded(child: Center(child: Text('รูปแผลผ่าตัด'))),
                   numeric: false,
                   onSort: (columnIndex, sortAscending) {
@@ -103,9 +98,14 @@ class _PostHomeTableState extends State<PostHomeTable> {
                         _sortColumnIndex = columnIndex;
                         _sortAsc = _sortWoundImgAsc;
                       }
-                      _postHomeViewModel.sortBy('wound_img', sortAscending);
+                      _postHomeViewModel.sortBy('woundImg', sortAscending);
                     });
                   },
+                ),
+                DataColumn(
+                  label:
+                      Expanded(child: Center(child: Text('ครั้งที่มารักษา'))),
+                  numeric: true,
                 ),
               ],
               rows: users.map((user) {
@@ -118,39 +118,26 @@ class _PostHomeTableState extends State<PostHomeTable> {
                       DataCell(Text(user.name)),
                       DataCell(Text(user.gender)),
                       DataCell(Center(child: Text(user.age))),
-                      DataCell(Text('1')
-                          // Text('${user.admissionCount.toString()}',
-                          //     style: TextStyle(
-                          //         color: CustomMaterial().getAdmissionCountColor(
-                          //             user.admissionCount))),
-                          ),
-                      DataCell(Text('5')
-                          // Text('${user.painScore.toString()}',
-                          //     style: TextStyle(
-                          //         color: _customMaterial
-                          //             .getPainScoreColor(user.painScore))),
-                          ),
                       DataCell(
-                        Text('LAP+Operation'),
-                        // style: TextStyle(
-                        //     color: _customMaterial
-                        //         .getOperationTypeColor(user.operationType))),
+                          // Text('LAP+Operation'),
+                          Text('${user.operationType.toString()}')),
+                      DataCell(
+                        //Text('5')
+                        Text('${user.painScore.toString()}',
+                            style: TextStyle(
+                                color: _customMaterial
+                                    .getPainScoreColor(user.painScore))),
                       ),
                       DataCell(
-                        Text('ได้รับรูปภาพ'),
-                        // style: TextStyle(
-                        //     color: _customMaterial.getWoundImgColor(
-                        //         user.woundImg))),
+                        Text('${user.woundImg.toString()}',
+                            style: TextStyle(
+                                color: _customMaterial
+                                    .getWoundImgColor(user.woundImg))),
                       ),
-                      // DataCell(
-                      //   Align(
-                      //     alignment: Alignment.center,
-                      //     child: Text(user.woundImg,
-                      //         style: TextStyle(
-                      //             color: _customMaterial
-                      //                 .getWoundImgColor(user.woundImg))),
-                      //   ),
-                      // ),
+                      DataCell(
+                        //Text('1')
+                        Text('${user.admissionCount.toString()}'),
+                      ),
                     ]);
               }).toList(),
             );
