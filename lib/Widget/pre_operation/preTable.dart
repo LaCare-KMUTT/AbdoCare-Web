@@ -177,6 +177,8 @@ class _PreTableState extends State<PreTable> {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
+                      Navigator.pushNamed(context, '/dashboard_pre',
+                          arguments: user.hn);
                     },
                     cells: [
                       DataCell(Text(user.hn)),

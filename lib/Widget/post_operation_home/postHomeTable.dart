@@ -112,6 +112,8 @@ class _PostHomeTableState extends State<PostHomeTable> {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
+                      Navigator.pushNamed(context, '/dashboard_postHome',
+                          arguments: user.hn);
                     },
                     cells: [
                       DataCell(Text(user.hn)),
