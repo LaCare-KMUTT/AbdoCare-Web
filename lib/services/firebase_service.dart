@@ -390,7 +390,7 @@ class FirebaseService extends IFirebaseService {
             birthDate: userCollection.data()['dob'].toDate());
         var painScoreToMap = formPainData['formData']['Answer'];
         var operationTypeToMap = anSubCollection['operationMethod'];
-        var woundImgToMap = formSurgicalIncisionData['imgURL'];
+        var woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
         var map = {
           'hn': hnToMap,
           'name': nameToMap,
