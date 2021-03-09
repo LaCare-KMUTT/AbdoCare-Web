@@ -126,10 +126,13 @@ class _PostHomeTableState extends State<PostHomeTable> {
                                     .getPainScoreColor(user.painScore))),
                       ),
                       DataCell(
-                        Text('${user.woundImg.toString()}',
-                            style: TextStyle(
-                                color: _customMaterial
-                                    .getWoundImgColor(user.woundImg))),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text('${user.woundImg.toString()}',
+                              style: TextStyle(
+                                  color: _customMaterial
+                                      .getWoundImgColor(user.woundImg))),
+                        ),
                       ),
                       DataCell(
                         Text('${user.admissionCount.toString()}'),
