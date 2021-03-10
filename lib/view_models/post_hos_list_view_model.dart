@@ -11,15 +11,17 @@ class PostHosViewModel {
 
   Future<void> _initialize() async {
     var postHosList = await _firebaseService.getPostHosList();
-    postHosList.forEach((mapData) {
-      userList.add(PostHosData(map: mapData));
-    });
+    if (postHosList != null) {
+      postHosList.forEach((mapData) {
+        userList.add(PostHosData(map: mapData));
+      });
+    }
   }
 
   Future<List<PostHosData>> getUsers() async {
-    if (userList.length == 0) {
-      await _initialize();
-    }
+    userList.clear();
+    print(userList.length);
+    await _initialize();
     return userList;
   }
 

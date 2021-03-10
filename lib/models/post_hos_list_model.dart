@@ -5,11 +5,11 @@ class PostHosData {
   String age;
   String roomNumber;
   String bedNumber;
-  double temperature;
-  double respirationRate;
-  double heartRate;
-  double bloodPressure;
-  double oxygenRate;
+  dynamic temperature;
+  dynamic respirationRate;
+  dynamic heartRate;
+  dynamic bloodPressure;
+  dynamic oxygenRate;
   String status;
   Map<String, dynamic> map;
 
@@ -20,13 +20,13 @@ class PostHosData {
     this.name = map['name'];
     this.gender = map['gender'];
     this.age = map['age'].toString();
-    this.roomNumber = map['room_number'];
-    this.bedNumber = map['bed_number'];
+    this.roomNumber = map['roomNumber'];
+    this.bedNumber = map['bedNumber'];
     this.temperature = map['temperature'];
-    this.respirationRate = map['respiration_rate'];
-    this.heartRate = map['heart_rate'];
-    this.bloodPressure = map['blood_pressure'];
-    this.oxygenRate = map['oxygen_rate'];
+    this.respirationRate = map['respirationRate'];
+    this.heartRate = map['heartRate'];
+    this.bloodPressure = map['bloodPressure'];
+    this.oxygenRate = map['oxygenRate'];
     this.status = map['status'];
   }
 }

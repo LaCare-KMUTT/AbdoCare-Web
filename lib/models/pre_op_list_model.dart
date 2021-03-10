@@ -5,17 +5,18 @@ class PreOpData {
   String age;
   String roomNumber;
   String bedNumber;
-  double temperature;
-  double respirationRate;
-  double heartRate;
-  double bloodPressure;
-  double oxygenRate;
+  dynamic temperature;
+  dynamic respirationRate;
+  dynamic heartRate;
+  dynamic bloodPressure;
+  dynamic oxygenRate;
   String status;
   Map<String, dynamic> map;
 
   PreOpData({
     this.map,
   }) {
+    print('map in preop model$map');
     this.hn = map['hn'];
     this.name = map['name'];
     this.gender = map['gender'];

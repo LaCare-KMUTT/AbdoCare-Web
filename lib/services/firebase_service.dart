@@ -247,93 +247,118 @@ class FirebaseService extends IFirebaseService {
       {@required String userId,
       @required String patientState,
       @required String formName}) async {
-    List filteredUserList = await _firestore
+    var anSubCollection = await _firestore
         .collection('Users')
         .doc(userId)
         .collection('an')
         .orderBy('operationDate', descending: true)
         .where('state', isEqualTo: patientState)
         .get()
-        .then((value) {
-      var user = value.docs.first.data();
-      var userForm = user['forms'];
-      var formData = userForm.map((elem) {
-        if (elem['formName'] == formName) {
-          return elem;
-        }
-      }).toList();
-      return formData;
-    }).catchError((onError) {
-      print('$onError $userId does not have $formName ');
-      return null;
+        .catchError((onError) {
+      print('$onError help!');
     });
-
-    if (filteredUserList != null) {
-      filteredUserList.removeWhere((elem) => elem == null);
+    List userForm;
+    try {
+      userForm = anSubCollection.docs.first.get('forms');
+    } catch (error) {
+      userForm = null;
     }
-    return filteredUserList;
+
+    List list = [];
+    print('userForm = $userForm');
+    if (userForm != null) {
+      print('ขอร้องงงงง');
+      userForm.forEach((form) {
+        if (form['formName'] == formName) {
+          list.add(form);
+        } else {
+          print('$userId does not have $formName');
+        }
+      });
+    } else {
+      print('userForm = null');
+    }
+    print('Filtered list = $list');
+    return list;
   }
 
   Future<List<Map<String, dynamic>>> getPostHosList() async {
     var userList = await this.getUserList();
-    var mapResult = userList.map((user) async {
+    var returnList = userList.map((user) async {
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: user.id);
+      var hnToMap = userCollection.data()['hn'] ?? '-';
+      var nameToMap =
+          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var genderToMap = userCollection.data()['gender'] ?? '-';
+      var ageToMap = _calculationService.calculateAge(
+              birthDate: userCollection.data()['dob'].toDate()) ??
+          '-';
+
+      var anSubCollection = await _firestore
+          .collection('Users')
+          .doc(user.id)
+          .collection('an')
+          .orderBy('operationDate', descending: true)
+          .limit(1)
+          .get()
+          .then((value) => value.docs.first.data())
+          .catchError((onError) {
+        print('$onError no anSubCollection on ${user.id}');
+      });
+      if (anSubCollection['state'] != 'Post-Operation@Hospital') {
+        return null;
+      }
+
+      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
+      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
+      var temperatureToMap = '-';
+      var respirationRateToMap = '-';
+      var heartRateToMap = '-';
+      var bloodPressureToMap = '-';
+      var oxygenRateToMap = '-';
+      var status = '-';
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
-          patientState: 'Post-Operation@Hospital',
+          patientState: 'Pre-Operation',
           formName: 'Vital Sign');
-      bool isAbleToMap = formVitalSign != null && formVitalSign.isNotEmpty;
-      if (isAbleToMap) {
+      print('formVitalSign = $formVitalSign');
+      if (formVitalSign.isNotEmpty) {
         var formsCollection = await _firestore
             .collection('Forms')
             .doc(formVitalSign.first['formId'])
             .get()
-            .then((value) => value.data());
-        var anSubCollection = await _firestore
-            .collection('Users')
-            .doc(user.id)
-            .collection('an')
-            .orderBy('operationDate', descending: true)
-            .limit(1)
-            .get()
-            .then((value) => value.docs.first.data());
-        var userCollection = await this
-            .searchDocumentByDocId(collection: 'Users', docId: user.id);
-
-        var hnToMap = userCollection.data()['hn'];
-        var nameToMap =
-            '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-        var genderToMap = userCollection.data()['gender'];
-        var ageToMap = _calculationService.calculateAge(
-            birthDate: userCollection.data()['dob'].toDate());
-        var roomNumberToMap = anSubCollection['roomNumber'];
-        var bedNumberToMap = anSubCollection['bedNumber'];
-        var temperatureToMap = formsCollection['formData']['temperature'];
-        var respirationRateToMap =
-            formsCollection['formData']['respirationRate'];
-        var heartRateToMap = formsCollection['formData']['heartRate'];
-        var bloodPressureToMap = formsCollection['formData']['bloodPressure'];
-        var oxygenRateToMap = formsCollection['formData']['oxygen'];
-        var status = formsCollection['formData']['status'];
-        var map = {
-          'hn': hnToMap,
-          'name': nameToMap,
-          'gender': genderToMap,
-          'age': ageToMap,
-          'room_number': roomNumberToMap,
-          'bed_number': bedNumberToMap,
-          'temperature': temperatureToMap,
-          'respiration_rate': respirationRateToMap,
-          'heart_rate': heartRateToMap,
-          'blood_pressure': bloodPressureToMap,
-          'oxygen_rate': oxygenRateToMap,
-          'status': status,
-        };
-        return map;
-      } else {
-        return null;
+            .then((value) => value.data())
+            .catchError((onError) {
+          print('no formsCollection on ${user.id}');
+        });
+        temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
+        respirationRateToMap =
+            formsCollection['formData']['respirationRate'] ?? '-';
+        heartRateToMap = formsCollection['formData']['heartRate'] ?? '-';
+        bloodPressureToMap =
+            formsCollection['formData']['bloodPressure'] ?? '-';
+        oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
+        status = formsCollection['formData']['status'] ?? '-';
       }
+      var map = {
+        'hn': hnToMap,
+        'name': nameToMap,
+        'gender': genderToMap,
+        'age': ageToMap,
+        'roomNumber': roomNumberToMap,
+        'bedNumber': bedNumberToMap,
+        'temperature': temperatureToMap,
+        'respirationRate': respirationRateToMap,
+        'heartRate': heartRateToMap,
+        'bloodPressure': bloodPressureToMap,
+        'oxygenRate': oxygenRateToMap,
+        'status': status,
+      };
+      print('Return map preop from fbservice $map');
+      return map;
     });
-    var futureList = Future.wait(mapResult);
+    var futureList = Future.wait(returnList);
     var returnValue = await futureList;
     if (returnValue != null) {
       returnValue.removeWhere((element) => element == null);
@@ -352,59 +377,58 @@ class FirebaseService extends IFirebaseService {
           userId: user.id,
           patientState: 'Post-Operation@Home',
           formName: 'Surgical Incision');
+      var anSubCollection = await _firestore
+          .collection('Users')
+          .doc(user.id)
+          .collection('an')
+          .orderBy('operationDate', descending: true)
+          .limit(1)
+          .get()
+          .then((value) => value.docs.first.data());
+      if (anSubCollection['state'] != 'Post-Operation@Home') {
+        return null;
+      }
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: user.id);
+      var countAnSubCollection = await getCountANSubCollection(userId: user.id);
+
+      var hnToMap = userCollection.data()['hn'] ?? '-';
+      var nameToMap =
+          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var admissionCountToMap = countAnSubCollection ?? '-';
+      var genderToMap = userCollection.data()['gender'] ?? '-';
+      var ageToMap = _calculationService.calculateAge(
+          birthDate: userCollection.data()['dob'].toDate());
+      var operationTypeToMap = anSubCollection['operationMethod'] ?? '-';
+      var painScoreToMap = '-';
+      var woundImgToMap = '-';
       bool isAbleToMap = (formPain != null && formPain.isNotEmpty) &&
           (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty);
-      // bool isAbleToMap = (formPain != null && formPain.isNotEmpty);
       if (isAbleToMap) {
-        //TODO Change formsId => formId after clearing DB
         var formPainData = await _firestore
             .collection('Forms')
             .doc(formPain.first['formId'])
             .get()
             .then((value) => value.data());
-        //TODO Use this After has woundImg
         var formSurgicalIncisionData = await _firestore
             .collection('Forms')
             .doc(formSurgicalIncision.first['formId'])
             .get()
             .then((value) => value.data());
-        var anSubCollection = await _firestore
-            .collection('Users')
-            .doc(user.id)
-            .collection('an')
-            .orderBy('operationDate', descending: true)
-            .limit(1)
-            .get()
-            .then((value) => value.docs.first.data());
-        var userCollection = await this
-            .searchDocumentByDocId(collection: 'Users', docId: user.id);
-        var countAnSubCollection =
-            await getCountANSubCollection(userId: user.id);
-
-        var hnToMap = userCollection.data()['hn'];
-        var nameToMap =
-            '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-        var admissionCountToMap = countAnSubCollection;
-        var genderToMap = userCollection.data()['gender'];
-        var ageToMap = _calculationService.calculateAge(
-            birthDate: userCollection.data()['dob'].toDate());
-        var painScoreToMap = formPainData['formData']['Answer'];
-        var operationTypeToMap = anSubCollection['operationMethod'];
-        var woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
-        var map = {
-          'hn': hnToMap,
-          'name': nameToMap,
-          'admissionCount': admissionCountToMap,
-          'gender': genderToMap,
-          'age': ageToMap,
-          'painScore': painScoreToMap,
-          'operationType': operationTypeToMap,
-          'woundImg': woundImgToMap,
-        };
-        return map;
-      } else {
-        return null;
+        painScoreToMap = formPainData['formData']['Answer'] ?? '-';
+        woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
       }
+      var map = {
+        'hn': hnToMap,
+        'name': nameToMap,
+        'admissionCount': admissionCountToMap,
+        'gender': genderToMap,
+        'age': ageToMap,
+        'painScore': painScoreToMap,
+        'operationType': operationTypeToMap,
+        'woundImg': woundImgToMap,
+      };
+      return map;
     });
     var futureList = Future.wait(mapResult);
     var returnValue = await futureList;
@@ -415,77 +439,82 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<Map<String, dynamic>>> getPreOpList() async {
-    var userList = await getUserList();
-    var mapResult = userList.map((user) async {
+    var userList = await this.getUserList();
+    var returnList = userList.map((user) async {
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: user.id);
+      var hnToMap = userCollection.data()['hn'] ?? '-';
+      var nameToMap =
+          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var genderToMap = userCollection.data()['gender'] ?? '-';
+      var ageToMap = _calculationService.calculateAge(
+              birthDate: userCollection.data()['dob'].toDate()) ??
+          '-';
+
+      var anSubCollection = await _firestore
+          .collection('Users')
+          .doc(user.id)
+          .collection('an')
+          .orderBy('operationDate', descending: true)
+          .limit(1)
+          .get()
+          .then((value) => value.docs.first.data())
+          .catchError((onError) {
+        print('$onError no anSubCollection on ${user.id}');
+      });
+      if (anSubCollection['state'] != 'Pre-Operation') {
+        return null;
+      }
+
+      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
+      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
+      var temperatureToMap = '-';
+      var respirationRateToMap = '-';
+      var heartRateToMap = '-';
+      var bloodPressureToMap = '-';
+      var oxygenRateToMap = '-';
+      var status = '-';
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
           patientState: 'Pre-Operation',
           formName: 'Vital Sign');
-      // print('fromVitalsign of ${user.id}, $formVitalSign');
-      if (formVitalSign != null) {
-        var anSubCollection = await _firestore
-            .collection('Users')
-            .doc(user.id)
-            .collection('an')
-            .orderBy('operationDate', descending: true)
-            .limit(1)
-            .get()
-            .then((value) => value.docs.first.data())
-            .catchError((onError) {
-          print('$onError help me please');
-        });
-        //TODO Change formsId => formId after clearing DB
+      print('formVitalSign = $formVitalSign');
+      if (formVitalSign.isNotEmpty) {
         var formsCollection = await _firestore
             .collection('Forms')
             .doc(formVitalSign.first['formId'])
             .get()
             .then((value) => value.data())
             .catchError((onError) {
-          print('formCollection $onError');
+          print('no formsCollection on ${user.id}');
         });
-        var userCollection = await this
-            .searchDocumentByDocId(collection: 'Users', docId: user.id);
-
-        bool isAbleToMap = formVitalSign != null && formVitalSign.isNotEmpty;
-        if (isAbleToMap) {
-          var hnToMap = userCollection.data()['hn'];
-          var nameToMap =
-              '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-          var genderToMap = userCollection.data()['gender'];
-          var ageToMap = _calculationService.calculateAge(
-              birthDate: userCollection.data()['dob'].toDate());
-          var roomNumberToMap = anSubCollection['roomNumber'];
-          var bedNumberToMap = anSubCollection['bedNumber'];
-          var temperatureToMap = formsCollection['formData']['temperature'];
-          var respirationRateToMap =
-              formsCollection['formData']['respirationRate'];
-          var heartRateToMap = formsCollection['formData']['heartRate'];
-          var bloodPressureToMap = formsCollection['formData']['bloodPressure'];
-          var oxygenRateToMap = formsCollection['formData']['oxygen'];
-          var status = formsCollection['formData']['status'];
-          var map = {
-            'hn': hnToMap,
-            'name': nameToMap,
-            'gender': genderToMap,
-            'age': ageToMap,
-            'roomNumber': roomNumberToMap,
-            'bedNumber': bedNumberToMap,
-            'temperature': temperatureToMap,
-            'respirationRate': respirationRateToMap,
-            'heartRate': heartRateToMap,
-            'bloodPressure': bloodPressureToMap,
-            'oxygenRate': oxygenRateToMap,
-            'status': status,
-          };
-          return map;
-        } else {
-          return null;
-        }
-      } else {
-        return null;
+        temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
+        respirationRateToMap =
+            formsCollection['formData']['respirationRate'] ?? '-';
+        heartRateToMap = formsCollection['formData']['heartRate'] ?? '-';
+        bloodPressureToMap =
+            formsCollection['formData']['bloodPressure'] ?? '-';
+        oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
+        status = formsCollection['formData']['status'] ?? '-';
       }
+      var map = {
+        'hn': hnToMap,
+        'name': nameToMap,
+        'gender': genderToMap,
+        'age': ageToMap,
+        'roomNumber': roomNumberToMap,
+        'bedNumber': bedNumberToMap,
+        'temperature': temperatureToMap,
+        'respirationRate': respirationRateToMap,
+        'heartRate': heartRateToMap,
+        'bloodPressure': bloodPressureToMap,
+        'oxygenRate': oxygenRateToMap,
+        'status': status,
+      };
+      print('Return map preop from fbservice $map');
+      return map;
     });
-    var futureList = Future.wait(mapResult);
+    var futureList = Future.wait(returnList);
     var returnValue = await futureList;
     if (returnValue != null) {
       returnValue.removeWhere((element) => element == null);

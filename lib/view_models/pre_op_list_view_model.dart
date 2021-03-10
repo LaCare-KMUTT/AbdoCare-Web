@@ -17,9 +17,10 @@ class PreOpViewModel {
   }
 
   Future<List<PreOpData>> getUsers() async {
-    if (userList.length == 0) {
-      await _initialize();
-    }
+    userList.clear();
+    print(userList.length);
+    await _initialize();
+
     return userList;
   }
 

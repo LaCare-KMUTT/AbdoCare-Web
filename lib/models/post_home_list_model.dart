@@ -3,8 +3,8 @@ class PostHomeData {
   String name;
   String gender;
   String age;
-  double admissionCount;
-  double painScore;
+  dynamic admissionCount;
+  dynamic painScore;
   String operationType;
   String woundImg;
 
