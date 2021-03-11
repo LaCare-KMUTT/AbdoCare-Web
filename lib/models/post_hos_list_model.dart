@@ -1,4 +1,4 @@
-class PreOpData {
+class PostHosData {
   String hn;
   String name;
   String gender;
@@ -13,7 +13,7 @@ class PreOpData {
   String status;
   Map<String, dynamic> map;
 
-  PreOpData({
+  PostHosData({
     this.map,
   }) {
     this.hn = map['hn'];

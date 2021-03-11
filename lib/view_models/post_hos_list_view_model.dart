@@ -1,28 +1,30 @@
-import 'package:AbdoCare_Web/models/pre_op_list_model.dart';
+import 'package:AbdoCare_Web/models/post_hos_list_model.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 
-class PreOpViewModel {
-  PreOpViewModel() {
+class PostHosViewModel {
+  PostHosViewModel() {
     // _initialize();
   }
   final _firebaseService = locator<IFirebaseService>();
-  List<PreOpData> userList = [];
+  List<PostHosData> userList = [];
 
   Future<void> _initialize() async {
-    var preOpList = await _firebaseService.getPreOpList();
-    preOpList.forEach((mapData) {
-      userList.add(PreOpData(map: mapData));
-    });
+    var postHosList = await _firebaseService.getPostHosList();
+    if (postHosList != null) {
+      postHosList.forEach((mapData) {
+        userList.add(PostHosData(map: mapData));
+      });
+    }
   }
 
-  Future<List<PreOpData>> getUsers() async {
+  Future<List<PostHosData>> getUsers() async {
     userList.clear();
     await _initialize();
     return userList;
   }
 
-  List<PreOpData> sortBy(String key, bool isAsc) {
+  List<PostHosData> sortBy(String key, bool isAsc) {
     switch (key) {
       case 'temperature':
         userList.sort((a, b) => a.temperature.compareTo(b.temperature));

@@ -33,8 +33,11 @@ class _PreTableState extends State<PreTable> {
         future: _preOpViewModel.getUsers(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return CircularProgressIndicator(
-              strokeWidth: 4,
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+              ),
             );
           } else {
             if (users.isNotEmpty) {
@@ -43,7 +46,7 @@ class _PreTableState extends State<PreTable> {
             users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
-              columnSpacing: screenSize.width / 37,
+              columnSpacing: screenSize.width / 35,
               headingRowHeight: 50,
               headingTextStyle: TextStyle(
                   fontSize: 18,
@@ -75,10 +78,6 @@ class _PreTableState extends State<PreTable> {
                   label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
                   numeric: true,
                   onSort: (columnIndex, sortAscending) {
-                    users.forEach((element) {
-                      print(
-                          'list Before sorted by respirationRate ==>${element.name} ${element.hn}');
-                    });
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
                         _sortAsc = _sortRespirationRateAsc = sortAscending;
@@ -174,41 +173,54 @@ class _PreTableState extends State<PreTable> {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
+                      Navigator.pushNamed(context, '/dashboard_pre',
+                          arguments: user.hn);
                     },
                     cells: [
                       DataCell(Text(user.hn)),
                       DataCell(Text(user.name)),
                       DataCell(Text(user.gender)),
-                      DataCell(Center(child: Text(user.age))),
+                      DataCell(Center(
+                          child: Text(
+                        user.age,
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ))),
                       DataCell(Center(child: Text(user.roomNumber))),
                       DataCell(Center(child: Text(user.bedNumber))),
                       DataCell(
                         Text('${user.respirationRate.toString()}',
                             style: TextStyle(
-                                color: CustomMaterial().getRespirationRateColor(
+                                fontSize: 17,
+                                color: _customMaterial.getRespirationRateColor(
                                     user.respirationRate))),
                       ),
                       DataCell(
                         Text('${user.temperature.toString()}',
                             style: TextStyle(
+                                fontSize: 17,
                                 color: _customMaterial
                                     .getTemperatureColor(user.temperature))),
                       ),
                       DataCell(
                         Text('${user.heartRate.toString()}',
                             style: TextStyle(
+                                fontSize: 17,
                                 color: _customMaterial
                                     .getHeartRateColor(user.heartRate))),
                       ),
                       DataCell(
                         Text('${user.bloodPressure.toString()}',
                             style: TextStyle(
+                                fontSize: 17,
                                 color: _customMaterial.getBloodPressureColor(
                                     user.bloodPressure))),
                       ),
                       DataCell(
                         Text('${user.oxygenRate.toString()}',
                             style: TextStyle(
+                                fontSize: 17,
                                 color: _customMaterial
                                     .getOxygenRateColor(user.oxygenRate))),
                       ),
