@@ -22,6 +22,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
   DateTime yesterday;
   ICalculationService _calculationService = locator<ICalculationService>();
   IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   Future<DateTime> _selectDate(BuildContext context) async {
     final DateTime picked = await showRoundedDatePicker(
@@ -32,7 +33,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
       firstDate: DateTime(DateTime.now().year - 200),
       lastDate: DateTime.now().add(Duration(days: 356)),
       theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          primarySwatch: _customMaterial.createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
       height: 320,
       styleDatePicker: MaterialRoundedDatePickerStyle(

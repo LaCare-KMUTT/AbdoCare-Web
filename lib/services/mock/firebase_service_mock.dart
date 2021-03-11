@@ -30,9 +30,7 @@ class FirebaseServiceMock extends IFirebaseService {
   Future<String> createPatient(
       {String collection, String docId, Map<String, dynamic> data}) async {
     print('create Temp User Throught Firebase Service Mock');
-    print(data);
-    print(data['username']);
-    print(data['dob']);
+
     var tempApp = await _createTempApp();
     var tempAuthResult = await _createTempAuthWithProvidedTempApp(
         tempApp, data['username'], data['uniqueKey']);
@@ -265,6 +263,12 @@ class FirebaseServiceMock extends IFirebaseService {
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate}) {
     // TODO: implement getAppointmentList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getPreOpList() {
+    // TODO: implement getPreOpList
     throw UnimplementedError();
   }
 }

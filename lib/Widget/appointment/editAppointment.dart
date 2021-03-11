@@ -23,6 +23,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
   _EditAppointmentPageState({@required this.appointmentId});
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   ICalculationService _calculationService = locator<ICalculationService>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   String _an = '';
   String _hn = '';
@@ -43,7 +44,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
       firstDate: DateTime(DateTime.now().year - 200),
       lastDate: DateTime.now().add(Duration(days: 356)),
       theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          primarySwatch: _customMaterial.createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
       height: 320,
       styleDatePicker: MaterialRoundedDatePickerStyle(

@@ -51,6 +51,8 @@ abstract class IFirebaseService {
 
   Future<List<Map<String, dynamic>>> getPostHomeList();
 
+  Future<List<Map<String, dynamic>>> getPreOpList();
+
   Future<bool> signIn({@required String username, @required String password});
 
   Future<void> signOut();
