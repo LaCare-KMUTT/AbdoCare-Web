@@ -20,7 +20,6 @@ class PostHosViewModel {
 
   Future<List<PostHosData>> getUsers() async {
     userList.clear();
-    print(userList.length);
     await _initialize();
     return userList;
   }

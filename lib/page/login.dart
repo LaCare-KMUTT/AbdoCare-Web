@@ -84,7 +84,6 @@ class _LoginPageState extends State<LoginPage> {
                               ? _validatePassword = true
                               : _validatePassword = false;
                         });
-                        print('This is login button');
 
                         var signInResult = false;
                         if (_validatePassword == false &&

@@ -78,10 +78,6 @@ class _PostHosTableState extends State<PostHosTable> {
                   label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
                   numeric: true,
                   onSort: (columnIndex, sortAscending) {
-                    users.forEach((element) {
-                      print(
-                          'list Before sorted by respirationRate ==>${element.name} ${element.hn}');
-                    });
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
                         _sortAsc = _sortRespirationRateAsc = sortAscending;

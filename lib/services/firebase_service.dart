@@ -50,17 +50,25 @@ class FirebaseService extends IFirebaseService {
 
   Future<FirebaseApp> _createTempApp() async {
     return await Firebase.initializeApp(
-        name: 'Temporary Register', options: Firebase.app().options);
+            name: 'Temporary Register', options: Firebase.app().options)
+        .catchError((onError) {
+      print('$onError in _createTempApp');
+    });
   }
 
-  void _deleteTempApp(FirebaseApp tempApp) {
-    tempApp.delete();
+  Future<void> _deleteTempApp(FirebaseApp tempApp) async {
+    await tempApp
+        .delete()
+        .then((value) => print('Success Delete ${tempApp.name}'));
   }
 
   Future<UserCredential> _createTempAuthWithProvidedTempApp(
       FirebaseApp tempApp, String username, String password) async {
     return await FirebaseAuth.instanceFor(app: tempApp)
-        .createUserWithEmailAndPassword(email: username, password: password);
+        .createUserWithEmailAndPassword(email: username, password: password)
+        .catchError((onError) {
+      print('$onError Failed to createAuthFor User $username $password');
+    });
   }
 
   Future<bool> _setRoleToUser({
@@ -90,7 +98,7 @@ class FirebaseService extends IFirebaseService {
     @required Map<String, dynamic> data,
   }) async {
     print('createUser using CreatePatient FirebaseInterface');
-    var tempApp = await _createTempApp();
+    FirebaseApp tempApp = await _createTempApp();
     var tempAuthResult = await _createTempAuthWithProvidedTempApp(
         tempApp, data['username'], data['uniqueKey']);
     var addedUserId = tempAuthResult.user.uid;
@@ -104,7 +112,7 @@ class FirebaseService extends IFirebaseService {
       print(
           '$onError having error in setting $data for $addedUserId in Users collection');
     });
-    _deleteTempApp(tempApp);
+    await _deleteTempApp(tempApp);
     var setRoleStatus = await _setRoleToUser(
         uid: addedUserId, username: data['username'], role: 'patient');
     setRoleStatus
@@ -128,7 +136,7 @@ class FirebaseService extends IFirebaseService {
     }).catchError((onError) {
       print('$onError Failed Creating Medical Team Mock');
     });
-    _deleteTempApp(tempApp);
+    await _deleteTempApp(tempApp);
     var setRoleStatus = await _setRoleToUser(
         uid: addedUserId, username: data['username'], role: 'Medical Team');
     setRoleStatus
@@ -255,7 +263,7 @@ class FirebaseService extends IFirebaseService {
         .where('state', isEqualTo: patientState)
         .get()
         .catchError((onError) {
-      print('$onError help!');
+      print('$onError Error in getFOrmListInAnBasedOnState!');
     });
     List userForm;
     try {
@@ -265,9 +273,7 @@ class FirebaseService extends IFirebaseService {
     }
 
     List list = [];
-    print('userForm = $userForm');
     if (userForm != null) {
-      print('ขอร้องงงงง');
       userForm.forEach((form) {
         if (form['formName'] == formName) {
           list.add(form);
@@ -278,7 +284,6 @@ class FirebaseService extends IFirebaseService {
     } else {
       print('userForm = null');
     }
-    print('Filtered list = $list');
     return list;
   }
 
@@ -322,7 +327,6 @@ class FirebaseService extends IFirebaseService {
           userId: user.id,
           patientState: 'Pre-Operation',
           formName: 'Vital Sign');
-      print('formVitalSign = $formVitalSign');
       if (formVitalSign.isNotEmpty) {
         var formsCollection = await _firestore
             .collection('Forms')
@@ -330,7 +334,7 @@ class FirebaseService extends IFirebaseService {
             .get()
             .then((value) => value.data())
             .catchError((onError) {
-          print('no formsCollection on ${user.id}');
+          print('$onError no formsCollection on ${user.id}');
         });
         temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
         respirationRateToMap =
@@ -355,7 +359,6 @@ class FirebaseService extends IFirebaseService {
         'oxygenRate': oxygenRateToMap,
         'status': status,
       };
-      print('Return map preop from fbservice $map');
       return map;
     });
     var futureList = Future.wait(returnList);
@@ -478,7 +481,6 @@ class FirebaseService extends IFirebaseService {
           userId: user.id,
           patientState: 'Pre-Operation',
           formName: 'Vital Sign');
-      print('formVitalSign = $formVitalSign');
       if (formVitalSign.isNotEmpty) {
         var formsCollection = await _firestore
             .collection('Forms')
@@ -511,7 +513,6 @@ class FirebaseService extends IFirebaseService {
         'oxygenRate': oxygenRateToMap,
         'status': status,
       };
-      print('Return map preop from fbservice $map');
       return map;
     });
     var futureList = Future.wait(returnList);
@@ -545,7 +546,6 @@ class FirebaseService extends IFirebaseService {
       print('$onError : Failed login!');
       return false;
     });
-    print('login finished!');
     return loginResult;
   }
 

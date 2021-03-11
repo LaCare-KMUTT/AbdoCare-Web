@@ -72,10 +72,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                   label: Expanded(child: Center(child: Text('คะแนนความปวด'))),
                   numeric: true,
                   onSort: (columnIndex, sortAscending) {
-                    users.forEach((element) {
-                      print(
-                          'list Before sorted by painScore ==>${element.name} ${element.hn}');
-                    });
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
                         _sortAsc = _sortPainScore = sortAscending;

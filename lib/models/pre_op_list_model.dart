@@ -16,7 +16,6 @@ class PreOpData {
   PreOpData({
     this.map,
   }) {
-    print('map in preop model$map');
     this.hn = map['hn'];
     this.name = map['name'];
     this.gender = map['gender'];
