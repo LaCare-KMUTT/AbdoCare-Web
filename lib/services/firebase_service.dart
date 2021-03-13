@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,8 @@ class FirebaseService extends IFirebaseService {
   final _auth = FirebaseAuth.instance;
   final ICalculationService _calculationService =
       locator<ICalculationService>();
+  final CloudFunctionService _cloudFunctionService =
+      locator<CloudFunctionService>();
 
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
@@ -98,21 +101,23 @@ class FirebaseService extends IFirebaseService {
     @required Map<String, dynamic> data,
   }) async {
     print('createUser using CreatePatient FirebaseInterface');
-    FirebaseApp tempApp = await _createTempApp();
-    var tempAuthResult = await _createTempAuthWithProvidedTempApp(
-        tempApp, data['username'], data['uniqueKey']);
-    var addedUserId = tempAuthResult.user.uid;
-    _firestore
-        .collection('Users')
-        .doc(addedUserId)
-        .set(data)
-        .then((value) =>
-            print('Success setting $data for $addedUserId in Users collection'))
-        .catchError((onError) {
-      print(
-          '$onError having error in setting $data for $addedUserId in Users collection');
-    });
-    await _deleteTempApp(tempApp);
+    // FirebaseApp tempApp = await _createTempApp();
+    // var tempAuthResult = await _createTempAuthWithProvidedTempApp(
+    //     tempApp, data['username'], data['uniqueKey']);
+    // var addedUserId = tempAuthResult.user.uid;
+    // _firestore
+    //     .collection('Users')
+    //     .doc(addedUserId)
+    //     .set(data)
+    //     .then((value) =>
+    //         print('Success setting $data for $addedUserId in Users collection'))
+    //     .catchError((onError) {
+    //   print(
+    //       '$onError having error in setting $data for $addedUserId in Users collection');
+    // });
+    // await _deleteTempApp(tempApp);
+    var addedUserId = await _cloudFunctionService.createUser(
+        email: data['username'], password: data['password']);
     var setRoleStatus = await _setRoleToUser(
         uid: addedUserId, username: data['username'], role: 'patient');
     setRoleStatus
