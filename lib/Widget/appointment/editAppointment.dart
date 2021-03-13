@@ -5,7 +5,7 @@ import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
-import '../material.dart';
+import '../customMaterial.dart';
 
 class EditAppointmentPage extends StatefulWidget {
   final String appointmentId;

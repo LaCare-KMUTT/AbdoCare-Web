@@ -1,11 +1,10 @@
-import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
-
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/service_locator.dart';
+import '../customMaterial.dart';
 
 class PrevisitForm extends StatefulWidget {
   PrevisitForm({Key key}) : super(key: key);
@@ -17,6 +16,7 @@ enum ConsentSigned { patient, other }
 
 class _PrevisitFormState extends State<PrevisitForm> {
   ICalculationService _calculationService = locator<ICalculationService>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   String _hn = '';
   String _an = '';
@@ -45,7 +45,7 @@ class _PrevisitFormState extends State<PrevisitForm> {
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          primarySwatch: _customMaterial.createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
       height: 320,
       styleDatePicker: MaterialRoundedDatePickerStyle(
