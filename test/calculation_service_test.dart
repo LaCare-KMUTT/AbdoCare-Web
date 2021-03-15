@@ -15,8 +15,8 @@ void main() {
       var age = _calculationService.calculateAge(birthDateString: '2542-03-12');
       var ageWithTime =
           _calculationService.calculateAge(birthDateString: '2542-03-12 10:00');
-      expect(age, 21);
-      expect(ageWithTime, 21);
+      expect(age, 22);
+      expect(ageWithTime, 22);
     });
 
     test('calculationAge should be able to calculate when Datetime is injected',
@@ -25,7 +25,7 @@ void main() {
 
       var age =
           _calculationService.calculateAge(birthDate: DateTime(2542, 03, 12));
-      expect(age, 21);
+      expect(age, 22);
     });
   });
 
