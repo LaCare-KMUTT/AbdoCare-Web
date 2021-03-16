@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,8 @@ class FirebaseService extends IFirebaseService {
   final _auth = FirebaseAuth.instance;
   final ICalculationService _calculationService =
       locator<ICalculationService>();
+  final CloudFunctionService _cloudFunctionService =
+      locator<CloudFunctionService>();
 
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
@@ -48,29 +51,6 @@ class FirebaseService extends IFirebaseService {
     });
   }
 
-  Future<FirebaseApp> _createTempApp() async {
-    return await Firebase.initializeApp(
-            name: 'Temporary Register', options: Firebase.app().options)
-        .catchError((onError) {
-      print('$onError in _createTempApp');
-    });
-  }
-
-  Future<void> _deleteTempApp(FirebaseApp tempApp) async {
-    await tempApp
-        .delete()
-        .then((value) => print('Success Delete ${tempApp.name}'));
-  }
-
-  Future<UserCredential> _createTempAuthWithProvidedTempApp(
-      FirebaseApp tempApp, String username, String password) async {
-    return await FirebaseAuth.instanceFor(app: tempApp)
-        .createUserWithEmailAndPassword(email: username, password: password)
-        .catchError((onError) {
-      print('$onError Failed to createAuthFor User $username $password');
-    });
-  }
-
   Future<bool> _setRoleToUser({
     @required String uid,
     @required String username,
@@ -98,11 +78,20 @@ class FirebaseService extends IFirebaseService {
     @required Map<String, dynamic> data,
   }) async {
     print('createUser using CreatePatient FirebaseInterface');
-    FirebaseApp tempApp = await _createTempApp();
-    var tempAuthResult = await _createTempAuthWithProvidedTempApp(
-        tempApp, data['username'], data['uniqueKey']);
-    var addedUserId = tempAuthResult.user.uid;
-    _firestore
+    var firebaseRegisterInstance = Firebase.app("Abdocare-Register-Service");
+    var firebaseRegisterApp =
+        FirebaseAuth.instanceFor(app: firebaseRegisterInstance);
+
+    var addedUserId = await firebaseRegisterApp
+        .createUserWithEmailAndPassword(
+            email: data['username'], password: data['uniqueKey'])
+        .then((value) => value.user.uid)
+        .catchError((onError) {
+      print(
+          '$onError Failed to createAuthFor User ${data['username']} ${data['uniqueKey']}');
+    });
+    await firebaseRegisterApp.signOut();
+    await _firestore
         .collection('Users')
         .doc(addedUserId)
         .set(data)
@@ -112,7 +101,7 @@ class FirebaseService extends IFirebaseService {
       print(
           '$onError having error in setting $data for $addedUserId in Users collection');
     });
-    await _deleteTempApp(tempApp);
+
     var setRoleStatus = await _setRoleToUser(
         uid: addedUserId, username: data['username'], role: 'patient');
     setRoleStatus
@@ -123,20 +112,21 @@ class FirebaseService extends IFirebaseService {
 
   Future<void> createMedicalTeam({Map<String, dynamic> data}) async {
     print('create temp user via Firebase Service Mock');
-    var tempApp = await _createTempApp();
-    var tempAuthResult = await _createTempAuthWithProvidedTempApp(
-        tempApp, data['username'], data['password']);
-    var addedUserId = tempAuthResult.user.uid;
-    _firestore
-        .collection('MedicalTeams')
-        .doc(addedUserId)
-        .set(data)
-        .then((value) {
-      print('successfully create Medical Team Mock');
-    }).catchError((onError) {
-      print('$onError Failed Creating Medical Team Mock');
+
+    var firebaseRegisterInstance = Firebase.app("Abdocare-Register-Service");
+    var firebaseTempApp =
+        FirebaseAuth.instanceFor(app: firebaseRegisterInstance);
+
+    var addedUserId = await firebaseTempApp
+        .createUserWithEmailAndPassword(
+            email: data['username'], password: data['uniqueKey'])
+        .then((value) => value.user.uid)
+        .catchError((onError) {
+      print(
+          '$onError Failed to createAuthFor User ${data['username']} ${data['uniqueKey']}');
     });
-    await _deleteTempApp(tempApp);
+    await firebaseTempApp.signOut();
+
     var setRoleStatus = await _setRoleToUser(
         uid: addedUserId, username: data['username'], role: 'Medical Team');
     setRoleStatus
