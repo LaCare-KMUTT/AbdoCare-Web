@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/Widget/customMaterial.dart';
+import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:get_it/get_it.dart';
 
 import '../view_models/post_home_list_view_model.dart';
@@ -25,4 +26,6 @@ void setupServiceLocator({bool isMock = false}) {
   locator.registerLazySingleton<PostHomeViewModel>(() => PostHomeViewModel());
   locator.registerLazySingleton<PostHosViewModel>(() => PostHosViewModel());
   locator.registerLazySingleton<CustomMaterial>(() => CustomMaterial());
+  locator.registerLazySingleton<CloudFunctionService>(
+      () => CloudFunctionService());
 }
