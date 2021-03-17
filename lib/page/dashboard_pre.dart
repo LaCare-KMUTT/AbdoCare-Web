@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../Widget/appbar.dart';
 import '../Widget/sidebar.dart';
-import '../Widget/dashboard/preDashboardDetail.dart';
+import '../Widget/dashboard/pre_operation/preDashboardDetail.dart';
 
 class PreDashboardPage extends StatefulWidget {
   @override
