@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/page/evaluationForm.dart';
 import 'package:AbdoCare_Web/page/mockDataPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +58,6 @@ class MyApp extends StatelessWidget {
         '/dashboard_postHos': (context) => PostHosDashboardPage(),
         '/mock': (context) => MockDataPage(),
         '/appointment_page': (context) => AppointmentPage(),
-        '/forms': (context) => EvaluationFormPage(),
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
