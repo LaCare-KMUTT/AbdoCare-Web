@@ -64,15 +64,6 @@ class SideBar extends StatelessWidget {
                         print('This is appointment_page button');
                       },
                     ),
-                    ListTile(
-                      leading: Icon(Icons.favorite),
-                      title: Text("แบบประเมินจ้า",
-                          style: Theme.of(context).textTheme.bodyText2),
-                      onTap: () async {
-                        await _firebaseService.signOut();
-                        Navigator.pushReplacementNamed(context, '/forms');
-                      },
-                    ),
                     const Expanded(child: SizedBox()),
                     const Divider(height: 1.0, color: Colors.grey),
                     ListTile(
