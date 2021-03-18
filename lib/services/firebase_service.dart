@@ -394,22 +394,23 @@ class FirebaseService extends IFirebaseService {
       var ageToMap = _calculationService.calculateAge(
           birthDate: userCollection.data()['dob'].toDate());
       var operationTypeToMap = anSubCollection['operationMethod'] ?? '-';
-      var painScoreToMap = '-';
-      var woundImgToMap = '-';
-      bool isAbleToMap = (formPain != null && formPain.isNotEmpty) &&
-          (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty);
-      if (isAbleToMap) {
+      var painScoreToMap;
+      var woundImgToMap;
+      if (formPain != null && formPain.isNotEmpty) {
         var formPainData = await _firestore
             .collection('Forms')
             .doc(formPain.first['formId'])
             .get()
             .then((value) => value.data());
+
+        painScoreToMap = formPainData['formData']['Answer'] ?? '-';
+      }
+      if (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty) {
         var formSurgicalIncisionData = await _firestore
             .collection('Forms')
             .doc(formSurgicalIncision.first['formId'])
             .get()
             .then((value) => value.data());
-        painScoreToMap = formPainData['formData']['Answer'] ?? '-';
         woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
       }
       var map = {
@@ -418,9 +419,9 @@ class FirebaseService extends IFirebaseService {
         'admissionCount': admissionCountToMap,
         'gender': genderToMap,
         'age': ageToMap,
-        'painScore': painScoreToMap,
-        'operationType': operationTypeToMap,
-        'woundImg': woundImgToMap,
+        'painScore': painScoreToMap ?? '-',
+        'operationType': operationTypeToMap ?? '-',
+        'woundImg': woundImgToMap ?? '-',
       };
       return map;
     });
