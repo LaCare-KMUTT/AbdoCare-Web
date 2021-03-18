@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../services/interfaces/calculation_service_interface.dart';
 import '../../../services/service_locator.dart';
 import '../../appbar.dart';
-import '../../customMaterial.dart';
+import '../../material.dart';
 import '../../sidebar.dart';
 
 class HealthStatusForm extends StatefulWidget {

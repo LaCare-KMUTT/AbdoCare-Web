@@ -5,7 +5,7 @@ import 'package:AbdoCare_Web/view_models/post_hos_list_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/service_locator.dart';
-import '../customMaterial.dart';
+import '../material.dart';
 
 class PostHosTable extends StatefulWidget {
   PostHosTable({Key key}) : super(key: key);

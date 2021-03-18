@@ -9,7 +9,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/service_locator.dart';
-import '../customMaterial.dart';
+import '../material.dart';
 
 class PatientRegisterForm extends StatefulWidget {
   PatientRegisterForm(this.submitFn);

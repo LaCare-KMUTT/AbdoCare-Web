@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'Widget/customMaterial.dart';
+import 'Widget/material.dart';
 import 'page/addPatient.dart';
 import 'page/appointment.dart';
 import 'page/dashboard_postHome.dart';
