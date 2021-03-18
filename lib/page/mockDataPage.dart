@@ -123,7 +123,7 @@ class _MockDataPageState extends State<MockDataPage> {
                     onPressed: _buttonEnabled
                         ? () async {
                             var mockFormCollection =
-                                _mockFirestore.mockFormCollection(
+                                await _mockFirestore.mockVitalSignForm(
                                     an: _anController.text.trim(),
                                     hn: _hnController.text.trim());
                             var form =
