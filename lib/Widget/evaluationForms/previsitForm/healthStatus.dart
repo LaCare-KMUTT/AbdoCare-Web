@@ -21,6 +21,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   ICalculationService _calculationService = locator<ICalculationService>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
+  DateTime date = DateTime.now();
+
   String _general = '';
   String _heent = '';
   String _cv = '';
@@ -115,6 +117,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
 
   @override
   Widget build(BuildContext context) {
+    var toShow = _calculationService.formatDateToThaiString(
+        date: date, isBuddhist: false);
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: BaseAppBar(
@@ -2560,7 +2564,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                 screenSize.height / 70),
                                             child: Container(
                                               child: Center(
-                                                child: Text('Date'),
+                                                child: Text('Date: $toShow'),
                                               ),
                                             ),
                                           ),
