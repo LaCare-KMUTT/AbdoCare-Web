@@ -307,17 +307,18 @@ class FirebaseService extends IFirebaseService {
 
       var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var temperatureToMap = '-';
-      var respirationRateToMap = '-';
-      var heartRateToMap = '-';
-      var bloodPressureToMap = '-';
-      var oxygenRateToMap = '-';
+      var temperatureToMap;
+      var respirationRateToMap;
+      var heartRateToMap;
+      var bloodPressureToMap;
+      var oxygenRateToMap;
       var status = '-';
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
-          patientState: 'Pre-Operation',
+          patientState: 'Post-Operation@Hospital',
           formName: 'Vital Sign');
       if (formVitalSign.isNotEmpty) {
+        print('should be here');
         var formsCollection = await _firestore
             .collection('Forms')
             .doc(formVitalSign.first['formId'])
@@ -342,12 +343,12 @@ class FirebaseService extends IFirebaseService {
         'age': ageToMap,
         'roomNumber': roomNumberToMap,
         'bedNumber': bedNumberToMap,
-        'temperature': temperatureToMap,
-        'respirationRate': respirationRateToMap,
-        'heartRate': heartRateToMap,
-        'bloodPressure': bloodPressureToMap,
-        'oxygenRate': oxygenRateToMap,
-        'status': status,
+        'temperature': temperatureToMap ?? '-',
+        'respirationRate': respirationRateToMap ?? '-',
+        'heartRate': heartRateToMap ?? '-',
+        'bloodPressure': bloodPressureToMap ?? '-',
+        'oxygenRate': oxygenRateToMap ?? '-',
+        'status': status ?? '-',
       };
       return map;
     });
@@ -461,11 +462,11 @@ class FirebaseService extends IFirebaseService {
 
       var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var temperatureToMap = '-';
-      var respirationRateToMap = '-';
-      var heartRateToMap = '-';
-      var bloodPressureToMap = '-';
-      var oxygenRateToMap = '-';
+      var temperatureToMap;
+      var respirationRateToMap;
+      var heartRateToMap;
+      var bloodPressureToMap;
+      var oxygenRateToMap;
       var status = '-';
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
@@ -496,12 +497,12 @@ class FirebaseService extends IFirebaseService {
         'age': ageToMap,
         'roomNumber': roomNumberToMap,
         'bedNumber': bedNumberToMap,
-        'temperature': temperatureToMap,
-        'respirationRate': respirationRateToMap,
-        'heartRate': heartRateToMap,
-        'bloodPressure': bloodPressureToMap,
-        'oxygenRate': oxygenRateToMap,
-        'status': status,
+        'temperature': temperatureToMap ?? '-',
+        'respirationRate': respirationRateToMap ?? '-',
+        'heartRate': heartRateToMap ?? '-',
+        'bloodPressure': bloodPressureToMap ?? '-',
+        'oxygenRate': oxygenRateToMap ?? '-',
+        'status': status ?? '-',
       };
       return map;
     });
