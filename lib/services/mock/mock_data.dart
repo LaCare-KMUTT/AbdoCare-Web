@@ -73,7 +73,7 @@ class MockFirestore {
       'bedNumber': '1234',
       'roomType': 'ห้องเดี่ยว',
       'roomNumber': '1234',
-      'state': 'pre-operation',
+      'state': 'Pre-Operation',
     };
     return anSubCollectionDataOnCreatePatient;
   }
