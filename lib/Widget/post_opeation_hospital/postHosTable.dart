@@ -46,7 +46,7 @@ class _PostHosTableState extends State<PostHosTable> {
             users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
-              columnSpacing: screenSize.width / 37,
+              columnSpacing: screenSize.width / 35,
               headingRowHeight: 50,
               headingTextStyle: TextStyle(
                   fontSize: 18,
