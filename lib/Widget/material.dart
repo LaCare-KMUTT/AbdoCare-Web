@@ -55,11 +55,12 @@ class CustomMaterial {
     return Colors.green;
   }
 
-  Color getBloodPressureColor(dynamic bloodPressure) {
+  Color getBloodPressureColor(
+      int systolic, int diastolic, dynamic bloodPressure) {
     if (bloodPressure == '-') {
       return Color(0xFFC37447);
     } else {
-      if (bloodPressure < 130) {
+      if (systolic >= 130 || diastolic >= 80) {
         return Colors.red;
       }
     }
@@ -70,7 +71,7 @@ class CustomMaterial {
     if (oxygenRate == '-') {
       return Color(0xFFC37447);
     } else {
-      if (oxygenRate < 95) {
+      if (oxygenRate <= 95) {
         return Colors.red;
       }
     }
@@ -89,7 +90,7 @@ class CustomMaterial {
     if (painScore == '-') {
       return Color(0xFFC37447);
     } else {
-      if (painScore > 7) {
+      if (painScore >= 8) {
         return Colors.red;
       }
     }
