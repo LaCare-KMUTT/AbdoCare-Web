@@ -106,7 +106,7 @@ class MockFirestore {
         .orderBy('operationDate', descending: true)
         .limit(1)
         .get();
-    var patientState = await anSubCollection.docs.first.get('patientState');
+    var patientState = await anSubCollection.docs.first.get('state');
 
     print(creation);
     Map<String, dynamic> mockVitalSignForm = {
