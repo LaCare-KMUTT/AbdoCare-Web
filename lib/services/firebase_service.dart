@@ -312,7 +312,7 @@ class FirebaseService extends IFirebaseService {
       var heartRateToMap;
       var bloodPressureToMap;
       var oxygenRateToMap;
-      var status = '-';
+      var status;
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
           patientState: 'Post-Operation@Hospital',
@@ -336,13 +336,14 @@ class FirebaseService extends IFirebaseService {
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
+
       var map = {
         'hn': hnToMap,
         'name': nameToMap,
         'gender': genderToMap,
         'age': ageToMap,
-        'roomNumber': roomNumberToMap,
-        'bedNumber': bedNumberToMap,
+        'roomNumber': roomNumberToMap ?? '-',
+        'bedNumber': bedNumberToMap ?? '-',
         'temperature': temperatureToMap ?? '-',
         'respirationRate': respirationRateToMap ?? '-',
         'heartRate': heartRateToMap ?? '-',
