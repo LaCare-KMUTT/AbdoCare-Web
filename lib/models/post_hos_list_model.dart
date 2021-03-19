@@ -8,7 +8,7 @@ class PostHosData {
   dynamic temperature;
   dynamic respirationRate;
   dynamic heartRate;
-  dynamic bloodPressure;
+  String bloodPressure;
   dynamic oxygenRate;
   String status;
   Map<String, dynamic> map;
