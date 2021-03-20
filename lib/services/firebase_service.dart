@@ -182,6 +182,20 @@ class FirebaseService extends IFirebaseService {
     return snapshot;
   }
 
+  Future<String> getMedicalTeamSignature() async {
+    var medicalTeamUserId = getUserId();
+    var signature = await _firestore
+        .collection('MedicalTeams')
+        .doc(medicalTeamUserId)
+        .get()
+        .then((value) {
+      var name = value.get('name');
+      var surname = value.get('surname');
+      return "$name $surname";
+    });
+    return signature;
+  }
+
   Future<void> addDataToFormsCollection(
       {@required Map<String, dynamic> data,
       @required String formName,

@@ -14,8 +14,8 @@ class HealthStatusForm extends StatefulWidget {
       : super(key: key);
   final Map<String, dynamic> adlForm;
   final String hn;
-  @override
   final Map<String, dynamic> generalForm;
+  @override
   _HealthStatusFormState createState() => _HealthStatusFormState();
 }
 
@@ -37,85 +37,85 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
   String _lymph = '';
   String _abnormalDetails = '';
 
-  var _generalValue1 = false;
-  var _generalValue2 = false;
-  var _generalValue3 = false;
-  var _generalValue4 = false;
-  var _generalValue5 = false;
-  var _generalValue6 = false;
-  var _generalValue7 = false;
+  bool _generalValue1 = false;
+  bool _generalValue2 = false;
+  bool _generalValue3 = false;
+  bool _generalValue4 = false;
+  bool _generalValue5 = false;
+  bool _generalValue6 = false;
+  bool _generalValue7 = false;
 
-  var _heentValue1 = false;
-  var _heentValue2 = false;
-  var _heentValue3 = false;
-  var _heentValue4 = false;
-  var _heentValue5 = false;
-  var _heentValue6 = false;
-  var _heentValue7 = false;
+  bool _heentValue1 = false;
+  bool _heentValue2 = false;
+  bool _heentValue3 = false;
+  bool _heentValue4 = false;
+  bool _heentValue5 = false;
+  bool _heentValue6 = false;
+  bool _heentValue7 = false;
 
-  var _cvValue1 = false;
-  var _cvValue2 = false;
-  var _cvValue3 = false;
-  var _cvValue4 = false;
-  var _cvValue5 = false;
-  var _cvValue6 = false;
-  var _cvValue7 = false;
+  bool _cvValue1 = false;
+  bool _cvValue2 = false;
+  bool _cvValue3 = false;
+  bool _cvValue4 = false;
+  bool _cvValue5 = false;
+  bool _cvValue6 = false;
+  bool _cvValue7 = false;
 
-  var _pulmonaryValue1 = false;
-  var _pulmonaryValue2 = false;
-  var _pulmonaryValue3 = false;
-  var _pulmonaryValue4 = false;
-  var _pulmonaryValue5 = false;
-  var _pulmonaryValue6 = false;
-  var _pulmonaryValue7 = false;
+  bool _pulmonaryValue1 = false;
+  bool _pulmonaryValue2 = false;
+  bool _pulmonaryValue3 = false;
+  bool _pulmonaryValue4 = false;
+  bool _pulmonaryValue5 = false;
+  bool _pulmonaryValue6 = false;
+  bool _pulmonaryValue7 = false;
 
-  var _gynValue1 = false;
-  var _gynValue2 = false;
-  var _gynValue3 = false;
-  var _gynValue4 = false;
-  var _gynValue5 = false;
-  var _gynValue6 = false;
-  var _gynValue7 = false;
+  bool _gynValue1 = false;
+  bool _gynValue2 = false;
+  bool _gynValue3 = false;
+  bool _gynValue4 = false;
+  bool _gynValue5 = false;
+  bool _gynValue6 = false;
+  bool _gynValue7 = false;
 
-  var _neuroValue1 = false;
-  var _neuroValue2 = false;
-  var _neuroValue3 = false;
-  var _neuroValue4 = false;
-  var _neuroValue5 = false;
-  var _neuroValue6 = false;
-  var _neuroValue7 = false;
+  bool _neuroValue1 = false;
+  bool _neuroValue2 = false;
+  bool _neuroValue3 = false;
+  bool _neuroValue4 = false;
+  bool _neuroValue5 = false;
+  bool _neuroValue6 = false;
+  bool _neuroValue7 = false;
 
-  var _giValue1 = false;
-  var _giValue2 = false;
-  var _giValue3 = false;
-  var _giValue4 = false;
-  var _giValue5 = false;
-  var _giValue6 = false;
-  var _giValue7 = false;
+  bool _giValue1 = false;
+  bool _giValue2 = false;
+  bool _giValue3 = false;
+  bool _giValue4 = false;
+  bool _giValue5 = false;
+  bool _giValue6 = false;
+  bool _giValue7 = false;
 
-  var _msValue1 = false;
-  var _msValue2 = false;
-  var _msValue3 = false;
-  var _msValue4 = false;
-  var _msValue5 = false;
-  var _msValue6 = false;
-  var _msValue7 = false;
+  bool _msValue1 = false;
+  bool _msValue2 = false;
+  bool _msValue3 = false;
+  bool _msValue4 = false;
+  bool _msValue5 = false;
+  bool _msValue6 = false;
+  bool _msValue7 = false;
 
-  var _endocrineValue1 = false;
-  var _endocrineValue2 = false;
-  var _endocrineValue3 = false;
-  var _endocrineValue4 = false;
-  var _endocrineValue5 = false;
-  var _endocrineValue6 = false;
-  var _endocrineValue7 = false;
+  bool _endocrineValue1 = false;
+  bool _endocrineValue2 = false;
+  bool _endocrineValue3 = false;
+  bool _endocrineValue4 = false;
+  bool _endocrineValue5 = false;
+  bool _endocrineValue6 = false;
+  bool _endocrineValue7 = false;
 
-  var _lymphValue1 = false;
-  var _lymphValue2 = false;
-  var _lymphValue3 = false;
-  var _lymphValue4 = false;
-  var _lymphValue5 = false;
-  var _lymphValue6 = false;
-  var _lymphValue7 = false;
+  bool _lymphValue1 = false;
+  bool _lymphValue2 = false;
+  bool _lymphValue3 = false;
+  bool _lymphValue4 = false;
+  bool _lymphValue5 = false;
+  bool _lymphValue6 = false;
+  bool _lymphValue7 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -2186,77 +2186,76 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                                 'Cold intolerance')),
                                                       ),
                                                       Container(
-                                                          child: Row(
-                                                        children: [
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child:
-                                                                CheckboxListTile(
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                              value:
-                                                                  _endocrineValue7,
-                                                              selected:
-                                                                  _endocrineValue7,
-                                                              controlAffinity:
-                                                                  ListTileControlAffinity
-                                                                      .leading,
-                                                              activeColor: Color(
-                                                                  0xFFC37447),
-                                                              onChanged:
-                                                                  (value) {
-                                                                setState(() {
-                                                                  _endocrineValue7 =
-                                                                      value;
-                                                                  if (_endocrineValue7 ==
-                                                                      false) {
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child:
+                                                                  CheckboxListTile(
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                value:
+                                                                    _endocrineValue7,
+                                                                selected:
+                                                                    _endocrineValue7,
+                                                                controlAffinity:
+                                                                    ListTileControlAffinity
+                                                                        .leading,
+                                                                activeColor: Color(
+                                                                    0xFFC37447),
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    _endocrineValue7 =
+                                                                        value;
+                                                                    if (_endocrineValue7 ==
+                                                                        false) {
+                                                                      _endocrine =
+                                                                          '-';
+                                                                    }
+                                                                  });
+                                                                },
+                                                                title: Text(
+                                                                    'Other:'),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              flex: 2,
+                                                              child:
+                                                                  TextFormField(
+                                                                enabled:
+                                                                    _endocrineValue7,
+                                                                validator:
+                                                                    (value) {
+                                                                  return value
+                                                                          .isEmpty
+                                                                      ? 'กรุณากรอก Other'
+                                                                      : null;
+                                                                },
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                        contentPadding: new EdgeInsets.symmetric(
+                                                                            vertical:
+                                                                                8.0,
+                                                                            horizontal:
+                                                                                10.0),
+                                                                        enabledBorder:
+                                                                            OutlineInputBorder(
+                                                                          borderSide: BorderSide(
+                                                                              color: Colors.black26,
+                                                                              width: 1),
+                                                                        ),
+                                                                        labelText:
+                                                                            ' Other'),
+                                                                onSaved: (value) =>
                                                                     _endocrine =
-                                                                        '-';
-                                                                  }
-                                                                });
-                                                              },
-                                                              title: Text(
-                                                                  'Other:'),
+                                                                        value,
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 2,
-                                                            child:
-                                                                TextFormField(
-                                                              enabled:
-                                                                  _endocrineValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                      contentPadding: new EdgeInsets
-                                                                              .symmetric(
-                                                                          vertical:
-                                                                              8.0,
-                                                                          horizontal:
-                                                                              10.0),
-                                                                      enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: BorderSide(
-                                                                            color:
-                                                                                Colors.black26,
-                                                                            width: 1),
-                                                                      ),
-                                                                      labelText:
-                                                                          ' Other'),
-                                                              onSaved: (value) =>
-                                                                  _endocrine =
-                                                                      value,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ))
+                                                          ],
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
                                                 ),
@@ -2283,10 +2282,11 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                     children: [
                                                       Container(
                                                         child: Align(
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            child: Text(
-                                                                'HEME/LYMPH')),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                              'HEME/LYMPH'),
+                                                        ),
                                                       ),
                                                       Container(
                                                         child: CheckboxListTile(
@@ -2546,14 +2546,27 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         ],
                                       ),
                                       Row(
-                                        children: [
+                                        children: <Widget>[
                                           Expanded(
                                             flex: 2,
                                             child: Padding(
                                               padding: EdgeInsets.all(
                                                   screenSize.height / 70),
                                               child: Container(
-                                                child: Text('R.N. Signature:'),
+                                                child: FutureBuilder<String>(
+                                                    future: _firebaseService
+                                                        .getMedicalTeamSignature(),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      if (!snapshot.hasData) {
+                                                        return CircularProgressIndicator(
+                                                          strokeWidth: 4,
+                                                        );
+                                                      } else {
+                                                        return Text(
+                                                            'R.N. Signature: ${snapshot.data}');
+                                                      }
+                                                    }),
                                               ),
                                             ),
                                           )
@@ -2593,7 +2606,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         'ยืนยัน',
                                         style: TextStyle(fontSize: 18),
                                       ),
-                                      onPressed: () {
+                                      onPressed: () async {
                                         Map<String, dynamic> healthStatusForm =
                                             {
                                           'generalNormal': _generalValue1,
@@ -2686,7 +2699,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ...widget.adlForm,
                                           ...healthStatusForm,
                                         };
-                                        _firebaseService
+                                        await _firebaseService
                                             .addDataToFormsCollection(
                                                 hn: widget.hn,
                                                 formName: 'Pre-visit',
