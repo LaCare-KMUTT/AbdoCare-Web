@@ -8,8 +8,9 @@ import '../../appbar.dart';
 import '../../sidebar.dart';
 
 class ADLForm extends StatefulWidget {
-  ADLForm({Key key, this.generalForm}) : super(key: key);
+  ADLForm({Key key, this.generalForm, this.hn}) : super(key: key);
   final Map<String, dynamic> generalForm;
+  final String hn;
 
   @override
   _ADLFormState createState() => _ADLFormState();
@@ -1388,6 +1389,7 @@ class _ADLFormState extends State<ADLForm> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   HealthStatusForm(
+                                                      hn: widget.hn,
                                                       generalForm:
                                                           widget.generalForm,
                                                       adlForm: formDataToDB2),

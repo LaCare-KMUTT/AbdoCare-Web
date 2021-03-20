@@ -2629,6 +2629,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => ADLForm(
+                                                    hn: _hn,
                                                     generalForm: formDataToDB),
                                               ));
                                         }),

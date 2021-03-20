@@ -10,10 +10,12 @@ import '../../material.dart';
 import '../../sidebar.dart';
 
 class HealthStatusForm extends StatefulWidget {
-  HealthStatusForm({Key key, this.generalForm, this.adlForm}) : super(key: key);
+  HealthStatusForm({Key key, this.generalForm, this.adlForm, this.hn})
+      : super(key: key);
   final Map<String, dynamic> adlForm;
-  final Map<String, dynamic> generalForm;
+  final String hn;
   @override
+  final Map<String, dynamic> generalForm;
   _HealthStatusFormState createState() => _HealthStatusFormState();
 }
 
@@ -2679,13 +2681,21 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           'abnormalDetails': _abnormalDetails
                                         };
 
-                                        //**Please help create add form to db function**
-                                        // _firebaseService.addDataToFormsCollection(
-                                        // formName: 'Pre-visit', data: widget.generalForm);
-                                        //               _firebaseService.addDataToFormsCollection(
-                                        // formName: 'Pre-visit', data: widget.adlForm);
-                                        // _firebaseService.addDataToFormsCollection(
-                                        // formName: 'Pre-visit', data: healthStatusForm);
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                hn: widget.hn,
+                                                formName: 'Pre-visit',
+                                                data: widget.generalForm);
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                hn: widget.hn,
+                                                formName: 'Pre-visit',
+                                                data: widget.adlForm);
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                hn: widget.hn,
+                                                formName: 'Pre-visit',
+                                                data: healthStatusForm);
 
                                         Navigator.push(
                                             context,

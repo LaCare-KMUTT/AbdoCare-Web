@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,8 +13,6 @@ class FirebaseService extends IFirebaseService {
   final _auth = FirebaseAuth.instance;
   final ICalculationService _calculationService =
       locator<ICalculationService>();
-  final CloudFunctionService _cloudFunctionService =
-      locator<CloudFunctionService>();
 
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
@@ -183,6 +180,56 @@ class FirebaseService extends IFirebaseService {
         .first
         .then((value) => value.docs.first.data());
     return snapshot;
+  }
+
+  Future<void> addDataToFormsCollection(
+      {@required Map<String, dynamic> data,
+      @required String formName,
+      @required String hn}) async {
+    var userId = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) => value.docs.first.id);
+    var anSubCollection = await getLatestAnSubCollection(docId: userId);
+    var patientState = anSubCollection['state'];
+    var an = anSubCollection['an'];
+    var creator = getUserId();
+    var creation = _calculationService.formatDate(date: DateTime.now());
+    Map<String, dynamic> dataToAdd = {
+      'an': an,
+      'hn': hn,
+      'creation': creation,
+      'formName': formName,
+      'creator': creator,
+      'patientState': patientState,
+      'formData': data,
+    };
+
+    print('Here is data to add $dataToAdd');
+    var forms = await this
+        .addDocumentToCollection(collection: 'Forms', docData: dataToAdd);
+    var formsId = forms.id;
+    await _firestore
+        .collection('Users')
+        .doc(userId)
+        .collection('an')
+        .doc(an)
+        .update({
+          'forms': FieldValue.arrayUnion([
+            {
+              'formId': formsId,
+              'formName': formName,
+              'formCreation': creation,
+            }
+          ]),
+        })
+        .then(
+            (value) => print('success adding forms things to an subCollection'))
+        .catchError((onError) {
+          print('$onError on adding forms things to an subCollection');
+        });
+    return formsId;
   }
 
   Future<void> addSubCollection({
