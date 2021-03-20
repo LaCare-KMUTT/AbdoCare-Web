@@ -2681,22 +2681,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           'abnormalDetails': _abnormalDetails
                                         };
 
+                                        Map<String, dynamic> mapToDb = {
+                                          ...widget.generalForm,
+                                          ...widget.adlForm,
+                                          ...healthStatusForm,
+                                        };
                                         _firebaseService
                                             .addDataToFormsCollection(
                                                 hn: widget.hn,
                                                 formName: 'Pre-visit',
-                                                data: widget.generalForm);
-                                        _firebaseService
-                                            .addDataToFormsCollection(
-                                                hn: widget.hn,
-                                                formName: 'Pre-visit',
-                                                data: widget.adlForm);
-                                        _firebaseService
-                                            .addDataToFormsCollection(
-                                                hn: widget.hn,
-                                                formName: 'Pre-visit',
-                                                data: healthStatusForm);
-
+                                                data: mapToDb);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
