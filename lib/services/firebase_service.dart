@@ -208,7 +208,7 @@ class FirebaseService extends IFirebaseService {
     var anSubCollection = await getLatestAnSubCollection(docId: userId);
     var patientState = anSubCollection['state'];
     var an = anSubCollection['an'];
-    var creator = getUserId();
+    var creator = await getMedicalTeamSignature();
     var creation = _calculationService.formatDate(date: DateTime.now());
     Map<String, dynamic> dataToAdd = {
       'an': an,
