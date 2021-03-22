@@ -3,14 +3,13 @@ import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart
 import 'package:AbdoCare_Web/services/service_locator.dart';
 
 class PostHosViewModel {
-  PostHosViewModel() {
-    // _initialize();
-  }
+  PostHosViewModel();
   final _firebaseService = locator<IFirebaseService>();
   List<PostHosData> userList = [];
 
   Future<void> _initialize() async {
     var postHosList = await _firebaseService.getPostHosList();
+    print('initList');
     if (postHosList != null) {
       postHosList.forEach((mapData) {
         userList.add(PostHosData(map: mapData));
@@ -19,8 +18,7 @@ class PostHosViewModel {
   }
 
   Future<List<PostHosData>> getUsers() async {
-    userList.clear();
-    await _initialize();
+    if (userList.isEmpty) await _initialize();
     return userList;
   }
 
