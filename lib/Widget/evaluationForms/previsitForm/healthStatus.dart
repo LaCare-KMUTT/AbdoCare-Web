@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/adlForm.dart';
 import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 
@@ -116,6 +117,108 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
   bool _lymphValue5 = false;
   bool _lymphValue6 = false;
   bool _lymphValue7 = false;
+
+  void healthStatusData(int page) {
+    Map<String, dynamic> healthStatusForm = {
+      'generalNormal': _generalValue1,
+      'generalAbnormalWeightLoss': _generalValue2,
+      'generalAbnormalWeightGain': _generalValue3,
+      'generalFever': _generalValue4,
+      'generalFatigue': _generalValue5,
+      'generalChillsSweats': _generalValue6,
+      'generalOther': _generalValue7,
+      'generalOtherDetail': _general,
+      'heentValue1': _heentValue1,
+      'heentValue2': _heentValue2,
+      'heentValue3': _heentValue3,
+      'heentValue4': _heentValue4,
+      'heentValue5': _heentValue5,
+      'heentValue6': _heentValue6,
+      'heentValue7': _heentValue7,
+      'heentOtherDetail': _heent,
+      'cvValue1': _cvValue1,
+      'cvValue2': _cvValue2,
+      'cvValue3': _cvValue3,
+      'cvValue4': _cvValue4,
+      'cvValue5': _cvValue5,
+      'cvValue6': _cvValue6,
+      'cvValue7': _cvValue7,
+      'cvOtherDetail': _cv,
+      'pulmonaryValue1': _pulmonaryValue1,
+      'pulmonaryValue2': _pulmonaryValue2,
+      'pulmonaryValue3': _pulmonaryValue3,
+      'pulmonaryValue4': _pulmonaryValue4,
+      'pulmonaryValue5': _pulmonaryValue5,
+      'pulmonaryValue6': _pulmonaryValue6,
+      'pulmonaryValue7': _pulmonaryValue7,
+      'pulmonaryOtherDetail': _pulmonary,
+      '_gynValue1': _gynValue1,
+      '_gynValue2': _gynValue2,
+      '_gynValue3': _gynValue3,
+      '_gynValue4': _gynValue4,
+      '_gynValue5': _gynValue5,
+      '_gynValue6': _gynValue6,
+      '_gynValue7': _gynValue7,
+      'gynOtherDetail': _gyn,
+      '_neuroValue1': _neuroValue1,
+      '_neuroValue2': _neuroValue2,
+      '_neuroValue3': _neuroValue3,
+      '_neuroValue4': _neuroValue4,
+      '_neuroValue5': _neuroValue5,
+      '_neuroValue6': _neuroValue6,
+      '_neuroValue7': _neuroValue7,
+      '_neuroOtherDetail': _neuro,
+      '_giValue1': _giValue1,
+      '_giValue2': _giValue2,
+      '_giValue3': _giValue3,
+      '_giValue4': _giValue4,
+      '_giValue5': _giValue5,
+      '_giValue6': _giValue6,
+      '_giValue7': _giValue7,
+      'giOtherDetail': _gi,
+      'msValue1': _msValue1,
+      'msValue2': _msValue2,
+      'msValue3': _msValue3,
+      'msValue4': _msValue4,
+      'msValue5': _msValue5,
+      'msValue6': _msValue6,
+      'msValue7': _msValue7,
+      'msOtherDetail': _ms,
+      'endocrineValue1': _endocrineValue1,
+      'endocrineValue2': _endocrineValue2,
+      'endocrineValue3': _endocrineValue3,
+      'endocrineValue4': _endocrineValue4,
+      'endocrineValue5': _endocrineValue5,
+      'endocrineValue6': _endocrineValue6,
+      'endocrineValue7': _endocrineValue7,
+      'endocrineOtherDetail': _endocrine,
+      'lymphValue1': _lymphValue1,
+      'lymphValue2': _lymphValue2,
+      'lymphValue3': _lymphValue3,
+      'lymphValue4': _lymphValue4,
+      'lymphValue5': _lymphValue5,
+      'lymphValue6': _lymphValue6,
+      'lymphValue7': _lymphValue7,
+      'lymphOtherDetail': _lymph,
+      'abnormalDetails': _abnormalDetails
+    };
+    if (page == 0) {
+      //back to previous page
+    } else {
+      Map<String, dynamic> mapToDb = {
+        ...widget.generalForm,
+        ...widget.adlForm,
+        ...healthStatusForm,
+      };
+      _firebaseService.addDataToFormsCollection(
+          hn: widget.hn, formName: 'Pre-visit', data: mapToDb);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PreDashboardPage(),
+          ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -2495,6 +2598,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ),
                                         ],
                                       ),
+                                      //abnormalDetails
                                       Row(
                                         children: [
                                           Padding(
@@ -2539,7 +2643,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                     labelText:
                                                         ' Details for Abnormal'),
                                                 onSaved: (value) =>
-                                                    _heent = value,
+                                                    _abnormalDetails = value,
                                               ),
                                             ),
                                           ),
@@ -2588,137 +2692,58 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20, bottom: 15),
-                                  child: Container(
-                                    width: 100,
-                                    margin: EdgeInsets.all(20),
-                                    child: RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(7.0),
-                                      ),
-                                      padding: EdgeInsets.all(15),
-                                      textColor: Colors.white,
-                                      color: Color(0xFF2ED47A),
-                                      child: Text(
-                                        'ยืนยัน',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      onPressed: () async {
-                                        Map<String, dynamic> healthStatusForm =
-                                            {
-                                          'generalNormal': _generalValue1,
-                                          'generalAbnormalWeightLoss':
-                                              _generalValue2,
-                                          'generalAbnormalWeightGain':
-                                              _generalValue3,
-                                          'generalFever': _generalValue4,
-                                          'generalFatigue': _generalValue5,
-                                          'generalChillsSweats': _generalValue6,
-                                          'generalOther': _generalValue7,
-                                          'generalOtherDetail': _general,
-                                          'heentValue1': _heentValue1,
-                                          'heentValue2': _heentValue2,
-                                          'heentValue3': _heentValue3,
-                                          'heentValue4': _heentValue4,
-                                          'heentValue5': _heentValue5,
-                                          'heentValue6': _heentValue6,
-                                          'heentValue7': _heentValue7,
-                                          'heentOtherDetail': _heent,
-                                          'cvValue1': _cvValue1,
-                                          'cvValue2': _cvValue2,
-                                          'cvValue3': _cvValue3,
-                                          'cvValue4': _cvValue4,
-                                          'cvValue5': _cvValue5,
-                                          'cvValue6': _cvValue6,
-                                          'cvValue7': _cvValue7,
-                                          'cvOtherDetail': _cv,
-                                          'pulmonaryValue1': _pulmonaryValue1,
-                                          'pulmonaryValue2': _pulmonaryValue2,
-                                          'pulmonaryValue3': _pulmonaryValue3,
-                                          'pulmonaryValue4': _pulmonaryValue4,
-                                          'pulmonaryValue5': _pulmonaryValue5,
-                                          'pulmonaryValue6': _pulmonaryValue6,
-                                          'pulmonaryValue7': _pulmonaryValue7,
-                                          'pulmonaryOtherDetail': _pulmonary,
-                                          '_gynValue1': _gynValue1,
-                                          '_gynValue2': _gynValue2,
-                                          '_gynValue3': _gynValue3,
-                                          '_gynValue4': _gynValue4,
-                                          '_gynValue5': _gynValue5,
-                                          '_gynValue6': _gynValue6,
-                                          '_gynValue7': _gynValue7,
-                                          'gynOtherDetail': _gyn,
-                                          '_neuroValue1': _neuroValue1,
-                                          '_neuroValue2': _neuroValue2,
-                                          '_neuroValue3': _neuroValue3,
-                                          '_neuroValue4': _neuroValue4,
-                                          '_neuroValue5': _neuroValue5,
-                                          '_neuroValue6': _neuroValue6,
-                                          '_neuroValue7': _neuroValue7,
-                                          '_neuroOtherDetail': _neuro,
-                                          '_giValue1': _giValue1,
-                                          '_giValue2': _giValue2,
-                                          '_giValue3': _giValue3,
-                                          '_giValue4': _giValue4,
-                                          '_giValue5': _giValue5,
-                                          '_giValue6': _giValue6,
-                                          '_giValue7': _giValue7,
-                                          'giOtherDetail': _gi,
-                                          'msValue1': _msValue1,
-                                          'msValue2': _msValue2,
-                                          'msValue3': _msValue3,
-                                          'msValue4': _msValue4,
-                                          'msValue5': _msValue5,
-                                          'msValue6': _msValue6,
-                                          'msValue7': _msValue7,
-                                          'msOtherDetail': _ms,
-                                          'endocrineValue1': _endocrineValue1,
-                                          'endocrineValue2': _endocrineValue2,
-                                          'endocrineValue3': _endocrineValue3,
-                                          'endocrineValue4': _endocrineValue4,
-                                          'endocrineValue5': _endocrineValue5,
-                                          'endocrineValue6': _endocrineValue6,
-                                          'endocrineValue7': _endocrineValue7,
-                                          'endocrineOtherDetail': _endocrine,
-                                          'lymphValue1': _lymphValue1,
-                                          'lymphValue2': _lymphValue2,
-                                          'lymphValue3': _lymphValue3,
-                                          'lymphValue4': _lymphValue4,
-                                          'lymphValue5': _lymphValue5,
-                                          'lymphValue6': _lymphValue6,
-                                          'lymphValue7': _lymphValue7,
-                                          'lymphOtherDetail': _lymph,
-                                          'abnormalDetails': _abnormalDetails
-                                        };
-
-                                        Map<String, dynamic> mapToDb = {
-                                          ...widget.generalForm,
-                                          ...widget.adlForm,
-                                          ...healthStatusForm,
-                                        };
-                                        await _firebaseService
-                                            .addDataToFormsCollection(
-                                                hn: widget.hn,
-                                                formName: 'Pre-visit',
-                                                data: mapToDb);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PreDashboardPage(),
-                                            ));
-                                      },
-                                    ),
-                                  ),
-                                ),
                               ],
                             ),
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 15),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 100,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                            ),
+                            padding: EdgeInsets.all(15),
+                            textColor: Colors.black,
+                            color: Color(0xFFEBEBEB),
+                            child: Text(
+                              'ย้อนกลับ',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            onPressed: () {
+                              healthStatusData(0);
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: 100,
+                          margin: EdgeInsets.all(20),
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                            ),
+                            padding: EdgeInsets.all(15),
+                            textColor: Colors.white,
+                            color: Color(0xFF2ED47A),
+                            child: Text(
+                              'ยืนยัน',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            onPressed: () {
+                              healthStatusData(1);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

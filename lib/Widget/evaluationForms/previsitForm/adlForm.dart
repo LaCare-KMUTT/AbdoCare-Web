@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm.dart';
 import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatus.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,12 @@ import '../../appbar.dart';
 import '../../sidebar.dart';
 
 class ADLForm extends StatefulWidget {
-  ADLForm({Key key, this.generalForm, this.hn}) : super(key: key);
+  ADLForm(
+      {Key key, this.generalForm, this.adlForm, this.healthStatusForm, this.hn})
+      : super(key: key);
   final Map<String, dynamic> generalForm;
+  final Map<String, dynamic> adlForm;
+  final Map<String, dynamic> healthStatusForm;
   final String hn;
 
   @override
@@ -30,6 +35,7 @@ class _ADLFormState extends State<ADLForm> {
   String _bowels = '';
   String _bladder = '';
 
+  int bladderIsSelected;
   int totalscore = 0;
   int score1,
       score2,
@@ -52,6 +58,45 @@ class _ADLFormState extends State<ADLForm> {
   int bathing;
   int bowels;
   int bladder;
+  void adlData(int page) {
+    totalscore = score1 +
+        score2 +
+        score3 +
+        score4 +
+        score5 +
+        score6 +
+        score7 +
+        score8 +
+        score9 +
+        score10;
+
+    Map<String, dynamic> formDataToDB2 = {
+      'Feeding': score1,
+      'Grooming': score2,
+      'Tranfer': score3,
+      'Toilet': score4,
+      'Mobility': score5,
+      'Dressing': score6,
+      'Stairs': score7,
+      'Bathing': score8,
+      'Bowels': score9,
+      'Bladder': score10,
+      'TotalscoreADL': totalscore,
+    };
+    if (page == 0) {
+      //back to previous page
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HealthStatusForm(
+                hn: widget.hn,
+                generalForm: widget.generalForm,
+                adlForm: formDataToDB2),
+          ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -359,14 +404,14 @@ class _ADLFormState extends State<ADLForm> {
                                                         title: Text(
                                                             '0 ไม่สามารถนั่งได้ (นั่งแล้วจะล้มเสมอ) หรือต้องใช้คนสองคนช่วยกันยกขึ้น'),
                                                         value: 0,
-                                                        groupValue: grooming,
+                                                        groupValue: transfer,
                                                         onChanged: (newValue) {
                                                           setState(() {
-                                                            grooming = newValue;
+                                                            transfer = newValue;
                                                             score3 = 0;
-                                                            _grooming =
+                                                            _transfer =
                                                                 '0 ต้องการความช่วยเหลือ';
-                                                            print(_grooming);
+                                                            print(_transfer);
                                                           });
                                                         },
                                                       ),
@@ -1340,69 +1385,58 @@ class _ADLFormState extends State<ADLForm> {
                                     ),
                                   ],
                                 )),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20, bottom: 15),
-                                  child: Container(
-                                    width: 100,
-                                    margin: EdgeInsets.all(20),
-                                    child: RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(7.0),
-                                      ),
-                                      padding: EdgeInsets.all(15),
-                                      textColor: Colors.white,
-                                      color: Color(0xFF2ED47A),
-                                      child: Text(
-                                        'ถัดไป',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      onPressed: () {
-                                        totalscore = score1 +
-                                            score2 +
-                                            score3 +
-                                            score4 +
-                                            score5 +
-                                            score6 +
-                                            score7 +
-                                            score8 +
-                                            score9 +
-                                            score10;
-
-                                        Map<String, dynamic> formDataToDB2 = {
-                                          'Feeding': score1,
-                                          'Grooming': score2,
-                                          'Tranfer': score3,
-                                          'Toilet': score4,
-                                          'Mobility': score5,
-                                          'Dressing': score6,
-                                          'Stairs': score7,
-                                          'Bathing': score8,
-                                          'Bowels': score9,
-                                          'Bladder': score10,
-                                          'TotalscoreADL': totalscore,
-                                        };
-
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HealthStatusForm(
-                                                      hn: widget.hn,
-                                                      generalForm:
-                                                          widget.generalForm,
-                                                      adlForm: formDataToDB2),
-                                            ));
-                                      },
-                                    ),
-                                  ),
-                                ),
                               ],
                             ),
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 15),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 100,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                            ),
+                            padding: EdgeInsets.all(15),
+                            textColor: Colors.black,
+                            color: Color(0xFFEBEBEB),
+                            child: Text(
+                              'ย้อนกลับ',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            onPressed: () {
+                              adlData(0);
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: 100,
+                          margin: EdgeInsets.all(20),
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                            ),
+                            padding: EdgeInsets.all(15),
+                            textColor: Colors.white,
+                            color: Color(0xFF2ED47A),
+                            child: Text(
+                              'ถัดไป',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            onPressed: () {
+                              adlData(1);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
