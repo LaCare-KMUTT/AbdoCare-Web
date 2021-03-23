@@ -2657,10 +2657,8 @@ class _GeneralFormState extends State<GeneralForm> {
                             padding: EdgeInsets.all(15),
                             textColor: Colors.white,
                             color: Color(0xFF2ED47A),
-                            child: Text(
-                              'ถัดไป',
-                              style: TextStyle(fontSize: 18),
-                            ),
+                            child:
+                                Text('ถัดไป', style: TextStyle(fontSize: 18)),
                             onPressed: () {
                               Map<String, dynamic> formDataToDB = {
                                 'hn': _hn,
