@@ -12,7 +12,8 @@ import '../../appbar.dart';
 import '../../sidebar.dart';
 
 class GeneralForm extends StatefulWidget {
-  GeneralForm({Key key}) : super(key: key);
+  final String hn;
+  GeneralForm({Key key, @required this.hn}) : super(key: key);
   @override
   _GeneralFormState createState() => _GeneralFormState();
 }
@@ -2693,11 +2694,14 @@ class _GeneralFormState extends State<GeneralForm> {
                                     _sleepDisorderDurationAvg,
                               };
                               // if (_formKey.currentState.validate()) {
+                              print('hn in generalForm = ${widget.hn}');
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ADLForm(
-                                        hn: _hn, generalForm: formDataToDB),
+                                        hn: widget.hn,
+                                        generalForm: formDataToDB),
                                   ));
                               print('This is next button');
                               //}

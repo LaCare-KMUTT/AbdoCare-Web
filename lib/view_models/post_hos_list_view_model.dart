@@ -19,6 +19,9 @@ class PostHosViewModel {
 
   Future<List<PostHosData>> getUsers() async {
     if (userList.isEmpty) await _initialize();
+    userList.forEach((element) {
+      print(element.name);
+    });
     return userList;
   }
 

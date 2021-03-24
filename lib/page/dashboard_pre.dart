@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 import '../Widget/appbar.dart';
@@ -14,12 +16,16 @@ class PreDashboardPage extends StatefulWidget {
 class _PreDashboardPageState extends State<PreDashboardPage> {
   @override
   Widget build(BuildContext context) {
+    final hn = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: BaseAppBar(
         title: Text('สรุปผลประจำวัน'),
         appBar: AppBar(),
       ),
-      body: PreDashboardDetail(),
+      body: PreDashboardDetail(
+        hn: hn,
+      ),
       drawer: SideBar(),
     );
   }

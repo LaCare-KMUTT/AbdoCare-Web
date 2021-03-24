@@ -9,7 +9,8 @@ import '../../../page/dashboard_postHos.dart';
 import '../../../page/dashboard_pre.dart';
 
 class PreDashboardDetail extends StatefulWidget {
-  PreDashboardDetail({Key key}) : super(key: key);
+  final String hn;
+  PreDashboardDetail({Key key, @required this.hn}) : super(key: key);
   @override
   _PreDashboardDetailState createState() => _PreDashboardDetailState();
 }
@@ -53,7 +54,9 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => GeneralForm(),
+                            builder: (context) => GeneralForm(
+                              hn: widget.hn,
+                            ),
                           ));
                     },
                   ),
