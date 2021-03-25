@@ -11,16 +11,6 @@ class ShowDashboard extends StatefulWidget {
 }
 
 class _ShowDashboardState extends State<ShowDashboard> {
-  final List<PointSeries> data2 = [
-    PointSeries(day: 0, point: 10),
-    PointSeries(day: 1, point: 8),
-    PointSeries(day: 2, point: 7),
-    PointSeries(day: 3, point: 8),
-    PointSeries(day: 4, point: 5),
-    PointSeries(day: 5, point: 4),
-    PointSeries(day: 6, point: 2),
-  ];
-
   final List<SubscriberSeries> data = [
     SubscriberSeries(
       topic: "การรับประทานอาหาร",
@@ -141,7 +131,7 @@ class _ShowDashboardState extends State<ShowDashboard> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
-                      child: LineChart(data2: data2),
+                      child: LineChart(),
                     ),
                   ],
                 ),

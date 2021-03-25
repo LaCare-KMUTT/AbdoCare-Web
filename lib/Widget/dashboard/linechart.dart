@@ -1,73 +1,51 @@
 import 'package:flutter/cupertino.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 
-class LineChart extends StatelessWidget {
-  final List<PointSeries> data2;
-  LineChart({@required this.data2});
-  final customTickFormatter = charts.BasicNumericTickFormatterSpec((value) {
-    if (value == 0) {
-      return "19 ก.ย";
-    } else if (value == 1) {
-      return "20 ก.ย";
-    } else if (value == 2) {
-      return "21 ก.ย";
-    } else if (value == 3) {
-      return "22 ก.ย";
-    } else if (value == 4) {
-      return "23 ก.ย";
-    } else if (value == 5) {
-      return "24 ก.ย";
-    } else if (value == 6) {
-      return "25 ก.ย";
-    }
-  });
+class LineChart extends StatefulWidget {
+  @override
+  _LineChartState createState() => _LineChartState();
+}
+
+class _LineChartState extends State<LineChart> {
+  List<_SalesData> data = [
+    _SalesData('วันที่ 1', 8),
+    _SalesData('วันที่ 2', 7),
+    _SalesData('วันที่ 3', 7),
+    _SalesData('วันที่ 4', 5),
+    _SalesData('วันที่ 5', 3),
+    _SalesData('วันที่ 6', 3),
+    _SalesData('วันที่ 7', 3)
+  ];
 
   @override
   Widget build(BuildContext context) {
-    var serieslist = <charts.Series<PointSeries, int>>[
-      charts.Series(
-        id: "Pain",
-        data: data2,
-        domainFn: (PointSeries serieslist, _) => serieslist.day,
-        measureFn: (PointSeries serieslist, _) => serieslist.point,
-      ),
-    ];
     return Container(
       height: 400,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Column(
-            children: [
-              Expanded(
-                child: charts.LineChart(
-                  serieslist,
-                  animate: false,
-                  primaryMeasureAxis: charts.NumericAxisSpec(
-                    tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                        desiredTickCount: 6),
-                  ),
-                  domainAxis: charts.NumericAxisSpec(
-                    tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                        desiredTickCount: 7),
-                    tickFormatterSpec: customTickFormatter,
-                  ),
-                ),
-              ),
-            ],
-          ),
+      child: Column(children: [
+        Expanded(
+          child: SfCartesianChart(
+              primaryXAxis: CategoryAxis(),
+              legend: Legend(isVisible: false),
+              tooltipBehavior: TooltipBehavior(enable: true),
+              series: <ChartSeries<_SalesData, String>>[
+                LineSeries<_SalesData, String>(
+                    dataSource: data,
+                    xValueMapper: (sales, _) => sales.year,
+                    yValueMapper: (sales, _) => sales.sales,
+                    name: 'ความเจ็บปวด',
+                    dataLabelSettings: DataLabelSettings(isVisible: true))
+              ]),
         ),
-      ),
+      ]),
     );
   }
 }
 
-class PointSeries {
-  final int day;
-  final int point;
-  PointSeries({
-    @required this.day,
-    @required this.point,
-  });
+class _SalesData {
+  _SalesData(this.year, this.sales);
+
+  final String year;
+  final double sales;
 }
