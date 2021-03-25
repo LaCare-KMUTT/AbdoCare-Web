@@ -192,6 +192,8 @@ class FirebaseService extends IFirebaseService {
       var name = value.get('name');
       var surname = value.get('surname');
       return "$name $surname";
+    }).catchError((onError) {
+      print('$onError : Cannot find medical Signature');
     });
     return signature;
   }
@@ -200,14 +202,20 @@ class FirebaseService extends IFirebaseService {
       {@required Map<String, dynamic> data,
       @required String formName,
       @required String hn}) async {
+    print('hn = $hn');
     var userId = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
         .get()
-        .then((value) => value.docs.first.id);
+        .then((value) => value.docs.first.id)
+        .catchError((onError) {
+      print('$onError Cannot find user when add Data to forms Collection');
+    });
     var anSubCollection = await getLatestAnSubCollection(docId: userId);
+
     var patientState = anSubCollection['state'];
     var an = anSubCollection['an'];
+    var anSubCollectionDocId = anSubCollection['id'];
     var creator = await getMedicalTeamSignature();
     var creation = _calculationService.formatDate(date: DateTime.now());
     Map<String, dynamic> dataToAdd = {
@@ -223,27 +231,29 @@ class FirebaseService extends IFirebaseService {
     print('Here is data to add $dataToAdd');
     var forms = await this
         .addDocumentToCollection(collection: 'Forms', docData: dataToAdd);
-    var formsId = forms.id;
+
+    print('\n\n When Adding userId =  $userId');
+    var formId = forms.id;
     await _firestore
         .collection('Users')
         .doc(userId)
         .collection('an')
-        .doc(an)
-        .update({
+        .doc(anSubCollectionDocId)
+        .set({
           'forms': FieldValue.arrayUnion([
             {
-              'formId': formsId,
+              'formId': formId,
               'formName': formName,
               'formCreation': creation,
             }
           ]),
-        })
+        }, SetOptions(merge: true))
         .then(
             (value) => print('success adding forms things to an subCollection'))
         .catchError((onError) {
           print('$onError on adding forms things to an subCollection');
         });
-    return formsId;
+    return formId;
   }
 
   Future<void> addSubCollection({
