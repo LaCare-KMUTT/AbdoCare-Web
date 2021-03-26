@@ -9,43 +9,85 @@ class LineChart extends StatefulWidget {
 }
 
 class _LineChartState extends State<LineChart> {
-  List<_SalesData> data = [
-    _SalesData('วันที่ 1', 8),
-    _SalesData('วันที่ 2', 7),
-    _SalesData('วันที่ 3', 7),
-    _SalesData('วันที่ 4', 5),
-    _SalesData('วันที่ 5', 3),
-    _SalesData('วันที่ 6', 3),
-    _SalesData('วันที่ 7', 3)
+  List<_PainData> data = [
+    _PainData('10/03/64\n02.00น', 9),
+    _PainData('10/03/64\n06.00น', 9),
+    _PainData('10/03/64\n10.00น', 8),
+    _PainData('10/03/64\n14.00น', 8),
+    _PainData('10/03/64\n18.00น', 8),
+    _PainData('10/03/64\n22.00น', 8),
+    _PainData('11/03/64\n02.00น', 7),
+    _PainData('11/03/64\n06.00น', 9),
+    _PainData('11/03/64\n10.00น', 9),
+    _PainData('11/03/64\n14.00น', 7),
+    _PainData('11/03/64\n18.00น', 6),
+    _PainData('11/03/64\n22.00น', 6),
+    _PainData('12/03/64\n02.00น', 6),
+    _PainData('12/03/64\n06.00น', 6),
+    _PainData('12/03/64\n10.00น', 7),
+    _PainData('12/03/64\n14.00น', 6),
+    _PainData('12/03/64\n18.00น', 5),
+    _PainData('12/03/64\n22.00น', 5),
+    _PainData('13/03/64\n02.00น', 5),
+    _PainData('13/03/64\n06.00น', 4),
+    _PainData('13/03/64\n10.00น', 4),
+    _PainData('13/03/64\n14.00น', 4),
+    _PainData('13/03/64\n18.00น', 4),
+    _PainData('13/03/64\n22.00น', 4),
+    _PainData('14/03/64\n02.00น', 5),
+    _PainData('14/03/64\n06.00น', 4),
+    _PainData('14/03/64\n10.00น', 4),
+    _PainData('14/03/64\n14.00น', 4),
+    _PainData('14/03/64\n18.00น', 4),
+    _PainData('14/03/64\n22.00น', 4),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 400,
-      child: Column(children: [
-        Expanded(
-          child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              legend: Legend(isVisible: false),
-              tooltipBehavior: TooltipBehavior(enable: true),
-              series: <ChartSeries<_SalesData, String>>[
-                LineSeries<_SalesData, String>(
-                    dataSource: data,
-                    xValueMapper: (sales, _) => sales.year,
-                    yValueMapper: (sales, _) => sales.sales,
-                    name: 'ความเจ็บปวด',
-                    dataLabelSettings: DataLabelSettings(isVisible: true))
-              ]),
+    var screenSize = MediaQuery.of(context).size;
+
+    return LayoutBuilder(builder: (context, constraints) {
+      return SafeArea(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Container(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                  minWidth: constraints.minWidth,
+                  minHeight: constraints.minHeight),
+              child: IntrinsicWidth(
+                child: Container(
+                  height: screenSize.height / 2,
+                  width: screenSize.width * 2,
+                  child: Column(children: [
+                    SfCartesianChart(
+                        primaryXAxis: CategoryAxis(),
+                        legend: Legend(isVisible: false),
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        series: <ChartSeries<_PainData, String>>[
+                          LineSeries<_PainData, String>(
+                              dataSource: data,
+                              xValueMapper: (pain, _) => pain.painscore,
+                              yValueMapper: (pain, _) => pain.day,
+                              name: 'Pain score',
+                              color: Colors.red,
+                              dataLabelSettings:
+                                  DataLabelSettings(isVisible: true))
+                        ]),
+                  ]),
+                ),
+              ),
+            ),
+          ),
         ),
-      ]),
-    );
+      );
+    });
   }
 }
 
-class _SalesData {
-  _SalesData(this.year, this.sales);
+class _PainData {
+  _PainData(this.painscore, this.day);
 
-  final String year;
-  final double sales;
+  final String painscore;
+  final double day;
 }

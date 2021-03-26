@@ -130,7 +130,7 @@ class _ShowDashboardState extends State<ShowDashboard> {
                               fontSize: 18, color: Color(0xFFC37447))),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: LineChart(),
                     ),
                   ],
