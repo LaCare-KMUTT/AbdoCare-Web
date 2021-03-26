@@ -3,7 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ADLChart extends StatelessWidget {
-  @override
+  Widget adlradialGauge(double score) {
+    return Container(
+      height: 100,
+      width: 10,
+      child: SfRadialGauge(
+        axes: <RadialAxis>[
+          RadialAxis(
+              axisLineStyle: AxisLineStyle(
+                thickness: 20,
+              ),
+              startAngle: -90,
+              endAngle: 270,
+              showTicks: false,
+              showLabels: false,
+              pointers: <GaugePointer>[
+                RangePointer(value: score, width: 20, color: Color(0xFFC37447))
+              ],
+              annotations: <GaugeAnnotation>[
+                GaugeAnnotation(
+                    widget: Container(
+                        child:
+                            Text('$score %', style: TextStyle(fontSize: 16))),
+                    angle: 90,
+                    positionFactor: 0.2)
+              ]),
+        ],
+      ),
+    );
+  }
+
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -23,37 +52,26 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 500,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('100 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
+                      child: adlradialGauge(50),
                     ),
+                    Expanded(
+                      child: adlradialGauge(20),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(50),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Expanded(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 2,
@@ -64,37 +82,14 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 50,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('50 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
-                    )
+                      child: adlradialGauge(80),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(50),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(70),
+                    ),
                   ],
                 )
               ],
@@ -116,37 +111,26 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 500,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('100 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
+                      child: adlradialGauge(70),
                     ),
+                    Expanded(
+                      child: adlradialGauge(30),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(50),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Expanded(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 2,
@@ -156,37 +140,14 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 50,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('50 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
-                    )
+                      child: adlradialGauge(90),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(50),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(80),
+                    ),
                   ],
                 )
               ],
@@ -208,37 +169,26 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 500,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('100 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
+                      child: adlradialGauge(80),
                     ),
+                    Expanded(
+                      child: adlradialGauge(20),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(60),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Expanded(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 2,
@@ -248,37 +198,14 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 50,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('50 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
-                    )
+                      child: adlradialGauge(60),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(20),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(60),
+                    ),
                   ],
                 )
               ],
@@ -300,37 +227,26 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 50,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('50 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
+                      child: adlradialGauge(80),
                     ),
+                    Expanded(
+                      child: adlradialGauge(30),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(70),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Expanded(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 2,
@@ -340,37 +256,14 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 100,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('100 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
-                    )
+                      child: adlradialGauge(50),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(30),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(40),
+                    ),
                   ],
                 )
               ],
@@ -392,37 +285,26 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 75,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('75 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
+                      child: adlradialGauge(50),
                     ),
+                    Expanded(
+                      child: adlradialGauge(20),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(50),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Expanded(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 2,
@@ -432,37 +314,14 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: SfRadialGauge(
-                          axes: <RadialAxis>[
-                            RadialAxis(
-                                axisLineStyle: AxisLineStyle(
-                                  thickness: 20,
-                                ),
-                                startAngle: -90,
-                                endAngle: 270,
-                                showTicks: false,
-                                showLabels: false,
-                                pointers: <GaugePointer>[
-                                  RangePointer(
-                                      value: 25,
-                                      width: 20,
-                                      color: Color(0xFFC37447))
-                                ],
-                                annotations: <GaugeAnnotation>[
-                                  GaugeAnnotation(
-                                      widget: Container(
-                                          child: Text('25 %',
-                                              style: TextStyle(fontSize: 16))),
-                                      angle: 90,
-                                      positionFactor: 0.2)
-                                ]),
-                          ],
-                        ),
-                      ),
-                    )
+                      child: adlradialGauge(50),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(30),
+                    ),
+                    Expanded(
+                      child: adlradialGauge(60),
+                    ),
                   ],
                 )
               ],
