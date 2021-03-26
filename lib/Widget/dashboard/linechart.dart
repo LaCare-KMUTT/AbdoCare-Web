@@ -59,22 +59,20 @@ class _LineChartState extends State<LineChart> {
                 child: Container(
                   height: screenSize.height / 2,
                   width: screenSize.width * 2,
-                  child: Column(children: [
-                    SfCartesianChart(
-                        primaryXAxis: CategoryAxis(),
-                        legend: Legend(isVisible: false),
-                        tooltipBehavior: TooltipBehavior(enable: true),
-                        series: <ChartSeries<_PainData, String>>[
-                          LineSeries<_PainData, String>(
-                              dataSource: data,
-                              xValueMapper: (pain, _) => pain.painscore,
-                              yValueMapper: (pain, _) => pain.day,
-                              name: 'Pain score',
-                              color: Colors.red,
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true))
-                        ]),
-                  ]),
+                  child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      legend: Legend(isVisible: false),
+                      tooltipBehavior: TooltipBehavior(enable: true),
+                      series: <ChartSeries<_PainData, String>>[
+                        LineSeries<_PainData, String>(
+                            dataSource: data,
+                            xValueMapper: (pain, _) => pain.painscore,
+                            yValueMapper: (pain, _) => pain.day,
+                            name: 'Pain score',
+                            color: Colors.red,
+                            dataLabelSettings:
+                                DataLabelSettings(isVisible: true))
+                      ]),
                 ),
               ),
             ),
