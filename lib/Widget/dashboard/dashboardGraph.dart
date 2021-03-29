@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'ADL_chart.dart';
 import 'barchart.dart';
+import 'dashboard_Table.dart';
 import 'radial_gauge_chart .dart';
 
 class ShowDashboard extends StatefulWidget {
@@ -69,6 +70,28 @@ class _ShowDashboardState extends State<ShowDashboard> {
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+            child: Container(
+              child: Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text('ไม่รู้จะเรียกอะไรดี',
+                          style: TextStyle(
+                              fontSize: 18, color: Color(0xFFC37447))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      child: DashboardTable(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: Container(
