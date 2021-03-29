@@ -79,7 +79,7 @@ class _ShowDashboardState extends State<ShowDashboard> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.all(10),
-                      child: Text('ไม่รู้จะเรียกอะไรดี',
+                      child: Text('Vital sign',
                           style: TextStyle(
                               fontSize: 18, color: Color(0xFFC37447))),
                     ),
