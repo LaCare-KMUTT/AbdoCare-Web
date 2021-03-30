@@ -2694,6 +2694,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                     _sleepDisorderDurationAvg,
                               };
                               // if (_formKey.currentState.validate()) {
+                              _formKey.currentState.save();
                               print('hn in generalForm = ${widget.hn}');
 
                               Navigator.push(
