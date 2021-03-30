@@ -62,11 +62,6 @@ class _MockDataPageState extends State<MockDataPage> {
                     docId: patientId,
                     subCollection: 'an',
                     data: mockedAnSubCollection);
-                await _firebaseService.addSubCollection(
-                    collection: 'Users',
-                    docId: patientId,
-                    subCollection: 'an',
-                    data: mockedAnSubCollection);
               },
             ),
             RaisedButton(
@@ -123,7 +118,7 @@ class _MockDataPageState extends State<MockDataPage> {
                     onPressed: _buttonEnabled
                         ? () async {
                             var mockFormCollection =
-                                _mockFirestore.mockFormCollection(
+                                await _mockFirestore.mockVitalSignForm(
                                     an: _anController.text.trim(),
                                     hn: _hnController.text.trim());
                             var form =

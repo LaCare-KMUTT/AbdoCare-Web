@@ -271,4 +271,17 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getPreOpList
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> addDataToFormsCollection(
+      {Map<String, dynamic> data, String formName, String hn}) {
+    // TODO: implement addDataToFormsCollection
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> getMedicalTeamSignature() {
+    // TODO: implement getMedicalTeamSignature
+    throw UnimplementedError();
+  }
 }

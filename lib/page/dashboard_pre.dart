@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../Widget/appbar.dart';
+import '../Widget/dashboard/pre_operation/preDashboardDetail.dart';
 import '../Widget/sidebar.dart';
-import '../Widget/dashboard/preDashboardDetail.dart';
 
 class PreDashboardPage extends StatefulWidget {
   @override
@@ -14,12 +14,16 @@ class PreDashboardPage extends StatefulWidget {
 class _PreDashboardPageState extends State<PreDashboardPage> {
   @override
   Widget build(BuildContext context) {
+    final hn = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: BaseAppBar(
         title: Text('สรุปผลประจำวัน'),
         appBar: AppBar(),
       ),
-      body: PreDashboardDetail(),
+      body: PreDashboardDetail(
+        hn: hn,
+      ),
       drawer: SideBar(),
     );
   }

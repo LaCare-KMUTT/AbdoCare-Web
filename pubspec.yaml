@@ -50,7 +50,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
     
-
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/abdocare_logo.png'
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -88,10 +91,14 @@ flutter:
     - family: Prompt
       fonts:
         - asset: assets/fonts/Prompt-Bold.ttf
-          weight: 600
+          weight: 700
         - asset: assets/fonts/Prompt-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Prompt-Light.ttf
+        - asset: assets/fonts/Prompt-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Prompt-Medium.ttf
+          weight: 500
+        
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

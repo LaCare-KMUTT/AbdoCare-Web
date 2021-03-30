@@ -24,7 +24,7 @@ class CustomMaterial {
 
   Color getTemperatureColor(dynamic temperature) {
     if (temperature == '-') {
-      return Colors.yellow;
+      return Color(0xFFC37447);
     } else {
       if (temperature < 36.0 || temperature > 37.0) {
         return Colors.red;
@@ -35,7 +35,7 @@ class CustomMaterial {
 
   Color getRespirationRateColor(dynamic respirationRate) {
     if (respirationRate == '-') {
-      return Colors.yellow;
+      return Color(0xFFC37447);
     } else {
       if (respirationRate < 16 || respirationRate > 20) {
         return Colors.red;
@@ -46,7 +46,7 @@ class CustomMaterial {
 
   Color getHeartRateColor(dynamic heartRate) {
     if (heartRate == '-') {
-      return Colors.yellow;
+      return Color(0xFFC37447);
     } else {
       if (heartRate < 60 || heartRate > 100) {
         return Colors.red;
@@ -55,11 +55,12 @@ class CustomMaterial {
     return Colors.green;
   }
 
-  Color getBloodPressureColor(dynamic bloodPressure) {
+  Color getBloodPressureColor(
+      int systolic, int diastolic, dynamic bloodPressure) {
     if (bloodPressure == '-') {
-      return Colors.yellow;
+      return Color(0xFFC37447);
     } else {
-      if (bloodPressure < 130) {
+      if (systolic >= 130 || diastolic >= 80) {
         return Colors.red;
       }
     }
@@ -68,9 +69,9 @@ class CustomMaterial {
 
   Color getOxygenRateColor(dynamic oxygenRate) {
     if (oxygenRate == '-') {
-      return Colors.yellow;
+      return Color(0xFFC37447);
     } else {
-      if (oxygenRate < 95) {
+      if (oxygenRate <= 95) {
         return Colors.red;
       }
     }
@@ -87,9 +88,9 @@ class CustomMaterial {
 
   Color getPainScoreColor(dynamic painScore) {
     if (painScore == '-') {
-      return Colors.yellow;
+      return Color(0xFFC37447);
     } else {
-      if (painScore > 7) {
+      if (painScore >= 8) {
         return Colors.red;
       }
     }

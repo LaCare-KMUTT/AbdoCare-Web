@@ -1,11 +1,14 @@
 import 'dart:math';
 
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
 import '../service_locator.dart';
 
 class MockFirestore {
+  final _firestore = FirebaseFirestore.instance;
+
   final ICalculationService _calculationService =
       locator<ICalculationService>();
   String _generateUniqueKey(int length) {
@@ -70,7 +73,7 @@ class MockFirestore {
       'bedNumber': '1234',
       'roomType': 'ห้องเดี่ยว',
       'roomNumber': '1234',
-      'state': 'pre-operation',
+      'state': 'Pre-Operation',
     };
     return anSubCollectionDataOnCreatePatient;
   }
@@ -88,17 +91,31 @@ class MockFirestore {
     return mockMedicalTeamCollection;
   }
 
-  Map<String, dynamic> mockFormCollection({String an, String hn}) {
-    // var creation = DateTime.now();
+  Future<Map<String, dynamic>> mockVitalSignForm({String an, String hn}) async {
     var creation = _calculationService.formatDate(date: DateTime.now());
+    var userCollection = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .limit(1)
+        .get();
+    var userDocId = userCollection.docs.first.id;
+    var anSubCollection = await _firestore
+        .collection('Users')
+        .doc(userDocId)
+        .collection('an')
+        .orderBy('operationDate', descending: true)
+        .limit(1)
+        .get();
+    var patientState = await anSubCollection.docs.first.get('state');
+
     print(creation);
-    Map<String, dynamic> mockFormsCollection = {
+    Map<String, dynamic> mockVitalSignForm = {
       'an': an,
       'hn': hn,
       'creation': creation,
       'creator': 'พยาบาลนิรนาม',
       'formName': 'Vital Sign',
-      'patientStage': 'Pre-Operation',
+      'patientStage': patientState,
       'formData': {
         'temperature': 32.1,
         'respirationRate': 50,
@@ -108,6 +125,8 @@ class MockFirestore {
         'status': 'ปกติ',
       },
     };
-    return mockFormsCollection;
+
+    print(mockVitalSignForm);
+    return mockVitalSignForm;
   }
 }

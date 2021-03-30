@@ -1,49 +1,65 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm.dart';
 import 'package:flutter/material.dart';
 
-import '../../page/dashboard_pre.dart';
-import '../../page/dashboard_postHome.dart';
-import '../../page/dashboard_postHos.dart';
+import 'preDashboardPatientDetail.dart';
+import '../dashboardGraph.dart';
 
-import 'dashboardGraph.dart';
-import 'postHosDashboardPatientDetail.dart';
+import '../../../page/dashboard_postHome.dart';
+import '../../../page/dashboard_postHos.dart';
+import '../../../page/dashboard_pre.dart';
 
-class PostHosDashboardDetail extends StatefulWidget {
-  PostHosDashboardDetail({Key key}) : super(key: key);
+class PreDashboardDetail extends StatefulWidget {
+  final String hn;
+  PreDashboardDetail({Key key, @required this.hn}) : super(key: key);
   @override
-  _PostHosDashboardDetailState createState() => _PostHosDashboardDetailState();
+  _PreDashboardDetailState createState() => _PreDashboardDetailState();
 }
 
-class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
+class _PreDashboardDetailState extends State<PreDashboardDetail> {
   final ScrollController controller = ScrollController();
 
   Container myArticles(String heading) {
+    var screenSize = MediaQuery.of(context).size;
     return Container(
-      width: 160.0,
+      padding: const EdgeInsets.all(8.0),
+      width: screenSize.width / 5,
+      height: screenSize.width / 4,
       child: Card(
-        child: Wrap(
+        child: ListView(
           children: [
             ListTile(
               title: Text(
                 heading,
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 5),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                  textColor: Colors.black,
-                  color: Color(0xFFEBEBEB),
-                  child: Text('แบบประเมิน', style: TextStyle(fontSize: 12)),
-                  onPressed: () {
-                    print('แบบประเมินระบบทางเดินหายใจ');
-                    setState(() {});
-                    Navigator.pushNamed(context, '/addPatient_page');
-                  },
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: RaisedButton(
+                    padding: EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    textColor: Colors.black,
+                    color: Color(0xFFEBEBEB),
+                    child: Text('แบบประเมิน', style: TextStyle(fontSize: 16)),
+                    onPressed: () {
+                      print(heading);
+                      setState(() {});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GeneralForm(
+                              hn: widget.hn,
+                            ),
+                          ));
+                    },
+                  ),
                 ),
               ),
             ),
@@ -53,9 +69,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
     );
   }
 
-  String dropdownValue = 'Post-Operation@Hospital';
+  String dropdownValue = 'Pre-Operation';
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         child: ListView(
@@ -126,49 +143,42 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  // Vertical ListView
-                  child: PostHosPatientDetail(),
+                Container(
+                  height: screenSize.width / 3.5,
+                  width: screenSize.width,
+                  child: PrePatientDetail(),
                 ),
-                // not in nsc scope
-                //
-                // SizedBox(
-                //   // Horizontal ListView
-                //   height: 160,
-                //   child: Card(
-                //     margin: EdgeInsets.all(10),
-                //     child: Scrollbar(
-                //       isAlwaysShown: false,
-                //       controller: controller,
-                //       child: ListView(
-                //         controller: controller,
-                //         scrollDirection: Axis.horizontal,
-                //         children: <Widget>[
-                //           myArticles('แบบประเมินความพร้อมการฟื้นสภาพ'),
-                //           myArticles('แบบประเมินการจัดการความปวด'),
-                //           myArticles(
-                //               'แบบประเมินการจัดการแผลผ่าตัดสายระบายต่างๆ'),
-                //           myArticles('แบบประเมินระบบทางเดินหายใจ'),
-                //           myArticles('แบบประเมินระบบปัสสาวะ'),
-                //           myArticles(''),
-                //           myArticles(''),
-                //         ],
-                //       ),
-                //       // child: ListView.builder(
-                //       //   itemCount: 20,
-                //       //   scrollDirection: Axis.horizontal,
-                //       //   itemBuilder: (context, index) {
-                //       //     return Container(
-                //       //       width: 100,
-                //       //       alignment: Alignment.center,
-                //       //       color: Colors.blue[(index % 9) * 100],
-                //       //       child: Text(index.toString()),
-                //       //     );
-                //       //   },
-                //       // ),
-                //     ),
-                //   ),
-                // ),
+                SizedBox(
+                  height: 160,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Card(
+                      child: Scrollbar(
+                        isAlwaysShown: false,
+                        controller: controller,
+                        child: ListView(
+                          controller: controller,
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            myArticles('แบบประเมิน Pre-Visit'),
+                          ],
+                        ),
+                        // child: ListView.builder(
+                        //   itemCount: 20,
+                        //   scrollDirection: Axis.horizontal,
+                        //   itemBuilder: (context, index) {
+                        //     return Container(
+                        //       width: 100,
+                        //       alignment: Alignment.center,
+                        //       color: Colors.blue[(index % 9) * 100],
+                        //       child: Text(index.toString()),
+                        //     );
+                        //   },
+                        // ),
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   // Vertical ListView
                   child: ShowDashboard(),
