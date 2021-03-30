@@ -73,27 +73,32 @@ class PieChart extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Card(
                   child: Container(
                     margin: EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        Text('การแปลผล',
-                            style: TextStyle(color: Color(0xFFC37447)),
-                            textAlign: TextAlign.left),
-                        Text('12 คะแนนขึ้นไป = mild independence',
-                            style: Theme.of(context).textTheme.bodyText2,
-                            textAlign: TextAlign.left),
-                        Text('9-11 คะแนน = moderately independence',
-                            style: Theme.of(context).textTheme.bodyText2,
-                            textAlign: TextAlign.left),
-                        Text('5-8 คะแนน = severe independence',
-                            style: Theme.of(context).textTheme.bodyText2,
-                            textAlign: TextAlign.left),
-                        Text('0-4 คะแนน = total independence',
-                            style: Theme.of(context).textTheme.bodyText2,
-                            textAlign: TextAlign.left),
+                        Text(
+                          'การแปลผล',
+                          style: TextStyle(color: Color(0xFFC37447)),
+                        ),
+                        Text(
+                          '12 คะแนนขึ้นไป = mild independence',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        Text(
+                          '9-11 คะแนน = moderately independence',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        Text(
+                          '5-8 คะแนน = severe independence',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        Text(
+                          '0-4 คะแนน = total independence',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                       ],
                     ),
                   ),
