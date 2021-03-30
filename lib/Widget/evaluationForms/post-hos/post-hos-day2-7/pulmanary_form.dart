@@ -336,17 +336,18 @@ class _PulmanaryFormState extends State<PulmanaryForm> {
                                         }),
                                   ),
                                 ),
-                                Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 20),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
                                     child: RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.0)),
+                                        textColor: Colors.white,
                                         padding: EdgeInsets.all(15),
-                                        child: Text(
-                                          'ยืนยัน',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2,
-                                        ),
+                                        color: Color(0xFF2ED47A),
+                                        child: Text('ยืนยัน',
+                                            style: TextStyle(fontSize: 18)),
                                         onPressed: () async {
                                           if (_value1 == null ||
                                               _value2 == null ||
