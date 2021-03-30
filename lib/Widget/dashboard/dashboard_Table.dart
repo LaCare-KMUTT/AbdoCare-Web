@@ -11,12 +11,12 @@ class DashboardTable extends StatefulWidget {
 
 class _DashboardTableState extends State<DashboardTable> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
-  List<Map<String, dynamic>> test = [
+  List<Map<String, dynamic>> dashboardtable = [
     {
       "Date": "10/03/64",
       "Time": "02.00 น.",
       "Admission": 1,
-      "Operation": "",
+      "Operation": "0",
       "RespirationsRate": 14,
       "BloodPressure": "125/80",
       "O2Sat": 100,
@@ -193,6 +193,25 @@ class _DashboardTableState extends State<DashboardTable> {
       "WtHt": 56,
     },
   ];
+  splitdiastolic(String bloodpressure) {
+    if (bloodpressure != null) {
+      var str = bloodpressure;
+      var parts = str.split('/');
+      var d = parts[1].trim();
+      var diastolic = int.parse(d);
+      return diastolic;
+    }
+  }
+
+  splitsystolic(String bloodpressure) {
+    if (bloodpressure != null) {
+      var str = bloodpressure;
+      var parts = str.split('/');
+      var s = parts[0].trim();
+      var systolic = int.parse(s);
+      return systolic;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,6 +231,141 @@ class _DashboardTableState extends State<DashboardTable> {
                   width: screenSize.width * 2,
                   child: Column(
                     children: [
+                      DataTable(
+                        dataRowHeight: 60,
+                        columnSpacing: screenSize.width / 50,
+                        columns: [
+                          DataColumn(
+                            label: Text(
+                              'Date',
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic, fontSize: 16),
+                            ),
+                          ),
+                          for (var item in dashboardtable)
+                            DataColumn(
+                              label: Column(
+                                children: [
+                                  Text(
+                                    item['Date'],
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    item['Time'],
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 16),
+                                  )
+                                ],
+                              ),
+                            ),
+                        ],
+                        rows: [
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text(
+                                'Days after Admission',
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic, fontSize: 16),
+                              )),
+                              for (var item in dashboardtable)
+                                DataCell(Text(
+                                  item['Admission'].toString(),
+                                )),
+                            ],
+                          ),
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text(
+                                'Days after Operation',
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic, fontSize: 16),
+                              )),
+                              for (var item in dashboardtable)
+                                DataCell(Text(
+                                  item['Operation'].toString(),
+                                )),
+                            ],
+                          ),
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text(
+                                'Respirations Rate',
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic, fontSize: 16),
+                              )),
+                              for (var item in dashboardtable)
+                                DataCell(Text(
+                                    item['RespirationsRate'].toString(),
+                                    style: TextStyle(
+                                        color: _customMaterial
+                                            .getRespirationRateColor(
+                                                item['RespirationsRate'])))),
+                            ],
+                          ),
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(
+                                Column(children: [
+                                  Text(
+                                    'Blood Pressure :',
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    'Systolic/Diastolic',
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 16),
+                                  )
+                                ]),
+                              ),
+                              for (var item in dashboardtable)
+                                DataCell(Text(item['BloodPressure'].toString(),
+                                    style: TextStyle(
+                                        color: _customMaterial
+                                            .getBloodPressureColor(
+                                                splitsystolic(
+                                                    item['BloodPressure']),
+                                                splitdiastolic(
+                                                    item['BloodPressure']),
+                                                item['BloodPressure']),
+                                        fontSize: 16))),
+                            ],
+                          ),
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text(
+                                'O2 Sat',
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic, fontSize: 16),
+                              )),
+                              for (var item in dashboardtable)
+                                DataCell(Text(item['O2Sat'].toString(),
+                                    style: TextStyle(
+                                        color: _customMaterial
+                                            .getOxygenRateColor(item['O2Sat']),
+                                        fontSize: 16))),
+                            ],
+                          ),
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text(
+                                'Wt and Ht',
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic, fontSize: 16),
+                              )),
+                              for (var item in dashboardtable)
+                                DataCell(Text(
+                                  item['WtHt'].toString(),
+                                )),
+                            ],
+                          ),
+                        ],
+                      ),
                       Table(
                         border: TableBorder.all(
                             color: Colors.grey,
@@ -239,7 +393,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ),
                               ),
                             ),
-                            for (var item in test)
+                            for (var item in dashboardtable)
                               Container(
                                 color: Color(0xFFFCECBC),
                                 child: SizedBox(
@@ -274,7 +428,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in test)
+                            for (var item in dashboardtable)
                               Column(children: [
                                 Text(
                                   item['Admission'].toString(),
@@ -295,7 +449,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in test)
+                            for (var item in dashboardtable)
                               Column(children: [
                                 Text(
                                   item['Operation'].toString(),
@@ -316,7 +470,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in test)
+                            for (var item in dashboardtable)
                               Column(children: [
                                 Text(item['RespirationsRate'].toString(),
                                     style: TextStyle(
@@ -341,7 +495,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in test)
+                            for (var item in dashboardtable)
                               Column(children: [
                                 Text(
                                   item['BloodPressure'],
@@ -362,7 +516,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in test)
+                            for (var item in dashboardtable)
                               Column(children: [
                                 Text(item['O2Sat'].toString(),
                                     style: TextStyle(
@@ -385,7 +539,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in test)
+                            for (var item in dashboardtable)
                               Column(children: [
                                 Text(
                                   item['WtHt'].toString(),
