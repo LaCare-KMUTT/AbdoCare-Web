@@ -170,6 +170,12 @@ class _PreTableState extends State<PreTable> {
                 ),
               ],
               rows: users.map((user) {
+                var str = user.bloodPressure;
+                var parts = str.split('/');
+                var s = parts[0].trim();
+                var d = parts[1].trim();
+                var systolic = int.parse(s);
+                var diastolic = int.parse(d);
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
@@ -215,7 +221,7 @@ class _PreTableState extends State<PreTable> {
                             style: TextStyle(
                                 fontSize: 17,
                                 color: _customMaterial.getBloodPressureColor(
-                                    user.bloodPressure))),
+                                    systolic, diastolic, user.bloodPressure))),
                       ),
                       DataCell(
                         Text('${user.oxygenRate.toString()}',

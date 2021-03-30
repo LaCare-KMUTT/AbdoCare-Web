@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,8 +13,6 @@ class FirebaseService extends IFirebaseService {
   final _auth = FirebaseAuth.instance;
   final ICalculationService _calculationService =
       locator<ICalculationService>();
-  final CloudFunctionService _cloudFunctionService =
-      locator<CloudFunctionService>();
 
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
@@ -185,6 +182,80 @@ class FirebaseService extends IFirebaseService {
     return snapshot;
   }
 
+  Future<String> getMedicalTeamSignature() async {
+    var medicalTeamUserId = getUserId();
+    var signature = await _firestore
+        .collection('MedicalTeams')
+        .doc(medicalTeamUserId)
+        .get()
+        .then((value) {
+      var name = value.get('name');
+      var surname = value.get('surname');
+      return "$name $surname";
+    }).catchError((onError) {
+      print('$onError : Cannot find medical Signature');
+    });
+    return signature;
+  }
+
+  Future<void> addDataToFormsCollection(
+      {@required Map<String, dynamic> data,
+      @required String formName,
+      @required String hn}) async {
+    print('hn = $hn');
+    var userId = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) => value.docs.first.id)
+        .catchError((onError) {
+      print('$onError Cannot find user when add Data to forms Collection');
+    });
+    var anSubCollection = await getLatestAnSubCollection(docId: userId);
+
+    var patientState = anSubCollection['state'];
+    var an = anSubCollection['an'];
+    var anSubCollectionDocId = anSubCollection['id'];
+    var creator = await getMedicalTeamSignature();
+    var creation = _calculationService.formatDate(date: DateTime.now());
+    Map<String, dynamic> dataToAdd = {
+      'an': an,
+      'hn': hn,
+      'creation': creation,
+      'formName': formName,
+      'creator': creator,
+      'patientState': patientState,
+      'formData': data,
+    };
+
+    print('Here is data to add $dataToAdd');
+    var forms = await this
+        .addDocumentToCollection(collection: 'Forms', docData: dataToAdd);
+
+    print('\n\n When Adding userId =  $userId');
+    var formId = forms.id;
+    await _firestore
+        .collection('Users')
+        .doc(userId)
+        .collection('an')
+        .doc(anSubCollectionDocId)
+        .set({
+          'forms': FieldValue.arrayUnion([
+            {
+              'formId': formId,
+              'formName': formName,
+              'formCreation': creation,
+            }
+          ]),
+        }, SetOptions(merge: true))
+        .then(
+            (value) => print('success adding forms things to an subCollection'))
+        .catchError((onError) {
+          print('$onError on adding forms things to an subCollection');
+        });
+    return formId;
+  }
+
   Future<void> addSubCollection({
     @required String collection,
     @required String docId,
@@ -307,17 +378,18 @@ class FirebaseService extends IFirebaseService {
 
       var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var temperatureToMap = '-';
-      var respirationRateToMap = '-';
-      var heartRateToMap = '-';
-      var bloodPressureToMap = '-';
-      var oxygenRateToMap = '-';
-      var status = '-';
+      var temperatureToMap;
+      var respirationRateToMap;
+      var heartRateToMap;
+      var bloodPressureToMap;
+      var oxygenRateToMap;
+      var status;
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
-          patientState: 'Pre-Operation',
+          patientState: 'Post-Operation@Hospital',
           formName: 'Vital Sign');
       if (formVitalSign.isNotEmpty) {
+        print('should be here');
         var formsCollection = await _firestore
             .collection('Forms')
             .doc(formVitalSign.first['formId'])
@@ -335,19 +407,20 @@ class FirebaseService extends IFirebaseService {
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
+
       var map = {
         'hn': hnToMap,
         'name': nameToMap,
         'gender': genderToMap,
         'age': ageToMap,
-        'roomNumber': roomNumberToMap,
-        'bedNumber': bedNumberToMap,
-        'temperature': temperatureToMap,
-        'respirationRate': respirationRateToMap,
-        'heartRate': heartRateToMap,
-        'bloodPressure': bloodPressureToMap,
-        'oxygenRate': oxygenRateToMap,
-        'status': status,
+        'roomNumber': roomNumberToMap ?? '-',
+        'bedNumber': bedNumberToMap ?? '-',
+        'temperature': temperatureToMap ?? '-',
+        'respirationRate': respirationRateToMap ?? '-',
+        'heartRate': heartRateToMap ?? '-',
+        'bloodPressure': bloodPressureToMap ?? '-',
+        'oxygenRate': oxygenRateToMap ?? '-',
+        'status': status ?? '-',
       };
       return map;
     });
@@ -393,22 +466,23 @@ class FirebaseService extends IFirebaseService {
       var ageToMap = _calculationService.calculateAge(
           birthDate: userCollection.data()['dob'].toDate());
       var operationTypeToMap = anSubCollection['operationMethod'] ?? '-';
-      var painScoreToMap = '-';
-      var woundImgToMap = '-';
-      bool isAbleToMap = (formPain != null && formPain.isNotEmpty) &&
-          (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty);
-      if (isAbleToMap) {
+      var painScoreToMap;
+      var woundImgToMap;
+      if (formPain != null && formPain.isNotEmpty) {
         var formPainData = await _firestore
             .collection('Forms')
             .doc(formPain.first['formId'])
             .get()
             .then((value) => value.data());
+
+        painScoreToMap = formPainData['formData']['Answer'] ?? '-';
+      }
+      if (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty) {
         var formSurgicalIncisionData = await _firestore
             .collection('Forms')
             .doc(formSurgicalIncision.first['formId'])
             .get()
             .then((value) => value.data());
-        painScoreToMap = formPainData['formData']['Answer'] ?? '-';
         woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
       }
       var map = {
@@ -417,9 +491,9 @@ class FirebaseService extends IFirebaseService {
         'admissionCount': admissionCountToMap,
         'gender': genderToMap,
         'age': ageToMap,
-        'painScore': painScoreToMap,
-        'operationType': operationTypeToMap,
-        'woundImg': woundImgToMap,
+        'painScore': painScoreToMap ?? '-',
+        'operationType': operationTypeToMap ?? '-',
+        'woundImg': woundImgToMap ?? '-',
       };
       return map;
     });
@@ -461,11 +535,11 @@ class FirebaseService extends IFirebaseService {
 
       var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var temperatureToMap = '-';
-      var respirationRateToMap = '-';
-      var heartRateToMap = '-';
-      var bloodPressureToMap = '-';
-      var oxygenRateToMap = '-';
+      var temperatureToMap;
+      var respirationRateToMap;
+      var heartRateToMap;
+      var bloodPressureToMap;
+      var oxygenRateToMap;
       var status = '-';
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
@@ -496,12 +570,12 @@ class FirebaseService extends IFirebaseService {
         'age': ageToMap,
         'roomNumber': roomNumberToMap,
         'bedNumber': bedNumberToMap,
-        'temperature': temperatureToMap,
-        'respirationRate': respirationRateToMap,
-        'heartRate': heartRateToMap,
-        'bloodPressure': bloodPressureToMap,
-        'oxygenRate': oxygenRateToMap,
-        'status': status,
+        'temperature': temperatureToMap ?? '-',
+        'respirationRate': respirationRateToMap ?? '-',
+        'heartRate': heartRateToMap ?? '-',
+        'bloodPressure': bloodPressureToMap ?? '-',
+        'oxygenRate': oxygenRateToMap ?? '-',
+        'status': status ?? '-',
       };
       return map;
     });

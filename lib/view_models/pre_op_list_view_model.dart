@@ -3,9 +3,7 @@ import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart
 import 'package:AbdoCare_Web/services/service_locator.dart';
 
 class PreOpViewModel {
-  PreOpViewModel() {
-    // _initialize();
-  }
+  PreOpViewModel();
   final _firebaseService = locator<IFirebaseService>();
   List<PreOpData> userList = [];
 
@@ -17,8 +15,7 @@ class PreOpViewModel {
   }
 
   Future<List<PreOpData>> getUsers() async {
-    userList.clear();
-    await _initialize();
+    if (userList.isEmpty) await _initialize();
     return userList;
   }
 

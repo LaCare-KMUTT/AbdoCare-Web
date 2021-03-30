@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'preDashboardPatientDetail.dart';
-import 'dashboardGraph.dart';
+import '../../../page/dashboard_pre.dart';
+import '../../../page/dashboard_postHome.dart';
+import '../../../page/dashboard_postHos.dart';
 
-import '../../page/dashboard_postHome.dart';
-import '../../page/dashboard_postHos.dart';
-import '../../page/dashboard_pre.dart';
+import '../dashboardGraph.dart';
+import 'postHosDashboardPatientDetail.dart';
 
-class PreDashboardDetail extends StatefulWidget {
-  PreDashboardDetail({Key key}) : super(key: key);
+class PostHosDashboardDetail extends StatefulWidget {
+  PostHosDashboardDetail({Key key}) : super(key: key);
   @override
-  _PreDashboardDetailState createState() => _PreDashboardDetailState();
+  _PostHosDashboardDetailState createState() => _PostHosDashboardDetailState();
 }
 
-class _PreDashboardDetailState extends State<PreDashboardDetail> {
+class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
   final ScrollController controller = ScrollController();
 
   Container myArticles(String heading) {
@@ -53,7 +53,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
     );
   }
 
-  String dropdownValue = 'Pre-Operation';
+  String dropdownValue = 'Post-Operation@Hospital';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +128,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                 ),
                 SizedBox(
                   // Vertical ListView
-                  child: PrePatientDetail(),
+                  child: PostHosPatientDetail(),
                 ),
                 // not in nsc scope
                 //

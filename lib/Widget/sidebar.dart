@@ -75,7 +75,7 @@ class SideBar extends StatelessWidget {
                         Navigator.pushReplacementNamed(context, '/login_page');
                         print('This is logout button');
                       },
-                    )
+                    ),
                   ],
                 ),
               ),

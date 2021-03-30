@@ -71,6 +71,14 @@ abstract class IFirebaseService {
     @required String subCollection,
     @required String subCollectionDocId,
   });
+
+  Future<void> addDataToFormsCollection(
+      {@required Map<String, dynamic> data,
+      @required String formName,
+      @required String hn});
+
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate});
+
+  Future<String> getMedicalTeamSignature();
 }
