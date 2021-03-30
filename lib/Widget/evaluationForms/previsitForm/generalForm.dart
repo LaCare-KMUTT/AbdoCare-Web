@@ -2661,12 +2661,14 @@ class _GeneralFormState extends State<GeneralForm> {
                             child:
                                 Text('ถัดไป', style: TextStyle(fontSize: 18)),
                             onPressed: () {
+                              _formKey.currentState.save();
+
                               Map<String, dynamic> formDataToDB = {
                                 'hn': _hn,
                                 'an': _an,
                                 'patientName': _patientName,
                                 'patientSurname': _patientSurname,
-                                'dod': _dob,
+                                'dob': _dob,
                                 'operationDate': _operationDate,
                                 'gender': _gender,
                                 'ward': _ward,
@@ -2694,8 +2696,8 @@ class _GeneralFormState extends State<GeneralForm> {
                                     _sleepDisorderDurationAvg,
                               };
                               // if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
                               print('hn in generalForm = ${widget.hn}');
+                              print('Data in GeneralForm = $formDataToDB');
 
                               Navigator.push(
                                   context,
