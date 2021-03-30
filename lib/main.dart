@@ -5,16 +5,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'Widget/material.dart';
 import 'page/addPatient.dart';
-import 'page/editPatient.dart';
 import 'page/appointment.dart';
+import 'page/dashboard_postHome.dart';
+import 'page/dashboard_postHos.dart';
+import 'page/dashboard_pre.dart';
+import 'page/editPatient.dart';
 import 'page/login.dart';
 import 'page/patientList.dart';
 import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
-import 'page/dashboard_pre.dart';
-import 'page/dashboard_postHos.dart';
-import 'page/dashboard_postHome.dart';
 import 'services/service_locator.dart';
 
 void main() async {

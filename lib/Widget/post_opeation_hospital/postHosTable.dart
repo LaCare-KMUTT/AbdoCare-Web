@@ -29,6 +29,7 @@ class _PostHosTableState extends State<PostHosTable> {
 
   FutureBuilder dataBody() {
     var screenSize = MediaQuery.of(context).size;
+
     return FutureBuilder<List<PostHosData>>(
         future: _postHosViewModel.getUsers(),
         builder: (context, snapshot) {
@@ -46,7 +47,7 @@ class _PostHosTableState extends State<PostHosTable> {
             users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
-              columnSpacing: screenSize.width / 37,
+              columnSpacing: screenSize.width / 35,
               headingRowHeight: 50,
               headingTextStyle: TextStyle(
                   fontSize: 18,
@@ -167,6 +168,12 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
               ],
               rows: users.map((user) {
+                var str = user.bloodPressure;
+                var parts = str.split('/');
+                var s = parts[0].trim();
+                var d = parts[1].trim();
+                var systolic = int.parse(s);
+                var diastolic = int.parse(d);
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
@@ -202,7 +209,7 @@ class _PostHosTableState extends State<PostHosTable> {
                         Text('${user.bloodPressure.toString()}',
                             style: TextStyle(
                                 color: _customMaterial.getBloodPressureColor(
-                                    user.bloodPressure))),
+                                    systolic, diastolic, user.bloodPressure))),
                       ),
                       DataCell(
                         Text('${user.oxygenRate.toString()}',
@@ -229,6 +236,7 @@ class _PostHosTableState extends State<PostHosTable> {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);

@@ -80,7 +80,7 @@ class _ShowDashboardState extends State<ShowDashboard> {
         shrinkWrap: true,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+            padding: const EdgeInsets.all(10),
             child: Container(
               child: Card(
                 child: Column(

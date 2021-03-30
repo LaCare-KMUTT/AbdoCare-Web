@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../Widget/appbar.dart';
 import '../Widget/sidebar.dart';
-import '../Widget/dashboard/postHomeDashboardDetail.dart';
+import '../Widget/dashboard/post_operation_home/postHomeDashboardDetail.dart';
 
 class PostHomeDashboardPage extends StatefulWidget {
   @override

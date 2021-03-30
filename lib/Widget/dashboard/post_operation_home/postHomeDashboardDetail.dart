@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'dashboardGraph.dart';
+import '../dashboardGraph.dart';
 import 'postHomeDashboardPatientDetail.dart';
 
-import '../../page/dashboard_pre.dart';
-import '../../page/dashboard_postHome.dart';
+import '../../../page/dashboard_pre.dart';
+import '../../../page/dashboard_postHome.dart';
 
 class PostHomeDashboardDetail extends StatefulWidget {
   PostHomeDashboardDetail({Key key}) : super(key: key);
