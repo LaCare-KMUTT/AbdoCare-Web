@@ -41,10 +41,6 @@ class GeneralFormModel {
     patientSurname = map['surname'] ?? '-';
     gender = map['gender'] ?? '-';
     dob = map['dob'].toDate() ?? '-';
-
-    print('hn = $hn');
-    print('name = $patientName');
-    print('surname = $patientSurname');
     return this;
   }
 
