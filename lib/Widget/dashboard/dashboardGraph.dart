@@ -1,10 +1,10 @@
-import './linechart.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'ADL_chart.dart';
 import 'barchart.dart';
 import 'dashboard_Table.dart';
 import 'radial_gauge_chart .dart';
+import 'test.dart';
 
 class ShowDashboard extends StatefulWidget {
   @override
@@ -79,13 +79,35 @@ class _ShowDashboardState extends State<ShowDashboard> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.all(10),
-                      child: Text('Vital sign',
+                      child: Text('ข้อมูลจากแบบฟรอมการประเมิน',
                           style: TextStyle(
                               fontSize: 18, color: Color(0xFFC37447))),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                       child: DashboardTable(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+            child: Container(
+              child: Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text('Test',
+                          style: TextStyle(
+                              fontSize: 18, color: Color(0xFFC37447))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: TestChart(),
                     ),
                   ],
                 ),
@@ -108,7 +130,6 @@ class _ShowDashboardState extends State<ShowDashboard> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
                       child: ADLChart(),
-                      //BarChart(data: data),
                     ),
                   ],
                 ),
@@ -133,28 +154,6 @@ class _ShowDashboardState extends State<ShowDashboard> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
                       child: PieChart(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Container(
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text('ความเจ็บปวด',
-                          style: TextStyle(
-                              fontSize: 18, color: Color(0xFFC37447))),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: LineChart(),
                     ),
                   ],
                 ),

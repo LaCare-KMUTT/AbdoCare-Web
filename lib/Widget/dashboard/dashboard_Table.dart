@@ -2,7 +2,9 @@ import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../material.dart';
-//import 'package:horizontal_data_table/horizontal_data_table.dart';
+import 'bodyTemperature_chart.dart';
+import 'linechart.dart';
+import 'pulseRate_chart.dart';
 
 class DashboardTable extends StatefulWidget {
   @override
@@ -228,149 +230,21 @@ class _DashboardTableState extends State<DashboardTable> {
               ),
               child: IntrinsicWidth(
                 child: Container(
-                  width: screenSize.width * 2,
+                  width: screenSize.width * 1.5,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      DataTable(
-                        dataRowHeight: 60,
-                        columnSpacing: screenSize.width / 50,
-                        columns: [
-                          DataColumn(
-                            label: Text(
-                              'Date',
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic, fontSize: 16),
-                            ),
-                          ),
-                          for (var item in dashboardtable)
-                            DataColumn(
-                              label: Column(
-                                children: [
-                                  Text(
-                                    item['Date'],
-                                    style: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                        fontSize: 16),
-                                  ),
-                                  Text(
-                                    item['Time'],
-                                    style: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                        fontSize: 16),
-                                  )
-                                ],
-                              ),
-                            ),
-                        ],
-                        rows: [
-                          DataRow(
-                            cells: <DataCell>[
-                              DataCell(Text(
-                                'Days after Admission',
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic, fontSize: 16),
-                              )),
-                              for (var item in dashboardtable)
-                                DataCell(Text(
-                                  item['Admission'].toString(),
-                                )),
-                            ],
-                          ),
-                          DataRow(
-                            cells: <DataCell>[
-                              DataCell(Text(
-                                'Days after Operation',
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic, fontSize: 16),
-                              )),
-                              for (var item in dashboardtable)
-                                DataCell(Text(
-                                  item['Operation'].toString(),
-                                )),
-                            ],
-                          ),
-                          DataRow(
-                            cells: <DataCell>[
-                              DataCell(Text(
-                                'Respirations Rate',
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic, fontSize: 16),
-                              )),
-                              for (var item in dashboardtable)
-                                DataCell(Text(
-                                    item['RespirationsRate'].toString(),
-                                    style: TextStyle(
-                                        color: _customMaterial
-                                            .getRespirationRateColor(
-                                                item['RespirationsRate'])))),
-                            ],
-                          ),
-                          DataRow(
-                            cells: <DataCell>[
-                              DataCell(
-                                Column(children: [
-                                  Text(
-                                    'Blood Pressure :',
-                                    style: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                        fontSize: 16),
-                                  ),
-                                  Text(
-                                    'Systolic/Diastolic',
-                                    style: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                        fontSize: 16),
-                                  )
-                                ]),
-                              ),
-                              for (var item in dashboardtable)
-                                DataCell(Text(item['BloodPressure'].toString(),
-                                    style: TextStyle(
-                                        color: _customMaterial
-                                            .getBloodPressureColor(
-                                                splitsystolic(
-                                                    item['BloodPressure']),
-                                                splitdiastolic(
-                                                    item['BloodPressure']),
-                                                item['BloodPressure']),
-                                        fontSize: 16))),
-                            ],
-                          ),
-                          DataRow(
-                            cells: <DataCell>[
-                              DataCell(Text(
-                                'O2 Sat',
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic, fontSize: 16),
-                              )),
-                              for (var item in dashboardtable)
-                                DataCell(Text(item['O2Sat'].toString(),
-                                    style: TextStyle(
-                                        color: _customMaterial
-                                            .getOxygenRateColor(item['O2Sat']),
-                                        fontSize: 16))),
-                            ],
-                          ),
-                          DataRow(
-                            cells: <DataCell>[
-                              DataCell(Text(
-                                'Wt and Ht',
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic, fontSize: 16),
-                              )),
-                              for (var item in dashboardtable)
-                                DataCell(Text(
-                                  item['WtHt'].toString(),
-                                )),
-                            ],
-                          ),
-                        ],
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text('Vital sign',
+                            style: TextStyle(
+                                fontSize: 18, color: Color(0xFFC37447))),
                       ),
                       Table(
                         border: TableBorder.all(
-                            color: Colors.grey,
+                            color: Colors.white,
                             style: BorderStyle.solid,
-                            width: 1),
+                            width: 2),
                         columnWidths: {
                           0: IntrinsicColumnWidth(),
                         },
@@ -380,13 +254,14 @@ class _DashboardTableState extends State<DashboardTable> {
                               verticalAlignment:
                                   TableCellVerticalAlignment.fill,
                               child: Container(
-                                color: Color(0xFFFCECBC),
+                                color: Color(0xFFC37447),
                                 child: SizedBox(
                                   child: Column(children: [
                                     Text(
                                       'Date',
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
+                                          color: Colors.white,
                                           fontSize: 16),
                                     ),
                                   ]),
@@ -395,19 +270,21 @@ class _DashboardTableState extends State<DashboardTable> {
                             ),
                             for (var item in dashboardtable)
                               Container(
-                                color: Color(0xFFFCECBC),
+                                color: Color(0xFFC37447),
                                 child: SizedBox(
                                   child: Column(children: [
                                     Text(
                                       item['Date'],
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
+                                          color: Colors.white,
                                           fontSize: 16),
                                     ),
                                     Text(
                                       item['Time'],
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
+                                          color: Colors.white,
                                           fontSize: 16),
                                     )
                                   ]),
@@ -419,12 +296,12 @@ class _DashboardTableState extends State<DashboardTable> {
                               verticalAlignment:
                                   TableCellVerticalAlignment.fill,
                               child: Container(
-                                color: Color(0xFFFCECBC),
+                                color: Colors.grey[100],
                                 child: Column(children: [
-                                  Text('Days after Admission',
+                                  Text(' Days after Admission ',
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
-                                          fontSize: 16))
+                                          fontSize: 15))
                                 ]),
                               ),
                             ),
@@ -440,12 +317,12 @@ class _DashboardTableState extends State<DashboardTable> {
                               verticalAlignment:
                                   TableCellVerticalAlignment.fill,
                               child: Container(
-                                color: Color(0xFFFCECBC),
+                                color: Colors.grey[100],
                                 child: Column(children: [
-                                  Text('Days after Operation',
+                                  Text(' Days after Operation ',
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
-                                          fontSize: 16))
+                                          fontSize: 15))
                                 ]),
                               ),
                             ),
@@ -461,12 +338,12 @@ class _DashboardTableState extends State<DashboardTable> {
                               verticalAlignment:
                                   TableCellVerticalAlignment.fill,
                               child: Container(
-                                color: Color(0xFFFCECBC),
+                                color: Colors.grey[100],
                                 child: Column(children: [
-                                  Text('Respirations Rate',
+                                  Text(' Respirations Rate ',
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
-                                          fontSize: 16))
+                                          fontSize: 15))
                                 ]),
                               ),
                             ),
@@ -482,16 +359,16 @@ class _DashboardTableState extends State<DashboardTable> {
                           TableRow(children: [
                             TableCell(
                               child: Container(
-                                color: Color(0xFFFCECBC),
+                                color: Colors.grey[100],
                                 child: Column(children: [
-                                  Text('Blood Pressure :',
+                                  Text(' Blood Pressure : ',
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
-                                          fontSize: 16)),
-                                  Text('Systolic/Diastolic',
+                                          fontSize: 15)),
+                                  Text(' Systolic/Diastolic ',
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
-                                          fontSize: 16))
+                                          fontSize: 15))
                                 ]),
                               ),
                             ),
@@ -507,12 +384,12 @@ class _DashboardTableState extends State<DashboardTable> {
                               verticalAlignment:
                                   TableCellVerticalAlignment.fill,
                               child: Container(
-                                color: Color(0xFFFCECBC),
+                                color: Colors.grey[100],
                                 child: Column(children: [
-                                  Text('O2 Sat',
+                                  Text(' O2 Sat ',
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
-                                          fontSize: 16))
+                                          fontSize: 15))
                                 ]),
                               ),
                             ),
@@ -522,7 +399,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                     style: TextStyle(
                                         color: _customMaterial
                                             .getOxygenRateColor(item['O2Sat']),
-                                        fontSize: 16))
+                                        fontSize: 15))
                               ]),
                           ]),
                           TableRow(children: [
@@ -530,12 +407,12 @@ class _DashboardTableState extends State<DashboardTable> {
                               verticalAlignment:
                                   TableCellVerticalAlignment.fill,
                               child: Container(
-                                color: Color(0xFFFCECBC),
+                                color: Colors.grey[100],
                                 child: Column(children: [
-                                  Text('Wt and Ht',
+                                  Text(' Wt and Ht ',
                                       style: TextStyle(
                                           fontStyle: FontStyle.italic,
-                                          fontSize: 16))
+                                          fontSize: 15))
                                 ]),
                               ),
                             ),
@@ -546,6 +423,45 @@ class _DashboardTableState extends State<DashboardTable> {
                                 )
                               ]),
                           ]),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            child: Text('Pulse Rate',
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(0xFFC37447))),
+                          ),
+                          PulseRateChart(),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            child: Text('Body Temperature',
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(0xFFC37447))),
+                          ),
+                          BodyTemperatureChart(),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            child: Text('ความเจ็บปวด',
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(0xFFC37447))),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            child: LineChart(),
+                          ),
                         ],
                       ),
                     ],
