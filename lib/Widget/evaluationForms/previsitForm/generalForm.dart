@@ -214,10 +214,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 flex: 2,
                                                                 child:
                                                                     TextFormField(
-                                                                  initialValue: snapshot
+                                                                  initialValue:
+                                                                      snapshot
                                                                           .data
-                                                                          .patientName ??
-                                                                      'nullhere',
+                                                                          .patientName,
                                                                   enabled:
                                                                       false,
                                                                   validator:
@@ -256,6 +256,12 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 flex: 2,
                                                                 child:
                                                                     TextFormField(
+                                                                  initialValue:
+                                                                      snapshot
+                                                                          .data
+                                                                          .patientSurname,
+                                                                  enabled:
+                                                                      false,
                                                                   validator:
                                                                       (value) {
                                                                     return value
@@ -291,6 +297,12 @@ class _GeneralFormState extends State<GeneralForm> {
                                                               Expanded(
                                                                 child:
                                                                     TextFormField(
+                                                                  initialValue:
+                                                                      snapshot
+                                                                          .data
+                                                                          .hn,
+                                                                  enabled:
+                                                                      false,
                                                                   validator:
                                                                       (value) {
                                                                     return value
@@ -327,6 +339,12 @@ class _GeneralFormState extends State<GeneralForm> {
                                                               Expanded(
                                                                 child:
                                                                     TextFormField(
+                                                                  initialValue:
+                                                                      snapshot
+                                                                          .data
+                                                                          .an,
+                                                                  enabled:
+                                                                      false,
                                                                   validator:
                                                                       (value) {
                                                                     return value
@@ -374,14 +392,20 @@ class _GeneralFormState extends State<GeneralForm> {
                                                               Expanded(
                                                                 flex: 2,
                                                                 child:
-                                                                    DropdownButtonFormField(
-                                                                  isExpanded:
-                                                                      true,
-                                                                  validator: (value) =>
-                                                                      value ==
-                                                                              null
-                                                                          ? 'กรุณาเลือกเพศของผู้ป่วย'
-                                                                          : null,
+                                                                    TextFormField(
+                                                                  initialValue:
+                                                                      snapshot
+                                                                          .data
+                                                                          .gender,
+                                                                  enabled:
+                                                                      false,
+                                                                  validator:
+                                                                      (value) {
+                                                                    return value
+                                                                            .isEmpty
+                                                                        ? 'กรุณากรอกเพศ'
+                                                                        : null;
+                                                                  },
                                                                   decoration:
                                                                       InputDecoration(
                                                                           contentPadding: new EdgeInsets.symmetric(
@@ -395,32 +419,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                                 BorderSide(color: Colors.black26, width: 1),
                                                                           ),
                                                                           labelText:
-                                                                              'Gender'),
-                                                                  onSaved:
-                                                                      (value) {
-                                                                    _gender =
-                                                                        value;
-                                                                  },
-                                                                  items: [
-                                                                    'ชาย',
-                                                                    'หญิง',
-                                                                  ]
-                                                                      .map((label) =>
-                                                                          DropdownMenuItem(
-                                                                            child:
-                                                                                Text(label),
-                                                                            value:
-                                                                                label,
-                                                                          ))
-                                                                      .toList(),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
+                                                                              'AN'),
+                                                                  onSaved: (value) =>
                                                                       _gender =
-                                                                          value;
-                                                                    });
-                                                                  },
+                                                                          value,
                                                                 ),
                                                               ),
                                                               Expanded(
@@ -497,6 +499,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                     Container(
                                                                   width: 300,
                                                                   child: DateTimeField(
+                                                                      initialValue: snapshot.data.dob,
                                                                       validator: (DateTime dateTime) {
                                                                         if (dateTime ==
                                                                             null) {
@@ -587,6 +590,12 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 flex: 2,
                                                                 child:
                                                                     TextFormField(
+                                                                  initialValue:
+                                                                      snapshot
+                                                                          .data
+                                                                          .operationMethod,
+                                                                  enabled:
+                                                                      false,
                                                                   validator:
                                                                       (value) {
                                                                     return value
@@ -626,6 +635,8 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                     Container(
                                                                   width: 300,
                                                                   child: DateTimeField(
+                                                                      initialValue: snapshot.data.operationDate,
+                                                                      enabled: false,
                                                                       validator: (DateTime dateTime) {
                                                                         if (dateTime ==
                                                                             null) {
