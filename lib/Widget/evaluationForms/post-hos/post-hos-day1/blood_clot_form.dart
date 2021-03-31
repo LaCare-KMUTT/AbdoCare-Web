@@ -23,9 +23,8 @@ class _BloodClotFormState extends State<BloodClotForm> {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      child: Text("แบบประเมินการเกิดภาวะลิ่มเลือดอุดตัน",
-          style: TextStyle(fontSize: 18)),
-      padding: EdgeInsets.all(15),
+      child: Text("แบบประเมิน", style: TextStyle(fontSize: 15)),
+      padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
       onPressed: () {
         showDialog(

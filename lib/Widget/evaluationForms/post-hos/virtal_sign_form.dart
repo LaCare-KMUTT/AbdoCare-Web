@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 
 class VirtalSignForm extends StatefulWidget {
   final String hn;
-  VirtalSignForm({Key key, @required this.hn}) : super(key: key);
+  final String formTime;
+  VirtalSignForm({Key key, @required this.hn, @required this.formTime})
+      : super(key: key);
 
   @override
   _VirtalSignFormState createState() => _VirtalSignFormState();
@@ -31,8 +33,8 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
     var timeToShow = DateFormat.Hm().format(DateTime.now()).toString();
 
     return RaisedButton(
-      child: Text("แบบประเมินสัญญาณชีพ", style: TextStyle(fontSize: 18)),
-      padding: EdgeInsets.all(15),
+      child: Text(widget.formTime, style: TextStyle(fontSize: 15)),
+      padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
       onPressed: () {
         showDialog(
