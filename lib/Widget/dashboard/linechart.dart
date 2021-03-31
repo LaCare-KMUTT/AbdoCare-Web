@@ -1,73 +1,91 @@
 import 'package:flutter/cupertino.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 
-class LineChart extends StatelessWidget {
-  final List<PointSeries> data2;
-  LineChart({@required this.data2});
-  final customTickFormatter = charts.BasicNumericTickFormatterSpec((value) {
-    if (value == 0) {
-      return "19 ก.ย";
-    } else if (value == 1) {
-      return "20 ก.ย";
-    } else if (value == 2) {
-      return "21 ก.ย";
-    } else if (value == 3) {
-      return "22 ก.ย";
-    } else if (value == 4) {
-      return "23 ก.ย";
-    } else if (value == 5) {
-      return "24 ก.ย";
-    } else if (value == 6) {
-      return "25 ก.ย";
-    }
-  });
+class LineChart extends StatefulWidget {
+  @override
+  _LineChartState createState() => _LineChartState();
+}
+
+class _LineChartState extends State<LineChart> {
+  List<_PainData> data = [
+    _PainData('10/03/64\n02.00น', 9),
+    _PainData('10/03/64\n06.00น', 9),
+    _PainData('10/03/64\n10.00น', 8),
+    _PainData('10/03/64\n14.00น', 8),
+    _PainData('10/03/64\n18.00น', 8),
+    _PainData('10/03/64\n22.00น', 8),
+    _PainData('11/03/64\n02.00น', 7),
+    _PainData('11/03/64\n06.00น', 9),
+    _PainData('11/03/64\n10.00น', 9),
+    _PainData('11/03/64\n14.00น', 7),
+    _PainData('11/03/64\n18.00น', 6),
+    _PainData('11/03/64\n22.00น', 6),
+    _PainData('12/03/64\n02.00น', 6),
+    _PainData('12/03/64\n06.00น', 6),
+    _PainData('12/03/64\n10.00น', 7),
+    _PainData('12/03/64\n14.00น', 6),
+    _PainData('12/03/64\n18.00น', 5),
+    _PainData('12/03/64\n22.00น', 5),
+    _PainData('13/03/64\n02.00น', 5),
+    _PainData('13/03/64\n06.00น', 4),
+    _PainData('13/03/64\n10.00น', 4),
+    _PainData('13/03/64\n14.00น', 4),
+    _PainData('13/03/64\n18.00น', 4),
+    _PainData('13/03/64\n22.00น', 4),
+    _PainData('14/03/64\n02.00น', 5),
+    _PainData('14/03/64\n06.00น', 4),
+    _PainData('14/03/64\n10.00น', 4),
+    _PainData('14/03/64\n14.00น', 4),
+    _PainData('14/03/64\n18.00น', 4),
+    _PainData('14/03/64\n22.00น', 4),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    var serieslist = <charts.Series<PointSeries, int>>[
-      charts.Series(
-        id: "Pain",
-        data: data2,
-        domainFn: (PointSeries serieslist, _) => serieslist.day,
-        measureFn: (PointSeries serieslist, _) => serieslist.point,
-      ),
-    ];
-    return Container(
-      height: 400,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Column(
-            children: [
-              Expanded(
-                child: charts.LineChart(
-                  serieslist,
-                  animate: false,
-                  primaryMeasureAxis: charts.NumericAxisSpec(
-                    tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                        desiredTickCount: 6),
-                  ),
-                  domainAxis: charts.NumericAxisSpec(
-                    tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                        desiredTickCount: 7),
-                    tickFormatterSpec: customTickFormatter,
-                  ),
+    var screenSize = MediaQuery.of(context).size;
+
+    return LayoutBuilder(builder: (context, constraints) {
+      return SafeArea(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Container(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                  minWidth: constraints.minWidth,
+                  minHeight: constraints.minHeight),
+              child: IntrinsicWidth(
+                child: Container(
+                  height: screenSize.height / 2,
+                  width: screenSize.width * 2,
+                  child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      legend: Legend(isVisible: false),
+                      tooltipBehavior: TooltipBehavior(enable: true),
+                      series: <ChartSeries<_PainData, String>>[
+                        LineSeries<_PainData, String>(
+                            dataSource: data,
+                            xValueMapper: (pain, _) => pain.painscore,
+                            yValueMapper: (pain, _) => pain.day,
+                            name: 'Pain score',
+                            color: Colors.red,
+                            dataLabelSettings:
+                                DataLabelSettings(isVisible: true))
+                      ]),
                 ),
               ),
-            ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
-class PointSeries {
-  final int day;
-  final int point;
-  PointSeries({
-    @required this.day,
-    @required this.point,
-  });
+class _PainData {
+  _PainData(this.painscore, this.day);
+
+  final String painscore;
+  final double day;
 }

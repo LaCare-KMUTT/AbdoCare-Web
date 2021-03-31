@@ -143,9 +143,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                     ),
                   ),
                 ),
-                Container(
-                  height: screenSize.width / 3.5,
-                  width: screenSize.width,
+                SizedBox(
                   child: PrePatientDetail(),
                 ),
                 SizedBox(
