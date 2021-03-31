@@ -1,17 +1,16 @@
-import 'package:AbdoCare_Web/Widget/material.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/adlForm.dart';
-import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_model.dart';
-import 'package:AbdoCare_Web/view_models/evaluate_form/generalForm_view_model.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../../../models/evalutate_form/pre_visit/generalForm_model.dart';
 import '../../../services/interfaces/calculation_service_interface.dart';
 import '../../../services/service_locator.dart';
+import '../../../view_models/evaluate_form/generalForm_view_model.dart';
 import '../../appbar.dart';
+import '../../material.dart';
 import '../../sidebar.dart';
+import 'adlForm.dart';
 
 class GeneralForm extends StatefulWidget {
   final String hn;
