@@ -252,7 +252,7 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot(
+  Future<Map<String, dynamic>> getLatestSubCollectionMap(
       {String collection,
       String docId,
       String subCollection,
@@ -282,6 +282,13 @@ class FirebaseServiceMock extends IFirebaseService {
   @override
   Future<String> getMedicalTeamSignature() {
     // TODO: implement getMedicalTeamSignature
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, dynamic>> getCollectionMap(
+      {String collection, String docId}) {
+    // TODO: implement getCollectionMap
     throw UnimplementedError();
   }
 }

@@ -164,13 +164,13 @@ class FirebaseService extends IFirebaseService {
     return await _firestore.collection(collection).doc(docId).get();
   }
 
-  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot({
+  Future<Map<String, dynamic>> getLatestSubCollectionMap({
     @required String collection,
     @required String docId,
     @required String subCollection,
     @required String subCollectionDocId,
   }) {
-    var snapshot = _firestore
+    var map = _firestore
         .collection(collection)
         .doc(docId)
         .collection(subCollection)
@@ -179,7 +179,7 @@ class FirebaseService extends IFirebaseService {
         .snapshots()
         .first
         .then((value) => value.docs.first.data());
-    return snapshot;
+    return map;
   }
 
   Future<String> getMedicalTeamSignature() async {
@@ -662,5 +662,15 @@ class FirebaseService extends IFirebaseService {
       return null;
     });
     return data;
+  }
+
+  Future<Map<String, dynamic>> getCollectionMap(
+      {@required String collection, @required String docId}) async {
+    var result = await _firestore
+        .collection('collection')
+        .doc(docId)
+        .get()
+        .then((value) => value.data());
+    return result;
   }
 }
