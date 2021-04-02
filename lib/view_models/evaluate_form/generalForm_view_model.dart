@@ -7,7 +7,7 @@ import '../../services/service_locator.dart';
 
 class GeneralFormViewModel {
   String hn;
-  GeneralFormModel _generalFormModel;
+  static GeneralFormModel _generalFormModel;
   final _firebaseService = locator<IFirebaseService>();
 
   GeneralFormViewModel._init(this.hn) {
@@ -29,10 +29,15 @@ class GeneralFormViewModel {
         'id': value.docs.first.id,
       };
     });
-    var model = _generalFormModel.setUserCollection(userCollection);
+    var model = _generalFormModel.setUserCollectionFromDb(userCollection);
     var anSubCollection = await _firebaseService.getLatestAnSubCollection(
         docId: userCollection['id']);
-    model = _generalFormModel.setAnSubCollection(anSubCollection);
+    model = _generalFormModel.setAnSubCollectionFromDb(anSubCollection);
+    return model;
+  }
+
+  static GeneralFormModel getGeneralFormModel() {
+    var model = _generalFormModel.getModel();
     return model;
   }
 }
