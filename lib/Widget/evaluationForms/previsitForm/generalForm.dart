@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/consent_sign_model.dart';
 import 'package:AbdoCare_Web/Widget/shared/rounded_date_picker.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _GeneralFormState extends State<GeneralForm> {
   bool checkBox7 = false;
   bool checkBox8 = false;
 
-  int consentSigned;
+  String consentSigned;
   int typeOfAnesthesia;
   int previousIllness;
   int asaClass;
@@ -77,15 +78,19 @@ class _GeneralFormState extends State<GeneralForm> {
   void _initiateConsent(String consentFromDb) {
     if (!isInitConsent) {
       if (consentFromDb != 'Patient') {
-        consentSigned = 1;
+        consentSigned = 'Patient';
         checkBox1 = true;
         print('Consent is not Patient It is $consentFromDb');
       } else if (consentFromDb == 'Patient') {
-        consentSigned = 0;
+        consentSigned = 'Others';
         print('Consent is Patient');
       }
       isInitConsent = true;
     }
+  }
+
+  void onSave(value) {
+    _consentSigned = value;
   }
 
   @override
@@ -214,8 +219,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Name'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .patientName =
+                                                                    _patientName =
                                                                         value,
                                                               ),
                                                             ),
@@ -257,8 +261,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Surname'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .patientSurname =
+                                                                    _patientSurname =
                                                                         value,
                                                               ),
                                                             ),
@@ -298,10 +301,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         ),
                                                                         labelText:
                                                                             'HN'),
-                                                                onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .hn =
-                                                                        value,
+                                                                onSaved:
+                                                                    (value) =>
+                                                                        _hn =
+                                                                            value,
                                                               ),
                                                             ),
                                                             Expanded(
@@ -340,10 +343,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         ),
                                                                         labelText:
                                                                             'AN'),
-                                                                onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .an =
-                                                                        value,
+                                                                onSaved:
+                                                                    (value) =>
+                                                                        _an =
+                                                                            value,
                                                               ),
                                                             ),
                                                           ],
@@ -395,8 +398,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Gender'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .gender =
+                                                                    _gender =
                                                                         value,
                                                               ),
                                                             ),
@@ -435,9 +437,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                             'Ward'),
                                                                 onSaved:
                                                                     (value) {
-                                                                  snapshot.data
-                                                                          .ward =
-                                                                      value;
+                                                                  _ward = value;
                                                                 },
                                                                 items: [
                                                                   '1',
@@ -456,8 +456,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 onChanged:
                                                                     (value) {
                                                                   setState(() {
-                                                                    snapshot.data
-                                                                            .ward =
+                                                                    _ward =
                                                                         value;
                                                                   });
                                                                 },
@@ -506,9 +505,8 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                     onSaved: (date) {
                                                                       setState(
                                                                         () {
-                                                                          snapshot
-                                                                              .data
-                                                                              .dob = date;
+                                                                          _dob =
+                                                                              date;
                                                                         },
                                                                       );
                                                                     }),
@@ -562,8 +560,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Diagnosis'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .diagnosis =
+                                                                    _diagnosis =
                                                                         value,
                                                               ),
                                                             ),
@@ -596,9 +593,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                   onSaved: (value) {
                                                                     print(
                                                                         'Value of Operation $value');
-                                                                    snapshot.data
-                                                                            .operationMethod =
-                                                                        value;
+                                                                    _operationMethod =
+                                                                        value ??
+                                                                            '-';
                                                                   }),
                                                             ),
                                                             Expanded(
@@ -644,9 +641,8 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                     onSaved: (date) {
                                                                       setState(
                                                                         () {
-                                                                          snapshot
-                                                                              .data
-                                                                              .operationDate = date;
+                                                                          _operationDate =
+                                                                              date;
                                                                         },
                                                                       );
                                                                     }),
@@ -661,123 +657,126 @@ class _GeneralFormState extends State<GeneralForm> {
                                                         padding: _customMaterial
                                                             .getEdgeInsetLTRB7070700(
                                                                 context),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                                flex: 3,
-                                                                child: Text(
-                                                                    'Consent signed',
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.w600))),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'Patient'),
-                                                                  value: 0,
-                                                                  groupValue:
-                                                                      consentSigned,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      consentSigned =
-                                                                          newValue;
-                                                                      checkBox1 =
-                                                                          false;
-                                                                      snapshot
-                                                                          .data
-                                                                          .consentSigned = 'Patient';
-                                                                      print(
-                                                                          _consentSigned);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                    'Other:',
-                                                                  ),
-                                                                  value: 1,
-                                                                  groupValue:
-                                                                      consentSigned,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      consentSigned =
-                                                                          newValue;
-                                                                      checkBox1 =
-                                                                          true;
-                                                                      print(
-                                                                          consentSigned);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child:
-                                                                  TextFormField(
-                                                                enabled:
-                                                                    checkBox1,
-                                                                initialValue:
-                                                                    consentSigned ==
-                                                                            0
-                                                                        ? null
-                                                                        : snapshot
-                                                                            .data
-                                                                            .consentSigned,
-                                                                validator:
-                                                                    (value) {
-                                                                  return value
-                                                                          .isEmpty
-                                                                      ? 'กรุณากรอกConsent signed'
-                                                                      : null;
-                                                                },
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                        contentPadding: new EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                8.0,
-                                                                            horizontal:
-                                                                                10.0),
-                                                                        enabledBorder:
-                                                                            OutlineInputBorder(
-                                                                          borderSide: BorderSide(
-                                                                              color: Colors.black26,
-                                                                              width: 1),
-                                                                        ),
-                                                                        labelText:
-                                                                            'Other'),
-                                                                onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .consentSigned =
-                                                                        value,
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 7,
-                                                              child: SizedBox(
-                                                                  width: 0),
-                                                            )
-                                                          ],
-                                                        ),
+                                                        child: ConsentSign(
+                                                            onSaved: onSave,
+                                                            consentFromDb: snapshot
+                                                                .data
+                                                                .consentSigned),
+                                                        // child: Row(
+                                                        //   children: <Widget>[
+                                                        //     Expanded(
+                                                        //         flex: 3,
+                                                        //         child: Text(
+                                                        //             'Consent signed',
+                                                        //             style: TextStyle(
+                                                        //                 fontWeight:
+                                                        //                     FontWeight.w600))),
+                                                        //     Expanded(
+                                                        //       flex: 2,
+                                                        //       child: Container(
+                                                        //         child:
+                                                        //             RadioListTile<
+                                                        //                 String>(
+                                                        //           contentPadding:
+                                                        //               EdgeInsets
+                                                        //                   .zero,
+                                                        //           title: Text(
+                                                        //               'Patient'),
+                                                        //           value:
+                                                        //               'Patient',
+                                                        //           groupValue:
+                                                        //               _consentSigned,
+                                                        //           onChanged:
+                                                        //               (newValue) {
+                                                        //             setState(
+                                                        //                 () {
+                                                        //               checkBox1 =
+                                                        //                   false;
+                                                        //               _consentSigned =
+                                                        //                   'Patient';
+                                                        //               print(
+                                                        //                   _consentSigned);
+                                                        //             });
+                                                        //           },
+                                                        //         ),
+                                                        //       ),
+                                                        //     ),
+                                                        //     Expanded(
+                                                        //       flex: 2,
+                                                        //       child: Container(
+                                                        //         child:
+                                                        //             RadioListTile<String>(
+                                                        //           contentPadding:
+                                                        //               EdgeInsets
+                                                        //                   .zero,
+                                                        //           title: Text(
+                                                        //             'Other:',
+                                                        //           ),
+                                                        //           value: 'Others',
+                                                        //           groupValue:
+                                                        //               _consentSigned,
+                                                        //           onChanged:
+                                                        //               (value) {
+                                                        //             setState(
+                                                        //                 () {
+                                                        //               _consentSigned =
+                                                        //                   value;
+                                                        //               checkBox1 =
+                                                        //                   true;
+                                                        //               print(
+                                                        //                   consentSigned);
+                                                        //             });
+                                                        //           },
+                                                        //         ),
+                                                        //       ),
+                                                        //     ),
+                                                        //     Expanded(
+                                                        //       flex: 3,
+                                                        //       child:
+                                                        //           TextFormField(
+                                                        //         enabled:
+                                                        //             checkBox1,
+                                                        //         initialValue:
+                                                        //             _consentSigned ==
+                                                        //                     'Others'
+                                                        //                 ? null
+                                                        //                 : snapshot
+                                                        //                     .data
+                                                        //                     .consentSigned,
+                                                        //         validator:
+                                                        //             (value) {
+                                                        //           return value
+                                                        //                   .isEmpty
+                                                        //               ? 'กรุณากรอกConsent signed'
+                                                        //               : null;
+                                                        //         },
+                                                        //         decoration:
+                                                        //             InputDecoration(
+                                                        //                 contentPadding: new EdgeInsets.symmetric(
+                                                        //                     vertical:
+                                                        //                         8.0,
+                                                        //                     horizontal:
+                                                        //                         10.0),
+                                                        //                 enabledBorder:
+                                                        //                     OutlineInputBorder(
+                                                        //                   borderSide: BorderSide(
+                                                        //                       color: Colors.black26,
+                                                        //                       width: 1),
+                                                        //                 ),
+                                                        //                 labelText:
+                                                        //                     'Other'),
+                                                        //         onSaved: (value) =>
+                                                        //             _consentSigned =
+                                                        //                 value,
+                                                        //       ),
+                                                        //     ),
+                                                        //     Expanded(
+                                                        //       flex: 7,
+                                                        //       child: SizedBox(
+                                                        //           width: 0),
+                                                        //     )
+                                                        //   ],
+                                                        // ),
                                                       ),
                                                     ),
                                                     Container(
@@ -830,8 +829,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Pre-medication'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .preMedication =
+                                                                    _preMedication =
                                                                         value,
                                                               ),
                                                             ),
@@ -1269,8 +1267,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Other'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .previousIllness =
+                                                                    _previousIllness =
                                                                         value,
                                                               ),
                                                             ),
@@ -1334,8 +1331,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Drug used'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .drugUsed =
+                                                                    _drugUsed =
                                                                         value,
                                                               ),
                                                             ),
@@ -1616,11 +1612,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         ),
                                                                         labelText:
                                                                             'BW'),
-                                                                onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .bw =
-                                                                        int.parse(
-                                                                            value),
+                                                                onSaved:
+                                                                    (value) =>
+                                                                        _bw =
+                                                                            value,
                                                               ),
                                                             ),
                                                             Expanded(
@@ -1659,11 +1654,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         ),
                                                                         labelText:
                                                                             'High'),
-                                                                onSaved: (value) => snapshot
-                                                                        .data
-                                                                        .high =
-                                                                    int.parse(
-                                                                        value),
+                                                                onSaved:
+                                                                    (value) =>
+                                                                        _high =
+                                                                            value,
                                                               ),
                                                             ),
                                                             Flexible(
@@ -1702,11 +1696,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         ),
                                                                         labelText:
                                                                             'Weight'),
-                                                                onSaved: (value) => snapshot
-                                                                        .data
-                                                                        .weight =
-                                                                    int.parse(
-                                                                        value),
+                                                                onSaved: (value) =>
+                                                                    _weight =
+                                                                        value,
                                                               ),
                                                             ),
                                                             Flexible(
@@ -1766,8 +1758,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Previous surgery'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .previousSurgery =
+                                                                    _previousSurgery =
                                                                         value,
                                                               ),
                                                             ),
@@ -1876,8 +1867,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'On Anticoagulant/ Anti Platelet'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .antiPlateletReason =
+                                                                    _antiPlateletReason =
                                                                         value,
                                                               ),
                                                             ),
@@ -1914,8 +1904,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Days'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .anitiPlateletDays =
+                                                                    _antiPlateletDays =
                                                                         value,
                                                               ),
                                                             ),
@@ -2064,8 +2053,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Symptoms'),
                                                                 onSaved: (value) =>
-                                                                    snapshot.data
-                                                                            .allergyMedication =
+                                                                    _allergyMedication =
                                                                         value,
                                                               ),
                                                             ),
@@ -2956,8 +2944,10 @@ class _GeneralFormState extends State<GeneralForm> {
                               var model =
                                   GeneralFormViewModel.getGeneralFormModel();
                               print('body Weight : ${model.weight}');
-                              // var map = model.toMap();
-                              // print('Model =  : $map');
+                              print('ConsentHEREEE =  : $_consentSigned');
+                              model.fromMap(formDataToDB);
+                              var map = model.toMap();
+                              print('Model =  : $map');
                               // model.fromMap(formDataToDB);
                               Navigator.push(
                                   context,

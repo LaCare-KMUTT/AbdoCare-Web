@@ -1403,7 +1403,9 @@ class _ADLFormState extends State<ADLForm> {
                             style: TextStyle(fontSize: 18),
                           ),
                           onPressed: () {
-                            adlData(0);
+                            Navigator.pop(context);
+
+                            // adlData(0);
                           },
                         ),
                       ),

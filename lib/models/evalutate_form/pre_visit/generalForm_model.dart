@@ -178,7 +178,7 @@ class GeneralFormModel {
     _operationDate = map['operationDate'];
     _gender = map['gender'];
     _ward = map['ward'];
-    _operationMethod = map['operation'];
+    _operationMethod = map['operationMethod'];
     _diagnosis = map['diagnosis'];
     _consentSigned = map['consentSigned'];
     _preMedication = map['preMedication'];
