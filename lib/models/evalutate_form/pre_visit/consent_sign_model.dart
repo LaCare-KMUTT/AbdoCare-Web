@@ -44,8 +44,10 @@ class _ConsentSignState extends State<ConsentSign> {
                 else {
                   isEnabled = true;
                 }
-                item = e.text;
-                onSaved(item);
+                if (!isEnabled) {
+                  item = e.text;
+                  onSaved(item);
+                }
               });
             },
           ),
