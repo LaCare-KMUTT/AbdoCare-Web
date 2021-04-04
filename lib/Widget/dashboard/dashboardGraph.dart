@@ -107,7 +107,33 @@ class _ShowDashboardState extends State<ShowDashboard> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: TestChart(),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 50,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.chevron_left,
+                                size: 50,
+                              ),
+                              color: Color(0xFFC37447),
+                              onPressed: () {},
+                            ),
+                          ),
+                          Expanded(child: TestChart()),
+                          Container(
+                            width: 50,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.chevron_right,
+                                size: 50,
+                              ),
+                              color: Color(0xFFC37447),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
