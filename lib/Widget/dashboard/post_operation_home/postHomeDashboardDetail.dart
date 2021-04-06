@@ -170,7 +170,7 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                 // ),
                 SizedBox(
                   // Vertical ListView
-                  child: ShowDashboard(),
+                  child: ShowDashboard(patientstate: 'Post-Operation@Home'),
                 )
               ],
             ),

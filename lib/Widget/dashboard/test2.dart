@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 
-class TestChart extends StatefulWidget {
+class TestChart2 extends StatefulWidget {
   @override
-  _TestChartState createState() => _TestChartState();
+  _TestChartState2 createState() => _TestChartState2();
 }
 
-class _TestChartState extends State<TestChart> {
+class _TestChartState2 extends State<TestChart2> {
   List<_TestData> data = [
     _TestData('10/03/64\n02.00น', 37.0),
     _TestData('10/03/64\n06.00น', 37.2),
@@ -22,12 +22,12 @@ class _TestChartState extends State<TestChart> {
     _TestData('11/03/64\n14.00น', 36.5),
     _TestData('11/03/64\n18.00น', 36.8),
     _TestData('11/03/64\n22.00น', 36.9),
-    // _TestData('12/03/64\n02.00น', 37.0),
-    // _TestData('12/03/64\n06.00น', 36.1),
-    // _TestData('12/03/64\n10.00น', 36.2),
-    // _TestData('12/03/64\n14.00น', 36.5),
-    // _TestData('12/03/64\n18.00น', 36.2),
-    // _TestData('12/03/64\n22.00น', 36.2),
+    _TestData('12/03/64\n02.00น', 37.0),
+    _TestData('12/03/64\n06.00น', 36.1),
+    _TestData('12/03/64\n10.00น', 36.2),
+    _TestData('12/03/64\n14.00น', 36.5),
+    _TestData('12/03/64\n18.00น', 36.2),
+    _TestData('12/03/64\n22.00น', 36.2),
   ];
   List<_TestData> data2 = [
     _TestData('10/03/64\n02.00น', 68),
@@ -42,12 +42,12 @@ class _TestChartState extends State<TestChart> {
     _TestData('11/03/64\n14.00น', 85),
     _TestData('11/03/64\n18.00น', 78),
     _TestData('11/03/64\n22.00น', 79),
-    // _TestData('12/03/64\n02.00น', 82),
-    // _TestData('12/03/64\n06.00น', 85),
-    // _TestData('12/03/64\n10.00น', 90),
-    // _TestData('12/03/64\n14.00น', 92),
-    // _TestData('12/03/64\n18.00น', 94),
-    // _TestData('12/03/64\n22.00น', 89),
+    _TestData('12/03/64\n02.00น', 70),
+    _TestData('12/03/64\n06.00น', 85),
+    _TestData('12/03/64\n10.00น', 89),
+    _TestData('12/03/64\n14.00น', 90),
+    _TestData('12/03/64\n18.00น', 79),
+    _TestData('12/03/64\n22.00น', 85),
   ];
   ZoomPanBehavior _zoomPanBehavior;
 
@@ -80,8 +80,9 @@ class _TestChartState extends State<TestChart> {
             //           child:
             SfCartesianChart(
                 zoomPanBehavior: _zoomPanBehavior,
-                primaryXAxis:
-                    CategoryAxis(name: 'test2', title: AxisTitle(text: 'Date')),
+                primaryXAxis: CategoryAxis(
+                    //name: 'test2', title: AxisTitle(text: 'Date')
+                    ),
                 primaryYAxis: NumericAxis(
                     name: 'test',
                     title: AxisTitle(
