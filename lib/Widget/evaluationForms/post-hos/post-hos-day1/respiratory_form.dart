@@ -555,6 +555,7 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
                                                 //   'seen': false,
                                                 // });
                                               }
+                                              Navigator.pop(context);
                                             }
                                           }),
                                     ),

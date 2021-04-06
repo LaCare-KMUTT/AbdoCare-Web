@@ -188,6 +188,7 @@ class _UrologyFormState extends State<UrologyForm> {
                                                 //   'seen': false,
                                                 // });
                                               }
+                                              Navigator.pop(context);
                                             }
                                           }),
                                     ),

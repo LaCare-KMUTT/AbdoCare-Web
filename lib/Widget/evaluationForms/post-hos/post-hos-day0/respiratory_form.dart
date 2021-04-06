@@ -492,71 +492,71 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       child: RaisedButton(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(7.0)),
-                                          textColor: Colors.white,
-                                          padding: EdgeInsets.all(15),
-                                          color: Color(0xFF2ED47A),
-                                          child: Text('ยืนยัน',
-                                              style: TextStyle(fontSize: 18)),
-                                          onPressed: () async {
-                                            if (_value1 == null ||
-                                                _value2 == null ||
-                                                _value3 == null ||
-                                                _value4 == null ||
-                                                _value5 == null ||
-                                                _value6 == null) {
-                                              alert(context);
-                                            } else {
-                                              Map<String, dynamic>
-                                                  formDataToDB = {
-                                                'Exercise1': _value1,
-                                                'Exercise2': _value2,
-                                                'Exercise3': _value3,
-                                                'Exercise4': _value4,
-                                                'Exercise5': _value5,
-                                                'Exercise6': _value6,
-                                              };
-                                              print(
-                                                  'hn in Respiratory = ${widget.hn}');
-                                              var formId =
-                                                  await _firebaseService
-                                                      .addDataToFormsCollection(
-                                                          hn: widget.hn,
-                                                          formName:
-                                                              'Respiratory',
-                                                          data: formDataToDB);
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.0)),
+                                        textColor: Colors.white,
+                                        padding: EdgeInsets.all(15),
+                                        color: Color(0xFF2ED47A),
+                                        child: Text('ยืนยัน',
+                                            style: TextStyle(fontSize: 18)),
+                                        onPressed: () async {
+                                          if (_value1 == null ||
+                                              _value2 == null ||
+                                              _value3 == null ||
+                                              _value4 == null ||
+                                              _value5 == null ||
+                                              _value6 == null) {
+                                            alert(context);
+                                          } else {
+                                            Map<String, dynamic> formDataToDB =
+                                                {
+                                              'Exercise1': _value1,
+                                              'Exercise2': _value2,
+                                              'Exercise3': _value3,
+                                              'Exercise4': _value4,
+                                              'Exercise5': _value5,
+                                              'Exercise6': _value6,
+                                            };
+                                            print(
+                                                'hn in Respiratory = ${widget.hn}');
+                                            var formId = await _firebaseService
+                                                .addDataToFormsCollection(
+                                                    hn: widget.hn,
+                                                    formName: 'Respiratory',
+                                                    data: formDataToDB);
 
-                                              if (_value1 == "ใช่" &&
-                                                  _value2 ==
-                                                      "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
-                                                  (_value3 == "ปฏิบัติ" ||
-                                                      _value3 ==
-                                                          "ไม่มีเสมหะ") &&
-                                                  _value4 == "ปฏิบัติ" &&
-                                                  _value5 ==
-                                                      "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
-                                                  (_value6 == "2 ลูก" ||
-                                                      _value6 == "3 ลูก")) {
-                                                result = "Pass";
-                                              } else {
-                                                result = "NotPass";
-                                                // var creation = _calculationService.formatDate(
-                                                //     date: DateTime.now());
-                                                // var patientState = _anSubCollection['state'];
-                                                // _firebaseService.addNotification({
-                                                //   'formName': 'Respiratory',
-                                                //   'formId': formId,
-                                                //   'userId':
-                                                //       UserStore.getValueFromStore('storedUserId'),
-                                                //   'creation': creation,
-                                                //   'patientState': patientState,
-                                                //   'seen': false,
-                                                // });
-                                              }
+                                            if (_value1 == "ใช่" &&
+                                                _value2 ==
+                                                    "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
+                                                (_value3 == "ปฏิบัติ" ||
+                                                    _value3 == "ไม่มีเสมหะ") &&
+                                                _value4 == "ปฏิบัติ" &&
+                                                _value5 ==
+                                                    "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
+                                                (_value6 == "2 ลูก" ||
+                                                    _value6 == "3 ลูก")) {
+                                              result = "Pass";
+                                            } else {
+                                              result = "NotPass";
+                                              // var creation = _calculationService.formatDate(
+                                              //     date: DateTime.now());
+                                              // var patientState = _anSubCollection['state'];
+                                              // _firebaseService.addNotification({
+                                              //   'formName': 'Respiratory',
+                                              //   'formId': formId,
+                                              //   'userId':
+                                              //       UserStore.getValueFromStore('storedUserId'),
+                                              //   'creation': creation,
+                                              //   'patientState': patientState,
+                                              //   'seen': false,
+                                              // });
+
                                             }
-                                          }),
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ],

@@ -301,6 +301,7 @@ class _DrainFormState extends State<DrainForm> {
                                                 //   'seen': false,
                                                 // });
                                               }
+                                              Navigator.pop(context);
                                             }
                                           }),
                                     ),

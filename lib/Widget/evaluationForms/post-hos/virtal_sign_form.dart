@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/gradient_slider.dart';
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
@@ -26,6 +27,15 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   String _bp;
   String _systolic;
   String _diastolic;
+  int value = 5;
+  String result = "ปวดปานกลาง";
+  LinearGradient gradient = LinearGradient(
+    colors: <Color>[
+      Colors.greenAccent[400],
+      Colors.orangeAccent[400],
+      Colors.redAccent[700],
+    ],
+  );
   @override
   Widget build(BuildContext context) {
     var dateToShow = _calculationService.formatDateToThaiString(
@@ -246,6 +256,73 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                       ],
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, bottom: 10),
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Image.asset(
+                                              'assets/Painform.png',
+                                              height: 150,
+                                              width: 350,
+                                            ),
+                                            Column(children: [
+                                              Text(
+                                                value.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 24.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black),
+                                              ),
+                                              Text(
+                                                result,
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.w300,
+                                                    color: Colors.black),
+                                              ),
+                                            ]),
+                                            SliderTheme(
+                                              data: SliderThemeData(
+                                                trackShape:
+                                                    GradientRectSliderTrackShape(
+                                                        gradient: gradient,
+                                                        darkenInactive: true),
+                                                trackHeight: 20,
+                                              ),
+                                              child: Slider(
+                                                value: value.toDouble(),
+                                                min: 0,
+                                                max: 10,
+                                                activeColor: Colors.white,
+                                                onChanged: (value2) {
+                                                  setState(() {
+                                                    value = value2.round();
+                                                    if (value >= 8) {
+                                                      result = "ปวดมาก";
+                                                    } else if (5 <= value) {
+                                                      result = "ปวดปานกลาง";
+                                                    } else if (1 <= value) {
+                                                      result = "ปวดเล็กน้อย";
+                                                    } else if (0 <= value) {
+                                                      result = "ไม่ปวด";
+                                                    }
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   Container(
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 20),
@@ -270,15 +347,49 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                               'pr': _pr,
                                               'rr': _rr,
                                               'bp': _bp,
+                                              'pain': value,
                                             };
                                             print(
                                                 'hn in Virtal-Sign = ${widget.hn}');
+                                            print(
+                                                'Value in pain_form = $value ');
 
                                             _firebaseService
                                                 .addDataToFormsCollection(
                                                     hn: widget.hn,
                                                     formName: 'Virtal-Sign',
                                                     data: dataToDB);
+
+                                            // if ((_anSubCollection['state'] ==
+                                            //             'Post-Operation@Hospital' &&
+                                            //         value >= 7) ||
+                                            //     (_anSubCollection['state'] ==
+                                            //             'Post-Operation@Home' &&
+                                            //         value >= 4)) {
+                                            //   showAdvise1(context, value,
+                                            //       _anSubCollection['state']);
+                                            //   if (checkNotificationCriteria(
+                                            //       value)) {
+                                            //     var creation =
+                                            //         _calculationService
+                                            //             .formatDate(
+                                            //                 date:
+                                            //                     DateTime.now());
+                                            //     var patientState =
+                                            //         _anSubCollection['state'];
+                                            //     _firebaseService
+                                            //         .addNotification({
+                                            //       'formName': 'pain',
+                                            //       'formId': formId,
+                                            //       'userId': UserStore
+                                            //           .getValueFromStore(
+                                            //               'storedUserId'),
+                                            //       'creation': creation,
+                                            //       'patientState': patientState,
+                                            //       'seen': false,
+                                            //     });
+                                            //   }
+                                            // }
                                             Navigator.pop(context);
                                           }
                                         },

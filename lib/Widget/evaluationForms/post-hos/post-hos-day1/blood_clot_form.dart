@@ -546,6 +546,7 @@ class _BloodClotFormState extends State<BloodClotForm> {
                                                 //   'seen': false,
                                                 // });
                                               }
+                                              Navigator.pop(context);
                                             }
                                           }),
                                     ),

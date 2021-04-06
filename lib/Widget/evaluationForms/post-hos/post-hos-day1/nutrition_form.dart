@@ -362,6 +362,7 @@ class _NutritionFormState extends State<NutritionForm> {
                                                 // 'seen': false,
                                                 // });
                                               }
+                                              Navigator.pop(context);
                                             }
                                           }),
                                     ),
