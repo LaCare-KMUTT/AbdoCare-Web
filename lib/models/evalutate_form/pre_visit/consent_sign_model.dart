@@ -20,7 +20,7 @@ class _ConsentSignState extends State<ConsentSign> {
   String consentFromDb;
   _ConsentSignState({this.onSaved, this.consentFromDb});
 
-  int _id = 1;
+  int _id;
   String item = 'Patient';
   bool isEnabled = false;
   List<ConsentList> list = [
@@ -35,17 +35,19 @@ class _ConsentSignState extends State<ConsentSign> {
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
             title: Text('${e.text}'),
-            value: e.text,
+            value: e.index,
             groupValue: _id,
             onChanged: (newValue) {
               setState(() {
-                if (newValue == 'Patient')
+                if (newValue == 'Patient') {
                   isEnabled = false;
-                else {
+                  _id = e.index;
+                } else {
                   isEnabled = true;
+                  _id = e.index;
                 }
                 if (!isEnabled) {
-                  item = e.text;
+                  item = newValue;
                   onSaved(item);
                 }
               });
@@ -58,18 +60,20 @@ class _ConsentSignState extends State<ConsentSign> {
 
   @override
   void initState() {
-    print('Consent from db$consentFromDb');
     super.initState();
     int init;
     if (consentFromDb == 'Patient') {
       init = 1;
+      isEnabled = false;
+      item = 'Patient';
     } else {
       init = 2;
+      isEnabled = true;
+      item = 'Others';
     }
     setState(() {
       _id = init;
     });
-    print(' id  = ==  $_id');
   }
 
   @override
@@ -97,7 +101,8 @@ class _ConsentSignState extends State<ConsentSign> {
                 ),
                 labelText: 'Other'),
             onSaved: (value) {
-              onSaved(item);
+              print('Value from $value');
+              onSaved(value);
             },
           ),
         ),

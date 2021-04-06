@@ -74,20 +74,6 @@ class _GeneralFormState extends State<GeneralForm> {
   int sleepDisorder;
 
   var date;
-  bool isInitConsent = false;
-  void _initiateConsent(String consentFromDb) {
-    if (!isInitConsent) {
-      if (consentFromDb != 'Patient') {
-        consentSigned = 'Patient';
-        checkBox1 = true;
-        print('Consent is not Patient It is $consentFromDb');
-      } else if (consentFromDb == 'Patient') {
-        consentSigned = 'Others';
-        print('Consent is Patient');
-      }
-      isInitConsent = true;
-    }
-  }
 
   void onSave(value) {
     _consentSigned = value;
@@ -150,8 +136,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                           if (!snapshot.hasData) {
                                             return CircularProgressIndicator();
                                           }
-                                          _initiateConsent(
-                                              snapshot.data.consentSigned);
                                           return Column(
                                             children: [
                                               Container(
