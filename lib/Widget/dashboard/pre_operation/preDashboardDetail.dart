@@ -1,12 +1,11 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/generalForm.dart';
 import 'package:flutter/material.dart';
-
-import 'preDashboardPatientDetail.dart';
-import '../dashboardGraph.dart';
 
 import '../../../page/dashboard_postHome.dart';
 import '../../../page/dashboard_postHos.dart';
 import '../../../page/dashboard_pre.dart';
+import '../../evaluationForms/previsitForm/generalForm/generalForm.dart';
+import '../dashboardGraph.dart';
+import 'preDashboardPatientDetail.dart';
 
 class PreDashboardDetail extends StatefulWidget {
   final String hn;
