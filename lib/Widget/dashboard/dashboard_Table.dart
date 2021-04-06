@@ -399,8 +399,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 Text(item['O2Sat'].toString(),
                                     style: TextStyle(
                                         color: _customMaterial
-                                            .getOxygenRateColor(item['O2Sat']),
-                                        fontSize: 15))
+                                            .getOxygenRateColor(item['O2Sat'])))
                               ]),
                           ]),
                           TableRow(children: [
