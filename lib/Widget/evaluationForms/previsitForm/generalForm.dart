@@ -575,8 +575,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                       ),
                                                                       labelText: 'Operation'),
                                                                   onSaved: (value) {
-                                                                    print(
-                                                                        'Value of Operation $value');
                                                                     _operationMethod =
                                                                         value ??
                                                                             '-';
@@ -646,121 +644,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                                             consentFromDb: snapshot
                                                                 .data
                                                                 .consentSigned),
-                                                        // child: Row(
-                                                        //   children: <Widget>[
-                                                        //     Expanded(
-                                                        //         flex: 3,
-                                                        //         child: Text(
-                                                        //             'Consent signed',
-                                                        //             style: TextStyle(
-                                                        //                 fontWeight:
-                                                        //                     FontWeight.w600))),
-                                                        //     Expanded(
-                                                        //       flex: 2,
-                                                        //       child: Container(
-                                                        //         child:
-                                                        //             RadioListTile<
-                                                        //                 String>(
-                                                        //           contentPadding:
-                                                        //               EdgeInsets
-                                                        //                   .zero,
-                                                        //           title: Text(
-                                                        //               'Patient'),
-                                                        //           value:
-                                                        //               'Patient',
-                                                        //           groupValue:
-                                                        //               _consentSigned,
-                                                        //           onChanged:
-                                                        //               (newValue) {
-                                                        //             setState(
-                                                        //                 () {
-                                                        //               checkBox1 =
-                                                        //                   false;
-                                                        //               _consentSigned =
-                                                        //                   'Patient';
-                                                        //               print(
-                                                        //                   _consentSigned);
-                                                        //             });
-                                                        //           },
-                                                        //         ),
-                                                        //       ),
-                                                        //     ),
-                                                        //     Expanded(
-                                                        //       flex: 2,
-                                                        //       child: Container(
-                                                        //         child:
-                                                        //             RadioListTile<String>(
-                                                        //           contentPadding:
-                                                        //               EdgeInsets
-                                                        //                   .zero,
-                                                        //           title: Text(
-                                                        //             'Other:',
-                                                        //           ),
-                                                        //           value: 'Others',
-                                                        //           groupValue:
-                                                        //               _consentSigned,
-                                                        //           onChanged:
-                                                        //               (value) {
-                                                        //             setState(
-                                                        //                 () {
-                                                        //               _consentSigned =
-                                                        //                   value;
-                                                        //               checkBox1 =
-                                                        //                   true;
-                                                        //               print(
-                                                        //                   consentSigned);
-                                                        //             });
-                                                        //           },
-                                                        //         ),
-                                                        //       ),
-                                                        //     ),
-                                                        //     Expanded(
-                                                        //       flex: 3,
-                                                        //       child:
-                                                        //           TextFormField(
-                                                        //         enabled:
-                                                        //             checkBox1,
-                                                        //         initialValue:
-                                                        //             _consentSigned ==
-                                                        //                     'Others'
-                                                        //                 ? null
-                                                        //                 : snapshot
-                                                        //                     .data
-                                                        //                     .consentSigned,
-                                                        //         validator:
-                                                        //             (value) {
-                                                        //           return value
-                                                        //                   .isEmpty
-                                                        //               ? 'กรุณากรอกConsent signed'
-                                                        //               : null;
-                                                        //         },
-                                                        //         decoration:
-                                                        //             InputDecoration(
-                                                        //                 contentPadding: new EdgeInsets.symmetric(
-                                                        //                     vertical:
-                                                        //                         8.0,
-                                                        //                     horizontal:
-                                                        //                         10.0),
-                                                        //                 enabledBorder:
-                                                        //                     OutlineInputBorder(
-                                                        //                   borderSide: BorderSide(
-                                                        //                       color: Colors.black26,
-                                                        //                       width: 1),
-                                                        //                 ),
-                                                        //                 labelText:
-                                                        //                     'Other'),
-                                                        //         onSaved: (value) =>
-                                                        //             _consentSigned =
-                                                        //                 value,
-                                                        //       ),
-                                                        //     ),
-                                                        //     Expanded(
-                                                        //       flex: 7,
-                                                        //       child: SizedBox(
-                                                        //           width: 0),
-                                                        //     )
-                                                        //   ],
-                                                        // ),
                                                       ),
                                                     ),
                                                     Container(
