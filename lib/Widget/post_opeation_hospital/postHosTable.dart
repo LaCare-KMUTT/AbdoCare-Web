@@ -1,6 +1,6 @@
 import 'dart:ui';
-
 import 'package:AbdoCare_Web/models/post_hos_list_model.dart';
+import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:AbdoCare_Web/view_models/post_hos_list_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -177,8 +177,12 @@ class _PostHosTableState extends State<PostHosTable> {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
-                      Navigator.pushNamed(context, '/dashboard_postHos',
-                          arguments: user.hn);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PostHosDashboardPage(hn: user.hn),
+                          ));
                     },
                     cells: [
                       DataCell(Text(user.hn)),

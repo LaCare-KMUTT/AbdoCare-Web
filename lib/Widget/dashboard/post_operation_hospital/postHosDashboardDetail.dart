@@ -1,14 +1,23 @@
+import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day0/respiratory_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day0/urology_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day1/blood_clot_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day1/drain_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day1/nutrition_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day1/respiratory_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/digestive_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/infection_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/pulmanary_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/virtal_sign_form.dart';
 
-import '../../../page/dashboard_pre.dart';
-import '../../../page/dashboard_postHome.dart';
-import '../../../page/dashboard_postHos.dart';
-
+import '../../material.dart';
 import '../dashboardGraph.dart';
 import 'postHosDashboardPatientDetail.dart';
 
 class PostHosDashboardDetail extends StatefulWidget {
-  PostHosDashboardDetail({Key key}) : super(key: key);
+  final String hn;
+  PostHosDashboardDetail({Key key, @required this.hn}) : super(key: key);
   @override
   _PostHosDashboardDetailState createState() => _PostHosDashboardDetailState();
 }
@@ -16,44 +25,250 @@ class PostHosDashboardDetail extends StatefulWidget {
 class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
   final ScrollController controller = ScrollController();
 
-  Container myArticles(String heading) {
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
+  String dayInCurrentState = '1';
+  String dropdownValue = 'Post-Operation@Hospital';
+
+  Container virtalSignFormCard(String heading, String hn) {
     return Container(
-      width: 160.0,
-      child: Card(
-        child: Wrap(
-          children: [
-            ListTile(
-              title: Text(
-                heading,
-                style: TextStyle(fontSize: 12),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 5),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                  textColor: Colors.black,
-                  color: Color(0xFFEBEBEB),
-                  child: Text('แบบประเมิน', style: TextStyle(fontSize: 12)),
-                  onPressed: () {
-                    print('แบบประเมินระบบทางเดินหายใจ');
-                    setState(() {});
-                    Navigator.pushNamed(context, '/addPatient_page');
-                  },
+      width: 400,
+      height: 420,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+        child: Card(
+          child: Wrap(
+            children: [
+              ListTile(
+                title: Text(
+                  heading,
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-          ],
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: (() {
+                    print('container: ${hn}');
+                    if (heading == 'แบบประเมินสัญญาณชีพ') {
+                      return Column(
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_customMaterial
+                                    .disableVirtalSignButton1(false),
+                                child: VirtalSignForm(
+                                    hn: widget.hn, formTime: '02:00 น.'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_customMaterial
+                                    .disableVirtalSignButton2(false),
+                                child: VirtalSignForm(
+                                    hn: 'HN30001', formTime: '06:00 น.'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_customMaterial
+                                    .disableVirtalSignButton3(false),
+                                child: VirtalSignForm(
+                                    hn: 'HN30001', formTime: '10:00 น.'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_customMaterial
+                                    .disableVirtalSignButton4(false),
+                                child: VirtalSignForm(
+                                    hn: 'HN30001', formTime: '14:00 น.'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_customMaterial
+                                    .disableVirtalSignButton5(false),
+                                child: VirtalSignForm(
+                                    hn: 'HN30001', formTime: '18:00 น.'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_customMaterial
+                                    .disableVirtalSignButton6(false),
+                                child: VirtalSignForm(
+                                    hn: 'HN30001', formTime: '22:00 น.'),
+                              )),
+                        ],
+                      );
+                    }
+                  }()),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  String dropdownValue = 'Post-Operation@Hospital';
+  Container postHosDay0FormCard(String heading) {
+    return Container(
+      width: 400,
+      height: 140,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Card(
+          child: Wrap(
+            children: [
+              ListTile(
+                title: Text(
+                  heading,
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: (() {
+                    if (heading ==
+                        'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ(Day0)') {
+                      return AbsorbPointer(
+                          absorbing:
+                              !_customMaterial.disableRespiratoryDay0Button(
+                                  true), //true to disable the button
+                          child: RespiratoryDay0Form(hn: 'HN30001'));
+                    } else if (heading == 'แบบประเมินระบบปัสสาวะ') {
+                      return AbsorbPointer(
+                          absorbing:
+                              !_customMaterial.disableUrologyButton(false),
+                          child: UrologyForm(hn: 'HN30001'));
+                    } else {
+                      print('form not match');
+                      return null;
+                    }
+                  }()),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container postHosDay1FormCard(String heading) {
+    return Container(
+      width: 400,
+      height: 140,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Card(
+          child: Wrap(
+            children: [
+              ListTile(
+                title: Text(
+                  heading,
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: (() {
+                    if (heading == 'แบบประเมินการเกิดภาวะลิ่มเลือดอุดตัน') {
+                      return AbsorbPointer(
+                          absorbing:
+                              !_customMaterial.disableBloodClotButton(false),
+                          child: BloodClotForm(hn: 'HN30001'));
+                    } else if (heading ==
+                        'แบบประเมินการจัดการแผลผ่าตัดและสายระบาย') {
+                      return AbsorbPointer(
+                          absorbing: !_customMaterial.disableDrainButton(false),
+                          child: DrainForm(hn: 'HN30001'));
+                    } else if (heading == 'แบบประเมินการจัดการภาวะโภชนาการ') {
+                      return AbsorbPointer(
+                          absorbing:
+                              !_customMaterial.disableNutritionButton(false),
+                          child: NutritionForm(hn: 'HN30001'));
+                    } else if (heading ==
+                        'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ') {
+                      return AbsorbPointer(
+                          absorbing: !_customMaterial
+                              .disableRespiratoryDay1Button(false),
+                          child: RespiratoryDay1Form(hn: 'HN30001'));
+                    } else {
+                      print('form not match');
+                      return null;
+                    }
+                  }()),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container postHosDay2FormCard(String heading) {
+    return Container(
+      width: 400,
+      height: 140,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Card(
+          child: Wrap(
+            children: [
+              ListTile(
+                title: Text(
+                  heading,
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: (() {
+                    if (heading == 'แบบประเมินการฟื้นฟูระบบทางเดินอาหาร') {
+                      return AbsorbPointer(
+                          absorbing:
+                              !_customMaterial.disableDigestiveButton(false),
+                          child: DigestiveForm(hn: 'HN30001'));
+                    } else if (heading ==
+                        'แบบประเมินการเฝ้าระวังภาวะแทรกซ้อน') {
+                      return AbsorbPointer(
+                          absorbing:
+                              !_customMaterial.disableInfectionButton(false),
+                          child: InfectionForm(hn: 'HN30001'));
+                    } else if (heading == 'แบบประเมินการฟื้นฟูสมรรถภาพของปอด') {
+                      return AbsorbPointer(
+                          absorbing:
+                              !_customMaterial.disablePulmanaryButton(false),
+                          child: PulmanaryForm(hn: 'HN30001'));
+                    } else {
+                      print('form not match');
+                      return null;
+                    }
+                  }()),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,28 +310,18 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               dropdownValue = newValue;
                               switch (newValue) {
                                 case "Pre-Operation":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PreDashboardPage()),
-                                  );
+                                  Navigator.pushNamed(
+                                      context, '/dashboard_pre');
+
                                   break;
                                 case "Post-Operation@Hospital":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PostHosDashboardPage()),
-                                  );
+                                  Navigator.pushNamed(
+                                      context, '/dashboard_postHos');
+
                                   break;
                                 case "Post-Operation@Home":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PostHomeDashboardPage()),
-                                  );
+                                  Navigator.pushNamed(
+                                      context, '/dashboard_postHome');
                                   break;
                               }
                             });
@@ -126,53 +331,101 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                     ),
                   ),
                 ),
+                SizedBox(child: PostHosPatientDetail()),
                 SizedBox(
-                  // Vertical ListView
-                  child: PostHosPatientDetail(),
+                  height: 500,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Card(
+                      child: Scrollbar(
+                        isAlwaysShown: false,
+                        controller: controller,
+                        child: ListView(
+                          controller: controller,
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'แบบประเมิน',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Color(0xFFC37447)),
+                                  ),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            virtalSignFormCard(
+                                                'แบบประเมินสัญญาณชีพ',
+                                                widget.hn),
+                                          ],
+                                        ),
+                                        (() {
+                                          if (dayInCurrentState == '0') {
+                                            return Column(
+                                              children: [
+                                                postHosDay0FormCard(
+                                                    'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ(Day0)'),
+                                                postHosDay0FormCard(
+                                                    'แบบประเมินระบบปัสสาวะ'),
+                                              ],
+                                            );
+                                          } else if (dayInCurrentState == '1') {
+                                            return Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    postHosDay1FormCard(
+                                                        'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ'),
+                                                    postHosDay1FormCard(
+                                                        'แบบประเมินการจัดการแผลผ่าตัดและสายระบาย'),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    postHosDay1FormCard(
+                                                        'แบบประเมินการจัดการภาวะโภชนาการ'),
+                                                    postHosDay1FormCard(
+                                                        'แบบประเมินการเกิดภาวะลิ่มเลือดอุดตัน'),
+                                                  ],
+                                                ),
+                                              ],
+                                            );
+                                          } else if (dayInCurrentState == '2') {
+                                            return Column(
+                                              children: [
+                                                postHosDay2FormCard(
+                                                    'แบบประเมินการฟื้นฟูระบบทางเดินอาหาร'),
+                                                postHosDay2FormCard(
+                                                    'แบบประเมินการเฝ้าระวังภาวะแทรกซ้อน'),
+                                                postHosDay2FormCard(
+                                                    'แบบประเมินการฟื้นฟูสมรรถภาพของปอด')
+                                              ],
+                                            );
+                                          }
+                                        }())
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                // not in nsc scope
-                //
-                // SizedBox(
-                //   // Horizontal ListView
-                //   height: 160,
-                //   child: Card(
-                //     margin: EdgeInsets.all(10),
-                //     child: Scrollbar(
-                //       isAlwaysShown: false,
-                //       controller: controller,
-                //       child: ListView(
-                //         controller: controller,
-                //         scrollDirection: Axis.horizontal,
-                //         children: <Widget>[
-                //           myArticles('แบบประเมินความพร้อมการฟื้นสภาพ'),
-                //           myArticles('แบบประเมินการจัดการความปวด'),
-                //           myArticles(
-                //               'แบบประเมินการจัดการแผลผ่าตัดสายระบายต่างๆ'),
-                //           myArticles('แบบประเมินระบบทางเดินหายใจ'),
-                //           myArticles('แบบประเมินระบบปัสสาวะ'),
-                //           myArticles(''),
-                //           myArticles(''),
-                //         ],
-                //       ),
-                //       // child: ListView.builder(
-                //       //   itemCount: 20,
-                //       //   scrollDirection: Axis.horizontal,
-                //       //   itemBuilder: (context, index) {
-                //       //     return Container(
-                //       //       width: 100,
-                //       //       alignment: Alignment.center,
-                //       //       color: Colors.blue[(index % 9) * 100],
-                //       //       child: Text(index.toString()),
-                //       //     );
-                //       //   },
-                //       // ),
-                //     ),
-                //   ),
-                // ),
-                SizedBox(
-                  // Vertical ListView
-                  child: ShowDashboard(),
-                )
+                SizedBox(child: ShowDashboard())
               ],
             ),
           ],
