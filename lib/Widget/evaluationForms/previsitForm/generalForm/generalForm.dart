@@ -2,15 +2,15 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../models/evalutate_form/pre_visit/consent_sign_model.dart';
-import '../../../models/evalutate_form/pre_visit/generalForm_model.dart';
-import '../../../services/service_locator.dart';
-import '../../../view_models/evaluate_form/generalForm_view_model.dart';
-import '../../appbar.dart';
-import '../../material.dart';
-import '../../shared/rounded_date_picker.dart';
-import '../../sidebar.dart';
-import 'adlForm.dart';
+import 'consent_sign.dart';
+import '../../../../models/evalutate_form/pre_visit/generalForm_model.dart';
+import '../../../../services/service_locator.dart';
+import '../../../../view_models/evaluate_form/generalForm_view_model.dart';
+import '../../../appbar.dart';
+import '../../../material.dart';
+import '../../../shared/rounded_date_picker.dart';
+import '../../../sidebar.dart';
+import '../adlForm.dart';
 
 class GeneralForm extends StatefulWidget {
   final String hn;
@@ -704,144 +704,144 @@ class _GeneralFormState extends State<GeneralForm> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Container(
-                                                      child: Padding(
-                                                        padding: _customMaterial
-                                                            .getEdgeInsetLTRB7070700(
-                                                                context),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                                flex: 3,
-                                                                child: Text(
-                                                                    'Type of Anesthesia',
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.w600))),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'GA'),
-                                                                  value: 1,
-                                                                  groupValue:
-                                                                      typeOfAnesthesia,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      typeOfAnesthesia =
-                                                                          newValue;
-                                                                      _typeOfAnesthesia =
-                                                                          'GA';
-                                                                      print(
-                                                                          _typeOfAnesthesia);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  title: Text(
-                                                                      'SB'),
-                                                                  value: 2,
-                                                                  groupValue:
-                                                                      typeOfAnesthesia,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      typeOfAnesthesia =
-                                                                          newValue;
-                                                                      _typeOfAnesthesia =
-                                                                          'SB';
-                                                                      print(
-                                                                          _typeOfAnesthesia);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  title: Text(
-                                                                      'GA+SB'),
-                                                                  value: 3,
-                                                                  groupValue:
-                                                                      typeOfAnesthesia,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      typeOfAnesthesia =
-                                                                          newValue;
-                                                                      _typeOfAnesthesia =
-                                                                          'GA+SB';
-                                                                      print(
-                                                                          _typeOfAnesthesia);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 4,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  title: Text(
-                                                                      'GA+Feneral nerve block'),
-                                                                  value: 4,
-                                                                  groupValue:
-                                                                      typeOfAnesthesia,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      typeOfAnesthesia =
-                                                                          newValue;
-                                                                      _typeOfAnesthesia =
-                                                                          'GA+Feneral nerve block';
-                                                                      print(
-                                                                          _typeOfAnesthesia);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 4,
-                                                              child: SizedBox(
-                                                                  width: 0),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    // Container(
+                                                    //   child: Padding(
+                                                    //     padding: _customMaterial
+                                                    //         .getEdgeInsetLTRB7070700(
+                                                    //             context),
+                                                    //     child: Row(
+                                                    //       children: <Widget>[
+                                                    //         Expanded(
+                                                    //             flex: 3,
+                                                    //             child: Text(
+                                                    //                 'Type of Anesthesia',
+                                                    //                 style: TextStyle(
+                                                    //                     fontWeight:
+                                                    //                         FontWeight.w600))),
+                                                    //         Expanded(
+                                                    //           flex: 2,
+                                                    //           child: Container(
+                                                    //             child:
+                                                    //                 RadioListTile(
+                                                    //               contentPadding:
+                                                    //                   EdgeInsets
+                                                    //                       .zero,
+                                                    //               title: Text(
+                                                    //                   'GA'),
+                                                    //               value: 1,
+                                                    //               groupValue:
+                                                    //                   typeOfAnesthesia,
+                                                    //               onChanged:
+                                                    //                   (newValue) {
+                                                    //                 setState(
+                                                    //                     () {
+                                                    //                   typeOfAnesthesia =
+                                                    //                       newValue;
+                                                    //                   _typeOfAnesthesia =
+                                                    //                       'GA';
+                                                    //                   print(
+                                                    //                       _typeOfAnesthesia);
+                                                    //                 });
+                                                    //               },
+                                                    //             ),
+                                                    //           ),
+                                                    //         ),
+                                                    //         Expanded(
+                                                    //           flex: 2,
+                                                    //           child: Container(
+                                                    //             child:
+                                                    //                 RadioListTile(
+                                                    //               contentPadding:
+                                                    //                   EdgeInsets
+                                                    //                       .all(
+                                                    //                           0),
+                                                    //               title: Text(
+                                                    //                   'SB'),
+                                                    //               value: 2,
+                                                    //               groupValue:
+                                                    //                   typeOfAnesthesia,
+                                                    //               onChanged:
+                                                    //                   (newValue) {
+                                                    //                 setState(
+                                                    //                     () {
+                                                    //                   typeOfAnesthesia =
+                                                    //                       newValue;
+                                                    //                   _typeOfAnesthesia =
+                                                    //                       'SB';
+                                                    //                   print(
+                                                    //                       _typeOfAnesthesia);
+                                                    //                 });
+                                                    //               },
+                                                    //             ),
+                                                    //           ),
+                                                    //         ),
+                                                    //         Expanded(
+                                                    //           flex: 2,
+                                                    //           child: Container(
+                                                    //             child:
+                                                    //                 RadioListTile(
+                                                    //               contentPadding:
+                                                    //                   EdgeInsets
+                                                    //                       .all(
+                                                    //                           0),
+                                                    //               title: Text(
+                                                    //                   'GA+SB'),
+                                                    //               value: 3,
+                                                    //               groupValue:
+                                                    //                   typeOfAnesthesia,
+                                                    //               onChanged:
+                                                    //                   (newValue) {
+                                                    //                 setState(
+                                                    //                     () {
+                                                    //                   typeOfAnesthesia =
+                                                    //                       newValue;
+                                                    //                   _typeOfAnesthesia =
+                                                    //                       'GA+SB';
+                                                    //                   print(
+                                                    //                       _typeOfAnesthesia);
+                                                    //                 });
+                                                    //               },
+                                                    //             ),
+                                                    //           ),
+                                                    //         ),
+                                                    //         Expanded(
+                                                    //           flex: 4,
+                                                    //           child: Container(
+                                                    //             child:
+                                                    //                 RadioListTile(
+                                                    //               contentPadding:
+                                                    //                   EdgeInsets
+                                                    //                       .all(
+                                                    //                           0),
+                                                    //               title: Text(
+                                                    //                   'GA+Feneral nerve block'),
+                                                    //               value: 4,
+                                                    //               groupValue:
+                                                    //                   typeOfAnesthesia,
+                                                    //               onChanged:
+                                                    //                   (newValue) {
+                                                    //                 setState(
+                                                    //                     () {
+                                                    //                   typeOfAnesthesia =
+                                                    //                       newValue;
+                                                    //                   _typeOfAnesthesia =
+                                                    //                       'GA+Feneral nerve block';
+                                                    //                   print(
+                                                    //                       _typeOfAnesthesia);
+                                                    //                 });
+                                                    //               },
+                                                    //             ),
+                                                    //           ),
+                                                    //         ),
+                                                    //         Expanded(
+                                                    //           flex: 4,
+                                                    //           child: SizedBox(
+                                                    //               width: 0),
+                                                    //         )
+                                                    //       ],
+                                                    //     ),
+                                                    //   ),
+                                                    // ),
                                                     Container(
                                                       child: Padding(
                                                         padding: _customMaterial
