@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/previous_illness.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/type_of_anesthesia.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +83,10 @@ class _GeneralFormState extends State<GeneralForm> {
 
   void onSaveTypeOfAnethesia(value) {
     _typeOfAnesthesia = value;
+  }
+
+  void onSavePreviousIllness(value) {
+    _previousIllness = value;
   }
 
   @override
@@ -720,312 +725,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 onSaveTypeOfAnethesia),
                                                       ),
                                                     ),
-                                                    Container(
-                                                      child: Padding(
-                                                        padding: _customMaterial
-                                                            .getEdgeInsetLTRB7070700(
-                                                                context),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                                flex: 3,
-                                                                child: Text(
-                                                                    'Previous illness',
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.w600))),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'DM'),
-                                                                  value: 1,
-                                                                  groupValue:
-                                                                      previousIllness,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      previousIllness =
-                                                                          newValue;
-                                                                      _previousIllness =
-                                                                          'DM';
-                                                                      print(
-                                                                          _previousIllness);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  title: Text(
-                                                                      'HT'),
-                                                                  value: 2,
-                                                                  groupValue:
-                                                                      previousIllness,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      previousIllness =
-                                                                          newValue;
-                                                                      _previousIllness =
-                                                                          'HT';
-                                                                      print(
-                                                                          _previousIllness);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  title: Text(
-                                                                      'DLP'),
-                                                                  value: 3,
-                                                                  groupValue:
-                                                                      previousIllness,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      previousIllness =
-                                                                          newValue;
-                                                                      _previousIllness =
-                                                                          'DLP';
-                                                                      print(
-                                                                          _previousIllness);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  title: Text(
-                                                                      'Heart disease'),
-                                                                  value: 4,
-                                                                  groupValue:
-                                                                      previousIllness,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      previousIllness =
-                                                                          newValue;
-                                                                      _previousIllness =
-                                                                          'Heart disease';
-                                                                      print(
-                                                                          _previousIllness);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  title: Text(
-                                                                      'Lung disease'),
-                                                                  value: 5,
-                                                                  groupValue:
-                                                                      previousIllness,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      previousIllness =
-                                                                          newValue;
-                                                                      _previousIllness =
-                                                                          'Lung disease';
-                                                                      print(
-                                                                          _previousIllness);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: SizedBox(
-                                                                  width: 0),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      child: Padding(
-                                                        padding: _customMaterial
-                                                            .getEdgeInsetLTRB7070700(
-                                                                context),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child: SizedBox(
-                                                                  width: 0),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 4,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'Hematologic abnormality'),
-                                                                  value: 6,
-                                                                  groupValue:
-                                                                      previousIllness,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      previousIllness =
-                                                                          newValue;
-                                                                      _previousIllness =
-                                                                          'Hematologic abnormality';
-                                                                      print(
-                                                                          _previousIllness);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'Renal disease'),
-                                                                  value: 7,
-                                                                  groupValue:
-                                                                      previousIllness,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      previousIllness =
-                                                                          newValue;
-                                                                      _previousIllness =
-                                                                          'Renal diseasee';
-                                                                      print(
-                                                                          _previousIllness);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'Other'),
-                                                                  value: 8,
-                                                                  groupValue:
-                                                                      previousIllness,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      previousIllness =
-                                                                          newValue;
-                                                                      checkBox2 =
-                                                                          true;
-                                                                      print(
-                                                                          previousIllness);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child:
-                                                                  TextFormField(
-                                                                enabled:
-                                                                    checkBox2,
-                                                                validator:
-                                                                    (value) {
-                                                                  return value
-                                                                          .isEmpty
-                                                                      ? 'กรุณากรอกPrevious Illness'
-                                                                      : null;
-                                                                },
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                        contentPadding: new EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                8.0,
-                                                                            horizontal:
-                                                                                10.0),
-                                                                        enabledBorder:
-                                                                            OutlineInputBorder(
-                                                                          borderSide: BorderSide(
-                                                                              color: Colors.black26,
-                                                                              width: 1),
-                                                                        ),
-                                                                        labelText:
-                                                                            'Other'),
-                                                                onSaved: (value) =>
-                                                                    _previousIllness =
-                                                                        value,
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child: SizedBox(
-                                                                width: 0,
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    PreviousIllness(
+                                                        onSaved:
+                                                            onSavePreviousIllness),
                                                     Container(
                                                       child: Padding(
                                                         padding: _customMaterial
@@ -2684,16 +2386,12 @@ class _GeneralFormState extends State<GeneralForm> {
                                     _sleepDisorderDurationAvg,
                               };
                               print('hn in generalForm = ${widget.hn}');
-                              // print('Data in GeneralForm = $formDataToDB');
 
                               var model =
                                   GeneralFormViewModel.getGeneralFormModel();
-                              print('body Weight : ${model.weight}');
-                              print('ConsentHEREEE =  : $_consentSigned');
                               model.fromMap(formDataToDB);
                               var map = model.toMap();
                               print('Model =  : $map');
-                              // model.fromMap(formDataToDB);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
