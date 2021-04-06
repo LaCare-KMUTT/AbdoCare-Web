@@ -1,4 +1,4 @@
-import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/consent_sign_model.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/radio_list.dart';
 import 'package:flutter/material.dart';
 
 class ConsentSign extends StatefulWidget {
@@ -18,10 +18,8 @@ class _ConsentSignState extends State<ConsentSign> {
   int _id;
   String item = 'Patient';
   bool isEnabled = false;
-  List<ConsentSignModel> list = [
-    ConsentSignModel(index: 1, text: 'Patient'),
-    ConsentSignModel(index: 2, text: 'Others'),
-  ];
+  List list = getConsentSignList();
+
   List<Widget> getWidget() {
     return list.map((e) {
       return Expanded(
@@ -34,15 +32,10 @@ class _ConsentSignState extends State<ConsentSign> {
             groupValue: _id,
             onChanged: (newValue) {
               setState(() {
-                if (newValue == 'Patient') {
-                  isEnabled = false;
-                  _id = e.index;
-                } else {
-                  isEnabled = true;
-                  _id = e.index;
-                }
+                newValue == 1 ? isEnabled = false : isEnabled = true;
+                _id = e.index;
                 if (!isEnabled) {
-                  item = newValue;
+                  item = e.text;
                   onSaved(item);
                 }
               });

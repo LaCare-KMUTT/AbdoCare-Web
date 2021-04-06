@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../models/evalutate_form/pre_visit/type_of_anesthesia_model.dart';
+import '../../../../models/evalutate_form/pre_visit/radio_list.dart';
 
 class TypeOfAnesthesia extends StatefulWidget {
   final FormFieldSetter<String> onSaved;
@@ -16,12 +16,7 @@ class _TypeOfAnesthesiaState extends State<TypeOfAnesthesia> {
   _TypeOfAnesthesiaState({this.onSaved});
 
   int _id;
-  List<TypeOfAnesthesiaModel> list = [
-    TypeOfAnesthesiaModel(index: 1, text: 'GA'),
-    TypeOfAnesthesiaModel(index: 2, text: 'SB'),
-    TypeOfAnesthesiaModel(index: 3, text: 'GA+SB'),
-    TypeOfAnesthesiaModel(index: 4, text: 'GA+Feneral nerve block'),
-  ];
+  List list = getTypeOfAnesthesiaList();
 
   List<Widget> _getWidget() {
     return list.map((e) {
