@@ -57,6 +57,7 @@ class _TestChartState2 extends State<TestChart2> {
       enablePanning: true,
       enablePinching: true,
       zoomMode: ZoomMode.x,
+      // enableSelectionZooming: true,
     );
     super.initState();
   }
@@ -102,11 +103,6 @@ class _TestChartState2 extends State<TestChart2> {
                       textStyle: TextStyle(color: Colors.red)))
             ],
                 series: <ChartSeries<_TestData, String>>[
-              // ColumnSeries<_TestData, String>(
-              //     dataSource: data,
-              //     xValueMapper: (pulse, _) => pulse.pulserate,
-              //     yValueMapper: (pulse, _) => pulse.day,
-              //     name: 'Unit Sold'),
               LineSeries<_TestData, String>(
                   dataSource: data,
                   xValueMapper: (pulse, _) => pulse.pulserate,
