@@ -1,4 +1,4 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/generalForm.dart';
 import 'package:flutter/material.dart';
 
 import 'preDashboardPatientDetail.dart';
