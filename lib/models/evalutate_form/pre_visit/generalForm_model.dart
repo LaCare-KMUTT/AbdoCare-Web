@@ -24,6 +24,7 @@ class GeneralFormModel {
   String _antiPlateletReason;
   String _antiPlateletDays;
   String _allergyMedication;
+  String _allergySymptoms;
   String _allergyLatex;
   String _psychologicalStatus;
   String _drugAndSubstance;
@@ -58,6 +59,7 @@ class GeneralFormModel {
   String get antiPlateletReason => _antiPlateletReason;
   String get antiPlateletDays => _antiPlateletDays;
   String get allergyMedication => _allergyMedication;
+  String get allergySymptomps => _allergySymptoms;
   String get allergyLatex => _allergyLatex;
   String get psychologicalStatus => _psychologicalStatus;
   String get drugAndSubstance => _drugAndSubstance;
@@ -121,6 +123,9 @@ class GeneralFormModel {
 
   set allergyMedication(String allergyMedication) =>
       this._allergyMedication = allergyMedication;
+
+  set allergySymptoms(String allergySymptoms) =>
+      this._allergySymptoms = allergySymptomps;
 
   set allergyLatex(String allergyLatex) => this._allergyLatex = allergyLatex;
 
@@ -193,6 +198,7 @@ class GeneralFormModel {
     _antiPlateletReason = map['antiPlateletReason'];
     _antiPlateletDays = map['antiPlateletDays'];
     _allergyMedication = map['allergyMedication'];
+    _allergySymptoms = map['allergySymptoms'];
     _allergyLatex = map['allergyLatex'];
     _psychologicalStatus = map['psychologicalStatus'];
     _drugAndSubstance = map['drugAndSubstance'];
@@ -227,6 +233,7 @@ class GeneralFormModel {
       'antiPlateletReason': _antiPlateletReason,
       'antiPlateletDays': _antiPlateletDays,
       'allergyMedication': _allergyMedication,
+      'allergySymptoms': _allergySymptoms,
       'allergyLatex': _allergyLatex,
       'psychologicalStatus': _psychologicalStatus,
       'drugAndSubstance': _drugAndSubstance,

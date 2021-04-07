@@ -58,3 +58,8 @@ List<RadioListTileModel> getAntiPlateletList() => [
       RadioListTileModel(index: 1, text: 'No'),
       RadioListTileModel(index: 2, text: 'Yes(ระบุ):'),
     ];
+
+List<RadioListTileModel> getAllergyMedicationList() => [
+      RadioListTileModel(index: 1, text: 'No'),
+      RadioListTileModel(index: 2, text: 'Yes(ระบุ):'),
+    ];

@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/allergy_medication.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/antiPlatelet.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/asaClass.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/previous_illness.dart';
@@ -50,6 +51,7 @@ class _GeneralFormState extends State<GeneralForm> {
   String _antiPlateletReason = '';
   String _antiPlateletDays = '';
   String _allergyMedication = '';
+  String _allergySymptoms = '';
   String _allergyLatex = '';
   String _psychologicalStatus = '';
   String _drugAndSubstance = '';
@@ -1029,145 +1031,156 @@ class _GeneralFormState extends State<GeneralForm> {
                                                         padding: _customMaterial
                                                             .getEdgeInsetLTRB7070700(
                                                                 context),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                                flex: 3,
-                                                                child: Text(
-                                                                    'Allergy Medication',
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.w600))),
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'No'),
-                                                                  value: 1,
-                                                                  groupValue:
-                                                                      allergyMedication,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      allergyMedication =
-                                                                          newValue;
-                                                                      _allergyMedication =
-                                                                          'No';
-                                                                      print(
-                                                                          _allergyMedication);
-                                                                      checkBox4 =
-                                                                          false;
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'Yes(ระบุ):'),
-                                                                  value: 2,
-                                                                  groupValue:
-                                                                      allergyMedication,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      allergyMedication =
-                                                                          newValue;
-                                                                      checkBox4 =
-                                                                          true;
-                                                                      print(
-                                                                          allergyMedication);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child:
-                                                                  TextFormField(
-                                                                enabled:
-                                                                    checkBox4,
-                                                                validator:
-                                                                    (value) {
-                                                                  return value
-                                                                          .isEmpty
-                                                                      ? 'กรุณากรอกAnti Platelet'
-                                                                      : null;
-                                                                },
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                        contentPadding: new EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                8.0,
-                                                                            horizontal:
-                                                                                10.0),
-                                                                        enabledBorder:
-                                                                            OutlineInputBorder(
-                                                                          borderSide: BorderSide(
-                                                                              color: Colors.black26,
-                                                                              width: 1),
-                                                                        ),
-                                                                        labelText:
-                                                                            'Allergy Medication'),
-                                                                onSaved: (value) =>
-                                                                    _allergyMedication =
-                                                                        value,
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                                child: Center(
-                                                                    child: Text(
-                                                                        ' Symptoms '))),
-                                                            Expanded(
-                                                              flex: 2,
-                                                              child:
-                                                                  TextFormField(
-                                                                enabled:
-                                                                    checkBox4,
-                                                                validator:
-                                                                    (value) {
-                                                                  return value
-                                                                          .isEmpty
-                                                                      ? 'กรุณากรอกSymptoms'
-                                                                      : null;
-                                                                },
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                        contentPadding: new EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                8.0,
-                                                                            horizontal:
-                                                                                10.0),
-                                                                        enabledBorder:
-                                                                            OutlineInputBorder(
-                                                                          borderSide: BorderSide(
-                                                                              color: Colors.black26,
-                                                                              width: 1),
-                                                                        ),
-                                                                        labelText:
-                                                                            'Symptoms'),
-                                                                onSaved: (value) =>
-                                                                    _allergyMedication =
-                                                                        value,
-                                                              ),
-                                                            ),
-                                                          ],
+                                                        child:
+                                                            AllergyMedication(
+                                                          onSavedAllergy:
+                                                              (newValue) =>
+                                                                  _allergyMedication =
+                                                                      newValue,
+                                                          onSavedSymptomps:
+                                                              (newValue) =>
+                                                                  _allergySymptoms =
+                                                                      newValue,
                                                         ),
+                                                        // child: Row(
+                                                        //   children: <Widget>[
+                                                        //     Expanded(
+                                                        //         flex: 3,
+                                                        //         child: Text(
+                                                        //             'Allergy Medication',
+                                                        //             style: TextStyle(
+                                                        //                 fontWeight:
+                                                        //                     FontWeight.w600))),
+                                                        //     Expanded(
+                                                        //       flex: 1,
+                                                        //       child: Container(
+                                                        //         child:
+                                                        //             RadioListTile(
+                                                        //           contentPadding:
+                                                        //               EdgeInsets
+                                                        //                   .zero,
+                                                        //           title: Text(
+                                                        //               'No'),
+                                                        //           value: 1,
+                                                        //           groupValue:
+                                                        //               allergyMedication,
+                                                        //           onChanged:
+                                                        //               (newValue) {
+                                                        //             setState(
+                                                        //                 () {
+                                                        //               allergyMedication =
+                                                        //                   newValue;
+                                                        //               _allergyMedication =
+                                                        //                   'No';
+                                                        //               print(
+                                                        //                   _allergyMedication);
+                                                        //               checkBox4 =
+                                                        //                   false;
+                                                        //             });
+                                                        //           },
+                                                        //         ),
+                                                        //       ),
+                                                        //     ),
+                                                        //     Expanded(
+                                                        //       flex: 1,
+                                                        //       child: Container(
+                                                        //         child:
+                                                        //             RadioListTile(
+                                                        //           contentPadding:
+                                                        //               EdgeInsets
+                                                        //                   .zero,
+                                                        //           title: Text(
+                                                        //               'Yes(ระบุ):'),
+                                                        //           value: 2,
+                                                        //           groupValue:
+                                                        //               allergyMedication,
+                                                        //           onChanged:
+                                                        //               (newValue) {
+                                                        //             setState(
+                                                        //                 () {
+                                                        //               allergyMedication =
+                                                        //                   newValue;
+                                                        //               checkBox4 =
+                                                        //                   true;
+                                                        //               print(
+                                                        //                   allergyMedication);
+                                                        //             });
+                                                        //           },
+                                                        //         ),
+                                                        //       ),
+                                                        //     ),
+                                                        //     Expanded(
+                                                        //       flex: 3,
+                                                        //       child:
+                                                        //           TextFormField(
+                                                        //         enabled:
+                                                        //             checkBox4,
+                                                        //         validator:
+                                                        //             (value) {
+                                                        //           return value
+                                                        //                   .isEmpty
+                                                        //               ? 'กรุณากรอกAllergy Medication'
+                                                        //               : null;
+                                                        //         },
+                                                        //         decoration:
+                                                        //             InputDecoration(
+                                                        //                 contentPadding: new EdgeInsets.symmetric(
+                                                        //                     vertical:
+                                                        //                         8.0,
+                                                        //                     horizontal:
+                                                        //                         10.0),
+                                                        //                 enabledBorder:
+                                                        //                     OutlineInputBorder(
+                                                        //                   borderSide: BorderSide(
+                                                        //                       color: Colors.black26,
+                                                        //                       width: 1),
+                                                        //                 ),
+                                                        //                 labelText:
+                                                        //                     'Allergy Medication'),
+                                                        //         onSaved: (value) =>
+                                                        //             _allergyMedication =
+                                                        //                 value,
+                                                        //       ),
+                                                        //     ),
+                                                        //     Expanded(
+                                                        //         child: Center(
+                                                        //             child: Text(
+                                                        //                 ' Symptoms '))),
+                                                        //     Expanded(
+                                                        //       flex: 2,
+                                                        //       child:
+                                                        //           TextFormField(
+                                                        //         enabled:
+                                                        //             checkBox4,
+                                                        //         validator:
+                                                        //             (value) {
+                                                        //           return value
+                                                        //                   .isEmpty
+                                                        //               ? 'กรุณากรอกSymptoms'
+                                                        //               : null;
+                                                        //         },
+                                                        //         decoration:
+                                                        //             InputDecoration(
+                                                        //                 contentPadding: new EdgeInsets.symmetric(
+                                                        //                     vertical:
+                                                        //                         8.0,
+                                                        //                     horizontal:
+                                                        //                         10.0),
+                                                        //                 enabledBorder:
+                                                        //                     OutlineInputBorder(
+                                                        //                   borderSide: BorderSide(
+                                                        //                       color: Colors.black26,
+                                                        //                       width: 1),
+                                                        //                 ),
+                                                        //                 labelText:
+                                                        //                     'Symptoms'),
+                                                        //         onSaved: (value) =>
+                                                        //             _allergyMedication =
+                                                        //                 value,
+                                                        //       ),
+                                                        //     ),
+                                                        //   ],
+                                                        // ),
                                                       ),
                                                     ),
                                                     Container(
@@ -1391,7 +1404,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         labelText:
                                                                             'Allergy to Latex '),
                                                                 onSaved: (value) =>
-                                                                    _allergyMedication =
+                                                                    _allergyLatex =
                                                                         value,
                                                               ),
                                                             ),
@@ -2039,6 +2052,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                 'antiPlateletReason': _antiPlateletReason,
                                 'antiPlateletDays': _antiPlateletDays,
                                 'allergyMedication': _allergyMedication,
+                                'allergySymptoms': _allergySymptoms,
                                 'allergyLatex': _allergyLatex,
                                 'psychologicalStatus': _psychologicalStatus,
                                 'drugAndSubstance': _drugAndSubstance,

@@ -1,30 +1,25 @@
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/radioListTile_model.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/radio_list.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../models/evalutate_form/pre_visit/radioListTile_model.dart';
-import '../../../../models/evalutate_form/pre_visit/radio_list.dart';
+class AllergyMedication extends StatefulWidget {
+  final FormFieldSetter<String> onSavedAllergy;
+  final FormFieldSetter<String> onSavedSymptomps;
 
-class AntiPlatelet extends StatefulWidget {
-  final FormFieldSetter<String> onSavedDay;
-  final FormFieldSetter<String> onSavedReason;
-
-  AntiPlatelet({this.onSavedDay, this.onSavedReason});
+  AllergyMedication({this.onSavedAllergy, this.onSavedSymptomps});
   @override
-  _AntiPlateletState createState() => _AntiPlateletState(
-        onSavedDay: onSavedDay,
-        onSavedReason: onSavedReason,
-      );
+  _AllergyMedicationState createState() => _AllergyMedicationState(
+      onSavedAllergy: onSavedAllergy, onSavedSymptomps: onSavedSymptomps);
 }
 
-class _AntiPlateletState extends State<AntiPlatelet> {
-  final FormFieldSetter<String> onSavedDay;
-
-  final FormFieldSetter<String> onSavedReason;
-
-  _AntiPlateletState({this.onSavedDay, this.onSavedReason});
+class _AllergyMedicationState extends State<AllergyMedication> {
+  final FormFieldSetter<String> onSavedAllergy;
+  final FormFieldSetter<String> onSavedSymptomps;
+  _AllergyMedicationState({this.onSavedAllergy, this.onSavedSymptomps});
 
   bool isEnableTextField = false;
+  List<RadioListTileModel> list = getAllergyMedicationList();
   int _id;
-  List<RadioListTileModel> list = getAntiPlateletList();
 
   List<Widget> _getWidget() {
     return list.map((e) {
@@ -40,7 +35,8 @@ class _AntiPlateletState extends State<AntiPlatelet> {
               setState(() {
                 _id = e.index;
                 if (newValue == 1) {
-                  onSavedReason(e.text);
+                  onSavedAllergy(e.text);
+                  isEnableTextField = false;
                 }
                 if (newValue == 2) {
                   isEnableTextField = true;
@@ -59,7 +55,7 @@ class _AntiPlateletState extends State<AntiPlatelet> {
       children: <Widget>[
         Expanded(
             flex: 3,
-            child: Text('On Anticoagulant/ Anti Platelet',
+            child: Text('Allergy Medication',
                 style: TextStyle(fontWeight: FontWeight.w600))),
         ..._getWidget(),
         Expanded(
@@ -67,7 +63,7 @@ class _AntiPlateletState extends State<AntiPlatelet> {
           child: TextFormField(
             enabled: isEnableTextField,
             validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกAnti Platelet' : null;
+              return value.isEmpty ? 'กรุณากรอกAllergy Medication' : null;
             },
             decoration: InputDecoration(
                 contentPadding:
@@ -75,17 +71,17 @@ class _AntiPlateletState extends State<AntiPlatelet> {
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
-                labelText: 'On Anticoagulant/ Anti Platelet'),
-            onSaved: (value) => onSavedReason(value),
+                labelText: 'Allergy Medication'),
+            onSaved: (value) => onSavedAllergy(value),
           ),
         ),
-        Expanded(child: Center(child: Text(' Off '))),
+        Expanded(child: Center(child: Text(' Symptoms '))),
         Expanded(
-          flex: 1,
+          flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
             validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกDays' : null;
+              return value.isEmpty ? 'กรุณากรอกSymptoms' : null;
             },
             decoration: InputDecoration(
                 contentPadding:
@@ -93,11 +89,10 @@ class _AntiPlateletState extends State<AntiPlatelet> {
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
-                labelText: 'Days'),
-            onSaved: (value) => onSavedDay(value ?? '-'),
+                labelText: 'Symptoms'),
+            onSaved: (value) => onSavedSymptomps(value ?? '-'),
           ),
         ),
-        Expanded(child: Text(' Days')),
       ],
     );
   }
