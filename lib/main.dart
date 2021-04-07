@@ -6,9 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Widget/material.dart';
 import 'page/addPatient.dart';
 import 'page/appointment.dart';
-import 'page/dashboard_postHome.dart';
-import 'page/dashboard_postHos.dart';
-import 'page/dashboard_pre.dart';
 import 'page/editPatient.dart';
 import 'page/login.dart';
 import 'page/patientList.dart';
@@ -29,7 +26,7 @@ void main() async {
         appId: '1:611491873650:web:7c3d372d1cdf8f314393eb',
         messagingSenderId: '611491873650'),
   );
-  // ignore: await_only_futures
+  //ignore: await_only_futures
   await setupServiceLocator(isMock: false);
   runApp(MyApp());
 }
@@ -62,9 +59,6 @@ class MyApp extends StatelessWidget {
         '/postHos_page': (context) => PostHosPage(),
         '/postHome_page': (context) => PostHomePage(),
         '/login_page': (context) => LoginPage(),
-        '/dashboard_pre': (context) => PreDashboardPage(),
-        '/dashboard_postHome': (context) => PostHomeDashboardPage(),
-        '/dashboard_postHos': (context) => PostHosDashboardPage(),
         '/mock': (context) => MockDataPage(),
         '/appointment_page': (context) => AppointmentPage(),
       },
