@@ -383,6 +383,15 @@ class _GeneralFormState extends State<GeneralForm> {
                                                               flex: 2,
                                                               child:
                                                                   DropdownButtonFormField(
+                                                                // value: snapshot
+                                                                //     .data.ward,
+                                                                hint:
+                                                                    DropdownMenuItem(
+                                                                  child: Text(
+                                                                      snapshot
+                                                                          .data
+                                                                          .ward),
+                                                                ),
                                                                 isExpanded:
                                                                     true,
                                                                 validator: (value) =>
@@ -392,19 +401,21 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         : null,
                                                                 decoration:
                                                                     InputDecoration(
-                                                                        contentPadding: new EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                8.0,
-                                                                            horizontal:
-                                                                                10.0),
-                                                                        enabledBorder:
-                                                                            OutlineInputBorder(
-                                                                          borderSide: BorderSide(
-                                                                              color: Colors.black26,
-                                                                              width: 1),
-                                                                        ),
-                                                                        labelText:
-                                                                            'Ward'),
+                                                                  contentPadding: new EdgeInsets
+                                                                          .symmetric(
+                                                                      vertical:
+                                                                          8.0,
+                                                                      horizontal:
+                                                                          10.0),
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide: BorderSide(
+                                                                        color: Colors
+                                                                            .black26,
+                                                                        width:
+                                                                            1),
+                                                                  ),
+                                                                ),
                                                                 onSaved:
                                                                     (value) {
                                                                   _ward = value;
