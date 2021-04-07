@@ -56,11 +56,15 @@ class CustomMaterial {
     return Colors.green;
   }
 
-  Color getBloodPressureColor(
-      int systolic, int diastolic, dynamic bloodPressure) {
+  Color getBloodPressureColor(dynamic bloodPressure) {
     if (bloodPressure == '-') {
       return Color(0xFFC37447);
     } else {
+      var parts = bloodPressure.split('/');
+      var s = parts[0].trim();
+      var d = parts[1].trim();
+      var systolic = int.parse(s);
+      var diastolic = int.parse(d);
       if (systolic >= 130 || diastolic >= 80) {
         return Colors.red;
       }
