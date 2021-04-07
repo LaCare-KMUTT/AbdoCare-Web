@@ -105,8 +105,11 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                         const EdgeInsets.fromLTRB(20, 8, 20, 8),
                                     child: Row(
                                       children: <Widget>[
-                                        Text('BT:\t\t',
-                                            textAlign: TextAlign.end),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text('BT:\t\t',
+                                              textAlign: TextAlign.end),
+                                        ),
                                         Expanded(
                                           flex: 4,
                                           child: TextFormField(
@@ -137,8 +140,11 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                         const EdgeInsets.fromLTRB(20, 8, 20, 8),
                                     child: Row(
                                       children: <Widget>[
-                                        Text('PR:\t\t',
-                                            textAlign: TextAlign.end),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text('PR:\t\t',
+                                              textAlign: TextAlign.end),
+                                        ),
                                         Expanded(
                                           flex: 4,
                                           child: TextFormField(
@@ -169,8 +175,11 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                         const EdgeInsets.fromLTRB(20, 8, 20, 8),
                                     child: Row(
                                       children: <Widget>[
-                                        Text('RR:\t\t',
-                                            textAlign: TextAlign.end),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text('RR:\t\t',
+                                              textAlign: TextAlign.end),
+                                        ),
                                         Expanded(
                                           flex: 4,
                                           child: TextFormField(
@@ -202,8 +211,11 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                         const EdgeInsets.fromLTRB(20, 8, 20, 8),
                                     child: Row(
                                       children: <Widget>[
-                                        Text('BP:\t\t',
-                                            textAlign: TextAlign.end),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text('BP:\t\t',
+                                              textAlign: TextAlign.end),
+                                        ),
                                         Expanded(
                                           flex: 2,
                                           child: TextFormField(
@@ -259,14 +271,18 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                         const EdgeInsets.fromLTRB(20, 8, 20, 8),
                                     child: Row(
                                       children: [
-                                        Text('ความปวด:\t\t',
-                                            textAlign: TextAlign.end),
                                         Expanded(
-                                          flex: 2,
+                                          flex: 1,
+                                          child: Text('Pain:\t\t',
+                                              textAlign: TextAlign.end),
+                                        ),
+                                        Expanded(
+                                          flex: 4,
                                           child: DropdownButtonFormField(
+                                            isDense: true,
                                             isExpanded: true,
                                             validator: (value) => value == null
-                                                ? 'กรุณาเลือกความปวด'
+                                                ? 'กรุณาเลือกPain'
                                                 : null,
                                             decoration: InputDecoration(
                                                 enabledBorder:
@@ -275,7 +291,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                       color: Colors.black26,
                                                       width: 1),
                                                 ),
-                                                labelText: 'ความปวด'),
+                                                labelText: 'Pain'),
                                             onSaved: (value) {
                                               _pain = double.parse(value);
                                             },
@@ -304,6 +320,10 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                             },
                                           ),
                                         ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: SizedBox(width: 0),
+                                        )
                                       ],
                                     ),
                                   ),
