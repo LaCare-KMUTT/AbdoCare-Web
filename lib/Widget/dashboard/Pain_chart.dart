@@ -52,7 +52,6 @@ class _LineChartState extends State<LineChart> {
 
 class _PainData {
   _PainData(this.painscore, this.day);
-
   final String painscore;
   final double day;
 }

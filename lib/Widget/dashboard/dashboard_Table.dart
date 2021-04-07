@@ -1,10 +1,9 @@
-import 'package:AbdoCare_Web/Widget/dashboard/test2.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../material.dart';
 import 'bodyTemperature_chart.dart';
-import 'linechart.dart';
+import 'Pain_chart.dart';
 import 'pulseRate_chart.dart';
 
 class DashboardTable extends StatefulWidget {
@@ -231,7 +230,7 @@ class _DashboardTableState extends State<DashboardTable> {
               ),
               child: IntrinsicWidth(
                 child: Container(
-                  width: screenSize.width * 1.5,
+                  width: screenSize.width * 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -454,7 +453,7 @@ class _DashboardTableState extends State<DashboardTable> {
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.all(10),
-                            child: Text('ความเจ็บปวด',
+                            child: Text('Pain Score',
                                 style: TextStyle(
                                     fontSize: 18, color: Color(0xFFC37447))),
                           ),
@@ -462,18 +461,6 @@ class _DashboardTableState extends State<DashboardTable> {
                             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                             child: LineChart(),
                           ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.all(10),
-                            child: Text('Test2',
-                                style: TextStyle(
-                                    fontSize: 18, color: Color(0xFFC37447))),
-                          ),
-                          TestChart2(),
                         ],
                       ),
                     ],

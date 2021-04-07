@@ -1,9 +1,7 @@
-import 'package:AbdoCare_Web/Widget/dashboard/test2.dart';
 import 'package:flutter/material.dart';
 import 'ADL_chart.dart';
 import 'dashboard_Table.dart';
 import 'radial_gauge_chart .dart';
-import 'test.dart';
 
 class ShowDashboard extends StatefulWidget {
   final String patientstate;
@@ -88,76 +86,6 @@ class _ShowDashboardState extends State<ShowDashboard> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                       child: DashboardTable(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Container(
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text('Test3',
-                          style: TextStyle(
-                              fontSize: 18, color: Color(0xFFC37447))),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                      child: TestChart2(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Container(
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text('Test',
-                          style: TextStyle(
-                              fontSize: 18, color: Color(0xFFC37447))),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 50,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.chevron_left,
-                                size: 50,
-                              ),
-                              color: Color(0xFFC37447),
-                              onPressed: () {},
-                            ),
-                          ),
-                          Expanded(child: TestChart()),
-                          Container(
-                            width: 50,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.chevron_right,
-                                size: 50,
-                              ),
-                              color: Color(0xFFC37447),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
