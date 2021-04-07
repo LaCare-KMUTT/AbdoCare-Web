@@ -13,7 +13,7 @@ class DashboardTable extends StatefulWidget {
 
 class _DashboardTableState extends State<DashboardTable> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
-  List<Map<String, dynamic>> dashboardtable = [
+  List<Map<String, dynamic>> dashboardTable = [
     {
       "Date": "10/03/64",
       "Time": "02.00 น.",
@@ -195,9 +195,9 @@ class _DashboardTableState extends State<DashboardTable> {
       "WtHt": 56,
     },
   ];
-  splitbloodpressure(String bloodpressure, String variable) {
-    if (bloodpressure != null) {
-      var str = bloodpressure;
+  splitBloodPressure(String bloodPressure, String variable) {
+    if (bloodPressure != null) {
+      var str = bloodPressure;
       var parts = str.split('/');
       var d = parts[1].trim();
       var s = parts[0].trim();
@@ -264,7 +264,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ),
                               ),
                             ),
-                            for (var item in dashboardtable)
+                            for (var item in dashboardTable)
                               Container(
                                 color: Color(0xFFC37447),
                                 child: SizedBox(
@@ -301,7 +301,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in dashboardtable)
+                            for (var item in dashboardTable)
                               Column(children: [
                                 Text(
                                   item['Admission'].toString(),
@@ -322,7 +322,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in dashboardtable)
+                            for (var item in dashboardTable)
                               Column(children: [
                                 Text(
                                   item['Operation'].toString(),
@@ -343,7 +343,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in dashboardtable)
+                            for (var item in dashboardTable)
                               Column(children: [
                                 Text(item['RespirationsRate'].toString(),
                                     style: TextStyle(
@@ -368,19 +368,21 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in dashboardtable)
+                            for (var item in dashboardTable)
                               Column(children: [
-                                Text(item['BloodPressure'],
-                                    style: TextStyle(
-                                        color: _customMaterial
-                                            .getBloodPressureColor(
-                                                splitbloodpressure(
-                                                    item['BloodPressure'],
-                                                    "Systolic"),
-                                                splitbloodpressure(
-                                                    item['BloodPressure'],
-                                                    "Diastolic"),
-                                                item['BloodPressure'])))
+                                Text(
+                                  item['BloodPressure'],
+                                  // style: TextStyle(
+                                  //     color: _customMaterial
+                                  //         .getBloodPressureColor(
+                                  //             splitbloodpressure(
+                                  //                 item['BloodPressure'],
+                                  //                 "Systolic"),
+                                  //             splitbloodpressure(
+                                  //                 item['BloodPressure'],
+                                  //                 "Diastolic"),
+                                  //             item['BloodPressure']))
+                                )
                               ]),
                           ]),
                           TableRow(children: [
@@ -397,7 +399,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in dashboardtable)
+                            for (var item in dashboardTable)
                               Column(children: [
                                 Text(item['O2Sat'].toString(),
                                     style: TextStyle(
@@ -419,7 +421,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 ]),
                               ),
                             ),
-                            for (var item in dashboardtable)
+                            for (var item in dashboardTable)
                               Column(children: [
                                 Text(
                                   item['WtHt'].toString(),

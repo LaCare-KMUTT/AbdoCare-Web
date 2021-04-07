@@ -11,7 +11,7 @@ class ShowDashboard extends StatefulWidget {
 }
 
 class _ShowDashboardState extends State<ShowDashboard> {
-  Widget _preopdashboard(BuildContext context) {
+  Widget _preOpDashboard(BuildContext context) {
     return Container(
       child: Column(
         children: [
@@ -66,7 +66,7 @@ class _ShowDashboardState extends State<ShowDashboard> {
     );
   }
 
-  Widget _postopHospitaldashboard(BuildContext context) {
+  Widget _postOpHospitalDashboard(BuildContext context) {
     return Container(
       child: Column(
         children: [
@@ -143,7 +143,7 @@ class _ShowDashboardState extends State<ShowDashboard> {
     );
   }
 
-  Widget _postopHomedashboard(BuildContext context) {
+  Widget _postOpHomeDashboard(BuildContext context) {
     return Container(
       child: Column(
         children: [
@@ -204,13 +204,13 @@ class _ShowDashboardState extends State<ShowDashboard> {
       child: (() {
         switch (widget.patientstate) {
           case "Pre-Operation":
-            return _preopdashboard(context);
+            return _preOpDashboard(context);
             break;
           case "Post-Operation@Hospital":
-            return _postopHospitaldashboard(context);
+            return _postOpHospitalDashboard(context);
             break;
           case "Post-Operation@Home":
-            return _postopHomedashboard(context);
+            return _postOpHomeDashboard(context);
             break;
         }
       }()),

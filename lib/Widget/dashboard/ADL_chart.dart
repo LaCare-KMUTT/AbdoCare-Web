@@ -11,17 +11,17 @@ class _ADLChartState extends State<ADLChart> {
   double score;
   String topic;
 
-  Widget adlradialGaugecriteria(
+  Widget adlRadialGaugeCriteria(
       BuildContext context, String topic, double score) {
     Widget child;
     // For 2 choice
     if (topic == "Grooming" || topic == "Bathing") {
       if (score == 0) {
-        child = adlradialGauge(0);
+        child = adlRadialGauge(0);
       } else if (score == 1) {
-        child = adlradialGauge(100);
+        child = adlRadialGauge(100);
       } else {
-        child = adlradialGauge(0);
+        child = adlRadialGauge(0);
       }
     } // For 3 choice
     else if (topic == "Feeding" ||
@@ -31,33 +31,33 @@ class _ADLChartState extends State<ADLChart> {
         topic == "Bowels" ||
         topic == "Bladder") {
       if (score == 0) {
-        child = adlradialGauge(0);
+        child = adlRadialGauge(0);
       } else if (score == 1) {
-        child = adlradialGauge(50);
+        child = adlRadialGauge(50);
       } else if (score == 2) {
-        child = adlradialGauge(100);
+        child = adlRadialGauge(100);
       } else {
-        child = adlradialGauge(0);
+        child = adlRadialGauge(0);
       }
     }
     // For 4 choice
     else if (topic == "Transfer" || topic == "Mobility") {
       if (score == 0) {
-        child = adlradialGauge(0);
+        child = adlRadialGauge(0);
       } else if (score == 1) {
-        child = adlradialGauge(33);
+        child = adlRadialGauge(33);
       } else if (score == 2) {
-        child = adlradialGauge(66);
+        child = adlRadialGauge(66);
       } else if (score == 3) {
-        child = adlradialGauge(100);
+        child = adlRadialGauge(100);
       } else {
-        child = adlradialGauge(0);
+        child = adlRadialGauge(0);
       }
     }
     return Container(child: child);
   }
 
-  Widget adlradialGauge(double result) {
+  Widget adlRadialGauge(double result) {
     return Container(
       height: 100,
       width: 10,
@@ -138,15 +138,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Feeding", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Feeding", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Feeding", score = 0),
                     ),
                   ],
@@ -171,14 +171,14 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                        child: adlradialGaugecriteria(
+                        child: adlRadialGaugeCriteria(
                             context, topic = "Grooming", score = 1)),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Grooming", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Grooming", score = 0),
                     ),
                   ],
@@ -202,15 +202,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Transfer", score = 3),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Transfer", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Transfer", score = 0),
                     ),
                   ],
@@ -234,15 +234,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Toilet", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Toilet", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Toilet", score = 0),
                     ),
                   ],
@@ -266,15 +266,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Dressing", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Dressing", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Dressing", score = 0),
                     ),
                   ],
@@ -298,15 +298,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Mobility", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Mobility", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Mobility", score = 0),
                     ),
                   ],
@@ -330,15 +330,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Stairs", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Stairs", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Stairs", score = 0),
                     ),
                   ],
@@ -362,15 +362,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bathing", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bathing", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bathing", score = 0),
                     ),
                   ],
@@ -394,15 +394,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bowels", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bowels", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bowels", score = 0),
                     ),
                   ],
@@ -426,15 +426,15 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bladder", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bladder", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGaugecriteria(
+                      child: adlRadialGaugeCriteria(
                           context, topic = "Bladder", score = 0),
                     ),
                   ],
