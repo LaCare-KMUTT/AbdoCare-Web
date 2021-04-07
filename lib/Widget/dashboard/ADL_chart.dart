@@ -443,7 +443,7 @@ class _ADLChartState extends State<ADLChart> {
             ),
           ),
           Divider(
-            color: Colors.grey,
+            color: Color(0xFFC37447),
             height: 20,
             thickness: 1,
             indent: 10,
@@ -460,7 +460,8 @@ class _ADLChartState extends State<ADLChart> {
                       child: Container(
                         width: MediaQuery.of(context).size.width / 2,
                         child: Text('ผลรวม',
-                            style: Theme.of(context).textTheme.bodyText2,
+                            style: TextStyle(
+                                fontSize: 18, color: Color(0xFFC37447)),
                             textAlign: TextAlign.left),
                       ),
                     ),
@@ -468,17 +469,20 @@ class _ADLChartState extends State<ADLChart> {
                         child: Container(
                             child: Text('16',
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText2))),
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(0xFFC37447))))),
                     Expanded(
                         child: Container(
                             child: Text('12',
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText2))),
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(0xFFC37447))))),
                     Expanded(
                         child: Container(
                             child: Text('0',
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText2))),
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(0xFFC37447))))),
                   ],
                 )
               ],
