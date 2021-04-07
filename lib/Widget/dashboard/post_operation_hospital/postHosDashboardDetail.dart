@@ -310,14 +310,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           onChanged: (String newValue) {
                             setState(() {
                               dropdownValue = newValue;
-                              // if (newValue == "Pre-Operation") {
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             PreDashboardPage(hn: widget.hn)),
-                              //   );
-                              // }
+
                               switch (newValue) {
                                 case "Pre-Operation":
                                   Navigator.push(
