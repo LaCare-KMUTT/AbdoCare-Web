@@ -21,6 +21,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
   void _submitPatientRegisterForm({
     @required String hn,
     @required String an,
+    @required String ward,
     @required String patientName,
     @required String patientSurname,
     @required String address,
@@ -56,6 +57,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
       subCollection: 'an',
       data: {
         'an': an,
+        'ward': ward,
         'careTakerName': careTakerName,
         'careTakerSurname': careTakerSurname,
         'careTakerTel': careTakerTel,
