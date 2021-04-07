@@ -31,7 +31,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
     var timeToShow = DateFormat.Hm().format(DateTime.now()).toString();
 
     return RaisedButton(
-      child: Text("แบบประเมิน"),
+      child: Text("แบบประเมินสัญญาณชีพ", style: TextStyle(fontSize: 18)),
       padding: EdgeInsets.all(15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
       onPressed: () {
