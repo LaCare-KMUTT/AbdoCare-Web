@@ -168,12 +168,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
               ],
               rows: users.map((user) {
-                var str = user.bloodPressure;
-                var parts = str.split('/');
-                var s = parts[0].trim();
-                var d = parts[1].trim();
-                var systolic = int.parse(s);
-                var diastolic = int.parse(d);
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
@@ -209,7 +203,7 @@ class _PostHosTableState extends State<PostHosTable> {
                         Text('${user.bloodPressure.toString()}',
                             style: TextStyle(
                                 color: _customMaterial.getBloodPressureColor(
-                                    systolic, diastolic, user.bloodPressure))),
+                                    user.bloodPressure))),
                       ),
                       DataCell(
                         Text('${user.oxygenRate.toString()}',
