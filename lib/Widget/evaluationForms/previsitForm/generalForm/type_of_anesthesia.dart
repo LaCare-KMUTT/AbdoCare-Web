@@ -32,8 +32,7 @@ class _TypeOfAnesthesiaState extends State<TypeOfAnesthesia> {
               setState(() {
                 _id = e.index;
               });
-              String toSave = e.text;
-              onSaved(toSave);
+              onSaved(e.text);
             },
           ),
         ),

@@ -17,11 +17,19 @@ class _AllergyMedicationState extends State<AllergyMedication> {
   final FormFieldSetter<String> onSavedSymptomps;
   _AllergyMedicationState({this.onSavedAllergy, this.onSavedSymptomps});
 
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+
   bool isEnableTextField = false;
   List<RadioListTileModel> list = getAllergyMedicationList();
   int _id;
+  String _allergy = '-';
+  String _symptomps = '-';
 
   List<Widget> _getWidget() {
+    const int CHOICE_NO = 1;
+    const int CHOICE_YES = 2;
+
     return list.map((e) {
       return Expanded(
         flex: 1,
@@ -34,11 +42,15 @@ class _AllergyMedicationState extends State<AllergyMedication> {
             onChanged: (newValue) {
               setState(() {
                 _id = e.index;
-                if (newValue == 1) {
-                  onSavedAllergy(e.text);
+                _allergy = e.text;
+                if (newValue == CHOICE_NO) {
+                  onSavedAllergy(_allergy);
+                  onSavedSymptomps('-');
                   isEnableTextField = false;
+                  _controller1.clear();
+                  _controller2.clear();
                 }
-                if (newValue == 2) {
+                if (newValue == CHOICE_YES) {
                   isEnableTextField = true;
                 }
               });
@@ -65,6 +77,7 @@ class _AllergyMedicationState extends State<AllergyMedication> {
             validator: (value) {
               return value.isEmpty ? 'กรุณากรอกAllergy Medication' : null;
             },
+            controller: _controller1,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
@@ -72,7 +85,14 @@ class _AllergyMedicationState extends State<AllergyMedication> {
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
                 labelText: 'Allergy Medication'),
-            onSaved: (value) => onSavedAllergy(value),
+            onSaved: (value) {
+              if (isEnableTextField) {
+                setState(() {
+                  _allergy = value;
+                });
+                onSavedAllergy(_allergy);
+              }
+            },
           ),
         ),
         Expanded(child: Center(child: Text(' Symptoms '))),
@@ -83,6 +103,7 @@ class _AllergyMedicationState extends State<AllergyMedication> {
             validator: (value) {
               return value.isEmpty ? 'กรุณากรอกSymptoms' : null;
             },
+            controller: _controller2,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
@@ -90,7 +111,14 @@ class _AllergyMedicationState extends State<AllergyMedication> {
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
                 labelText: 'Symptoms'),
-            onSaved: (value) => onSavedSymptomps(value ?? '-'),
+            onSaved: (value) {
+              if (isEnableTextField) {
+                setState(() {
+                  _symptomps = value ?? '-';
+                });
+                onSavedSymptomps(_symptomps);
+              }
+            },
           ),
         ),
       ],

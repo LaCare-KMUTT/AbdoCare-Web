@@ -205,7 +205,6 @@ class GeneralFormModel {
     _sleepDisorder = map['sleepDisorder'];
     _sleepDisorderDuration = map['sleepDisorderDuration'];
     _sleepDisorderDurationAvg = map['sleepDisorderDurationAvg'];
-    print('Model is $this');
   }
 
   Map<String, dynamic> toMap() {

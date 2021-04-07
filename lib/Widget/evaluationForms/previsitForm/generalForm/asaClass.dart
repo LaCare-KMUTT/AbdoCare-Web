@@ -15,6 +15,7 @@ class _ASAClassState extends State<ASAClass> {
   _ASAClassState({this.onSaved});
   List<RadioListTileModel> list = getAsaClassList();
   int _id;
+  String _asaClass = '';
   List<Widget> _getWidget(Size screenSize) {
     return list.map((e) {
       return Container(
@@ -32,8 +33,8 @@ class _ASAClassState extends State<ASAClass> {
                   onChanged: (newValue) {
                     setState(() {
                       _id = e.index;
-                      var toSave = e.value;
-                      onSaved(toSave);
+                      _asaClass = e.value;
+                      onSaved(_asaClass);
                     });
                   },
                 ),

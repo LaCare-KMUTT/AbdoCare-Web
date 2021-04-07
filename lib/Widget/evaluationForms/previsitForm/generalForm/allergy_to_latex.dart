@@ -15,12 +15,18 @@ class _AllergyToLatexState extends State<AllergyToLatex> {
   final FormFieldSetter<String> onSavedAllergyLatex;
 
   _AllergyToLatexState({this.onSavedAllergyLatex});
+
+  final TextEditingController _controller = TextEditingController();
+
   int _id;
   bool isEnableTextField = false;
+  String _allergyLatex = '-';
 
   List<RadioListTileModel> list = getAllergyLatexList();
 
   List<Widget> _getWidget() {
+    const int CHOICE_OTHERS = 6;
+
     return list.map((e) {
       return Expanded(
         flex: 1,
@@ -33,11 +39,13 @@ class _AllergyToLatexState extends State<AllergyToLatex> {
             onChanged: (newValue) {
               setState(() {
                 _id = e.index;
-                if (newValue == 6) {
+                _allergyLatex = e.text;
+                if (newValue == CHOICE_OTHERS) {
                   isEnableTextField = true;
                 } else {
                   isEnableTextField = false;
-                  onSavedAllergyLatex(e.text);
+                  onSavedAllergyLatex(_allergyLatex);
+                  _controller.clear();
                 }
               });
             },
@@ -63,6 +71,7 @@ class _AllergyToLatexState extends State<AllergyToLatex> {
             validator: (value) {
               return value.isEmpty ? 'กรุณากรอกAllergy to Latex' : null;
             },
+            controller: _controller,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
@@ -70,7 +79,14 @@ class _AllergyToLatexState extends State<AllergyToLatex> {
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
                 labelText: 'Allergy to Latex '),
-            onSaved: (value) => onSavedAllergyLatex(value),
+            onSaved: (value) {
+              if (isEnableTextField) {
+                setState(() {
+                  _allergyLatex = value ?? '-';
+                });
+                onSavedAllergyLatex(_allergyLatex);
+              }
+            },
           ),
         ),
       ],

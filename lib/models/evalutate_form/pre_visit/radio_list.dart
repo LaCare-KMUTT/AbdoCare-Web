@@ -89,3 +89,13 @@ List<RadioListTileModel> getDrugAndSubStanceList2() => [
       RadioListTileModel(index: 4, text: 'ETOH'),
       RadioListTileModel(index: 5, text: 'Narcotics'),
     ];
+
+List<RadioListTileModel> getSleepDisorderList() => [
+      RadioListTileModel(index: 1, text: 'No'),
+      RadioListTileModel(index: 2, text: 'Yes'),
+    ];
+
+List<RadioListTileModel> getSleepDisorderDurationList() => [
+      RadioListTileModel(index: 3, text: '< 2 Wk.'),
+      RadioListTileModel(index: 4, text: '> 2 Wk.'),
+    ];

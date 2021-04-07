@@ -17,16 +17,23 @@ class AntiPlatelet extends StatefulWidget {
 
 class _AntiPlateletState extends State<AntiPlatelet> {
   final FormFieldSetter<String> onSavedDay;
-
   final FormFieldSetter<String> onSavedReason;
 
   _AntiPlateletState({this.onSavedDay, this.onSavedReason});
 
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+
   bool isEnableTextField = false;
   int _id;
   List<RadioListTileModel> list = getAntiPlateletList();
+  String _reason = '-';
+  String _day = '-';
 
   List<Widget> _getWidget() {
+    const int CHOICE_NO = 1;
+    const int CHOICE_YES = 2;
+
     return list.map((e) {
       return Expanded(
         flex: 1,
@@ -39,11 +46,14 @@ class _AntiPlateletState extends State<AntiPlatelet> {
             onChanged: (newValue) {
               setState(() {
                 _id = e.index;
-                if (newValue == 1) {
+                if (newValue == CHOICE_NO) {
+                  _reason = e.text;
                   isEnableTextField = false;
-                  onSavedReason(e.text);
+                  onSavedReason(_reason);
+                  _controller1.clear();
+                  _controller2.clear();
                 }
-                if (newValue == 2) {
+                if (newValue == CHOICE_YES) {
                   isEnableTextField = true;
                 }
               });
@@ -70,6 +80,7 @@ class _AntiPlateletState extends State<AntiPlatelet> {
             validator: (value) {
               return value.isEmpty ? 'กรุณากรอกAnti Platelet' : null;
             },
+            controller: _controller1,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
@@ -77,7 +88,14 @@ class _AntiPlateletState extends State<AntiPlatelet> {
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
                 labelText: 'On Anticoagulant/ Anti Platelet'),
-            onSaved: (value) => onSavedReason(value),
+            onSaved: (value) {
+              if (isEnableTextField) {
+                setState(() {
+                  _reason = value ?? '-';
+                });
+                onSavedReason(_reason);
+              }
+            },
           ),
         ),
         Expanded(child: Center(child: Text(' Off '))),
@@ -95,7 +113,15 @@ class _AntiPlateletState extends State<AntiPlatelet> {
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
                 labelText: 'Days'),
-            onSaved: (value) => onSavedDay(value ?? '-'),
+            controller: _controller2,
+            onSaved: (value) {
+              if (isEnableTextField) {
+                setState(() {
+                  _day = value ?? '-';
+                });
+                onSavedDay(_day);
+              }
+            },
           ),
         ),
         Expanded(child: Text(' Days')),

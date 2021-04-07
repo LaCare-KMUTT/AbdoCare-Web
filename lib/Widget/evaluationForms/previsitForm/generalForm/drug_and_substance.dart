@@ -15,11 +15,15 @@ class _DrugAndSubstanceState extends State<DrugAndSubstance> {
   final FormFieldSetter<String> onSavedDrugAndSubstance;
   _DrugAndSubstanceState({this.onSavedDrugAndSubstance});
 
+  final TextEditingController _controller = TextEditingController();
+
   int _id;
   bool isEnableTextField = false;
+  String _drugAndSubstance = '-';
   List<RadioListTileModel> list1 = getDrugAndSubstanceList1();
   List<RadioListTileModel> list2 = getDrugAndSubStanceList2();
   List<Widget> _getWidget(List list) {
+    const int CHOICE_DRUG_SEDATIVE = 2;
     return list.map((e) {
       return Expanded(
         flex: 1,
@@ -32,11 +36,13 @@ class _DrugAndSubstanceState extends State<DrugAndSubstance> {
             onChanged: (newValue) {
               setState(() {
                 _id = e.index;
-                if (newValue == 2) {
+                if (newValue == CHOICE_DRUG_SEDATIVE) {
                   isEnableTextField = true;
                 } else {
                   isEnableTextField = false;
-                  onSavedDrugAndSubstance(e.text);
+                  _drugAndSubstance = e.text;
+                  onSavedDrugAndSubstance(_drugAndSubstance);
+                  _controller.clear();
                 }
               });
             },
@@ -62,6 +68,7 @@ class _DrugAndSubstanceState extends State<DrugAndSubstance> {
             validator: (value) {
               return value.isEmpty ? 'กรุณากรอกDrug sedative' : null;
             },
+            controller: _controller,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
@@ -69,7 +76,14 @@ class _DrugAndSubstanceState extends State<DrugAndSubstance> {
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
                 labelText: 'Drug sedative'),
-            onSaved: (value) => onSavedDrugAndSubstance(value),
+            onSaved: (value) {
+              if (isEnableTextField) {
+                setState(() {
+                  _drugAndSubstance = value ?? '-';
+                });
+                onSavedDrugAndSubstance(_drugAndSubstance);
+              }
+            },
           ),
         ),
         ..._getWidget(list2),

@@ -15,18 +15,20 @@ class PreviousIllness extends StatefulWidget {
 class _PreviousIllnessState extends State<PreviousIllness> {
   final FormFieldSetter<String> onSaved;
 
+  final TextEditingController _controller = TextEditingController();
+
   _PreviousIllnessState({this.onSaved});
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
-  bool enableTextField = false;
+  bool isEnableTextField = false;
 
   List list1 = getPreviousIllnessList1();
   List list2 = getPreviousIllnessList2();
-
+  String _toSave = '-';
   int _id;
 
   List<Widget> _getWidget(List list) {
-    const int indexOfOther = 8;
+    const int CHOICE_OTHER = 8;
     return list.map((e) {
       return Expanded(
         flex: 2,
@@ -38,15 +40,16 @@ class _PreviousIllnessState extends State<PreviousIllness> {
             groupValue: _id,
             onChanged: (newValue) {
               setState(() {
-                newValue == indexOfOther
-                    ? enableTextField = true
-                    : enableTextField = false;
-
-                print('ENABLED TEXT FIELD $enableTextField');
+                if (newValue == CHOICE_OTHER) {
+                  isEnableTextField = true;
+                } else {
+                  isEnableTextField = false;
+                  _toSave = e.text;
+                  _controller.clear();
+                  onSaved(_toSave);
+                }
                 _id = e.index;
               });
-              String toSave = e.text;
-              onSaved(toSave);
             },
           ),
         ),
@@ -89,10 +92,11 @@ class _PreviousIllnessState extends State<PreviousIllness> {
                 Expanded(
                   flex: 2,
                   child: TextFormField(
-                    enabled: enableTextField,
+                    enabled: isEnableTextField,
                     validator: (value) {
                       return value.isEmpty ? 'กรุณากรอกPrevious Illness' : null;
                     },
+                    controller: _controller,
                     decoration: InputDecoration(
                         contentPadding: new EdgeInsets.symmetric(
                             vertical: 8.0, horizontal: 10.0),
@@ -101,7 +105,14 @@ class _PreviousIllnessState extends State<PreviousIllness> {
                               BorderSide(color: Colors.black26, width: 1),
                         ),
                         labelText: 'Other'),
-                    onSaved: (value) => onSaved(value),
+                    onSaved: (value) {
+                      if (isEnableTextField) {
+                        setState(() {
+                          _toSave = value ?? '-';
+                        });
+                        onSaved(_toSave);
+                      }
+                    },
                   ),
                 ),
                 Expanded(

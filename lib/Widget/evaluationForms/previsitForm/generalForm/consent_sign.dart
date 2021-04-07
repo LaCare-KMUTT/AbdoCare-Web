@@ -15,12 +15,16 @@ class _ConsentSignState extends State<ConsentSign> {
   String consentFromDb;
   _ConsentSignState({this.onSaved, this.consentFromDb});
 
+  final TextEditingController _controller = TextEditingController();
+
   int _id;
   String item = 'Patient';
   bool isEnabled = false;
   List list = getConsentSignList();
 
   List<Widget> getWidget() {
+    const int CHOICE_OTHER = 2;
+
     return list.map((e) {
       return Expanded(
         flex: 2,
@@ -32,9 +36,12 @@ class _ConsentSignState extends State<ConsentSign> {
             groupValue: _id,
             onChanged: (newValue) {
               setState(() {
-                newValue == 1 ? isEnabled = false : isEnabled = true;
                 _id = e.index;
-                if (!isEnabled) {
+                if (newValue == CHOICE_OTHER) {
+                  isEnabled = true;
+                } else {
+                  isEnabled = false;
+                  _controller.clear();
                   item = e.text;
                   onSaved(item);
                 }
@@ -78,6 +85,7 @@ class _ConsentSignState extends State<ConsentSign> {
           child: TextFormField(
             enabled: isEnabled,
             initialValue: consentFromDb == 'Others' ? null : consentFromDb,
+            controller: _controller,
             validator: (value) {
               return value.isEmpty ? 'กรุณากรอกConsent signed' : null;
             },
@@ -89,7 +97,12 @@ class _ConsentSignState extends State<ConsentSign> {
                 ),
                 labelText: 'Other'),
             onSaved: (value) {
-              onSaved(value);
+              if (isEnabled) {
+                setState(() {
+                  item = value ?? '-';
+                });
+                onSaved(item);
+              }
             },
           ),
         ),

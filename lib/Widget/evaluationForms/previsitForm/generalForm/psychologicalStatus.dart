@@ -15,12 +15,14 @@ class _PsychologicalStatusState extends State<PsychologicalStatus> {
   final FormFieldSetter<String> onSavedPsychologicalStatus;
   _PsychologicalStatusState({this.onSavedPsychologicalStatus});
 
+  final TextEditingController _controller = TextEditingController();
+
   int _id;
   bool isEnableTextField = false;
-
   List<RadioListTileModel> list = getPsychologicalStatusList();
-
+  String _psycologicalStatus = '-';
   List<Widget> _getWidget() {
+    const int CHOICE_OTHERS = 4;
     return list.map((e) {
       return Expanded(
         flex: 1,
@@ -33,11 +35,13 @@ class _PsychologicalStatusState extends State<PsychologicalStatus> {
             onChanged: (newValue) {
               setState(() {
                 _id = e.index;
-                if (newValue == 4) {
+                if (newValue == CHOICE_OTHERS) {
                   isEnableTextField = true;
                 } else {
                   isEnableTextField = false;
-                  onSavedPsychologicalStatus(e.text);
+                  _psycologicalStatus = e.text;
+                  onSavedPsychologicalStatus(_psycologicalStatus);
+                  _controller.clear();
                 }
               });
             },
@@ -63,6 +67,7 @@ class _PsychologicalStatusState extends State<PsychologicalStatus> {
             validator: (value) {
               return value.isEmpty ? 'กรุณากรอกPsychological Status' : null;
             },
+            controller: _controller,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
@@ -70,7 +75,14 @@ class _PsychologicalStatusState extends State<PsychologicalStatus> {
                   borderSide: BorderSide(color: Colors.black26, width: 1),
                 ),
                 labelText: 'Psychological Status '),
-            onSaved: (value) => onSavedPsychologicalStatus(value),
+            onSaved: (value) {
+              if (isEnableTextField) {
+                setState(() {
+                  _psycologicalStatus = value ?? '-';
+                });
+                onSavedPsychologicalStatus(_psycologicalStatus);
+              }
+            },
           ),
         ),
       ],
