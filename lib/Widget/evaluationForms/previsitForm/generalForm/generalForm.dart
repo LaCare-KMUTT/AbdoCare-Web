@@ -1,17 +1,7 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/allergy_medication.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/allergy_to_latex.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/antiPlatelet.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/asaClass.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/drug_and_substance.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/previous_illness.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/psychologicalStatus.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/sleep_disorder.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/type_of_anesthesia.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'consent_sign.dart';
 import '../../../../models/evalutate_form/pre_visit/generalForm_model.dart';
 import '../../../../services/service_locator.dart';
 import '../../../../view_models/evaluate_form/generalForm_view_model.dart';
@@ -20,6 +10,16 @@ import '../../../material.dart';
 import '../../../shared/rounded_date_picker.dart';
 import '../../../sidebar.dart';
 import '../adlForm.dart';
+import 'allergy_medication.dart';
+import 'allergy_to_latex.dart';
+import 'antiPlatelet.dart';
+import 'asaClass.dart';
+import 'consent_sign.dart';
+import 'drug_and_substance.dart';
+import 'previous_illness.dart';
+import 'psychologicalStatus.dart';
+import 'sleep_disorder.dart';
+import 'type_of_anesthesia.dart';
 
 class GeneralForm extends StatefulWidget {
   final String hn;
@@ -63,39 +63,7 @@ class _GeneralFormState extends State<GeneralForm> {
   String _sleepDisorderDuration = '';
   String _sleepDisorderDurationAvg = '';
 
-  bool checkBox1 = false;
-  bool checkBox2 = false;
-  bool checkBox3 = false;
-  bool checkBox4 = false;
-  bool checkBox5 = false;
-  bool checkBox6 = false;
-  bool checkBox7 = false;
-  bool checkBox8 = false;
-
-  String consentSigned;
-  int typeOfAnesthesia;
-  int previousIllness;
-  int asaClass;
-  int antiPlatelet;
-  int allergyMedication;
-  int allergyLatex;
-  int psychologicalStatus;
-  int drugAndSubstance;
-  int sleepDisorder;
-
   var date;
-
-  void onSaveConsent(value) {
-    _consentSigned = value;
-  }
-
-  void onSaveTypeOfAnethesia(value) {
-    _typeOfAnesthesia = value;
-  }
-
-  void onSavePreviousIllness(value) {
-    _previousIllness = value;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -658,8 +626,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                             .getEdgeInsetLTRB7070700(
                                                                 context),
                                                         child: ConsentSign(
-                                                            onSaved:
-                                                                onSaveConsent,
+                                                            onSaved: (value) =>
+                                                                _consentSigned =
+                                                                    value,
                                                             consentFromDb: snapshot
                                                                 .data
                                                                 .consentSigned),
@@ -729,13 +698,15 @@ class _GeneralFormState extends State<GeneralForm> {
                                                             .getEdgeInsetLTRB7070700(
                                                                 context),
                                                         child: TypeOfAnesthesia(
-                                                            onSaved:
-                                                                onSaveTypeOfAnethesia),
+                                                            onSaved: (value) =>
+                                                                _typeOfAnesthesia =
+                                                                    value),
                                                       ),
                                                     ),
                                                     PreviousIllness(
-                                                        onSaved:
-                                                            onSavePreviousIllness),
+                                                        onSaved: (value) =>
+                                                            _previousIllness =
+                                                                value),
                                                     Container(
                                                       child: Padding(
                                                         padding: _customMaterial
@@ -1154,7 +1125,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                 Text('ถัดไป', style: TextStyle(fontSize: 18)),
                             onPressed: () {
                               _formKey.currentState.save();
-
                               Map<String, dynamic> formDataToDB = {
                                 'hn': _hn,
                                 'an': _an,
@@ -1188,8 +1158,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                 'sleepDisorderDurationAvg':
                                     _sleepDisorderDurationAvg,
                               };
-                              print('hn in generalForm = ${widget.hn}');
-
                               var model =
                                   GeneralFormViewModel.getGeneralFormModel();
                               model.fromMap(formDataToDB);
@@ -1202,7 +1170,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                         hn: widget.hn,
                                         generalForm: formDataToDB),
                                   ));
-                              print('This is next button');
                               //}
                             }),
                       ),
