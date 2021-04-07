@@ -63,3 +63,29 @@ List<RadioListTileModel> getAllergyMedicationList() => [
       RadioListTileModel(index: 1, text: 'No'),
       RadioListTileModel(index: 2, text: 'Yes(ระบุ):'),
     ];
+
+List<RadioListTileModel> getAllergyLatexList() => [
+      RadioListTileModel(index: 1, text: 'No'),
+      RadioListTileModel(index: 2, text: 'Iodine'),
+      RadioListTileModel(index: 3, text: 'Tape'),
+      RadioListTileModel(index: 4, text: 'Food'),
+      RadioListTileModel(index: 5, text: 'Environment'),
+      RadioListTileModel(index: 6, text: 'Other(ระบุ):'),
+    ];
+
+List<RadioListTileModel> getPsychologicalStatusList() => [
+      RadioListTileModel(index: 1, text: 'Calm'),
+      RadioListTileModel(index: 2, text: 'Fear'),
+      RadioListTileModel(index: 3, text: 'Anxious'),
+      RadioListTileModel(index: 4, text: 'Other(ระบุ):'),
+    ];
+
+List<RadioListTileModel> getDrugAndSubstanceList1() => [
+      RadioListTileModel(index: 1, text: 'No'),
+      RadioListTileModel(index: 2, text: 'Drug sedative(ระบุ):'),
+    ];
+List<RadioListTileModel> getDrugAndSubStanceList2() => [
+      RadioListTileModel(index: 3, text: 'Smoking'),
+      RadioListTileModel(index: 4, text: 'ETOH'),
+      RadioListTileModel(index: 5, text: 'Narcotics'),
+    ];

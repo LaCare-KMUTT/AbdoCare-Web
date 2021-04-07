@@ -40,6 +40,7 @@ class _AntiPlateletState extends State<AntiPlatelet> {
               setState(() {
                 _id = e.index;
                 if (newValue == 1) {
+                  isEnableTextField = false;
                   onSavedReason(e.text);
                 }
                 if (newValue == 2) {
