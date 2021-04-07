@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../material.dart';
 import 'bodyTemperature_chart.dart';
-import 'Pain_chart.dart';
+import 'pain_chart.dart';
 import 'pulseRate_chart.dart';
 
 class DashboardTable extends StatefulWidget {
