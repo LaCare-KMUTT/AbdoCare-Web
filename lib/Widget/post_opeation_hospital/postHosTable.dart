@@ -177,6 +177,7 @@ class _PostHosTableState extends State<PostHosTable> {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(

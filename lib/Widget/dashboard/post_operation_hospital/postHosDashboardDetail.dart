@@ -1,3 +1,7 @@
+import 'package:AbdoCare_Web/Widget/dashboard/post_operation_hospital/postHosDashboardPatientDetail.dart';
+import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
+import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
+import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day0/respiratory_form.dart';
@@ -13,7 +17,6 @@ import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/virtal_sign_form.da
 
 import '../../material.dart';
 import '../dashboardGraph.dart';
-import 'postHosDashboardPatientDetail.dart';
 
 class PostHosDashboardDetail extends StatefulWidget {
   final String hn;
@@ -27,7 +30,6 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
 
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
   String dayInCurrentState = '1';
-  String dropdownValue = 'Post-Operation@Hospital';
 
   Container virtalSignFormCard(String heading, String hn) {
     return Container(
@@ -50,7 +52,6 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                 child: Container(
                   margin: EdgeInsets.only(bottom: 5),
                   child: (() {
-                    print('container: ${hn}');
                     if (heading == 'แบบประเมินสัญญาณชีพ') {
                       return Column(
                         children: [
@@ -269,6 +270,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
     );
   }
 
+  String dropdownValue = 'Post-Operation@Hospital';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -308,20 +310,40 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           onChanged: (String newValue) {
                             setState(() {
                               dropdownValue = newValue;
+                              // if (newValue == "Pre-Operation") {
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             PreDashboardPage(hn: widget.hn)),
+                              //   );
+                              // }
                               switch (newValue) {
                                 case "Pre-Operation":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_pre');
-
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PreDashboardPage(hn: widget.hn)),
+                                  );
                                   break;
                                 case "Post-Operation@Hospital":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_postHos');
-
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostHosDashboardPage(
+                                                hn: widget.hn)),
+                                  );
                                   break;
                                 case "Post-Operation@Home":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_postHome');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostHomeDashboardPage(
+                                                hn: widget.hn)),
+                                  );
                                   break;
                               }
                             });
@@ -331,6 +353,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                     ),
                   ),
                 ),
+                Text(' ${widget.hn}'),
                 SizedBox(child: PostHosPatientDetail()),
                 SizedBox(
                   height: 500,

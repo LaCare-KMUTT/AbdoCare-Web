@@ -1,4 +1,7 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm.dart';
+import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
+import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
+import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:flutter/material.dart';
 
 import 'preDashboardPatientDetail.dart';
@@ -45,7 +48,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                       color: Color(0xFFEBEBEB),
                       child: Text('แบบประเมิน', style: TextStyle(fontSize: 15)),
                       onPressed: () {
-                        print(heading);
+                        print('$heading : ${widget.hn}');
                         setState(() {});
                         Navigator.push(
                             context,
@@ -108,18 +111,30 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               dropdownValue = newValue;
                               switch (newValue) {
                                 case "Pre-Operation":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_pre');
-
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PreDashboardPage(hn: widget.hn)),
+                                  );
                                   break;
                                 case "Post-Operation@Hospital":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_postHos');
-
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostHosDashboardPage(
+                                                hn: widget.hn)),
+                                  );
                                   break;
                                 case "Post-Operation@Home":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_postHome');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostHomeDashboardPage(
+                                                hn: widget.hn)),
+                                  );
                                   break;
                               }
                             });
@@ -129,6 +144,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                     ),
                   ),
                 ),
+                Text(' ${widget.hn}'),
                 SizedBox(
                   child: PrePatientDetail(),
                 ),

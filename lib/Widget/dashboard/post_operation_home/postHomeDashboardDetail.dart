@@ -8,7 +8,8 @@ import '../../../page/dashboard_pre.dart';
 import '../../../page/dashboard_postHome.dart';
 
 class PostHomeDashboardDetail extends StatefulWidget {
-  PostHomeDashboardDetail({Key key}) : super(key: key);
+  final String hn;
+  PostHomeDashboardDetail({Key key, @required this.hn}) : super(key: key);
   @override
   _PostHomeDashboardDetailState createState() =>
       _PostHomeDashboardDetailState();
@@ -59,18 +60,30 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                               dropdownValue = newValue;
                               switch (newValue) {
                                 case "Pre-Operation":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_pre');
-
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PreDashboardPage(hn: widget.hn)),
+                                  );
                                   break;
                                 case "Post-Operation@Hospital":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_postHos');
-
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostHosDashboardPage(
+                                                hn: widget.hn)),
+                                  );
                                   break;
                                 case "Post-Operation@Home":
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_postHome');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostHomeDashboardPage(
+                                                hn: widget.hn)),
+                                  );
                                   break;
                               }
                             });
@@ -80,6 +93,7 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                     ),
                   ),
                 ),
+                Text(' ${widget.hn}'),
                 SizedBox(child: PostHomePatientDetail()),
                 SizedBox(child: ShowDashboard())
               ],

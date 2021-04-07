@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:AbdoCare_Web/models/pre_op_list_model.dart';
+import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:AbdoCare_Web/view_models/pre_op_list_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -179,8 +180,12 @@ class _PreTableState extends State<PreTable> {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
-                      Navigator.pushNamed(context, '/dashboard_pre',
-                          arguments: user.hn);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                PreDashboardPage(hn: user.hn)),
+                      );
                     },
                     cells: [
                       DataCell(Text(user.hn)),
