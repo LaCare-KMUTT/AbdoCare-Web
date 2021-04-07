@@ -31,6 +31,7 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
         padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
         onPressed: () {
+          print('แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ: ${widget.hn}');
           showDialog(
               context: context,
               builder: (BuildContext context) {

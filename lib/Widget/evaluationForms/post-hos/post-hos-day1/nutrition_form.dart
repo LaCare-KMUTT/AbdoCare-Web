@@ -29,6 +29,7 @@ class _NutritionFormState extends State<NutritionForm> {
         padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
         onPressed: () {
+          print('แบบประเมินการจัดการภาวะโภชนาการ: ${widget.hn}');
           showDialog(
               context: context,
               builder: (BuildContext context) {
