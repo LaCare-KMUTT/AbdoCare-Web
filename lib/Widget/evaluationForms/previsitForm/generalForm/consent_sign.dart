@@ -89,7 +89,6 @@ class _ConsentSignState extends State<ConsentSign> {
                 ),
                 labelText: 'Other'),
             onSaved: (value) {
-              print('Value from $value');
               onSaved(value);
             },
           ),

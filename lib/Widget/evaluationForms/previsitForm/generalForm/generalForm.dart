@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/antiPlatelet.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/asaClass.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/previous_illness.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/type_of_anesthesia.dart';
@@ -1013,147 +1014,13 @@ class _GeneralFormState extends State<GeneralForm> {
                                                         padding: _customMaterial
                                                             .getEdgeInsetLTRB7070700(
                                                                 context),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                                flex: 3,
-                                                                child: Text(
-                                                                    'On Anticoagulant/ Anti Platelet',
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.w600))),
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'No'),
-                                                                  value: 1,
-                                                                  groupValue:
-                                                                      antiPlatelet,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      antiPlatelet =
-                                                                          newValue;
-                                                                      _antiPlateletReason =
-                                                                          'No';
-                                                                      print(
-                                                                          _antiPlateletReason);
-                                                                      checkBox3 =
-                                                                          false;
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child: Container(
-                                                                child:
-                                                                    RadioListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  title: Text(
-                                                                      'Yes(ระบุ):'),
-                                                                  value: 2,
-                                                                  groupValue:
-                                                                      antiPlatelet,
-                                                                  onChanged:
-                                                                      (newValue) {
-                                                                    setState(
-                                                                        () {
-                                                                      antiPlatelet =
-                                                                          newValue;
-                                                                      checkBox3 =
-                                                                          true;
-                                                                      print(
-                                                                          antiPlatelet);
-                                                                    });
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 3,
-                                                              child:
-                                                                  TextFormField(
-                                                                enabled:
-                                                                    checkBox3,
-                                                                validator:
-                                                                    (value) {
-                                                                  return value
-                                                                          .isEmpty
-                                                                      ? 'กรุณากรอกAnti Platelet'
-                                                                      : null;
-                                                                },
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                        contentPadding: new EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                8.0,
-                                                                            horizontal:
-                                                                                10.0),
-                                                                        enabledBorder:
-                                                                            OutlineInputBorder(
-                                                                          borderSide: BorderSide(
-                                                                              color: Colors.black26,
-                                                                              width: 1),
-                                                                        ),
-                                                                        labelText:
-                                                                            'On Anticoagulant/ Anti Platelet'),
-                                                                onSaved: (value) =>
-                                                                    _antiPlateletReason =
-                                                                        value,
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                                child: Center(
-                                                                    child: Text(
-                                                                        ' Off '))),
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child:
-                                                                  TextFormField(
-                                                                enabled:
-                                                                    checkBox3,
-                                                                validator:
-                                                                    (value) {
-                                                                  return value
-                                                                          .isEmpty
-                                                                      ? 'กรุณากรอกDays'
-                                                                      : null;
-                                                                },
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                        contentPadding: new EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                8.0,
-                                                                            horizontal:
-                                                                                10.0),
-                                                                        enabledBorder:
-                                                                            OutlineInputBorder(
-                                                                          borderSide: BorderSide(
-                                                                              color: Colors.black26,
-                                                                              width: 1),
-                                                                        ),
-                                                                        labelText:
-                                                                            'Days'),
-                                                                onSaved: (value) =>
-                                                                    _antiPlateletDays =
-                                                                        value,
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                                child: Text(
-                                                                    ' Days')),
-                                                          ],
+                                                        child: AntiPlatelet(
+                                                          onSavedDay: (value) =>
+                                                              _antiPlateletDays =
+                                                                  value,
+                                                          onSavedReason: (value) =>
+                                                              _antiPlateletReason =
+                                                                  value,
                                                         ),
                                                       ),
                                                     ),
@@ -1256,7 +1123,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                               width: 1),
                                                                         ),
                                                                         labelText:
-                                                                            'Anti Platelet'),
+                                                                            'Allergy Medication'),
                                                                 onSaved: (value) =>
                                                                     _allergyMedication =
                                                                         value,

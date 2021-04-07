@@ -53,3 +53,8 @@ List<RadioListTileModel> getAsaClassList() => [
               'ASA Class V: ผู้ป่วยที่มีชีวิตอยู่ได้เพียง 24 ชั่วโมง ไม่ว่าจะได้รับการรักษาด้วยยาหรือผ่าตัด',
           value: 'ASAClass5'),
     ];
+
+List<RadioListTileModel> getAntiPlateletList() => [
+      RadioListTileModel(index: 1, text: 'No'),
+      RadioListTileModel(index: 2, text: 'Yes(ระบุ):'),
+    ];
