@@ -195,23 +195,19 @@ class _DashboardTableState extends State<DashboardTable> {
       "WtHt": 56,
     },
   ];
-  splitdiastolic(String bloodpressure) {
+  splitbloodpressure(String bloodpressure, String variable) {
     if (bloodpressure != null) {
       var str = bloodpressure;
       var parts = str.split('/');
       var d = parts[1].trim();
-      var diastolic = int.parse(d);
-      return diastolic;
-    }
-  }
-
-  splitsystolic(String bloodpressure) {
-    if (bloodpressure != null) {
-      var str = bloodpressure;
-      var parts = str.split('/');
       var s = parts[0].trim();
+      var diastolic = int.parse(d);
       var systolic = int.parse(s);
-      return systolic;
+      if (variable == "Diastolic") {
+        return diastolic;
+      } else if (variable == "Systolic") {
+        return systolic;
+      }
     }
   }
 
@@ -374,9 +370,17 @@ class _DashboardTableState extends State<DashboardTable> {
                             ),
                             for (var item in dashboardtable)
                               Column(children: [
-                                Text(
-                                  item['BloodPressure'],
-                                )
+                                Text(item['BloodPressure'],
+                                    style: TextStyle(
+                                        color: _customMaterial
+                                            .getBloodPressureColor(
+                                                splitbloodpressure(
+                                                    item['BloodPressure'],
+                                                    "Systolic"),
+                                                splitbloodpressure(
+                                                    item['BloodPressure'],
+                                                    "Diastolic"),
+                                                item['BloodPressure'])))
                               ]),
                           ]),
                           TableRow(children: [
