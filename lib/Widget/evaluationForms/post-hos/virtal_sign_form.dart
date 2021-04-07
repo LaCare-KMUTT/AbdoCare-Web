@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/gradient_slider.dart';
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
@@ -27,8 +26,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   String _bp;
   String _systolic;
   String _diastolic;
-  int value = 5;
-  String result = "ปวดปานกลาง";
+  double _pain;
   LinearGradient gradient = LinearGradient(
     colors: <Color>[
       Colors.greenAccent[400],
@@ -50,7 +48,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
         padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
         onPressed: () {
-          print('in form: ${widget.hn}');
+          print('แบบประเมินสัญญาณชีพ: ${widget.hn}');
           showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -257,83 +255,70 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, bottom: 10),
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Image.asset(
-                                              'assets/Painform.png',
-                                              height: 150,
-                                              width: 350,
-                                            ),
-                                            Column(children: [
-                                              Text(
-                                                value.toString(),
-                                                style: TextStyle(
-                                                    fontSize: 24.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.black),
-                                              ),
-                                              Text(
-                                                result,
-                                                style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Colors.black),
-                                              ),
-                                            ]),
-                                            SliderTheme(
-                                              data: SliderThemeData(
-                                                trackShape:
-                                                    GradientRectSliderTrackShape(
-                                                        gradient: gradient,
-                                                        darkenInactive: true),
-                                                trackHeight: 20,
-                                              ),
-                                              child: Slider(
-                                                value: value.toDouble(),
-                                                min: 0,
-                                                max: 10,
-                                                activeColor: Colors.white,
-                                                onChanged: (value2) {
-                                                  setState(() {
-                                                    value = value2.round();
-                                                    if (value >= 8) {
-                                                      result = "ปวดมาก";
-                                                    } else if (5 <= value) {
-                                                      result = "ปวดปานกลาง";
-                                                    } else if (1 <= value) {
-                                                      result = "ปวดเล็กน้อย";
-                                                    } else if (0 <= value) {
-                                                      result = "ไม่ปวด";
-                                                    }
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                          ],
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                                    child: Row(
+                                      children: [
+                                        Text('ความปวด:\t\t',
+                                            textAlign: TextAlign.end),
+                                        Expanded(
+                                          flex: 2,
+                                          child: DropdownButtonFormField(
+                                            isExpanded: true,
+                                            validator: (value) => value == null
+                                                ? 'กรุณาเลือกความปวด'
+                                                : null,
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.black26,
+                                                      width: 1),
+                                                ),
+                                                labelText: 'ความปวด'),
+                                            onSaved: (value) {
+                                              _pain = double.parse(value);
+                                            },
+                                            items: [
+                                              '1',
+                                              '2',
+                                              '3',
+                                              '4',
+                                              '5',
+                                              '6',
+                                              '7',
+                                              '8',
+                                              '9',
+                                              '10'
+                                            ]
+                                                .map(
+                                                    (label) => DropdownMenuItem(
+                                                          child: Text(label),
+                                                          value: label,
+                                                        ))
+                                                .toList(),
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _pain = double.parse(value);
+                                              });
+                                            },
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ),
-                                  Container(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 20),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
                                       child: RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.0)),
+                                        textColor: Colors.white,
                                         padding: EdgeInsets.all(15),
-                                        child: Text(
-                                          'ยืนยัน',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText2,
-                                        ),
+                                        color: Color(0xFF2ED47A),
+                                        child: Text('ยืนยัน',
+                                            style: TextStyle(fontSize: 18)),
                                         onPressed: () {
                                           if (_formKey.currentState
                                               .validate()) {
@@ -347,12 +332,12 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                               'pr': _pr,
                                               'rr': _rr,
                                               'bp': _bp,
-                                              'pain': value,
+                                              'pain': _pain,
                                             };
                                             print(
                                                 'hn in Virtal-Sign = ${widget.hn}');
                                             print(
-                                                'Value in pain_form = $value ');
+                                                'Value in pain_form = $_pain ');
 
                                             _firebaseService
                                                 .addDataToFormsCollection(
