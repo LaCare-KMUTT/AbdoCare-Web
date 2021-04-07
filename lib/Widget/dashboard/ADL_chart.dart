@@ -2,8 +2,62 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class ADLChart extends StatelessWidget {
-  Widget adlradialGauge(double score) {
+class ADLChart extends StatefulWidget {
+  @override
+  _ADLChartState createState() => _ADLChartState();
+}
+
+class _ADLChartState extends State<ADLChart> {
+  double score;
+  String topic;
+
+  Widget adlradialGaugecriteria(
+      BuildContext context, String topic, double score) {
+    Widget child;
+    // For 2 choice
+    if (topic == "Grooming" || topic == "Bathing") {
+      if (score == 0) {
+        child = adlradialGauge(0);
+      } else if (score == 1) {
+        child = adlradialGauge(100);
+      } else {
+        child = adlradialGauge(0);
+      }
+    } // For 3 choice
+    else if (topic == "Feeding" ||
+        topic == "Toilet" ||
+        topic == "Dressing" ||
+        topic == "Stairs" ||
+        topic == "Bowels" ||
+        topic == "Bladder") {
+      if (score == 0) {
+        child = adlradialGauge(0);
+      } else if (score == 1) {
+        child = adlradialGauge(50);
+      } else if (score == 2) {
+        child = adlradialGauge(100);
+      } else {
+        child = adlradialGauge(0);
+      }
+    }
+    // For 4 choice
+    else if (topic == "Transfer" || topic == "Mobility") {
+      if (score == 0) {
+        child = adlradialGauge(0);
+      } else if (score == 1) {
+        child = adlradialGauge(33);
+      } else if (score == 2) {
+        child = adlradialGauge(66);
+      } else if (score == 3) {
+        child = adlradialGauge(100);
+      } else {
+        child = adlradialGauge(0);
+      }
+    }
+    return Container(child: child);
+  }
+
+  Widget adlradialGauge(double result) {
     return Container(
       height: 100,
       width: 10,
@@ -18,13 +72,13 @@ class ADLChart extends StatelessWidget {
               showTicks: false,
               showLabels: false,
               pointers: <GaugePointer>[
-                RangePointer(value: score, width: 20, color: Color(0xFFC37447))
+                RangePointer(value: result, width: 20, color: Color(0xFFC37447))
               ],
               annotations: <GaugeAnnotation>[
                 GaugeAnnotation(
                     widget: Container(
                         child:
-                            Text('$score %', style: TextStyle(fontSize: 16))),
+                            Text('$result %', style: TextStyle(fontSize: 16))),
                     angle: 90,
                     positionFactor: 0.2)
               ]),
@@ -46,19 +100,54 @@ class ADLChart extends StatelessWidget {
                     Expanded(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 2,
+                      ),
+                    ),
+                    Expanded(
+                        child: Container(
+                            child: Text('Pre-Operation',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2))),
+                    Expanded(
+                        child: Container(
+                            child: Text('Post-Operation@Hospital',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2))),
+                    Expanded(
+                        child: Container(
+                            child: Text('Post-Operation@Home',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2))),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2,
                         child: Text('การรับประทานอาหาร',
                             style: Theme.of(context).textTheme.bodyText2,
                             textAlign: TextAlign.left),
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Feeding", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGauge(20),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Feeding", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Feeding", score = 0),
                     ),
                   ],
                 )
@@ -82,13 +171,15 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(80),
+                        child: adlradialGaugecriteria(
+                            context, topic = "Grooming", score = 1)),
+                    Expanded(
+                      child: adlradialGaugecriteria(
+                          context, topic = "Grooming", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
-                    ),
-                    Expanded(
-                      child: adlradialGauge(70),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Grooming", score = 0),
                     ),
                   ],
                 )
@@ -111,13 +202,16 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(70),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Transfer", score = 3),
                     ),
                     Expanded(
-                      child: adlradialGauge(30),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Transfer", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Transfer", score = 0),
                     ),
                   ],
                 )
@@ -140,13 +234,16 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(90),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Toilet", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Toilet", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(80),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Toilet", score = 0),
                     ),
                   ],
                 )
@@ -169,13 +266,16 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(80),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Dressing", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGauge(20),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Dressing", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(60),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Dressing", score = 0),
                     ),
                   ],
                 )
@@ -198,13 +298,16 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(60),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Mobility", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGauge(20),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Mobility", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(60),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Mobility", score = 0),
                     ),
                   ],
                 )
@@ -227,13 +330,16 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(80),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Stairs", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(30),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Stairs", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(70),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Stairs", score = 0),
                     ),
                   ],
                 )
@@ -256,13 +362,16 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bathing", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(30),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bathing", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(40),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bathing", score = 0),
                     ),
                   ],
                 )
@@ -285,13 +394,16 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bowels", score = 2),
                     ),
                     Expanded(
-                      child: adlradialGauge(20),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bowels", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bowels", score = 0),
                     ),
                   ],
                 )
@@ -314,14 +426,59 @@ class ADLChart extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: adlradialGauge(50),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bladder", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(30),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bladder", score = 1),
                     ),
                     Expanded(
-                      child: adlradialGauge(60),
+                      child: adlradialGaugecriteria(
+                          context, topic = "Bladder", score = 0),
                     ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Divider(
+            color: Colors.grey,
+            height: 20,
+            thickness: 1,
+            indent: 10,
+            endIndent: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: Text('ผลรวม',
+                            style: Theme.of(context).textTheme.bodyText2,
+                            textAlign: TextAlign.left),
+                      ),
+                    ),
+                    Expanded(
+                        child: Container(
+                            child: Text('16',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2))),
+                    Expanded(
+                        child: Container(
+                            child: Text('12',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2))),
+                    Expanded(
+                        child: Container(
+                            child: Text('0',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2))),
                   ],
                 )
               ],
