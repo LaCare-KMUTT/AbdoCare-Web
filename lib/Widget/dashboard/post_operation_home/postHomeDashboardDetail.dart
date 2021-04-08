@@ -93,55 +93,12 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                     ),
                   ),
                 ),
-
                 SizedBox(
-                  // Vertical ListView
                   child: PostHomePatientDetail(),
                 ),
-                // not in nsc scope
-                //
-                // SizedBox(
-                //   // Horizontal ListView
-                //   height: 160,
-                //   child: Card(
-                //     margin: EdgeInsets.all(10),
-                //     child: Scrollbar(
-                //       isAlwaysShown: false,
-                //       controller: controller,
-                //       child: ListView(
-                //         controller: controller,
-                //         scrollDirection: Axis.horizontal,
-                //         children: <Widget>[
-                //           myArticles('แบบประเมินความพร้อมการฟื้นสภาพ'),
-                //           myArticles('แบบประเมินการจัดการความปวด'),
-                //           myArticles(
-                //               'แบบประเมินการจัดการแผลผ่าตัดสายระบายต่างๆ'),
-                //           myArticles('แบบประเมินระบบทางเดินหายใจ'),
-                //           myArticles('แบบประเมินระบบปัสสาวะ'),
-                //           myArticles(''),
-                //           myArticles(''),
-                //         ],
-                //       ),
-                //       // child: ListView.builder(
-                //       //   itemCount: 20,
-                //       //   scrollDirection: Axis.horizontal,
-                //       //   itemBuilder: (context, index) {
-                //       //     return Container(
-                //       //       width: 100,
-                //       //       alignment: Alignment.center,
-                //       //       color: Colors.blue[(index % 9) * 100],
-                //       //       child: Text(index.toString()),
-                //       //     );
-                //       //   },
-                //       // ),
-                //     ),
-                //   ),
-                // ),
                 SizedBox(
-                  // Vertical ListView
                   child: ShowDashboard(patientstate: 'Post-Operation@Home'),
                 )
-
               ],
             ),
           ],

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../page/dashboard_postHome.dart';
@@ -7,7 +6,6 @@ import '../../../page/dashboard_pre.dart';
 import '../../evaluationForms/previsitForm/generalForm/generalForm.dart';
 import '../dashboardGraph.dart';
 import 'preDashboardPatientDetail.dart';
-
 
 class PreDashboardDetail extends StatefulWidget {
   final String hn;
@@ -195,7 +193,6 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                   ),
                 ),
                 SizedBox(
-                  // Vertical ListView
                   child: ShowDashboard(patientstate: 'Pre-Operation'),
                 )
               ],
