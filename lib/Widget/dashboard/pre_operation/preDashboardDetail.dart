@@ -178,7 +178,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                 ),
                 SizedBox(
                   // Vertical ListView
-                  child: ShowDashboard(),
+                  child: ShowDashboard(patientstate: 'Pre-Operation'),
                 )
               ],
             ),
