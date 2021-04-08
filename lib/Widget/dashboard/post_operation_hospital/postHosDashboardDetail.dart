@@ -171,7 +171,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                 // ),
                 SizedBox(
                   // Vertical ListView
-                  child: ShowDashboard(),
+                  child: ShowDashboard(patientstate: 'Post-Operation@Hospital'),
                 )
               ],
             ),
