@@ -70,7 +70,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton2(false),
                                 child: VirtalSignForm(
-                                    hn: 'HN30001', formTime: '06:00 น.'),
+                                    hn: widget.hn, formTime: '06:00 น.'),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -78,7 +78,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton3(false),
                                 child: VirtalSignForm(
-                                    hn: 'HN30001', formTime: '10:00 น.'),
+                                    hn: widget.hn, formTime: '10:00 น.'),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -86,7 +86,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton4(false),
                                 child: VirtalSignForm(
-                                    hn: 'HN30001', formTime: '14:00 น.'),
+                                    hn: widget.hn, formTime: '14:00 น.'),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -94,7 +94,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton5(false),
                                 child: VirtalSignForm(
-                                    hn: 'HN30001', formTime: '18:00 น.'),
+                                    hn: widget.hn, formTime: '18:00 น.'),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -102,7 +102,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton6(false),
                                 child: VirtalSignForm(
-                                    hn: 'HN30001', formTime: '22:00 น.'),
+                                    hn: widget.hn, formTime: '22:00 น.'),
                               )),
                         ],
                       );
@@ -144,12 +144,12 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           absorbing: !_evaluationFormViewModel
                               .disableRespiratoryDay0Button(
                                   true), //true to disable the button
-                          child: RespiratoryDay0Form(hn: 'HN30001'));
+                          child: RespiratoryDay0Form(hn: widget.hn));
                     } else if (heading == 'แบบประเมินระบบปัสสาวะ') {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableUrologyButton(false),
-                          child: UrologyForm(hn: 'HN30001'));
+                          child: UrologyForm(hn: widget.hn));
                     } else {
                       print('form not match');
                       return null;
@@ -189,24 +189,24 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableBloodClotButton(false),
-                          child: BloodClotForm(hn: 'HN30001'));
+                          child: BloodClotForm(hn: widget.hn));
                     } else if (heading ==
                         'แบบประเมินการจัดการแผลผ่าตัดและสายระบาย') {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableDrainButton(false),
-                          child: DrainForm(hn: 'HN30001'));
+                          child: DrainForm(hn: widget.hn));
                     } else if (heading == 'แบบประเมินการจัดการภาวะโภชนาการ') {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableNutritionButton(false),
-                          child: NutritionForm(hn: 'HN30001'));
+                          child: NutritionForm(hn: widget.hn));
                     } else if (heading ==
                         'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ') {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableRespiratoryDay1Button(false),
-                          child: RespiratoryDay1Form(hn: 'HN30001'));
+                          child: RespiratoryDay1Form(hn: widget.hn));
                     } else {
                       print('form not match');
                       return null;
@@ -246,18 +246,18 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableDigestiveButton(false),
-                          child: DigestiveForm(hn: 'HN30001'));
+                          child: DigestiveForm(hn: widget.hn));
                     } else if (heading ==
                         'แบบประเมินการเฝ้าระวังภาวะแทรกซ้อน') {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableInfectionButton(false),
-                          child: InfectionForm(hn: 'HN30001'));
+                          child: InfectionForm(hn: widget.hn));
                     } else if (heading == 'แบบประเมินการฟื้นฟูสมรรถภาพของปอด') {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disablePulmanaryButton(false),
-                          child: PulmanaryForm(hn: 'HN30001'));
+                          child: PulmanaryForm(hn: widget.hn));
                     } else {
                       print('form not match');
                       return null;
