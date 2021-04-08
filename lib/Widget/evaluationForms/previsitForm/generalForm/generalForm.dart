@@ -120,7 +120,12 @@ class _GeneralFormState extends State<GeneralForm> {
                                             widget.hn),
                                         builder: (context, snapshot) {
                                           if (!snapshot.hasData) {
-                                            return CircularProgressIndicator();
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: CircularProgressIndicator(
+                                                  strokeWidth: 4),
+                                            );
                                           }
                                           return Column(
                                             children: [
