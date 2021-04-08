@@ -3,6 +3,7 @@ import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
 import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
+import 'package:AbdoCare_Web/view_models/evaluation_form_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day0/respiratory_form.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day0/urology_form.dart';
@@ -15,7 +16,6 @@ import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/inf
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/pulmanary_form.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/virtal_sign_form.dart';
 
-import '../../material.dart';
 import '../dashboardGraph.dart';
 
 class PostHosDashboardDetail extends StatefulWidget {
@@ -28,8 +28,9 @@ class PostHosDashboardDetail extends StatefulWidget {
 class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
   final ScrollController controller = ScrollController();
 
-  final CustomMaterial _customMaterial = locator<CustomMaterial>();
-  String dayInCurrentState = '1';
+  final EvaluationFormViewModel _evaluationFormViewModel =
+      locator<EvaluationFormViewModel>();
+  String dayInCurrentState = '1'; //get from DB
 
   Container virtalSignFormCard(String heading, String hn) {
     return Container(
@@ -58,7 +59,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
-                                absorbing: !_customMaterial
+                                absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton1(false),
                                 child: VirtalSignForm(
                                     hn: widget.hn, formTime: '02:00 น.'),
@@ -66,7 +67,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
-                                absorbing: !_customMaterial
+                                absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton2(false),
                                 child: VirtalSignForm(
                                     hn: 'HN30001', formTime: '06:00 น.'),
@@ -74,7 +75,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
-                                absorbing: !_customMaterial
+                                absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton3(false),
                                 child: VirtalSignForm(
                                     hn: 'HN30001', formTime: '10:00 น.'),
@@ -82,7 +83,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
-                                absorbing: !_customMaterial
+                                absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton4(false),
                                 child: VirtalSignForm(
                                     hn: 'HN30001', formTime: '14:00 น.'),
@@ -90,7 +91,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
-                                absorbing: !_customMaterial
+                                absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton5(false),
                                 child: VirtalSignForm(
                                     hn: 'HN30001', formTime: '18:00 น.'),
@@ -98,7 +99,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
-                                absorbing: !_customMaterial
+                                absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton6(false),
                                 child: VirtalSignForm(
                                     hn: 'HN30001', formTime: '22:00 น.'),
@@ -140,14 +141,14 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                     if (heading ==
                         'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ(Day0)') {
                       return AbsorbPointer(
-                          absorbing:
-                              !_customMaterial.disableRespiratoryDay0Button(
+                          absorbing: !_evaluationFormViewModel
+                              .disableRespiratoryDay0Button(
                                   true), //true to disable the button
                           child: RespiratoryDay0Form(hn: 'HN30001'));
                     } else if (heading == 'แบบประเมินระบบปัสสาวะ') {
                       return AbsorbPointer(
-                          absorbing:
-                              !_customMaterial.disableUrologyButton(false),
+                          absorbing: !_evaluationFormViewModel
+                              .disableUrologyButton(false),
                           child: UrologyForm(hn: 'HN30001'));
                     } else {
                       print('form not match');
@@ -186,23 +187,24 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                   child: (() {
                     if (heading == 'แบบประเมินการเกิดภาวะลิ่มเลือดอุดตัน') {
                       return AbsorbPointer(
-                          absorbing:
-                              !_customMaterial.disableBloodClotButton(false),
+                          absorbing: !_evaluationFormViewModel
+                              .disableBloodClotButton(false),
                           child: BloodClotForm(hn: 'HN30001'));
                     } else if (heading ==
                         'แบบประเมินการจัดการแผลผ่าตัดและสายระบาย') {
                       return AbsorbPointer(
-                          absorbing: !_customMaterial.disableDrainButton(false),
+                          absorbing: !_evaluationFormViewModel
+                              .disableDrainButton(false),
                           child: DrainForm(hn: 'HN30001'));
                     } else if (heading == 'แบบประเมินการจัดการภาวะโภชนาการ') {
                       return AbsorbPointer(
-                          absorbing:
-                              !_customMaterial.disableNutritionButton(false),
+                          absorbing: !_evaluationFormViewModel
+                              .disableNutritionButton(false),
                           child: NutritionForm(hn: 'HN30001'));
                     } else if (heading ==
                         'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ') {
                       return AbsorbPointer(
-                          absorbing: !_customMaterial
+                          absorbing: !_evaluationFormViewModel
                               .disableRespiratoryDay1Button(false),
                           child: RespiratoryDay1Form(hn: 'HN30001'));
                     } else {
@@ -242,19 +244,19 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                   child: (() {
                     if (heading == 'แบบประเมินการฟื้นฟูระบบทางเดินอาหาร') {
                       return AbsorbPointer(
-                          absorbing:
-                              !_customMaterial.disableDigestiveButton(false),
+                          absorbing: !_evaluationFormViewModel
+                              .disableDigestiveButton(false),
                           child: DigestiveForm(hn: 'HN30001'));
                     } else if (heading ==
                         'แบบประเมินการเฝ้าระวังภาวะแทรกซ้อน') {
                       return AbsorbPointer(
-                          absorbing:
-                              !_customMaterial.disableInfectionButton(false),
+                          absorbing: !_evaluationFormViewModel
+                              .disableInfectionButton(false),
                           child: InfectionForm(hn: 'HN30001'));
                     } else if (heading == 'แบบประเมินการฟื้นฟูสมรรถภาพของปอด') {
                       return AbsorbPointer(
-                          absorbing:
-                              !_customMaterial.disablePulmanaryButton(false),
+                          absorbing: !_evaluationFormViewModel
+                              .disablePulmanaryButton(false),
                           child: PulmanaryForm(hn: 'HN30001'));
                     } else {
                       print('form not match');
