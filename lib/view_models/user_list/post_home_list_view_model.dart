@@ -1,4 +1,4 @@
-import 'package:AbdoCare_Web/models/post_home_list_model.dart';
+import 'package:AbdoCare_Web/models/user_list/post_home_list_model.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 

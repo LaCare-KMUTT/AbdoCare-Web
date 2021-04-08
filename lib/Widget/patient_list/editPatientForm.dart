@@ -164,7 +164,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
             _fetchAnId(userCollection.data.docs.first.id);
             var user = userCollection.data.docs.first;
             return FutureBuilder<Map<String, dynamic>>(
-                future: _firebaseService.getLatestSubCollectionSnapshot(
+                future: _firebaseService.getLatestSubCollectionMap(
                     collection: 'Users',
                     docId: '${userCollection.data.docs.first.id}',
                     subCollection: 'an',

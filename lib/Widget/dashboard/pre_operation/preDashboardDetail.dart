@@ -1,11 +1,13 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm.dart';
-import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
-import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
-import 'package:AbdoCare_Web/page/dashboard_pre.dart';
+
 import 'package:flutter/material.dart';
 
-import 'preDashboardPatientDetail.dart';
+import '../../../page/dashboard_postHome.dart';
+import '../../../page/dashboard_postHos.dart';
+import '../../../page/dashboard_pre.dart';
+import '../../evaluationForms/previsitForm/generalForm/generalForm.dart';
 import '../dashboardGraph.dart';
+import 'preDashboardPatientDetail.dart';
+
 
 class PreDashboardDetail extends StatefulWidget {
   final String hn;
@@ -194,7 +196,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                 ),
                 SizedBox(
                   // Vertical ListView
-                  child: ShowDashboard(),
+                  child: ShowDashboard(patientstate: 'Pre-Operation'),
                 )
               ],
             ),
