@@ -65,7 +65,7 @@ abstract class IFirebaseService {
     @required Map<String, dynamic> data,
   });
 
-  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot({
+  Future<Map<String, dynamic>> getLatestSubCollectionMap({
     @required String collection,
     @required String docId,
     @required String subCollection,
@@ -81,4 +81,7 @@ abstract class IFirebaseService {
       {@required DateTime currentDate});
 
   Future<String> getMedicalTeamSignature();
+
+  Future<Map<String, dynamic>> getCollectionMap(
+      {@required String collection, @required String docId});
 }

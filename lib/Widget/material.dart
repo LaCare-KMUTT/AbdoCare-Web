@@ -107,4 +107,10 @@ class CustomMaterial {
     }
     return Colors.black;
   }
+
+  EdgeInsets getEdgeInsetLTRB7070700(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    return EdgeInsets.fromLTRB(screenSize.height / 70, screenSize.height / 70,
+        screenSize.height / 70, 0);
+  }
 }
