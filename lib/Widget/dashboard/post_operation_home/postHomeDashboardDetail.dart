@@ -93,7 +93,6 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                     ),
                   ),
                 ),
-                Text(' ${widget.hn}'),
                 SizedBox(child: PostHomePatientDetail()),
                 SizedBox(child: ShowDashboard())
               ],

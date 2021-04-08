@@ -348,7 +348,6 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                     ),
                   ),
                 ),
-                Text(' ${widget.hn}'),
                 SizedBox(child: PostHosPatientDetail()),
                 SizedBox(
                   height: 500,

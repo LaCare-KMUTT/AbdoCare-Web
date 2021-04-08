@@ -144,7 +144,6 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                     ),
                   ),
                 ),
-                Text(' ${widget.hn}'),
                 SizedBox(
                   child: PrePatientDetail(),
                 ),
