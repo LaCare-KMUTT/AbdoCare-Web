@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/adlForm/feeding.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/adlForm/grooming.dart';
 import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/adlForm_model.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/adlForm_view_model.dart';
 
@@ -25,9 +26,6 @@ class ADLForm extends StatefulWidget {
 }
 
 class _ADLFormState extends State<ADLForm> {
-  ICalculationService _calculationService = locator<ICalculationService>();
-  final CustomMaterial _customMaterial = locator<CustomMaterial>();
-  String _feeding = '';
   String _grooming = '';
   String _transfer = '';
   String _toiletUse = '';
@@ -207,7 +205,6 @@ class _ADLFormState extends State<ADLForm> {
                                                     onSaved: (newValue) =>
                                                         score1 = newValue,
                                                   ),
-
                                                   //question#2
                                                   Container(
                                                     child: Padding(
@@ -232,52 +229,9 @@ class _ADLFormState extends State<ADLForm> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              screenSize
-                                                                      .height /
-                                                                  10,
-                                                              screenSize
-                                                                      .height /
-                                                                  70,
-                                                              screenSize
-                                                                      .height /
-                                                                  70,
-                                                              0),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Expanded(
-                                                            child: Container(
-                                                              child:
-                                                                  RadioListTile(
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                title: Text(
-                                                                    '0 ต้องการความช่วยเหลือ'),
-                                                                value: 0,
-                                                                groupValue:
-                                                                    grooming,
-                                                                onChanged:
-                                                                    (newValue) {
-                                                                  setState(() {
-                                                                    grooming =
-                                                                        newValue;
-                                                                    score2 = 0;
-                                                                    _grooming =
-                                                                        '0 ต้องการความช่วยเหลือ';
-                                                                    print(
-                                                                        _grooming);
-                                                                  });
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                                  GroomingADL(
+                                                    onSaved: (newValue) =>
+                                                        score2 = newValue,
                                                   ),
                                                   Container(
                                                     child: Padding(
