@@ -2722,7 +2722,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                               style: TextStyle(fontSize: 18),
                             ),
                             onPressed: () {
-                              healthStatusData(0);
+                              Navigator.pop(context);
+                              // healthStatusData(0);
                             },
                           ),
                         ),

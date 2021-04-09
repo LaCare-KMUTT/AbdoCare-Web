@@ -13,7 +13,7 @@ class ADLFormModel {
 
   ADLFormModel getModel() => this;
 
-  void fromMap(Map<String, int> map) {
+  void fromMap(Map<String, dynamic> map) {
     _feeding = map['Feeding'];
     _grooming = map['Grooming'];
     _transfer = map['Transfer'];
@@ -27,7 +27,7 @@ class ADLFormModel {
     _totalScore = map['TotalScoreADL'];
   }
 
-  Map<String, int> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'Feeding': _feeding,
       'Grooming': _grooming,

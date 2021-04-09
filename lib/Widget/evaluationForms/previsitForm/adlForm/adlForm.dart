@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/adlForm/feeding.dart';
 import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/adlForm_model.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/adlForm_view_model.dart';
 
@@ -48,7 +49,7 @@ class _ADLFormState extends State<ADLForm> {
       score7,
       score8,
       score9,
-      score10 = 0;
+      score10;
 
   int feeding;
   int grooming;
@@ -85,6 +86,10 @@ class _ADLFormState extends State<ADLForm> {
       'Bladder': score10,
       'TotalScoreADL': totalscore,
     };
+    var model = ADLFormViewModel.getADLFormModel();
+    model.fromMap(formDataToDB2);
+    var map = model.toMap();
+    print(map);
     if (page == 0) {
       //back to previous page
     } else {
@@ -142,7 +147,7 @@ class _ADLFormState extends State<ADLForm> {
                             children: [
                               Card(
                                   child: FutureBuilder<ADLFormModel>(
-                                      future: ADLFormViewModel().getModel(),
+                                      future: ADLFormViewModel.getModel(),
                                       builder: (context, snapshot) {
                                         if (!snapshot.hasData) {
                                           return Padding(
@@ -198,147 +203,11 @@ class _ADLFormState extends State<ADLForm> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              screenSize
-                                                                      .height /
-                                                                  10,
-                                                              screenSize
-                                                                      .height /
-                                                                  70,
-                                                              screenSize
-                                                                      .height /
-                                                                  70,
-                                                              0),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Expanded(
-                                                            child: Container(
-                                                              child:
-                                                                  RadioListTile(
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                title: Text(
-                                                                    '0 ไม่สามารถตักอาหารเข้าปากได้ ต้องมีคนป้อนให้'),
-                                                                value: 0,
-                                                                groupValue:
-                                                                    feeding,
-                                                                onChanged:
-                                                                    (newValue) {
-                                                                  setState(() {
-                                                                    feeding =
-                                                                        newValue;
-                                                                    score1 = 0;
-                                                                    _feeding =
-                                                                        '0 ไม่สามารถตักอาหารเข้าปากได้ ต้องมีคนป้อนให้';
-                                                                    print(
-                                                                        _feeding);
-                                                                  });
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                                  FeedingADL(
+                                                    onSaved: (newValue) =>
+                                                        score1 = newValue,
                                                   ),
-                                                  Container(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              screenSize
-                                                                      .height /
-                                                                  10,
-                                                              screenSize
-                                                                      .height /
-                                                                  70,
-                                                              screenSize
-                                                                      .height /
-                                                                  70,
-                                                              0),
-                                                      child: Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Container(
-                                                              child:
-                                                                  RadioListTile(
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                title: Text(
-                                                                    '1 ตักอาหารเองได้แต่ต้องมีคนช่วย เช่น ช่วยใช้ช้อนตักเตรียมไว้ให้หรือตัดเป็นเล็กๆไว้ล่วงหน้า  '),
-                                                                value: 1,
-                                                                groupValue:
-                                                                    feeding,
-                                                                onChanged:
-                                                                    (newValue) {
-                                                                  setState(() {
-                                                                    feeding =
-                                                                        newValue;
-                                                                    score1 = 1;
-                                                                    _feeding =
-                                                                        '1ตักอาหารเองได้แต่ต้องมีคนช่วย เช่น ช่วยใช้ช้อนตักเตรียมไว้ให้หรือตัดเป็นเล็กๆไว้ล่วงหน้า  ';
-                                                                    print(
-                                                                        _feeding);
-                                                                  });
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              screenSize
-                                                                      .height /
-                                                                  10,
-                                                              screenSize
-                                                                      .height /
-                                                                  70,
-                                                              screenSize
-                                                                      .height /
-                                                                  70,
-                                                              0),
-                                                      child: Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Container(
-                                                              child:
-                                                                  RadioListTile(
-                                                                contentPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                title: Text(
-                                                                    '2 ตักอาหารและช่วยตัวเองได้เป็นปกติ'),
-                                                                value: 2,
-                                                                groupValue:
-                                                                    feeding,
-                                                                onChanged:
-                                                                    (newValue) {
-                                                                  setState(() {
-                                                                    feeding =
-                                                                        newValue;
-                                                                    score1 = 2;
-                                                                    _feeding =
-                                                                        '2 ตักอาหารและช่วยตัวเองได้เป็นปกติ';
-                                                                    print(
-                                                                        _feeding);
-                                                                  });
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
+
                                                   //question#2
                                                   Container(
                                                     child: Padding(
@@ -1901,18 +1770,19 @@ class _ADLFormState extends State<ADLForm> {
                             style: TextStyle(fontSize: 18),
                           ),
                           onPressed: () {
-                            if (_feeding == "" ||
-                                _grooming == "" ||
-                                _transfer == "" ||
-                                _toiletUse == "" ||
-                                _mobility == "" ||
-                                _dressing == "" ||
-                                _stairs == "" ||
-                                _bathing == "" ||
-                                _bowels == "" ||
-                                _bladder == "") {
+                            if (score1 == null ||
+                                score2 == null ||
+                                score3 == null ||
+                                score4 == null ||
+                                score5 == null ||
+                                score6 == null ||
+                                score7 == null ||
+                                score8 == null ||
+                                score9 == null ||
+                                score10 == null) {
                               alert(context);
                             } else {
+                              // ADLFormViewModel().
                               adlData(1);
                             }
                           },

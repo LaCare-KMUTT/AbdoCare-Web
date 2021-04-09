@@ -3,17 +3,21 @@ import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/radioListTile_model
 import 'package:flutter/material.dart';
 
 class FeedingADL extends StatefulWidget {
+  final FormFieldSetter<int> onSaved;
+  FeedingADL({this.onSaved});
   @override
-  _FeedingADLState createState() => _FeedingADLState();
+  _FeedingADLState createState() => _FeedingADLState(onSaved: onSaved);
 }
 
-List<RadioListTileModel> list = getFeedingList();
-
-int feeding;
-int score1;
-String _feeding = '';
-
 class _FeedingADLState extends State<FeedingADL> {
+  final FormFieldSetter<int> onSaved;
+  _FeedingADLState({this.onSaved});
+
+  List<RadioListTileModel> list = getFeedingList();
+
+  int _id;
+  int _feedingScore = 0;
+
   List<Widget> _getWidget(screenSize) {
     return list.map((e) {
       return Container(
@@ -26,17 +30,14 @@ class _FeedingADLState extends State<FeedingADL> {
                 child: Container(
                   child: RadioListTile(
                     contentPadding: EdgeInsets.zero,
-                    title:
-                        Text('0 ไม่สามารถตักอาหารเข้าปากได้ ต้องมีคนป้อนให้'),
-                    value: 0,
-                    groupValue: feeding,
+                    title: Text('${e.text}'),
+                    value: e.index,
+                    groupValue: _id,
                     onChanged: (newValue) {
                       setState(() {
-                        feeding = newValue;
-                        score1 = 0;
-                        _feeding =
-                            '0 ไม่สามารถตักอาหารเข้าปากได้ ต้องมีคนป้อนให้';
-                        print(_feeding);
+                        _id = e.index;
+                        _feedingScore = e.value;
+                        onSaved(_feedingScore);
                       });
                     },
                   ),
@@ -46,100 +47,6 @@ class _FeedingADLState extends State<FeedingADL> {
           ),
         ),
       );
-      // Container(
-      //   child: Padding(
-      //     padding:
-      //         EdgeInsets.fromLTRB(
-      //             screenSize
-      //                     .height /
-      //                 10,
-      //             screenSize
-      //                     .height /
-      //                 70,
-      //             screenSize
-      //                     .height /
-      //                 70,
-      //             0),
-      //     child: Row(
-      //       children: [
-      //         Expanded(
-      //           child: Container(
-      //             child:
-      //                 RadioListTile(
-      //               contentPadding:
-      //                   EdgeInsets
-      //                       .zero,
-      //               title: Text(
-      //                   '1 ตักอาหารเองได้แต่ต้องมีคนช่วย เช่น ช่วยใช้ช้อนตักเตรียมไว้ให้หรือตัดเป็นเล็กๆไว้ล่วงหน้า  '),
-      //               value: 1,
-      //               groupValue:
-      //                   feeding,
-      //               onChanged:
-      //                   (newValue) {
-      //                 setState(() {
-      //                   feeding =
-      //                       newValue;
-      //                   score1 = 1;
-      //                   _feeding =
-      //                       '1ตักอาหารเองได้แต่ต้องมีคนช่วย เช่น ช่วยใช้ช้อนตักเตรียมไว้ให้หรือตัดเป็นเล็กๆไว้ล่วงหน้า  ';
-      //                   print(
-      //                       _feeding);
-      //                 });
-      //               },
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      // Container(
-      //   child: Padding(
-      //     padding:
-      //         EdgeInsets.fromLTRB(
-      //             screenSize
-      //                     .height /
-      //                 10,
-      //             screenSize
-      //                     .height /
-      //                 70,
-      //             screenSize
-      //                     .height /
-      //                 70,
-      //             0),
-      //     child: Row(
-      //       children: [
-      //         Expanded(
-      //           child: Container(
-      //             child:
-      //                 RadioListTile(
-      //               contentPadding:
-      //                   EdgeInsets
-      //                       .zero,
-      //               title: Text(
-      //                   '2 ตักอาหารและช่วยตัวเองได้เป็นปกติ'),
-      //               value: 2,
-      //               groupValue:
-      //                   feeding,
-      //               onChanged:
-      //                   (newValue) {
-      //                 setState(() {
-      //                   feeding =
-      //                       newValue;
-      //                   score1 = 2;
-      //                   _feeding =
-      //                       '2 ตักอาหารและช่วยตัวเองได้เป็นปกติ';
-      //                   print(
-      //                       _feeding);
-      //                 });
-      //               },
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // );
     }).toList();
   }
 
@@ -147,7 +54,9 @@ class _FeedingADLState extends State<FeedingADL> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Column(
-      children: [..._getWidget(screenSize)],
+      children: [
+        ..._getWidget(screenSize),
+      ],
     );
   }
 }
