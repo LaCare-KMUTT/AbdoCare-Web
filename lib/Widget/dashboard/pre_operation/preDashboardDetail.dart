@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/adlForm/adlForm.dart';
 import 'package:flutter/material.dart';
 
 import '../../../page/dashboard_postHome.dart';
@@ -50,13 +51,21 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                       onPressed: () {
                         print('$heading : ${widget.hn}');
                         setState(() {});
+                        //For debug
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => GeneralForm(
+                              builder: (context) => ADLForm(
                                 hn: widget.hn,
                               ),
                             ));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => GeneralForm(
+                        //         hn: widget.hn,
+                        //       ),
+                        //     ));
                       },
                     ),
                   ),
