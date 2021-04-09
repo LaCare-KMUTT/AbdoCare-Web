@@ -39,7 +39,7 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
                   content: StatefulBuilder(
                       builder: (BuildContext context, StateSetter setState) {
                     return Container(
-                      width: 500,
+                      width: 600,
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[

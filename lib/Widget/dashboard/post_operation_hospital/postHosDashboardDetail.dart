@@ -2,6 +2,7 @@ import 'package:AbdoCare_Web/Widget/dashboard/post_operation_hospital/postHosDas
 import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
 import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:AbdoCare_Web/page/dashboard_pre.dart';
+import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/evaluationFormButton_view_model.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +28,25 @@ class PostHosDashboardDetail extends StatefulWidget {
 
 class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
   final ScrollController controller = ScrollController();
-
+  final _firebaseService = locator<IFirebaseService>();
   final EvaluationFormViewModel _evaluationFormViewModel =
       locator<EvaluationFormViewModel>();
-  String dayInCurrentState = '1'; //get from DB
+  var _getdayInCurrentState;
+  var dayInCurrentState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  initData() async {
+    dayInCurrentState =
+        await _firebaseService.getDayInCurrentState(hn: widget.hn);
+    print('dayInCurrentState $dayInCurrentState');
+    setState(() {
+      _getdayInCurrentState = dayInCurrentState;
+    });
+  }
 
   Container virtalSignFormCard(String heading, String hn) {
     return Container(
@@ -139,11 +155,11 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                   margin: EdgeInsets.only(bottom: 5),
                   child: (() {
                     if (heading ==
-                        'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ(Day0)') {
+                        'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ (Day0)') {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableRespiratoryDay0Button(
-                                  true), //true to disable the button
+                                  false), //true to disable the button
                           child: RespiratoryDay0Form(hn: widget.hn));
                     } else if (heading == 'แบบประเมินระบบปัสสาวะ') {
                       return AbsorbPointer(
@@ -316,29 +332,26 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               switch (newValue) {
                                 case "Pre-Operation":
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PreDashboardPage(hn: widget.hn)),
-                                  );
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PreDashboardPage(hn: widget.hn)));
                                   break;
                                 case "Post-Operation@Hospital":
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PostHosDashboardPage(
-                                                hn: widget.hn)),
-                                  );
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PostHosDashboardPage(
+                                                  hn: widget.hn)));
                                   break;
                                 case "Post-Operation@Home":
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PostHomeDashboardPage(
-                                                hn: widget.hn)),
-                                  );
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PostHomeDashboardPage(
+                                                  hn: widget.hn)));
                                   break;
                               }
                             });
@@ -387,16 +400,17 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                           ],
                                         ),
                                         (() {
-                                          if (dayInCurrentState == '0') {
+                                          print("Day: $_getdayInCurrentState");
+                                          if (dayInCurrentState == 0) {
                                             return Column(
                                               children: [
                                                 postHosDay0FormCard(
-                                                    'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ(Day0)'),
+                                                    'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ (Day0)'),
                                                 postHosDay0FormCard(
                                                     'แบบประเมินระบบปัสสาวะ'),
                                               ],
                                             );
-                                          } else if (dayInCurrentState == '1') {
+                                          } else if (dayInCurrentState == 1) {
                                             return Column(
                                               children: [
                                                 Row(
@@ -417,7 +431,8 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                                 ),
                                               ],
                                             );
-                                          } else if (dayInCurrentState == '2') {
+                                          } else if (dayInCurrentState != 1 &&
+                                              dayInCurrentState != 0) {
                                             return Column(
                                               children: [
                                                 postHosDay2FormCard(
