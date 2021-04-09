@@ -5,6 +5,8 @@ import '../Widget/sidebar.dart';
 import '../Widget/dashboard/post_operation_hospital/postHosDashboardDetail.dart';
 
 class PostHosDashboardPage extends StatefulWidget {
+  final String hn;
+  PostHosDashboardPage({Key key, @required this.hn}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _PostHosDashboardPageState();
@@ -19,7 +21,7 @@ class _PostHosDashboardPageState extends State<PostHosDashboardPage> {
         title: Text('สรุปผลประจำวัน'),
         appBar: AppBar(),
       ),
-      body: PostHosDashboardDetail(),
+      body: PostHosDashboardDetail(hn: widget.hn),
       drawer: SideBar(),
     );
   }

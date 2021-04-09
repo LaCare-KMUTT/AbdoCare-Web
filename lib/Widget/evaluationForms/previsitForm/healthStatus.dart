@@ -217,7 +217,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PreDashboardPage(),
+            builder: (context) => PreDashboardPage(hn: widget.hn),
           ));
     }
   }

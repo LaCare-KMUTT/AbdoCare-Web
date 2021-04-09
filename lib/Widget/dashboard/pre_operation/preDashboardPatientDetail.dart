@@ -222,7 +222,6 @@ class PrePatientDetail extends StatelessWidget {
                                   Expanded(
                                     flex: 1,
                                     child: Container(
-                                      width: 100,
                                       margin: EdgeInsets.only(left: 55),
                                       child: Text('เบอร์โทร:',
                                           textAlign: TextAlign.end),
@@ -302,8 +301,8 @@ class PrePatientDetail extends StatelessWidget {
                                   ),
                                 ),
                                 Expanded(
+                                  flex: 1,
                                   child: Container(
-                                    width: 200,
                                     margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
                                     child: Text('AN2344'),
                                   ),
