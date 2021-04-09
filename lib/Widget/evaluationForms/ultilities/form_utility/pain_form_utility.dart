@@ -15,7 +15,7 @@ class PainFormUtility {
     return this;
   }
 
-  bool getPainFormCriteria(double score) {
+  bool getPainFormCriteria(int score) {
     bool result = false;
     assert(score >= 0 && score <= 10);
     if (_state == "Post-Operation@Hospital") {

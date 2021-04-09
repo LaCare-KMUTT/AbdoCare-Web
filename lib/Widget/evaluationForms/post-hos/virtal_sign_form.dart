@@ -2,7 +2,6 @@ import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/pain
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,7 +16,6 @@ class VirtalSignForm extends StatefulWidget {
 }
 
 class _VirtalSignFormState extends State<VirtalSignForm> {
-  final _firestore = FirebaseFirestore.instance;
   ICalculationService _calculationService = locator<ICalculationService>();
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   final _formKey = GlobalKey<FormState>();
@@ -29,7 +27,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   String _bp;
   int _systolic;
   int _diastolic;
-  double _pain;
+  int _pain;
   LinearGradient gradient = LinearGradient(
     colors: <Color>[
       Colors.greenAccent[400],
@@ -58,21 +56,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
     });
   }
 
-  bool checkNotificationCriteria(String hn, double score) {
-    // var userId = _firestore
-    //     .collection('Users')
-    //     .where('hn', isEqualTo: hn)
-    //     .get()
-    //     .then((value) => value.docs.first.id)
-    //     .catchError((onError) {
-    //   print('$onError Cannot find user');
-    // });
-    // var state = _firebaseService.getPatientState(hn: hn);
-    // var latestStateChange = _anSubCollection['latestStateChange'].toDate();
-    // var dayInCurrentState = _calculationService.calculateDayDifference(
-    //     day: latestStateChange,
-    //     compareTo: _calculationService.formatDate(date: DateTime.now()));
-
+  bool checkNotificationCriteria(String hn, int score) {
     var shouldNotify = PainFormUtility()
         .withState(patientState)
         .withDayInState(dayInCurrentState)
@@ -340,7 +324,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 ),
                                                 labelText: 'Pain'),
                                             onSaved: (value) {
-                                              _pain = double.parse(value);
+                                              _pain = int.parse(value);
                                             },
                                             items: [
                                               '1',
@@ -362,7 +346,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 .toList(),
                                             onChanged: (value) {
                                               setState(() {
-                                                _pain = double.parse(value);
+                                                _pain = int.parse(value);
                                               });
                                             },
                                           ),
