@@ -27,8 +27,8 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   double _pr;
   double _rr;
   String _bp;
-  String _systolic;
-  String _diastolic;
+  int _systolic;
+  int _diastolic;
   double _pain;
   LinearGradient gradient = LinearGradient(
     colors: <Color>[
@@ -280,7 +280,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 ),
                                                 labelText: 'Systolic'),
                                             onChanged: (value) =>
-                                                _systolic = value,
+                                                _systolic = int.parse(value),
                                           ),
                                         ),
                                         Container(
@@ -306,7 +306,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 ),
                                                 labelText: 'Diastolic'),
                                             onChanged: (value) =>
-                                                _diastolic = value,
+                                                _diastolic = int.parse(value),
                                           ),
                                         ),
                                         Expanded(flex: 1, child: Text(' mmHg')),
@@ -418,7 +418,12 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                     'Post-Operation@Hospital' &&
                                                 _pain != null)) {
                                               if (checkNotificationCriteria(
-                                                  widget.hn, _pain)) {
+                                                      widget.hn, _pain) ||
+                                                  (_bt < 36.0 || _bt > 37.0) ||
+                                                  (_pr < 60.0 || _pr > 100) ||
+                                                  (_rr < 16 || _rr > 20) ||
+                                                  (_systolic > 130 ||
+                                                      _diastolic > 80)) {
                                                 print(
                                                     "$_getdayInCurrentState,$_getpatientState");
                                                 _firebaseService
