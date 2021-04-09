@@ -739,6 +739,6 @@ class FirebaseService extends IFirebaseService {
     });
     var anSubCollection = await getLatestAnSubCollection(docId: userId);
     var patientState = anSubCollection['state'];
-    return patientState;
+    return anSubCollection['state'];
   }
 }
