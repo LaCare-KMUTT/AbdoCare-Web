@@ -1,8 +1,6 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatus.dart';
 import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:flutter/material.dart';
-
-import '../../../services/interfaces/calculation_service_interface.dart';
 import '../../../services/service_locator.dart';
 import '../../appbar.dart';
 import '../../sidebar.dart';
@@ -21,7 +19,6 @@ class ADLForm extends StatefulWidget {
 }
 
 class _ADLFormState extends State<ADLForm> {
-  ICalculationService _calculationService = locator<ICalculationService>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
   String _feeding = '';
   String _grooming = '';
