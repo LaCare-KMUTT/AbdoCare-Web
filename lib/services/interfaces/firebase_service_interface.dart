@@ -75,7 +75,8 @@ abstract class IFirebaseService {
   Future<String> addDataToFormsCollection(
       {@required Map<String, dynamic> data,
       @required String formName,
-      @required String hn});
+      @required String hn,
+      String formTime});
 
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate});

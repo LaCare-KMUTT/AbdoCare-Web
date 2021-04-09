@@ -393,7 +393,8 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 .addDataToFormsCollection(
                                                     hn: widget.hn,
                                                     formName: 'Virtal-Sign',
-                                                    data: dataToDB);
+                                                    data: dataToDB,
+                                                    formTime: widget.formTime);
                                             var patientState =
                                                 await _firebaseService
                                                     .getPatientState(

@@ -274,7 +274,10 @@ class FirebaseServiceMock extends IFirebaseService {
 
   @override
   Future<String> addDataToFormsCollection(
-      {Map<String, dynamic> data, String formName, String hn}) {
+      {Map<String, dynamic> data,
+      String formName,
+      String hn,
+      String formTime}) {
     // TODO: implement addDataToFormsCollection
     throw UnimplementedError();
   }

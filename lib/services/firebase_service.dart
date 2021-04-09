@@ -201,7 +201,8 @@ class FirebaseService extends IFirebaseService {
   Future<String> addDataToFormsCollection(
       {@required Map<String, dynamic> data,
       @required String formName,
-      @required String hn}) async {
+      @required String hn,
+      String formTime}) async {
     print('hn = $hn');
     var userId = await _firestore
         .collection('Users')
@@ -227,6 +228,9 @@ class FirebaseService extends IFirebaseService {
       'patientState': patientState,
       'formData': data,
     };
+    if (formTime != null) {
+      dataToAdd.addAll({'formTime': formTime});
+    }
 
     print('Here is data to add $dataToAdd');
     var forms = await this
