@@ -673,4 +673,23 @@ class FirebaseService extends IFirebaseService {
         .then((value) => value.data());
     return result;
   }
+
+  Future<int> getDayInCurrentState({@required String hn}) async {
+    print('hn = $hn');
+    var userId = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) => value.docs.first.id)
+        .catchError((onError) {
+      print('$onError Cannot find user');
+    });
+    var anSubCollection = await getLatestAnSubCollection(docId: userId);
+    var latestStateChange = anSubCollection['latestStateChange'];
+    var _getlastestStateChange = latestStateChange.toDate();
+    var dayInCurrentState = _calculationService.calculateDayDifference(
+        day: _getlastestStateChange,
+        compareTo: _calculationService.formatDate(date: DateTime.now()));
+    return dayInCurrentState;
+  }
 }

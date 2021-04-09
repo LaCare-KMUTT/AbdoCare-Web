@@ -291,4 +291,10 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getCollectionMap
     throw UnimplementedError();
   }
+
+  @override
+  Future<int> getDayInCurrentState({String hn}) {
+    // TODO: implement getCollectionMap
+    throw UnimplementedError();
+  }
 }

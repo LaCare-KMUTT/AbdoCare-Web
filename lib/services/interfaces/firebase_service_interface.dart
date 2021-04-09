@@ -84,4 +84,6 @@ abstract class IFirebaseService {
 
   Future<Map<String, dynamic>> getCollectionMap(
       {@required String collection, @required String docId});
+
+  Future<int> getDayInCurrentState({@required String hn});
 }
