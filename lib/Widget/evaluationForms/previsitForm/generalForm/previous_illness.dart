@@ -31,7 +31,6 @@ class _PreviousIllnessState extends State<PreviousIllness> {
     const int CHOICE_OTHER = 8;
     return list.map((e) {
       return Expanded(
-        flex: 2,
         child: Container(
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
@@ -63,34 +62,27 @@ class _PreviousIllnessState extends State<PreviousIllness> {
       children: [
         Container(
           child: Padding(
-            padding: _customMaterial.getEdgeInsetLTRB7070700(context),
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: Row(
               children: <Widget>[
                 Expanded(
-                    flex: 3,
                     child: Text('Previous illness',
                         style: TextStyle(fontWeight: FontWeight.w600))),
                 ..._getWidget(list1),
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(width: 0),
-                ),
               ],
             ),
           ),
         ),
         Container(
           child: Padding(
-            padding: _customMaterial.getEdgeInsetLTRB7070700(context),
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: Row(
               children: <Widget>[
                 Expanded(
-                  flex: 3,
                   child: SizedBox(width: 0),
                 ),
                 ..._getWidget(list2),
                 Expanded(
-                  flex: 2,
                   child: TextFormField(
                     enabled: isEnableTextField,
                     validator: (value) {
@@ -116,11 +108,8 @@ class _PreviousIllnessState extends State<PreviousIllness> {
                   ),
                 ),
                 Expanded(
-                  flex: 3,
-                  child: SizedBox(
-                    width: 0,
-                  ),
-                )
+                  child: SizedBox(width: 0),
+                ),
               ],
             ),
           ),

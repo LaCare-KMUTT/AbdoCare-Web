@@ -25,7 +25,6 @@ class _PsychologicalStatusState extends State<PsychologicalStatus> {
     const int CHOICE_OTHERS = 4;
     return list.map((e) {
       return Expanded(
-        flex: 1,
         child: Container(
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
@@ -56,12 +55,12 @@ class _PsychologicalStatusState extends State<PsychologicalStatus> {
     return Row(
       children: <Widget>[
         Expanded(
-            flex: 2,
+            flex: 1,
             child: Text('Psychological status',
                 style: TextStyle(fontWeight: FontWeight.w600))),
         ..._getWidget(),
         Expanded(
-          flex: 5,
+          flex: 3,
           child: TextFormField(
             enabled: isEnableTextField,
             validator: (value) {

@@ -26,7 +26,6 @@ class _DrugAndSubstanceState extends State<DrugAndSubstance> {
     const int CHOICE_DRUG_SEDATIVE = 2;
     return list.map((e) {
       return Expanded(
-        flex: 1,
         child: Container(
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
@@ -57,7 +56,7 @@ class _DrugAndSubstanceState extends State<DrugAndSubstance> {
     return Row(
       children: <Widget>[
         Expanded(
-            flex: 2,
+            flex: 1,
             child: Text('Drug and substance',
                 style: TextStyle(fontWeight: FontWeight.w600))),
         ..._getWidget(list1),

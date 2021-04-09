@@ -47,7 +47,6 @@ class _SleepDisorderState extends State<SleepDisorder> {
 
     return listDisorder.map((e) {
       return Expanded(
-        flex: 1,
         child: Container(
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
@@ -81,7 +80,6 @@ class _SleepDisorderState extends State<SleepDisorder> {
   List<Widget> _getWidget2() {
     return listDisorderDuration.map((e) {
       return Expanded(
-        flex: 1,
         child: AbsorbPointer(
           absorbing: !isEnableTextField,
           child: RadioListTile(
@@ -107,22 +105,20 @@ class _SleepDisorderState extends State<SleepDisorder> {
     return Row(
       children: <Widget>[
         Expanded(
-            flex: 2,
+            flex: 1,
             child: Text('Sleep disorder',
                 style: TextStyle(fontWeight: FontWeight.w600))),
         ..._getWidget1(),
-        Expanded(
-            flex: 1,
+        Container(
+            width: 100,
             child: Text('(Duration',
                 textAlign: TextAlign.end,
                 style: TextStyle(fontSize: 16, color: Colors.black87))),
         ..._getWidget2(),
-        Expanded(
-            flex: 1,
+        Flexible(
             child: Text(', On average',
                 style: TextStyle(fontSize: 16, color: Colors.black87))),
         Expanded(
-          flex: 2,
           child: TextFormField(
             controller: _controller,
             enabled: isEnableTextField,
@@ -146,8 +142,8 @@ class _SleepDisorderState extends State<SleepDisorder> {
             },
           ),
         ),
-        Expanded(
-            flex: 1,
+        Container(
+            width: 100,
             child: Text(' hr./night)',
                 style: TextStyle(fontSize: 16, color: Colors.black87))),
       ],
