@@ -273,7 +273,7 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<void> addDataToFormsCollection(
+  Future<String> addDataToFormsCollection(
       {Map<String, dynamic> data, String formName, String hn}) {
     // TODO: implement addDataToFormsCollection
     throw UnimplementedError();
@@ -294,6 +294,19 @@ class FirebaseServiceMock extends IFirebaseService {
 
   @override
   Future<int> getDayInCurrentState({String hn}) {
+    // TODO: implement getCollectionMap
+    throw UnimplementedError();
+  }
+
+  Future<void> addNotification(
+      {@required String hn,
+      @required String formId,
+      @required String formName}) {
+    // TODO: implement getCollectionMap
+    throw UnimplementedError();
+  }
+
+  Future<String> getPatientState({@required String hn}) {
     // TODO: implement getCollectionMap
     throw UnimplementedError();
   }

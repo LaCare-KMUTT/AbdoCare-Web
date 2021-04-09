@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ class RespiratoryDay0Form extends StatefulWidget {
 }
 
 class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
-  ICalculationService _calculationService = locator<ICalculationService>();
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   var _value1;
   var _value2;
@@ -526,7 +524,6 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
                                                     hn: widget.hn,
                                                     formName: 'Respiratory',
                                                     data: formDataToDB);
-
                                             if (_value1 == "ใช่" &&
                                                 _value2 ==
                                                     "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
@@ -540,19 +537,10 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
                                               result = "Pass";
                                             } else {
                                               result = "NotPass";
-                                              // var creation = _calculationService.formatDate(
-                                              //     date: DateTime.now());
-                                              // var patientState = _anSubCollection['state'];
-                                              // _firebaseService.addNotification({
-                                              //   'formName': 'Respiratory',
-                                              //   'formId': formId,
-                                              //   'userId':
-                                              //       UserStore.getValueFromStore('storedUserId'),
-                                              //   'creation': creation,
-                                              //   'patientState': patientState,
-                                              //   'seen': false,
-                                              // });
-
+                                              _firebaseService.addNotification(
+                                                  hn: widget.hn,
+                                                  formId: formId,
+                                                  formName: 'Respiratory');
                                             }
                                             Navigator.pop(context);
                                           }
