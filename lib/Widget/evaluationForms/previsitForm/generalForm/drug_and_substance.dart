@@ -64,9 +64,9 @@ class _DrugAndSubstanceState extends State<DrugAndSubstance> {
           flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกDrug sedative' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอกDrug sedative'
+                : null,
             controller: _controller,
             decoration: InputDecoration(
                 contentPadding:

@@ -76,9 +76,9 @@ class _AntiPlateletState extends State<AntiPlatelet> {
           flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกAnti Platelet' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอกAnti Platelet'
+                : null,
             controller: _controller1,
             decoration: InputDecoration(
                 contentPadding:
@@ -107,9 +107,8 @@ class _AntiPlateletState extends State<AntiPlatelet> {
           width: 200,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกDays' : null;
-            },
+            validator: (value) =>
+                isEnableTextField && value.isEmpty ? 'กรุณากรอกDays' : null,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),

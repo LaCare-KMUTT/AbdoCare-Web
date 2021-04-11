@@ -85,9 +85,9 @@ class _PreviousIllnessState extends State<PreviousIllness> {
                 Expanded(
                   child: TextFormField(
                     enabled: isEnableTextField,
-                    validator: (value) {
-                      return value.isEmpty ? 'กรุณากรอกPrevious Illness' : null;
-                    },
+                    validator: (value) => isEnableTextField && value.isEmpty
+                        ? 'กรุณากรอกPrevious Illness'
+                        : null,
                     controller: _controller,
                     decoration: InputDecoration(
                         contentPadding: new EdgeInsets.symmetric(

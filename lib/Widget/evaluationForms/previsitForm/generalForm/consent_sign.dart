@@ -83,9 +83,8 @@ class _ConsentSignState extends State<ConsentSign> {
             enabled: isEnabled,
             initialValue: consentFromDb == 'Others' ? null : consentFromDb,
             controller: _controller,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกConsent signed' : null;
-            },
+            validator: (value) =>
+                isEnabled && value.isEmpty ? 'กรุณากรอกConsent signed' : null,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),

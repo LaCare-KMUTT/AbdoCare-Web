@@ -66,9 +66,9 @@ class _AllergyToLatexState extends State<AllergyToLatex> {
         Expanded(
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกAllergy to Latex' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอกAllergy to Latex'
+                : null,
             controller: _controller,
             decoration: InputDecoration(
                 contentPadding:

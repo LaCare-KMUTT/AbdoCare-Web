@@ -63,9 +63,9 @@ class _PsychologicalStatusState extends State<PsychologicalStatus> {
           flex: 3,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกPsychological Status' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอกPsychological Status'
+                : null,
             controller: _controller,
             decoration: InputDecoration(
                 contentPadding:

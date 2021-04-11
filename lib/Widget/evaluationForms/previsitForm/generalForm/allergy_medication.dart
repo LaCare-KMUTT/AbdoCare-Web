@@ -73,9 +73,9 @@ class _AllergyMedicationState extends State<AllergyMedication> {
           flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกAllergy Medication' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอกAllergy Medication'
+                : null,
             controller: _controller1,
             decoration: InputDecoration(
                 contentPadding:
@@ -104,9 +104,8 @@ class _AllergyMedicationState extends State<AllergyMedication> {
           flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกSymptoms' : null;
-            },
+            validator: (value) =>
+                isEnableTextField && value.isEmpty ? 'กรุณากรอกSymptoms' : null,
             controller: _controller2,
             decoration: InputDecoration(
                 contentPadding:

@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../models/evalutate_form/pre_visit/generalForm_model.dart';
@@ -64,10 +65,17 @@ class _GeneralFormState extends State<GeneralForm> {
   String _sleepDisorderDurationAvg = '';
 
   var date;
+  // Function to validate the number
+  bool isNumber(String value) {
+    if (value == null) {
+      return true;
+    }
+    final n = num.tryParse(value);
+    return n != null;
+  }
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
     final format = DateFormat('dd/MM/yyyy');
     return Scaffold(
       appBar: BaseAppBar(
@@ -102,7 +110,6 @@ class _GeneralFormState extends State<GeneralForm> {
                 ),
                 Center(
                   child: SafeArea(
-
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Card(
@@ -150,7 +157,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                                               ],
                                                             ),
                                                           ),
-
                                                         ),
                                                         Container(
                                                           child: Padding(
@@ -310,6 +316,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                             value,
                                                                   ),
                                                                 ),
+                                                                Expanded(
+                                                                    child:
+                                                                        SizedBox())
                                                               ],
                                                             ),
                                                           ),
@@ -370,34 +379,27 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 Expanded(
                                                                   child:
                                                                       DropdownButtonFormField(
+                                                                    value: snapshot
+                                                                        .data
+                                                                        .ward,
                                                                     hint:
                                                                         DropdownMenuItem(
                                                                       child: Text(snapshot
                                                                           .data
                                                                           .ward),
                                                                     ),
-                                                                    // isExpanded:
-                                                                    //     true,
                                                                     validator: (value) => value ==
                                                                             null
                                                                         ? 'กรุณาเลือกWard'
                                                                         : null,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      contentPadding: new EdgeInsets
-                                                                              .symmetric(
-                                                                          vertical:
-                                                                              8.0,
-                                                                          horizontal:
-                                                                              10.0),
-                                                                      enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide: BorderSide(
-                                                                            color:
-                                                                                Colors.black26,
-                                                                            width: 1),
-                                                                      ),
-                                                                    ),
+                                                                    decoration: InputDecoration(
+                                                                        contentPadding: new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+                                                                        enabledBorder: OutlineInputBorder(
+                                                                          borderSide: BorderSide(
+                                                                              color: Colors.black26,
+                                                                              width: 1),
+                                                                        ),
+                                                                        labelText: 'Ward'),
                                                                     onSaved:
                                                                         (value) {
                                                                       _ward =
@@ -469,6 +471,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         );
                                                                       }),
                                                                 ),
+                                                                Expanded(
+                                                                    child:
+                                                                        SizedBox())
                                                               ],
                                                             ),
                                                           ),
@@ -589,6 +594,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                         );
                                                                       }),
                                                                 ),
+                                                                Expanded(
+                                                                    child:
+                                                                        SizedBox())
                                                               ],
                                                             ),
                                                           ),
@@ -660,14 +668,19 @@ class _GeneralFormState extends State<GeneralForm> {
                                                         //TypeOfAnesthesia
                                                         Container(
                                                           child: Padding(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(10,
-                                                                    10, 10, 0),
-                                                            child: TypeOfAnesthesia(
-                                                                onSaved: (value) =>
-                                                                    _typeOfAnesthesia =
-                                                                        value),
-                                                          ),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .fromLTRB(
+                                                                          10,
+                                                                          10,
+                                                                          10,
+                                                                          0),
+                                                              child: TypeOfAnesthesia(
+                                                                  onSaved:
+                                                                      (value) {
+                                                                _typeOfAnesthesia =
+                                                                    value;
+                                                              })),
                                                         ),
 
                                                         PreviousIllness(
@@ -778,6 +791,14 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                           ? 'กรุณากรอกBW'
                                                                           : null;
                                                                     },
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .number,
+                                                                    inputFormatters: <
+                                                                        TextInputFormatter>[
+                                                                      FilteringTextInputFormatter
+                                                                          .digitsOnly
+                                                                    ], // Only numbers can be entered
                                                                     decoration: InputDecoration(
                                                                         contentPadding: new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
                                                                         enabledBorder: OutlineInputBorder(
@@ -816,6 +837,14 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                           ? 'กรุณากรอกHigh'
                                                                           : null;
                                                                     },
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .number,
+                                                                    inputFormatters: <
+                                                                        TextInputFormatter>[
+                                                                      FilteringTextInputFormatter
+                                                                          .digitsOnly
+                                                                    ],
                                                                     decoration: InputDecoration(
                                                                         contentPadding: new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
                                                                         enabledBorder: OutlineInputBorder(
@@ -854,6 +883,14 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                           ? 'กรุณากรอกWeight'
                                                                           : null;
                                                                     },
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .number,
+                                                                    inputFormatters: <
+                                                                        TextInputFormatter>[
+                                                                      FilteringTextInputFormatter
+                                                                          .digitsOnly
+                                                                    ],
                                                                     decoration: InputDecoration(
                                                                         contentPadding: new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
                                                                         enabledBorder: OutlineInputBorder(
@@ -1069,52 +1106,59 @@ class _GeneralFormState extends State<GeneralForm> {
                             child:
                                 Text('ถัดไป', style: TextStyle(fontSize: 18)),
                             onPressed: () {
-                              _formKey.currentState.save();
-                              Map<String, dynamic> formDataToDB = {
-                                'hn': _hn,
-                                'an': _an,
-                                'patientName': _patientName,
-                                'patientSurname': _patientSurname,
-                                'dob': _dob,
-                                'operationDate': _operationDate,
-                                'gender': _gender,
-                                'ward': _ward,
-                                'operationMethod': _operationMethod,
-                                'diagnosis': _diagnosis,
-                                'consentSigned': _consentSigned,
-                                'preMedication': _preMedication,
-                                'typeOfAnesthesia': _typeOfAnesthesia,
-                                'previousIllness': _previousIllness,
-                                'drugUsed': _drugUsed,
-                                'asaClass': _asaClass,
-                                'bw': int.parse(_bw),
-                                'high': int.parse(_high),
-                                'weight': int.parse(_weight),
-                                'previousSurgery': _previousSurgery,
-                                'antiPlateletReason': _antiPlateletReason,
-                                'antiPlateletDays': _antiPlateletDays,
-                                'allergyMedication': _allergyMedication,
-                                'allergySymptoms': _allergySymptoms,
-                                'allergyLatex': _allergyLatex,
-                                'psychologicalStatus': _psychologicalStatus,
-                                'drugAndSubstance': _drugAndSubstance,
-                                'sleepDisorder': _sleepDisorder,
-                                'sleepDisorderDuration': _sleepDisorderDuration,
-                                'sleepDisorderDurationAvg':
-                                    _sleepDisorderDurationAvg,
-                              };
-                              var model =
-                                  GeneralFormViewModel.getGeneralFormModel();
-                              model.fromMap(formDataToDB);
-                              var map = model.toMap();
-                              print('Model =  : $map');
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ADLForm(
-                                        hn: widget.hn,
-                                        generalForm: formDataToDB),
-                                  ));
+                              if (_formKey.currentState.validate()) {
+                                if (_typeOfAnesthesia == null) {
+                                  alert(context);
+                                } else {
+                                  _formKey.currentState.save();
+                                  Map<String, dynamic> formDataToDB = {
+                                    'hn': _hn,
+                                    'an': _an,
+                                    'patientName': _patientName,
+                                    'patientSurname': _patientSurname,
+                                    'dob': _dob,
+                                    'operationDate': _operationDate,
+                                    'gender': _gender,
+                                    'ward': _ward,
+                                    'operationMethod': _operationMethod,
+                                    'diagnosis': _diagnosis,
+                                    'consentSigned': _consentSigned,
+                                    'preMedication': _preMedication,
+                                    'typeOfAnesthesia': _typeOfAnesthesia,
+                                    'previousIllness': _previousIllness,
+                                    'drugUsed': _drugUsed,
+                                    'asaClass': _asaClass,
+                                    'bw': int.parse(_bw),
+                                    'high': int.parse(_high),
+                                    'weight': int.parse(_weight),
+                                    'previousSurgery': _previousSurgery,
+                                    'antiPlateletReason': _antiPlateletReason,
+                                    'antiPlateletDays': _antiPlateletDays,
+                                    'allergyMedication': _allergyMedication,
+                                    'allergySymptoms': _allergySymptoms,
+                                    'allergyLatex': _allergyLatex,
+                                    'psychologicalStatus': _psychologicalStatus,
+                                    'drugAndSubstance': _drugAndSubstance,
+                                    'sleepDisorder': _sleepDisorder,
+                                    'sleepDisorderDuration':
+                                        _sleepDisorderDuration,
+                                    'sleepDisorderDurationAvg':
+                                        _sleepDisorderDurationAvg,
+                                  };
+                                  var model = GeneralFormViewModel
+                                      .getGeneralFormModel();
+                                  model.fromMap(formDataToDB);
+                                  var map = model.toMap();
+                                  print('Model =  : $map');
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ADLForm(
+                                            hn: widget.hn,
+                                            generalForm: formDataToDB),
+                                      ));
+                                }
+                              }
                             }),
                       ),
                     ],
@@ -1126,5 +1170,22 @@ class _GeneralFormState extends State<GeneralForm> {
         ),
       ),
     );
+  }
+
+  void alert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) {
+          Future.delayed(Duration(seconds: 2), () {
+            Navigator.of(context).pop(true);
+          });
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: Text("กรุณาทำแบบประเมินให้ครบถ้วน",
+                style: Theme.of(context).textTheme.bodyText2,
+                textAlign: TextAlign.center),
+          );
+        });
   }
 }

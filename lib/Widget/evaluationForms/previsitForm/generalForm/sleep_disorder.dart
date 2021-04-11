@@ -122,9 +122,9 @@ class _SleepDisorderState extends State<SleepDisorder> {
           child: TextFormField(
             controller: _controller,
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอก On average' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอก On average'
+                : null,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
