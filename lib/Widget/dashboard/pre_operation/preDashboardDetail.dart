@@ -17,52 +17,53 @@ class PreDashboardDetail extends StatefulWidget {
 class _PreDashboardDetailState extends State<PreDashboardDetail> {
   final ScrollController controller = ScrollController();
 
-  Container myArticles(String heading) {
-    var screenSize = MediaQuery.of(context).size;
+  Container formCard(String heading) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
-      width: screenSize.width / 5,
-      height: screenSize.width / 4,
-      child: Card(
-        child: ListView(
-          children: [
-            ListTile(
-              title: Text(
-                heading,
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
+      width: 400,
+      height: 140,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Card(
+          child: Wrap(
+            children: [
+              ListTile(
+                title: Text(
+                  heading,
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(bottom: 5),
-                  child: RaisedButton(
-                    padding: EdgeInsets.all(15),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    textColor: Colors.black,
-                    color: Color(0xFFEBEBEB),
-                    child: Text('แบบประเมิน', style: TextStyle(fontSize: 16)),
-                    onPressed: () {
-                      print(heading);
-                      setState(() {});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GeneralForm(
-                              hn: widget.hn,
-                            ),
-                          ));
-                    },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                    child: RaisedButton(
+                      padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      textColor: Colors.black,
+                      color: Color(0xFFEBEBEB),
+                      child: Text('แบบประเมิน', style: TextStyle(fontSize: 15)),
+                      onPressed: () {
+                        print('$heading : ${widget.hn}');
+                        setState(() {});
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GeneralForm(
+                                hn: widget.hn,
+                              ),
+                            ));
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -71,7 +72,6 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
   String dropdownValue = 'Pre-Operation';
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         child: ListView(
@@ -115,7 +115,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PreDashboardPage()),
+                                            PreDashboardPage(hn: widget.hn)),
                                   );
                                   break;
                                 case "Post-Operation@Hospital":
@@ -123,7 +123,8 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PostHosDashboardPage()),
+                                            PostHosDashboardPage(
+                                                hn: widget.hn)),
                                   );
                                   break;
                                 case "Post-Operation@Home":
@@ -131,7 +132,8 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PostHomeDashboardPage()),
+                                            PostHomeDashboardPage(
+                                                hn: widget.hn)),
                                   );
                                   break;
                               }
@@ -146,9 +148,9 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                   child: PrePatientDetail(),
                 ),
                 SizedBox(
-                  height: 160,
+                  height: 200,
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Card(
                       child: Scrollbar(
                         isAlwaysShown: false,
@@ -157,27 +159,40 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                           controller: controller,
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
-                            myArticles('แบบประเมิน Pre-Visit'),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    'แบบประเมิน',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Color(0xFFC37447)),
+                                  ),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            formCard('แบบประเมิน Pre-Visit'),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                        // child: ListView.builder(
-                        //   itemCount: 20,
-                        //   scrollDirection: Axis.horizontal,
-                        //   itemBuilder: (context, index) {
-                        //     return Container(
-                        //       width: 100,
-                        //       alignment: Alignment.center,
-                        //       color: Colors.blue[(index % 9) * 100],
-                        //       child: Text(index.toString()),
-                        //     );
-                        //   },
-                        // ),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  // Vertical ListView
                   child: ShowDashboard(patientstate: 'Pre-Operation'),
                 )
               ],

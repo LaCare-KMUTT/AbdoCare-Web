@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:flutter/material.dart';
 
 import '../dashboardGraph.dart';
@@ -7,7 +8,8 @@ import '../../../page/dashboard_pre.dart';
 import '../../../page/dashboard_postHome.dart';
 
 class PostHomeDashboardDetail extends StatefulWidget {
-  PostHomeDashboardDetail({Key key}) : super(key: key);
+  final String hn;
+  PostHomeDashboardDetail({Key key, @required this.hn}) : super(key: key);
   @override
   _PostHomeDashboardDetailState createState() =>
       _PostHomeDashboardDetailState();
@@ -15,42 +17,6 @@ class PostHomeDashboardDetail extends StatefulWidget {
 
 class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
   final ScrollController controller = ScrollController();
-  Container myArticles(String heading) {
-    return Container(
-      width: 160.0,
-      child: Card(
-        child: Wrap(
-          children: [
-            ListTile(
-              title: Text(
-                heading,
-                style: TextStyle(fontSize: 12),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 5),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                  textColor: Colors.black,
-                  color: Color(0xFFEBEBEB),
-                  child: Text('แบบประเมิน', style: TextStyle(fontSize: 12)),
-                  onPressed: () {
-                    print('แบบประเมินระบบทางเดินหายใจ');
-                    setState(() {});
-                    Navigator.pushNamed(context, '/addPatient_page');
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   String dropdownValue = 'Post-Operation@Home';
   @override
@@ -98,7 +64,7 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PreDashboardPage()),
+                                            PreDashboardPage(hn: widget.hn)),
                                   );
                                   break;
                                 case "Post-Operation@Hospital":
@@ -106,7 +72,8 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PostHomeDashboardPage()),
+                                            PostHosDashboardPage(
+                                                hn: widget.hn)),
                                   );
                                   break;
                                 case "Post-Operation@Home":
@@ -114,7 +81,8 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            PostHomeDashboardPage()),
+                                            PostHomeDashboardPage(
+                                                hn: widget.hn)),
                                   );
                                   break;
                               }
@@ -126,50 +94,9 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                   ),
                 ),
                 SizedBox(
-                  // Vertical ListView
                   child: PostHomePatientDetail(),
                 ),
-                // not in nsc scope
-                //
-                // SizedBox(
-                //   // Horizontal ListView
-                //   height: 160,
-                //   child: Card(
-                //     margin: EdgeInsets.all(10),
-                //     child: Scrollbar(
-                //       isAlwaysShown: false,
-                //       controller: controller,
-                //       child: ListView(
-                //         controller: controller,
-                //         scrollDirection: Axis.horizontal,
-                //         children: <Widget>[
-                //           myArticles('แบบประเมินความพร้อมการฟื้นสภาพ'),
-                //           myArticles('แบบประเมินการจัดการความปวด'),
-                //           myArticles(
-                //               'แบบประเมินการจัดการแผลผ่าตัดสายระบายต่างๆ'),
-                //           myArticles('แบบประเมินระบบทางเดินหายใจ'),
-                //           myArticles('แบบประเมินระบบปัสสาวะ'),
-                //           myArticles(''),
-                //           myArticles(''),
-                //         ],
-                //       ),
-                //       // child: ListView.builder(
-                //       //   itemCount: 20,
-                //       //   scrollDirection: Axis.horizontal,
-                //       //   itemBuilder: (context, index) {
-                //       //     return Container(
-                //       //       width: 100,
-                //       //       alignment: Alignment.center,
-                //       //       color: Colors.blue[(index % 9) * 100],
-                //       //       child: Text(index.toString()),
-                //       //     );
-                //       //   },
-                //       // ),
-                //     ),
-                //   ),
-                // ),
                 SizedBox(
-                  // Vertical ListView
                   child: ShowDashboard(patientstate: 'Post-Operation@Home'),
                 )
               ],

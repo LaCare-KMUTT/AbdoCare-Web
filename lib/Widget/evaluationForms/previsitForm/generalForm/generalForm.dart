@@ -102,6 +102,7 @@ class _GeneralFormState extends State<GeneralForm> {
                 ),
                 Center(
                   child: SafeArea(
+
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Card(
@@ -149,6 +150,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                                               ],
                                                             ),
                                                           ),
+
                                                         ),
                                                         Container(
                                                           child: Padding(

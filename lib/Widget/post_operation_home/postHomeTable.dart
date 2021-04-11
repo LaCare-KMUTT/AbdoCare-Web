@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
 import 'package:AbdoCare_Web/models/user_list/post_home_list_model.dart';
 import 'package:AbdoCare_Web/view_models/user_list/post_home_list_view_model.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../services/service_locator.dart';
@@ -108,8 +110,12 @@ class _PostHomeTableState extends State<PostHomeTable> {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
-                      Navigator.pushNamed(context, '/dashboard_postHome',
-                          arguments: user.hn);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                PostHomeDashboardPage(hn: user.hn)),
+                      );
                     },
                     cells: [
                       DataCell(Text(user.hn)),
