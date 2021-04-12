@@ -204,7 +204,6 @@ class _PatientListTableState extends State<PatientListTable> {
 
   Widget buildUserList(BuildContext context,
       AsyncSnapshot<List<QueryDocumentSnapshot>> snapshot) {
-    var screenSize = MediaQuery.of(context).size;
     if (snapshot.hasData) {
       return ListView.builder(
         scrollDirection: Axis.vertical,

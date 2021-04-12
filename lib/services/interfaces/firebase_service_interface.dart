@@ -72,10 +72,11 @@ abstract class IFirebaseService {
     @required String subCollectionDocId,
   });
 
-  Future<void> addDataToFormsCollection(
+  Future<String> addDataToFormsCollection(
       {@required Map<String, dynamic> data,
       @required String formName,
-      @required String hn});
+      @required String hn,
+      String formTime});
 
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate});
@@ -86,4 +87,10 @@ abstract class IFirebaseService {
       {@required String collection, @required String docId});
 
   Future<int> getDayInCurrentState({@required String hn});
+
+  Future<void> addNotification(
+      {@required String hn,
+      @required String formId,
+      @required String formName});
+  Future<String> getPatientState({@required String hn});
 }

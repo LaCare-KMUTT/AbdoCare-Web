@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ class InfectionForm extends StatefulWidget {
 }
 
 class _InfectionFormState extends State<InfectionForm> {
-  ICalculationService _calculationService = locator<ICalculationService>();
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   var _value1 = false;
   var _value2 = false;
@@ -273,18 +271,11 @@ class _InfectionFormState extends State<InfectionForm> {
                                                 result = "Pass";
                                               } else {
                                                 result = "NotPass";
-                                                //       var creation = _calculationService.formatDate(
-                                                //           date: DateTime.now());
-                                                //       var patientState = _anSubCollection['state'];
-                                                //       _firebaseService.addNotification({
-                                                //         'formName': 'Infection',
-                                                //         'formId': formId,
-                                                //         'userId':
-                                                //             UserStore.getValueFromStore('storedUserId'),
-                                                //         'creation': creation,
-                                                //         'patientState': patientState,
-                                                //         'seen': false,
-                                                //       });
+                                                _firebaseService
+                                                    .addNotification(
+                                                        hn: widget.hn,
+                                                        formId: formId,
+                                                        formName: 'Infection');
                                               }
                                             }
                                           }),

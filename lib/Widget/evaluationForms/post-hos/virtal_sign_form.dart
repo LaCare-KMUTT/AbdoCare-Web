@@ -1,3 +1,5 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/pain_form_utility.dart';
+import 'package:AbdoCare_Web/constants.dart';
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
@@ -24,9 +26,9 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   double _pr;
   double _rr;
   String _bp;
-  String _systolic;
-  String _diastolic;
-  double _pain;
+  int _systolic;
+  int _diastolic;
+  int _pain;
   LinearGradient gradient = LinearGradient(
     colors: <Color>[
       Colors.greenAccent[400],
@@ -34,6 +36,36 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
       Colors.redAccent[700],
     ],
   );
+  var _getdayInCurrentState;
+  var dayInCurrentState;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    dayInCurrentState =
+        await _firebaseService.getDayInCurrentState(hn: widget.hn);
+    print('dayInCurrentState $dayInCurrentState');
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getdayInCurrentState = dayInCurrentState;
+      _getpatientState = patientState;
+    });
+  }
+
+  bool checkNotificationCriteria(String hn, int score) {
+    var shouldNotify = PainFormUtility()
+        .withState(patientState)
+        .withDayInState(dayInCurrentState)
+        .getPainFormCriteria(score);
+    print('should notify = $shouldNotify');
+    return shouldNotify;
+  }
+
   @override
   Widget build(BuildContext context) {
     var dateToShow = _calculationService.formatDateToThaiString(
@@ -233,7 +265,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 ),
                                                 labelText: 'Systolic'),
                                             onChanged: (value) =>
-                                                _systolic = value,
+                                                _systolic = int.parse(value),
                                           ),
                                         ),
                                         Container(
@@ -259,7 +291,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 ),
                                                 labelText: 'Diastolic'),
                                             onChanged: (value) =>
-                                                _diastolic = value,
+                                                _diastolic = int.parse(value),
                                           ),
                                         ),
                                         Expanded(flex: 1, child: Text(' mmHg')),
@@ -293,7 +325,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 ),
                                                 labelText: 'Pain'),
                                             onSaved: (value) {
-                                              _pain = double.parse(value);
+                                              _pain = int.parse(value);
                                             },
                                             items: [
                                               '1',
@@ -315,7 +347,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 .toList(),
                                             onChanged: (value) {
                                               setState(() {
-                                                _pain = double.parse(value);
+                                                _pain = int.parse(value);
                                               });
                                             },
                                           ),
@@ -339,7 +371,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                         color: Color(0xFF2ED47A),
                                         child: Text('ยืนยัน',
                                             style: TextStyle(fontSize: 18)),
-                                        onPressed: () {
+                                        onPressed: () async {
                                           if (_formKey.currentState
                                               .validate()) {
                                             _formKey.currentState.save();
@@ -358,43 +390,55 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 'hn in Virtal-Sign = ${widget.hn}');
                                             print(
                                                 'Value in pain_form = $_pain ');
-
-                                            _firebaseService
+                                            var formId = await _firebaseService
                                                 .addDataToFormsCollection(
                                                     hn: widget.hn,
                                                     formName: 'Virtal-Sign',
-                                                    data: dataToDB);
-
-                                            // if ((_anSubCollection['state'] ==
-                                            //             'Post-Operation@Hospital' &&
-                                            //         value >= 7) ||
-                                            //     (_anSubCollection['state'] ==
-                                            //             'Post-Operation@Home' &&
-                                            //         value >= 4)) {
-                                            //   showAdvise1(context, value,
-                                            //       _anSubCollection['state']);
-                                            //   if (checkNotificationCriteria(
-                                            //       value)) {
-                                            //     var creation =
-                                            //         _calculationService
-                                            //             .formatDate(
-                                            //                 date:
-                                            //                     DateTime.now());
-                                            //     var patientState =
-                                            //         _anSubCollection['state'];
-                                            //     _firebaseService
-                                            //         .addNotification({
-                                            //       'formName': 'pain',
-                                            //       'formId': formId,
-                                            //       'userId': UserStore
-                                            //           .getValueFromStore(
-                                            //               'storedUserId'),
-                                            //       'creation': creation,
-                                            //       'patientState': patientState,
-                                            //       'seen': false,
-                                            //     });
-                                            //   }
-                                            // }
+                                                    data: dataToDB,
+                                                    formTime: widget.formTime);
+                                            var patientState =
+                                                await _firebaseService
+                                                    .getPatientState(
+                                                        hn: widget.hn);
+                                            if ((patientState ==
+                                                    'Post-Operation@Hospital' &&
+                                                _pain != null)) {
+                                              if (checkNotificationCriteria(
+                                                      widget.hn, _pain) ||
+                                                  (_bt <
+                                                          Constant
+                                                              .btLowerCriteria ||
+                                                      _bt >
+                                                          Constant
+                                                              .btUpperCriteria) ||
+                                                  (_pr <
+                                                          Constant
+                                                              .prLowerCriteria ||
+                                                      _pr >
+                                                          Constant
+                                                              .prUpperCriteria) ||
+                                                  (_rr <
+                                                          Constant
+                                                              .rrLowerCriteria ||
+                                                      _rr >
+                                                          Constant
+                                                              .rrUpperCriteria) ||
+                                                  (_systolic >
+                                                          Constant
+                                                              .systolicCriteria ||
+                                                      _diastolic >
+                                                          Constant
+                                                              .diastolicCriteris)) {
+                                                print(
+                                                    "$_getdayInCurrentState,$_getpatientState");
+                                                _firebaseService
+                                                    .addNotification(
+                                                        hn: widget.hn,
+                                                        formId: formId,
+                                                        formName:
+                                                            'Virtal-Sign');
+                                              }
+                                            }
                                             Navigator.pop(context);
                                           }
                                         },

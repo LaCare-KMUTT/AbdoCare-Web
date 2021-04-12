@@ -1,7 +1,5 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/adlForm/adlForm.dart';
 import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
-
 import 'package:flutter/material.dart';
 
 import '../../../services/interfaces/calculation_service_interface.dart';
@@ -23,7 +21,6 @@ class HealthStatusForm extends StatefulWidget {
 class _HealthStatusFormState extends State<HealthStatusForm> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   ICalculationService _calculationService = locator<ICalculationService>();
-  final CustomMaterial _customMaterial = locator<CustomMaterial>();
   DateTime date = DateTime.now();
 
   String _general = '';
