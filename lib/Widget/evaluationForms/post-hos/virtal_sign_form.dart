@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/pain_form_utility.dart';
+import 'package:AbdoCare_Web/constants.dart';
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
@@ -404,11 +405,30 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 _pain != null)) {
                                               if (checkNotificationCriteria(
                                                       widget.hn, _pain) ||
-                                                  (_bt < 36.0 || _bt > 37.0) ||
-                                                  (_pr < 60.0 || _pr > 100) ||
-                                                  (_rr < 16 || _rr > 20) ||
-                                                  (_systolic > 130 ||
-                                                      _diastolic > 80)) {
+                                                  (_bt <
+                                                          Constant
+                                                              .btLowerCriteria ||
+                                                      _bt >
+                                                          Constant
+                                                              .btUpperCriteria) ||
+                                                  (_pr <
+                                                          Constant
+                                                              .prLowerCriteria ||
+                                                      _pr >
+                                                          Constant
+                                                              .prUpperCriteria) ||
+                                                  (_rr <
+                                                          Constant
+                                                              .rrLowerCriteria ||
+                                                      _rr >
+                                                          Constant
+                                                              .rrUpperCriteria) ||
+                                                  (_systolic >
+                                                          Constant
+                                                              .systolicCriteria ||
+                                                      _diastolic >
+                                                          Constant
+                                                              .diastolicCriteris)) {
                                                 print(
                                                     "$_getdayInCurrentState,$_getpatientState");
                                                 _firebaseService
