@@ -33,36 +33,36 @@ class _GeneralFormState extends State<GeneralForm> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
   final _formKey = GlobalKey<FormState>();
 
-  String _hn = '';
-  String _an = '';
-  String _patientName = '';
-  String _patientSurname = '';
+  String _hn;
+  String _an;
+  String _patientName;
+  String _patientSurname;
   DateTime _dob;
   DateTime _operationDate;
-  String _gender = '';
-  String _ward = '';
-  String _operationMethod = '';
-  String _diagnosis = '';
-  String _consentSigned = '';
-  String _preMedication = '';
-  String _typeOfAnesthesia = '';
-  String _previousIllness = '';
-  String _drugUsed = '';
-  String _asaClass = '';
-  String _bw = '';
-  String _high = '';
-  String _weight = '';
-  String _previousSurgery = '';
-  String _antiPlateletReason = '';
-  String _antiPlateletDays = '';
-  String _allergyMedication = '';
-  String _allergySymptoms = '';
-  String _allergyLatex = '';
-  String _psychologicalStatus = '';
-  String _drugAndSubstance = '';
-  String _sleepDisorder = '';
-  String _sleepDisorderDuration = '';
-  String _sleepDisorderDurationAvg = '';
+  String _gender;
+  String _ward;
+  String _operationMethod;
+  String _diagnosis;
+  String _consentSigned;
+  String _preMedication;
+  String _typeOfAnesthesia;
+  String _previousIllness;
+  String _drugUsed;
+  String _asaClass;
+  String _bw;
+  String _high;
+  String _weight;
+  String _previousSurgery;
+  String _antiPlateletReason;
+  String _antiPlateletDays;
+  String _allergyMedication;
+  String _allergySymptoms;
+  String _allergyLatex;
+  String _psychologicalStatus;
+  String _drugAndSubstance;
+  String _sleepDisorder;
+  String _sleepDisorderDuration;
+  String _sleepDisorderDurationAvg;
 
   var date;
   // Function to validate the number
@@ -1107,7 +1107,16 @@ class _GeneralFormState extends State<GeneralForm> {
                                 Text('ถัดไป', style: TextStyle(fontSize: 18)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
-                                if (_typeOfAnesthesia == null) {
+                                if (_typeOfAnesthesia == null ||
+                                    _consentSigned == null ||
+                                    _previousIllness == null ||
+                                    _asaClass == null ||
+                                    _antiPlateletReason == null ||
+                                    _allergyMedication == null ||
+                                    _allergyLatex == null ||
+                                    _psychologicalStatus == null ||
+                                    _drugAndSubstance == null ||
+                                    _sleepDisorder == null) {
                                   alert(context);
                                 } else {
                                   _formKey.currentState.save();
@@ -1158,6 +1167,8 @@ class _GeneralFormState extends State<GeneralForm> {
                                             generalForm: formDataToDB),
                                       ));
                                 }
+                              } else {
+                                alert(context);
                               }
                             }),
                       ),
@@ -1176,9 +1187,7 @@ class _GeneralFormState extends State<GeneralForm> {
     showDialog(
         context: context,
         builder: (_) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true);
-          });
+          Future.delayed(Duration(seconds: 2), () {});
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
