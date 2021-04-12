@@ -1,5 +1,5 @@
 import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/radioListTile_model.dart';
-import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/radio_list.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_radio_list.dart';
 import 'package:flutter/material.dart';
 
 class AllergyMedication extends StatefulWidget {
