@@ -1,9 +1,9 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/healthStatus.dart';
 import 'package:flutter/material.dart';
 
 import '../../../page/dashboard_postHome.dart';
 import '../../../page/dashboard_postHos.dart';
 import '../../../page/dashboard_pre.dart';
-import '../../evaluationForms/previsitForm/generalForm/generalForm.dart';
 import '../dashboardGraph.dart';
 import 'preDashboardPatientDetail.dart';
 
@@ -57,10 +57,17 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                         //         hn: widget.hn,
                         //       ),
                         //     ));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => GeneralForm(
+                        //         hn: widget.hn,
+                        //       ),
+                        //     ));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => GeneralForm(
+                              builder: (context) => HealthStatusForm(
                                 hn: widget.hn,
                               ),
                             ));
