@@ -243,7 +243,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
           },
           child: LayoutBuilder(builder: (context, constraints) {
             return ListView(
-              children: [
+              children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(screenSize.height / 70),
                   child: Container(
@@ -269,19 +269,15 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                               minHeight: constraints.minHeight),
                           child: IntrinsicWidth(
                             child: Column(
-                              children: [
+                              children: <Widget>[
                                 Card(
                                   child: Column(
-                                    children: [
+                                    children: <Widget>[
                                       Container(
                                         child: Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              screenSize.height / 70,
-                                              screenSize.height / 70,
-                                              screenSize.height / 70,
-                                              0),
+                                          padding: EdgeInsets.all(10),
                                           child: Row(
-                                            children: [
+                                            children: <Widget>[
                                               Expanded(
                                                   child: Text('Health Status',
                                                       style: TextStyle(
@@ -292,33 +288,28 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         ),
                                       ),
                                       Row(
-                                        children: [
+                                        children: <Widget>[
                                           //GENERAL
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('GENERAL'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child:
-                                                              Text('GENERAL'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -451,9 +442,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                           child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
-                                                            flex: 1,
                                                             child:
                                                                 CheckboxListTile(
                                                               contentPadding:
@@ -485,18 +475,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                             ),
                                                           ),
                                                           Expanded(
-                                                            flex: 2,
                                                             child:
                                                                 TextFormField(
                                                               enabled:
                                                                   _generalValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
+                                                              validator: (value) =>
+                                                                  _generalValue7 &&
+                                                                          value
+                                                                              .isEmpty
+                                                                      ? 'กรุณากรอกOther'
+                                                                      : null,
                                                               decoration:
                                                                   InputDecoration(
                                                                       contentPadding: new EdgeInsets
@@ -530,29 +518,25 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ),
                                           //HEENT
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('HEENT'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text('HEENT'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -686,9 +670,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                           child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
-                                                            flex: 1,
                                                             child:
                                                                 CheckboxListTile(
                                                               contentPadding:
@@ -720,18 +703,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                             ),
                                                           ),
                                                           Expanded(
-                                                            flex: 2,
                                                             child:
                                                                 TextFormField(
                                                               enabled:
                                                                   _heentValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
+                                                              validator: (value) =>
+                                                                  _heentValue7 &&
+                                                                          value
+                                                                              .isEmpty
+                                                                      ? 'กรุณากรอกOther'
+                                                                      : null,
                                                               decoration:
                                                                   InputDecoration(
                                                                       contentPadding: new EdgeInsets
@@ -765,29 +746,25 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ),
                                           //CV
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('CV'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text('CV'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -908,9 +885,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                           child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
-                                                            flex: 1,
                                                             child:
                                                                 CheckboxListTile(
                                                               contentPadding:
@@ -940,18 +916,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                             ),
                                                           ),
                                                           Expanded(
-                                                            flex: 2,
                                                             child:
                                                                 TextFormField(
                                                               enabled:
                                                                   _cvValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
+                                                              validator: (value) =>
+                                                                  _cvValue7 &&
+                                                                          value
+                                                                              .isEmpty
+                                                                      ? 'กรุณากรอกOther'
+                                                                      : null,
                                                               decoration:
                                                                   InputDecoration(
                                                                       contentPadding: new EdgeInsets
@@ -985,30 +959,25 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ),
                                           //PULMONARY
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('PULMONARY'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child:
-                                                              Text('PULMONARY'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -1145,9 +1114,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                           child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
-                                                            flex: 1,
                                                             child:
                                                                 CheckboxListTile(
                                                               contentPadding:
@@ -1179,18 +1147,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                             ),
                                                           ),
                                                           Expanded(
-                                                            flex: 2,
                                                             child:
                                                                 TextFormField(
                                                               enabled:
                                                                   _pulmonaryValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
+                                                              validator: (value) =>
+                                                                  _pulmonaryValue7 &&
+                                                                          value
+                                                                              .isEmpty
+                                                                      ? 'กรุณากรอกOther'
+                                                                      : null,
                                                               decoration:
                                                                   InputDecoration(
                                                                       contentPadding: new EdgeInsets
@@ -1224,33 +1190,28 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         ],
                                       ),
                                       Row(
-                                        children: [
+                                        children: <Widget>[
                                           //GYN/URO
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('GYN/URO'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child:
-                                                              Text('GYN/URO'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -1378,9 +1339,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                           child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
-                                                            flex: 1,
                                                             child:
                                                                 CheckboxListTile(
                                                               contentPadding:
@@ -1410,18 +1370,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                             ),
                                                           ),
                                                           Expanded(
-                                                            flex: 2,
                                                             child:
                                                                 TextFormField(
                                                               enabled:
                                                                   _gynValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
+                                                              validator: (value) =>
+                                                                  _gynValue7 &&
+                                                                          value
+                                                                              .isEmpty
+                                                                      ? 'กรุณากรอกOther'
+                                                                      : null,
                                                               decoration:
                                                                   InputDecoration(
                                                                       contentPadding: new EdgeInsets
@@ -1455,29 +1413,25 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ),
                                           //NEURO
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('NEURO'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text('NEURO'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -1611,9 +1565,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                           child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
-                                                            flex: 1,
                                                             child:
                                                                 CheckboxListTile(
                                                               contentPadding:
@@ -1645,18 +1598,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                             ),
                                                           ),
                                                           Expanded(
-                                                            flex: 2,
                                                             child:
                                                                 TextFormField(
                                                               enabled:
                                                                   _neuroValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
+                                                              validator: (value) =>
+                                                                  _neuroValue7 &&
+                                                                          value
+                                                                              .isEmpty
+                                                                      ? 'กรุณากรอกOther'
+                                                                      : null,
                                                               decoration:
                                                                   InputDecoration(
                                                                       contentPadding: new EdgeInsets
@@ -1690,29 +1641,25 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ),
                                           //GI
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('GI'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text('GI'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -1832,9 +1779,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                           child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
-                                                            flex: 1,
                                                             child:
                                                                 CheckboxListTile(
                                                               contentPadding:
@@ -1864,18 +1810,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                             ),
                                                           ),
                                                           Expanded(
-                                                            flex: 2,
                                                             child:
                                                                 TextFormField(
                                                               enabled:
                                                                   _giValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
+                                                              validator: (value) =>
+                                                                  _giValue7 &&
+                                                                          value
+                                                                              .isEmpty
+                                                                      ? 'กรุณากรอกOther'
+                                                                      : null,
                                                               decoration:
                                                                   InputDecoration(
                                                                       contentPadding: new EdgeInsets
@@ -1909,29 +1853,25 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ),
                                           //MS
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('MS'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text('MS'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -2053,9 +1993,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                           child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
-                                                            flex: 1,
                                                             child:
                                                                 CheckboxListTile(
                                                               contentPadding:
@@ -2085,18 +2024,16 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                             ),
                                                           ),
                                                           Expanded(
-                                                            flex: 2,
                                                             child:
                                                                 TextFormField(
                                                               enabled:
                                                                   _msValue7,
-                                                              validator:
-                                                                  (value) {
-                                                                return value
-                                                                        .isEmpty
-                                                                    ? 'กรุณากรอก Other'
-                                                                    : null;
-                                                              },
+                                                              validator: (value) =>
+                                                                  _msValue7 &&
+                                                                          value
+                                                                              .isEmpty
+                                                                      ? 'กรุณากรอกOther'
+                                                                      : null,
                                                               decoration:
                                                                   InputDecoration(
                                                                       contentPadding: new EdgeInsets
@@ -2131,33 +2068,28 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         ],
                                       ),
                                       Row(
-                                        children: [
+                                        children: <Widget>[
                                           //ENDOCRINE
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('ENDOCRINE'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child:
-                                                              Text('ENDOCRINE'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                           contentPadding:
@@ -2292,9 +2224,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                         child: Row(
-                                                          children: [
+                                                          children: <Widget>[
                                                             Expanded(
-                                                              flex: 1,
                                                               child:
                                                                   CheckboxListTile(
                                                                 contentPadding:
@@ -2326,18 +2257,15 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                               ),
                                                             ),
                                                             Expanded(
-                                                              flex: 2,
                                                               child:
                                                                   TextFormField(
                                                                 enabled:
                                                                     _endocrineValue7,
-                                                                validator:
-                                                                    (value) {
-                                                                  return value
-                                                                          .isEmpty
-                                                                      ? 'กรุณากรอก Other'
-                                                                      : null;
-                                                                },
+                                                                validator: (value) =>
+                                                                    _endocrineValue7 &&
+                                                                            value.isEmpty
+                                                                        ? 'กรุณากรอกOther'
+                                                                        : null,
                                                                 decoration:
                                                                     InputDecoration(
                                                                         contentPadding: new EdgeInsets.symmetric(
@@ -2369,30 +2297,25 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                           ),
                                           //HEME/LYMPH
                                           Container(
-                                            margin: const EdgeInsets.all(15.0),
+                                            margin: const EdgeInsets.all(10.0),
                                             padding: const EdgeInsets.all(3.0),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey[300])),
                                             child: Column(
-                                              children: [
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
                                                 Container(
-                                                  margin: const EdgeInsets.all(
-                                                      15.0),
                                                   padding:
-                                                      const EdgeInsets.all(3.0),
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text('HEME/LYMPH'),
+                                                ),
+                                                Container(
                                                   height: screenSize.width / 4,
                                                   width: screenSize.width / 5,
                                                   child: ListView(
-                                                    children: [
-                                                      Container(
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                              'HEME/LYMPH'),
-                                                        ),
-                                                      ),
+                                                    children: <Widget>[
                                                       Container(
                                                         child: CheckboxListTile(
                                                             contentPadding:
@@ -2522,9 +2445,8 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                       ),
                                                       Container(
                                                         child: Row(
-                                                          children: [
+                                                          children: <Widget>[
                                                             Expanded(
-                                                              flex: 1,
                                                               child:
                                                                   CheckboxListTile(
                                                                 contentPadding:
@@ -2556,18 +2478,15 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                               ),
                                                             ),
                                                             Expanded(
-                                                              flex: 2,
                                                               child:
                                                                   TextFormField(
                                                                 enabled:
                                                                     _lymphValue7,
-                                                                validator:
-                                                                    (value) {
-                                                                  return value
-                                                                          .isEmpty
-                                                                      ? 'กรุณากรอก Other'
-                                                                      : null;
-                                                                },
+                                                                validator: (value) =>
+                                                                    _lymphValue7 &&
+                                                                            value.isEmpty
+                                                                        ? 'กรุณากรอกOther'
+                                                                        : null,
                                                                 decoration:
                                                                     InputDecoration(
                                                                         contentPadding: new EdgeInsets.symmetric(
@@ -2602,7 +2521,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                       ),
                                       //abnormalDetails
                                       Row(
-                                        children: [
+                                        children: <Widget>[
                                           Padding(
                                             padding: EdgeInsets.all(
                                                 screenSize.height / 70),
@@ -2616,7 +2535,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         ],
                                       ),
                                       Row(
-                                        children: [
+                                        children: <Widget>[
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsets.all(
@@ -2679,7 +2598,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         ],
                                       ),
                                       Row(
-                                        children: [
+                                        children: <Widget>[
                                           Padding(
                                             padding: EdgeInsets.all(
                                                 screenSize.height / 70),
@@ -2707,7 +2626,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                   child: Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Container(
                           width: 100,
                           child: RaisedButton(
