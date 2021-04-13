@@ -36,7 +36,6 @@ class _AntiPlateletState extends State<AntiPlatelet> {
 
     return list.map((e) {
       return Expanded(
-        flex: 1,
         child: Container(
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
@@ -69,17 +68,17 @@ class _AntiPlateletState extends State<AntiPlatelet> {
     return Row(
       children: <Widget>[
         Expanded(
-            flex: 3,
+            flex: 2,
             child: Text('On Anticoagulant/ Anti Platelet',
                 style: TextStyle(fontWeight: FontWeight.w600))),
         ..._getWidget(),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกAnti Platelet' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอกAnti Platelet'
+                : null,
             controller: _controller1,
             decoration: InputDecoration(
                 contentPadding:
@@ -98,14 +97,18 @@ class _AntiPlateletState extends State<AntiPlatelet> {
             },
           ),
         ),
-        Expanded(child: Center(child: Text(' Off '))),
-        Expanded(
-          flex: 1,
+        Container(
+            child: Center(
+                child: Text(
+          ' Off ',
+          style: TextStyle(fontSize: 16),
+        ))),
+        Container(
+          width: 200,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกDays' : null;
-            },
+            validator: (value) =>
+                isEnableTextField && value.isEmpty ? 'กรุณากรอกDays' : null,
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
@@ -124,7 +127,11 @@ class _AntiPlateletState extends State<AntiPlatelet> {
             },
           ),
         ),
-        Expanded(child: Text(' Days')),
+        Container(
+            child: Text(
+          ' Days',
+          style: TextStyle(fontSize: 16),
+        )),
       ],
     );
   }

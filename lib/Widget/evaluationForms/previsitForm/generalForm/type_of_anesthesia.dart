@@ -21,7 +21,6 @@ class _TypeOfAnesthesiaState extends State<TypeOfAnesthesia> {
   List<Widget> _getWidget() {
     return list.map((e) {
       return Expanded(
-        flex: 2,
         child: Container(
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
@@ -45,14 +44,12 @@ class _TypeOfAnesthesiaState extends State<TypeOfAnesthesia> {
     return Row(
       children: <Widget>[
         Expanded(
-            flex: 3,
             child: Text('Type of Anesthesia',
                 style: TextStyle(fontWeight: FontWeight.w600))),
         ..._getWidget(),
         Expanded(
-          flex: 4,
           child: SizedBox(width: 0),
-        )
+        ),
       ],
     );
   }
