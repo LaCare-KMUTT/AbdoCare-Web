@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -492,7 +493,7 @@ class _BloodClotFormState extends State<BloodClotForm> {
                                                 _value7 == null ||
                                                 _value8 == null ||
                                                 _value9 == null) {
-                                              alert(context);
+                                              Dialogs.alertDialog(context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -556,22 +557,5 @@ class _BloodClotFormState extends State<BloodClotForm> {
         },
       ),
     );
-  }
-
-  void alert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true);
-          });
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text("กรุณาทำแบบประเมินให้ครบถ้วน",
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center),
-          );
-        });
   }
 }
