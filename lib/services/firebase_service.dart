@@ -198,10 +198,11 @@ class FirebaseService extends IFirebaseService {
     return signature;
   }
 
-  Future<void> addDataToFormsCollection(
+  Future<String> addDataToFormsCollection(
       {@required Map<String, dynamic> data,
       @required String formName,
-      @required String hn}) async {
+      @required String hn,
+      String formTime}) async {
     print('hn = $hn');
     var userId = await _firestore
         .collection('Users')
@@ -227,6 +228,9 @@ class FirebaseService extends IFirebaseService {
       'patientState': patientState,
       'formData': data,
     };
+    if (formTime != null) {
+      dataToAdd.addAll({'formTime': formTime});
+    }
 
     print('Here is data to add $dataToAdd');
     var forms = await this
@@ -691,5 +695,54 @@ class FirebaseService extends IFirebaseService {
         day: _getlastestStateChange,
         compareTo: _calculationService.formatDate(date: DateTime.now()));
     return dayInCurrentState;
+  }
+
+  Future<void> addNotification(
+      {@required String hn,
+      @required String formId,
+      @required String formName}) async {
+    var creation = _calculationService.formatDate(date: DateTime.now());
+
+    var userId = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) => value.docs.first.id)
+        .catchError((onError) {
+      print('$onError Cannot find user');
+    });
+    var anSubCollection = await getLatestAnSubCollection(docId: userId);
+    var patientState = anSubCollection['state'];
+    Map<String, dynamic> dataToAdd = {
+      'formName': formName,
+      'formId': formId,
+      'userId': userId,
+      'creation': creation,
+      'patientState': patientState,
+      'seen': false,
+    };
+    await _firestore
+        .collection('Notifications')
+        .add(dataToAdd)
+        .then((value) =>
+            print('Successfully added $value to Notificaitons Collection'))
+        .catchError((e) {
+      print('$e failed to add notification to Notifications Collection');
+    });
+  }
+
+  Future<String> getPatientState({@required String hn}) async {
+    print('hn = $hn');
+    var userId = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) => value.docs.first.id)
+        .catchError((onError) {
+      print('$onError Cannot find user');
+    });
+    var anSubCollection = await getLatestAnSubCollection(docId: userId);
+    var patientState = anSubCollection['state'];
+    return anSubCollection['state'];
   }
 }

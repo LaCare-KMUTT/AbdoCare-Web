@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ class NutritionForm extends StatefulWidget {
 }
 
 class _NutritionFormState extends State<NutritionForm> {
-  ICalculationService _calculationService = locator<ICalculationService>();
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   var _value1;
   var _value2;
@@ -350,18 +348,11 @@ class _NutritionFormState extends State<NutritionForm> {
                                                 result = "Pass";
                                               } else {
                                                 result = "NotPass";
-                                                // var creation = _calculationService.formatDate(
-                                                //   date: DateTime.now());
-                                                // var patientState = _anSubCollection['state'];
-                                                // _firebaseService.addNotification({
-                                                // 'formName': 'Nutrition',
-                                                // 'formId': formId,
-                                                // 'userId':
-                                                //     UserStore.getValueFromStore('storedUserId'),
-                                                // 'creation': creation,
-                                                // 'patientState': patientState,
-                                                // 'seen': false,
-                                                // });
+                                                _firebaseService
+                                                    .addNotification(
+                                                        hn: widget.hn,
+                                                        formId: formId,
+                                                        formName: 'Nutrition');
                                               }
                                               Navigator.pop(context);
                                             }
