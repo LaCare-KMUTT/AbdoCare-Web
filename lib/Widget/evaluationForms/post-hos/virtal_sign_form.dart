@@ -7,7 +7,14 @@ import 'package:intl/intl.dart';
 class VirtalSignForm extends StatefulWidget {
   final String hn;
   final String formTime;
-  VirtalSignForm({Key key, @required this.hn, @required this.formTime})
+  final String state;
+  final double dayInCurrentState;
+  VirtalSignForm(
+      {Key key,
+      @required this.hn,
+      @required this.formTime,
+      @required this.state,
+      this.dayInCurrentState})
       : super(key: key);
 
   @override
@@ -19,7 +26,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   final _formKey = GlobalKey<FormState>();
   DateTime date = DateTime.now();
-  double postOpDay = 9;
+
   double _bt;
   double _pr;
   double _rr;
@@ -49,6 +56,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
         onPressed: () {
           print('แบบประเมินสัญญาณชีพ: ${widget.hn}');
+          print("${widget.state} Day: ${widget.dayInCurrentState}");
           showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -96,7 +104,14 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                       children: [
                                         Text('$dateToShow'),
                                         Text('\tเวลา $timeToShow น.'),
-                                        Text('\t post op day $postOpDay ')
+                                        (() {
+                                          if (widget.state == 'Pre-Operation') {
+                                            return Text('\t ${widget.state}  ');
+                                          } else {
+                                            return Text(
+                                                '\t ${widget.state} day: ${widget.dayInCurrentState} ');
+                                          }
+                                        }())
                                       ],
                                     ),
                                   ),
