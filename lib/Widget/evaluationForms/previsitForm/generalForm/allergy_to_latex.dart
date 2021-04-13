@@ -29,7 +29,6 @@ class _AllergyToLatexState extends State<AllergyToLatex> {
 
     return list.map((e) {
       return Expanded(
-        flex: 1,
         child: Container(
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
@@ -60,17 +59,16 @@ class _AllergyToLatexState extends State<AllergyToLatex> {
     return Row(
       children: <Widget>[
         Expanded(
-            flex: 2,
+            flex: 1,
             child: Text('Allergy to Latex',
                 style: TextStyle(fontWeight: FontWeight.w600))),
         ..._getWidget(),
         Expanded(
-          flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกAllergy to Latex' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอกAllergy to Latex'
+                : null,
             controller: _controller,
             decoration: InputDecoration(
                 contentPadding:
