@@ -3002,15 +3002,15 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                           future: _firebaseService
                                                               .getMedicalTeamSignature(),
                                                           builder: (context,
-                                                              snapshot) {
-                                                            if (!snapshot
+                                                              signature) {
+                                                            if (!signature
                                                                 .hasData) {
                                                               return CircularProgressIndicator(
                                                                 strokeWidth: 4,
                                                               );
                                                             } else {
                                                               return Text(
-                                                                  'R.N. Signature: ${snapshot.data}');
+                                                                  'R.N. Signature: ${signature.data}');
                                                             }
                                                           }),
                                                     ),

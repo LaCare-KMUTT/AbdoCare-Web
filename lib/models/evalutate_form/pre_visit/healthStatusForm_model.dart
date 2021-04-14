@@ -17,6 +17,8 @@ class HealthStatusFormModel {
   bool cv_ChestPain;
   bool cv_Palpitations;
   bool cv_Murmur;
+  bool cv_PNDOrthopnea;
+  bool cv_LEswelling;
   String cv_Other;
 
   bool pulmonary_Normal;
@@ -87,6 +89,8 @@ class HealthStatusFormModel {
       'cv_ChestPain': cv_ChestPain,
       'cv_Palpitations': cv_Palpitations,
       'cv_Murmur': cv_Murmur,
+      'cv_PNDOrthopnea': cv_PNDOrthopnea,
+      'cv_LEswelling': cv_LEswelling,
       'cv_Other': cv_Other,
       'pulmonary_Normal': pulmonary_Normal,
       'pulmonary_Wheezing': pulmonary_Wheezing,
@@ -151,6 +155,8 @@ class HealthStatusFormModel {
     cv_ChestPain = map['cv_ChestPain'];
     cv_Palpitations = map['cv_Palpitations'];
     cv_Murmur = map['cv_Murmur'];
+    cv_PNDOrthopnea = map['cv_PNDOrthopnea'];
+    cv_LEswelling = map['cv_LEswelling'];
     cv_Other = map['cv_Other'];
     pulmonary_Normal = map['pulmonary_Normal'];
     pulmonary_Wheezing = map['pulmonary_Wheezing'];
