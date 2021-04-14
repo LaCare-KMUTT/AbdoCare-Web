@@ -198,4 +198,8 @@ class HealthStatusFormModel {
     hemeLymph_RecentSteroidUse = map['hemeLymph_RecentSteroidUse'];
     hemeLymph_Other = map['hemeLymph_Other'];
   }
+
+  HealthStatusFormModel getModel() {
+    return this;
+  }
 }
