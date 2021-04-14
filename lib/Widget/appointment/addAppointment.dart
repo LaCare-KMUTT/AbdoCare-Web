@@ -1,10 +1,10 @@
-import '../../services/interfaces/firebase_service_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
-import '../../Widget/material.dart';
 import '../../services/interfaces/calculation_service_interface.dart';
+import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
+import '../material.dart';
 
 class AddAppointmentPage extends StatefulWidget {
   AddAppointmentPage({Key key}) : super(key: key);
@@ -15,6 +15,7 @@ class AddAppointmentPage extends StatefulWidget {
 class _AddAppointmentPageState extends State<AddAppointmentPage> {
   ICalculationService _calculationService = locator<ICalculationService>();
   IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   final _formKey = GlobalKey<FormState>();
   TimeOfDay _time = TimeOfDay.now();
@@ -33,7 +34,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
       firstDate: DateTime(DateTime.now().year - 10),
       lastDate: DateTime.now().add(Duration(days: 356)),
       theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          primarySwatch: _customMaterial.createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
       height: 320,
       styleDatePicker: MaterialRoundedDatePickerStyle(

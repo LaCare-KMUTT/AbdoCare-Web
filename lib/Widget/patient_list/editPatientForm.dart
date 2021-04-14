@@ -44,6 +44,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final ICalculationService _calculationService =
       locator<ICalculationService>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
   final _formKey = GlobalKey<FormState>();
   String pickedDate = '';
   String _hn = '';
@@ -78,7 +79,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          primarySwatch: _customMaterial.createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
       height: 320,
       styleDatePicker: MaterialRoundedDatePickerStyle(
@@ -163,7 +164,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
             _fetchAnId(userCollection.data.docs.first.id);
             var user = userCollection.data.docs.first;
             return FutureBuilder<Map<String, dynamic>>(
-                future: _firebaseService.getLatestSubCollectionSnapshot(
+                future: _firebaseService.getLatestSubCollectionMap(
                     collection: 'Users',
                     docId: '${userCollection.data.docs.first.id}',
                     subCollection: 'an',
@@ -954,9 +955,10 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
-                                                      initialValue:
-                                                          anSubCollection.data[
-                                                              'operationName'],
+                                                      initialValue: anSubCollection
+                                                                  .data[
+                                                              'operationName'] ??
+                                                          '-',
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกชื่อการผ่าตัด'
@@ -1004,7 +1006,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       },
                                                       initialValue:
                                                           anSubCollection.data[
-                                                              'doctorName'],
+                                                                  'doctorName'] ??
+                                                              '-',
                                                       decoration:
                                                           InputDecoration(
                                                               enabledBorder:
@@ -1047,9 +1050,10 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
-                                                      initialValue:
-                                                          anSubCollection.data[
-                                                              'previousIllness'],
+                                                      initialValue: anSubCollection
+                                                                  .data[
+                                                              'previousIllness'] ??
+                                                          '-',
                                                       validator: (value) {
                                                         return value.isEmpty
                                                             ? 'กรุณากรอกโรคร่วม'
@@ -1096,12 +1100,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                             null
                                                         ? 'กรุณาเลือกประเภทการผ่าตัด'
                                                         : null,
-                                                    hint: DropdownMenuItem(
-                                                      child: Text(
-                                                        anSubCollection.data[
-                                                            'operationMethod'],
-                                                      ),
-                                                    ),
                                                     decoration: InputDecoration(
                                                       enabledBorder:
                                                           OutlineInputBorder(
@@ -1115,6 +1113,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       _operationMethod = value;
                                                     },
                                                     items: [
+                                                      '-',
                                                       'Exploration',
                                                       'LAP+Operation',
                                                     ]

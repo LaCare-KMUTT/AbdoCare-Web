@@ -30,9 +30,7 @@ class FirebaseServiceMock extends IFirebaseService {
   Future<String> createPatient(
       {String collection, String docId, Map<String, dynamic> data}) async {
     print('create Temp User Throught Firebase Service Mock');
-    print(data);
-    print(data['username']);
-    print(data['dob']);
+
     var tempApp = await _createTempApp();
     var tempAuthResult = await _createTempAuthWithProvidedTempApp(
         tempApp, data['username'], data['uniqueKey']);
@@ -254,7 +252,7 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot(
+  Future<Map<String, dynamic>> getLatestSubCollectionMap(
       {String collection,
       String docId,
       String subCollection,
@@ -265,6 +263,54 @@ class FirebaseServiceMock extends IFirebaseService {
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate}) {
     // TODO: implement getAppointmentList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getPreOpList() {
+    // TODO: implement getPreOpList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> addDataToFormsCollection(
+      {Map<String, dynamic> data,
+      String formName,
+      String hn,
+      String formTime}) {
+    // TODO: implement addDataToFormsCollection
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> getMedicalTeamSignature() {
+    // TODO: implement getMedicalTeamSignature
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, dynamic>> getCollectionMap(
+      {String collection, String docId}) {
+    // TODO: implement getCollectionMap
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<int> getDayInCurrentState({String hn}) {
+    // TODO: implement getCollectionMap
+    throw UnimplementedError();
+  }
+
+  Future<void> addNotification(
+      {@required String hn,
+      @required String formId,
+      @required String formName}) {
+    // TODO: implement getCollectionMap
+    throw UnimplementedError();
+  }
+
+  Future<String> getPatientState({@required String hn}) {
+    // TODO: implement getCollectionMap
     throw UnimplementedError();
   }
 }

@@ -5,23 +5,29 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'Widget/material.dart';
 import 'page/addPatient.dart';
-import 'page/editPatient.dart';
 import 'page/appointment.dart';
+import 'page/editPatient.dart';
 import 'page/login.dart';
 import 'page/patientList.dart';
 import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
-import 'page/dashboard_pre.dart';
-import 'page/dashboard_postHos.dart';
-import 'page/dashboard_postHome.dart';
 import 'services/service_locator.dart';
 import 'page/notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // ignore: await_only_futures
+  await Firebase.initializeApp(
+    name: 'Abdocare-Register-Service',
+    options: const FirebaseOptions(
+        projectId: 'abdocare-bdab0',
+        apiKey: 'AIzaSyDu8_HYCIsMBc8PkNs5oddKhjcJLFoNaVk',
+        authDomain: 'abdocare-bdab0.firebaseapp.com',
+        appId: '1:611491873650:web:7c3d372d1cdf8f314393eb',
+        messagingSenderId: '611491873650'),
+  );
+  //ignore: await_only_futures
   await setupServiceLocator(isMock: false);
   runApp(MyApp());
 }
@@ -34,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Prompt",
         primaryColor: Color(0xFFC37447),
-        primarySwatch: createMaterialColor(Color(0xFFC37447)),
+        primarySwatch: CustomMaterial().createMaterialColor(Color(0xFFC37447)),
         textTheme: TextTheme(
           bodyText1: TextStyle(
               fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
@@ -54,9 +60,6 @@ class MyApp extends StatelessWidget {
         '/postHos_page': (context) => PostHosPage(),
         '/postHome_page': (context) => PostHomePage(),
         '/login_page': (context) => LoginPage(),
-        '/dashboard_pre': (context) => PreDashboardPage(),
-        '/dashboard_postHome': (context) => PostHomeDashboardPage(),
-        '/dashboard_postHos': (context) => PostHosDashboardPage(),
         '/mock': (context) => MockDataPage(),
         '/appointment_page': (context) => AppointmentPage(),
         '/notification_page': (context) => NotificationPage(),

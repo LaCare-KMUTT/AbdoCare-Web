@@ -17,6 +17,7 @@ class PatientRegisterForm extends StatefulWidget {
   final void Function({
     @required String hn,
     @required String an,
+    @required String ward,
     @required String patientName,
     @required String patientSurname,
     @required String address,
@@ -41,6 +42,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   ICalculationService _calculationService = locator<ICalculationService>();
   final _formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   String _hn = '';
   String _an = '';
@@ -55,6 +57,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
   String _careTakerRelationship = '';
   String _careTakerTel = '';
   String _uniqueKey = '';
+  String _ward = '';
 
   String _createDummyUsername(String hn) {
     String dummyUsername = '@abdoCare.com';
@@ -76,7 +79,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       initialDate: currentValue ?? DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
       theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFFC37447)),
+          primarySwatch: _customMaterial.createMaterialColor(Color(0xFFC37447)),
           fontFamily: "Prompt"),
       height: 320,
       styleDatePicker: MaterialRoundedDatePickerStyle(
@@ -108,6 +111,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
       widget.submitFn(
         hn: _hn,
         an: _an,
+        ward: _ward,
         patientName: _patientName,
         patientSurname: _patientSurname,
         address: _address.trim(),
@@ -239,9 +243,39 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 3,
-                                  child: SizedBox(
-                                    width: 100,
+                                    flex: 1,
+                                    child: Text('Ward:\t\t\t',
+                                        textAlign: TextAlign.end)),
+                                Expanded(
+                                  flex: 2,
+                                  child: DropdownButtonFormField(
+                                    isExpanded: true,
+                                    validator: (value) =>
+                                        value == null ? 'กรุณาเลือกWard' : null,
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            new EdgeInsets.symmetric(
+                                                vertical: 8.0,
+                                                horizontal: 10.0),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.black26, width: 1),
+                                        ),
+                                        labelText: 'Ward'),
+                                    onSaved: (value) {
+                                      _ward = value;
+                                    },
+                                    items: ['1', '2', '3', '4']
+                                        .map((label) => DropdownMenuItem(
+                                              child: Text(label),
+                                              value: label,
+                                            ))
+                                        .toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _ward = value;
+                                      });
+                                    },
                                   ),
                                 ),
                               ],
@@ -346,7 +380,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     onSaved: (value) {
                                       _gender = value;
                                     },
-                                    // value: _gender,
                                     items: [
                                       'ชาย',
                                       'หญิง',

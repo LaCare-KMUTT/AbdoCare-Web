@@ -51,6 +51,8 @@ abstract class IFirebaseService {
 
   Future<List<Map<String, dynamic>>> getPostHomeList();
 
+  Future<List<Map<String, dynamic>>> getPreOpList();
+
   Future<bool> signIn({@required String username, @required String password});
 
   Future<void> signOut();
@@ -63,12 +65,32 @@ abstract class IFirebaseService {
     @required Map<String, dynamic> data,
   });
 
-  Future<Map<String, dynamic>> getLatestSubCollectionSnapshot({
+  Future<Map<String, dynamic>> getLatestSubCollectionMap({
     @required String collection,
     @required String docId,
     @required String subCollection,
     @required String subCollectionDocId,
   });
+
+  Future<String> addDataToFormsCollection(
+      {@required Map<String, dynamic> data,
+      @required String formName,
+      @required String hn,
+      String formTime});
+
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate});
+
+  Future<String> getMedicalTeamSignature();
+
+  Future<Map<String, dynamic>> getCollectionMap(
+      {@required String collection, @required String docId});
+
+  Future<int> getDayInCurrentState({@required String hn});
+
+  Future<void> addNotification(
+      {@required String hn,
+      @required String formId,
+      @required String formName});
+  Future<String> getPatientState({@required String hn});
 }
