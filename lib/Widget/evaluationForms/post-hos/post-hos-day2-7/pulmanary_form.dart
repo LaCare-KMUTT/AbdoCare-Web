@@ -18,6 +18,20 @@ class _PulmanaryFormState extends State<PulmanaryForm> {
   var _value3;
   var _value4;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -378,6 +392,10 @@ class _PulmanaryFormState extends State<PulmanaryForm> {
                                                           formName: 'Pulmanary',
                                                           data: formDataToDB);
                                               print("finish add data");
+                                              Dialogs.alertDialogSaveData(
+                                                  context,
+                                                  widget.hn,
+                                                  _getpatientState);
                                               if (_value1 == "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
                                                   (_value2 == "ปฏิบัติ" ||
                                                       _value2 ==
