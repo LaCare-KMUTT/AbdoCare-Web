@@ -30,6 +30,7 @@ class PatientRegisterForm extends StatefulWidget {
     @required String username,
     @required String uniqueKey,
     @required String password,
+    @required DateTime latestStateChange,
   }) submitFn;
 
   @override
@@ -120,6 +121,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         username: _createDummyUsername(_hn.trim()),
         uniqueKey: _uniqueKey,
         password: '000000',
+        latestStateChange: _calculationService.formatDate(date: DateTime.now()),
       );
     }
   }

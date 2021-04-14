@@ -89,4 +89,24 @@ void main() {
       expect(formattedDate, 'วันศุกร์ที่ 12 มีนาคม พ.ศ. 2542');
     });
   });
+
+  group('Calculate calculateDayDifference', () {
+    test('calculateDayDifference should return correct difference in day', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var dayDifference = _calculationService.calculateDayDifference(
+          day: DateTime(1999, 03, 15), compareTo: DateTime(1999, 03, 12));
+      expect(dayDifference, 3);
+    });
+
+    test('calculateDayDifference should always return positive number', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var day1 = _calculationService.calculateDayDifference(
+          day: DateTime(1999, 03, 12), compareTo: DateTime(1999, 03, 13));
+      var day2 = _calculationService.calculateDayDifference(
+          day: DateTime(1999, 03, 13), compareTo: DateTime(1999, 03, 12));
+      expect(day1, 1);
+      expect(day2, 1);
+      expect(day1, day2);
+    });
+  });
 }
