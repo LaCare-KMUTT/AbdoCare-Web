@@ -15,6 +15,21 @@ class _UrologyFormState extends State<UrologyForm> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   var _value1;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -169,7 +184,10 @@ class _UrologyFormState extends State<UrologyForm> {
                                                           hn: widget.hn,
                                                           formName: 'Urology',
                                                           data: formDataToDB);
-
+                                              Dialogs.alertDialogSaveData(
+                                                  context,
+                                                  widget.hn,
+                                                  _getpatientState);
                                               if (_value1 ==
                                                   "ถ่ายปัสสาวะแล้ว") {
                                                 result = "Pass";

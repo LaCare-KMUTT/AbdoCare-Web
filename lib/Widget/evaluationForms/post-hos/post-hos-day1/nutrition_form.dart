@@ -18,6 +18,21 @@ class _NutritionFormState extends State<NutritionForm> {
   var _value3;
   var _value4;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -342,6 +357,10 @@ class _NutritionFormState extends State<NutritionForm> {
                                                           hn: widget.hn,
                                                           formName: 'Nutrition',
                                                           data: formDataToDB);
+                                              Dialogs.alertDialogSaveData(
+                                                  context,
+                                                  widget.hn,
+                                                  _getpatientState);
                                               if (_value1 == "มี" &&
                                                   _value2 == "มี" &&
                                                   _value3 == "ปฏิบัติ" &&

@@ -21,6 +21,20 @@ class _DrainFormState extends State<DrainForm> {
   var _value6 = false;
   var _value7 = false;
   var _value8 = false;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
 
   String result;
   @override
@@ -274,7 +288,10 @@ class _DrainFormState extends State<DrainForm> {
                                                           hn: widget.hn,
                                                           formName: 'Drain',
                                                           data: formDataToDB);
-
+                                              Dialogs.alertDialogSaveData(
+                                                  context,
+                                                  widget.hn,
+                                                  _getpatientState);
                                               if ((_value1 ||
                                                       _value2 == true) &&
                                                   _value3 == false &&

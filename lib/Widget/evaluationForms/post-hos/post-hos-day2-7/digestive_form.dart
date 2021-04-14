@@ -28,6 +28,20 @@ class _DigestiveFormState extends State<DigestiveForm> {
   var _value13;
   var _value14;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -716,7 +730,10 @@ class _DigestiveFormState extends State<DigestiveForm> {
                                                           hn: widget.hn,
                                                           formName: 'Digestive',
                                                           data: formDataToDB);
-
+                                              Dialogs.alertDialogSaveData(
+                                                  context,
+                                                  widget.hn,
+                                                  _getpatientState);
                                               if (_value1 == true &&
                                                   _value2 == false &&
                                                   _value3 == false &&

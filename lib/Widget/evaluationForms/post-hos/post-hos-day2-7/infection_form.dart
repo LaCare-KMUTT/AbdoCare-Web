@@ -22,6 +22,20 @@ class _InfectionFormState extends State<InfectionForm> {
   var _value7 = false;
   var _value8 = false;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -264,6 +278,10 @@ class _InfectionFormState extends State<InfectionForm> {
                                                           hn: widget.hn,
                                                           formName: 'Infection',
                                                           data: formDataToDB);
+                                              Dialogs.alertDialogSaveData(
+                                                  context,
+                                                  widget.hn,
+                                                  _getpatientState);
                                               if (_value3 == true &&
                                                   (_value5 ||
                                                       _value6 == true) &&

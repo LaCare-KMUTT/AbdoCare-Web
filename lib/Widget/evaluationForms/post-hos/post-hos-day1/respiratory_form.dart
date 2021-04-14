@@ -20,6 +20,21 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
   var _value5;
   var _value6;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -507,7 +522,7 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
                                                 _value4 == null ||
                                                 _value5 == null ||
                                                 _value6 == null) {
-                                            Dialogs.alertDialog(context);
+                                              Dialogs.alertDialog(context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -527,7 +542,10 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
                                                           formName:
                                                               'Respiratory',
                                                           data: formDataToDB);
-
+                                              Dialogs.alertDialogSaveData(
+                                                  context,
+                                                  widget.hn,
+                                                  _getpatientState);
                                               if (_value1 == "ใช่" &&
                                                   _value2 ==
                                                       "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
@@ -568,5 +586,4 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
       ),
     );
   }
-
 }
