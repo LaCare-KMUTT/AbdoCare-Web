@@ -1,4 +1,4 @@
-import '../../../../models/evalutate_form/pre_visit/checkboxListTile_model.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/checkboxListTile_model.dart';
 
 List<CheckboxListTileModel> getGeneralList() => [
       CheckboxListTileModel(title: 'Normal'),
