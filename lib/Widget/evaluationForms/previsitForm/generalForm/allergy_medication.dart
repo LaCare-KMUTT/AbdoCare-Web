@@ -32,7 +32,6 @@ class _AllergyMedicationState extends State<AllergyMedication> {
 
     return list.map((e) {
       return Expanded(
-        flex: 1,
         child: Container(
           child: RadioListTile(
             contentPadding: EdgeInsets.zero,
@@ -66,17 +65,17 @@ class _AllergyMedicationState extends State<AllergyMedication> {
     return Row(
       children: <Widget>[
         Expanded(
-            flex: 3,
+            flex: 1,
             child: Text('Allergy Medication',
                 style: TextStyle(fontWeight: FontWeight.w600))),
         ..._getWidget(),
         Expanded(
-          flex: 3,
+          flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกAllergy Medication' : null;
-            },
+            validator: (value) => isEnableTextField && value.isEmpty
+                ? 'กรุณากรอกAllergy Medication'
+                : null,
             controller: _controller1,
             decoration: InputDecoration(
                 contentPadding:
@@ -95,14 +94,18 @@ class _AllergyMedicationState extends State<AllergyMedication> {
             },
           ),
         ),
-        Expanded(child: Center(child: Text(' Symptoms '))),
+        Flexible(
+            child: Center(
+                child: Text(
+          ' Symptoms ',
+          style: TextStyle(fontSize: 16),
+        ))),
         Expanded(
           flex: 2,
           child: TextFormField(
             enabled: isEnableTextField,
-            validator: (value) {
-              return value.isEmpty ? 'กรุณากรอกSymptoms' : null;
-            },
+            validator: (value) =>
+                isEnableTextField && value.isEmpty ? 'กรุณากรอกSymptoms' : null,
             controller: _controller2,
             decoration: InputDecoration(
                 contentPadding:

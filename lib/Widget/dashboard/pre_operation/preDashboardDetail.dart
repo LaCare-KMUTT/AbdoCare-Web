@@ -1,9 +1,12 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/healthStatus.dart';
 import 'package:flutter/material.dart';
 
 import '../../../page/dashboard_postHome.dart';
 import '../../../page/dashboard_postHos.dart';
 import '../../../page/dashboard_pre.dart';
+import '../../../services/service_locator.dart';
+import '../../../view_models/evaluate_form/evaluationFormButton_view_model.dart';
+import '../../evaluationForms/post-hos/virtal_sign_form.dart';
+import '../../evaluationForms/previsitForm/healthStatusForm/healthStatus.dart';
 import '../dashboardGraph.dart';
 import 'preDashboardPatientDetail.dart';
 
@@ -16,8 +19,107 @@ class PreDashboardDetail extends StatefulWidget {
 
 class _PreDashboardDetailState extends State<PreDashboardDetail> {
   final ScrollController controller = ScrollController();
+  final EvaluationFormViewModel _evaluationFormViewModel =
+      locator<EvaluationFormViewModel>();
 
-  Container formCard(String heading) {
+  Container virtalSignFormCard(String heading, String hn) {
+    return Container(
+      width: 400,
+      height: 420,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+        child: Card(
+          child: Wrap(
+            children: [
+              ListTile(
+                title: Text(
+                  heading,
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  child: (() {
+                    if (heading == 'แบบประเมินสัญญาณชีพ') {
+                      return Column(
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_evaluationFormViewModel
+                                    .disableVirtalSignButton1(false),
+                                child: VirtalSignForm(
+                                    hn: widget.hn,
+                                    formTime: '02:00 น.',
+                                    state: 'Pre-Operation'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_evaluationFormViewModel
+                                    .disableVirtalSignButton2(false),
+                                child: VirtalSignForm(
+                                    hn: widget.hn,
+                                    formTime: '06:00 น.',
+                                    state: 'Pre-Operation'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_evaluationFormViewModel
+                                    .disableVirtalSignButton3(false),
+                                child: VirtalSignForm(
+                                    hn: widget.hn,
+                                    formTime: '10:00 น.',
+                                    state: 'Pre-Operation'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_evaluationFormViewModel
+                                    .disableVirtalSignButton4(false),
+                                child: VirtalSignForm(
+                                    hn: widget.hn,
+                                    formTime: '14:00 น.',
+                                    state: 'Pre-Operation'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_evaluationFormViewModel
+                                    .disableVirtalSignButton5(false),
+                                child: VirtalSignForm(
+                                    hn: widget.hn,
+                                    formTime: '18:00 น.',
+                                    state: 'Pre-Operation'),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: AbsorbPointer(
+                                absorbing: !_evaluationFormViewModel
+                                    .disableVirtalSignButton6(false),
+                                child: VirtalSignForm(
+                                    hn: widget.hn,
+                                    formTime: '22:00 น.',
+                                    state: 'Pre-Operation'),
+                              )),
+                        ],
+                      );
+                    }
+                  }()),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container preVisitFormCard(String heading) {
     return Container(
       width: 400,
       height: 140,
@@ -162,9 +264,9 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                   child: PrePatientDetail(),
                 ),
                 SizedBox(
-                  height: 200,
+                  height: 500,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                     child: Card(
                       child: Scrollbar(
                         isAlwaysShown: false,
@@ -188,10 +290,20 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Column(
                                           children: [
-                                            formCard('แบบประเมิน Pre-Visit'),
+                                            virtalSignFormCard(
+                                                'แบบประเมินสัญญาณชีพ',
+                                                widget.hn),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            preVisitFormCard(
+                                                'แบบประเมิน Pre-Visit'),
                                           ],
                                         ),
                                       ],

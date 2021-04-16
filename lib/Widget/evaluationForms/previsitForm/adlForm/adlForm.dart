@@ -92,7 +92,7 @@ class _ADLFormState extends State<ADLForm> {
       body: Container(
         child: LayoutBuilder(builder: (context, constraints) {
           return ListView(
-            children: [
+            children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(screenSize.height / 70),
                 child: Container(
@@ -118,7 +118,7 @@ class _ADLFormState extends State<ADLForm> {
                             minHeight: constraints.minHeight),
                         child: IntrinsicWidth(
                           child: Column(
-                            children: [
+                            children: <Widget>[
                               Card(
                                   child: FutureBuilder<ADLFormModel>(
                                       future: ADLFormViewModel.getModel(),
@@ -131,17 +131,17 @@ class _ADLFormState extends State<ADLForm> {
                                           );
                                         }
                                         return Column(
-                                          children: [
+                                          children: <Widget>[
                                             Container(
                                               child: Column(
-                                                children: [
+                                                children: <Widget>[
                                                   Container(
                                                     child: Padding(
                                                       padding: EdgeInsets.all(
                                                           screenSize.height /
                                                               70),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   'แบบประเมิน ADL',
@@ -169,7 +169,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '1.  Feeding (รับประทานอาหารเมื่อเตรียมสำรับไว้ให้เรียบร้อยต่อหน้า)')),
@@ -198,7 +198,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '2. Grooming (ล้างหน้า หวีผม แปรงฟัน โกนหนวด ในระยะเวลา24- 28 ชั่วโมงที่ผ่านมา)')),
@@ -228,7 +228,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '3. Transfer (ลุกนั่งจากที่นอน หรือจากเตียงไปยังเก้าอี้)')),
@@ -258,7 +258,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '4. Toilet use (การใช้ห้องน้ำ)')),
@@ -288,7 +288,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '5. Mobility (การเคลื่อนที่ภายในห้องหรือบ้าน)')),
@@ -318,7 +318,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '6. Dressing (การสวมใส่เสื้อผ้า)')),
@@ -348,7 +348,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '7. Stairs (การขึ้นลงบันได1ชั้น)')),
@@ -377,7 +377,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '8. Bathing (การอาบน้ำ)')),
@@ -406,7 +406,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '9. Bowels (การกลั้นการถ่ายอุจจาระในระยะ1สัปดาห์ที่ผ่านมา)')),
@@ -435,7 +435,7 @@ class _ADLFormState extends State<ADLForm> {
                                                                   70,
                                                               0),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Expanded(
                                                               child: Text(
                                                                   '10. Bladder (การกลั้นปัสสาวะในระยะ1สัปดาห์ที่ผ่านมา)')),
@@ -459,7 +459,7 @@ class _ADLFormState extends State<ADLForm> {
                                                         screenSize.height / 70,
                                                       ),
                                                       child: Row(
-                                                        children: [
+                                                        children: <Widget>[
                                                           Text(
                                                             'การแปลผล\n1. มีผลรวมคะแนน ตั้งแต่ 12 คะแนนขึ้นไป = Mild Independence\n2. มีผลรวมคะแนน 9 - 11 = Moderately Independence\n3. มีผลรวมคะแนน 5 - 8 = Severe Independence\n4. มีผลรวมคะแนน 0 - 4 = Total Independence',
                                                             style: TextStyle(
@@ -489,7 +489,7 @@ class _ADLFormState extends State<ADLForm> {
                 child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: <Widget>[
                       Container(
                         width: 100,
                         child: RaisedButton(
@@ -558,9 +558,7 @@ class _ADLFormState extends State<ADLForm> {
     showDialog(
         context: context,
         builder: (_) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true);
-          });
+          Future.delayed(Duration(seconds: 2), () {});
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

@@ -42,7 +42,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
   initData() async {
     dayInCurrentState =
         await _firebaseService.getDayInCurrentState(hn: widget.hn);
-    print('dayInCurrentState $dayInCurrentState');
+    print('dayInCurrentState: $dayInCurrentState');
     setState(() {
       _getdayInCurrentState = dayInCurrentState;
     });
@@ -78,7 +78,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton1(false),
                                 child: VirtalSignForm(
-                                    hn: widget.hn, formTime: '02:00 น.'),
+                                    hn: widget.hn,
+                                    formTime: '02:00 น.',
+                                    state: 'Post-op',
+                                    dayInCurrentState: _getdayInCurrentState),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -86,7 +89,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton2(false),
                                 child: VirtalSignForm(
-                                    hn: widget.hn, formTime: '06:00 น.'),
+                                    hn: widget.hn,
+                                    formTime: '06:00 น.',
+                                    state: 'Post-op',
+                                    dayInCurrentState: _getdayInCurrentState),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -94,7 +100,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton3(false),
                                 child: VirtalSignForm(
-                                    hn: widget.hn, formTime: '10:00 น.'),
+                                    hn: widget.hn,
+                                    formTime: '10:00 น.',
+                                    state: 'Post-op',
+                                    dayInCurrentState: _getdayInCurrentState),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -102,7 +111,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton4(false),
                                 child: VirtalSignForm(
-                                    hn: widget.hn, formTime: '14:00 น.'),
+                                    hn: widget.hn,
+                                    formTime: '14:00 น.',
+                                    state: 'Post-op',
+                                    dayInCurrentState: _getdayInCurrentState),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -110,7 +122,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton5(false),
                                 child: VirtalSignForm(
-                                    hn: widget.hn, formTime: '18:00 น.'),
+                                    hn: widget.hn,
+                                    formTime: '18:00 น.',
+                                    state: 'Post-op',
+                                    dayInCurrentState: _getdayInCurrentState),
                               )),
                           Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -118,7 +133,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton6(false),
                                 child: VirtalSignForm(
-                                    hn: widget.hn, formTime: '22:00 น.'),
+                                    hn: widget.hn,
+                                    formTime: '22:00 น.',
+                                    state: 'Post-op',
+                                    dayInCurrentState: _getdayInCurrentState),
                               )),
                         ],
                       );
