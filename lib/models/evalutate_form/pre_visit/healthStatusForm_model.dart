@@ -5,6 +5,8 @@ class HealthStatusFormModel {
   bool general_AbnormalWeightLost;
   bool general_AbnormalWeightGain;
   bool general_Fever;
+  bool general_Fatigue;
+  bool general_ChillsSweats;
   String general_Other;
 
   bool heent_Normal;
@@ -79,6 +81,8 @@ class HealthStatusFormModel {
       'general_AbnormalWeightLost': general_AbnormalWeightLost,
       'general_AbnormalWeightGain': general_AbnormalWeightGain,
       'general_Fever': general_Fever,
+      'general_Fatigue': general_Fatigue,
+      'general_ChillsSweats': general_ChillsSweats,
       'general_Other': general_Other,
       'heent_Normal': heent_Normal,
       'heent_Headache': heent_Headache,
@@ -145,6 +149,8 @@ class HealthStatusFormModel {
     general_AbnormalWeightLost = map['general_AbnormalWeightLost'];
     general_AbnormalWeightGain = map['general_AbnormalWeightGain'];
     general_Fever = map['general_Fever'];
+    general_Fatigue = map['general_Fatigue'];
+    general_ChillsSweats = map['general_ChillsSweats'];
     general_Other = map['general_Other'];
     heent_Normal = map['heent_Normal'];
     heent_Headache = map['heent_Headache'];

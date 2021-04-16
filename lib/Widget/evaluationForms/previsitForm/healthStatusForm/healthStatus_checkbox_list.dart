@@ -7,7 +7,7 @@ List<CheckboxListTileModel> getGeneralList() => [
       CheckboxListTileModel(title: 'Fever'),
       CheckboxListTileModel(title: 'Fatigue'),
       CheckboxListTileModel(title: 'Chills/Sweats'),
-      CheckboxListTileModel(title: 'Other:'),
+      // CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getHeentList() => [
