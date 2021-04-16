@@ -29,12 +29,16 @@ class HealthStatusFormModel {
   bool pulmonary_Wheezing = false;
   bool pulmonary_Cough = false;
   bool pulmonary_SOB = false;
+  bool pulmonary_Hemoptysis = false;
+  bool pulmonary_Sputum = false;
   String pulmonary_Other = '-';
 
   bool gynuro_Normal = false;
   bool gynuro_Dysuria = false;
   bool gynuro_Frequency = false;
   bool gynuro_Urgency = false;
+  bool gynuro_Hematuria = false;
+  bool gynuro_PelvicPain = false;
   String gynuro_Other = '-';
 
   bool neuro_Normal = false;
@@ -104,11 +108,15 @@ class HealthStatusFormModel {
       'pulmonary_Wheezing': pulmonary_Wheezing,
       'pulmonary_Cough': pulmonary_Cough,
       'pulmonary_SOB': pulmonary_SOB,
+      'pulmonary_Hemoptysis': pulmonary_Hemoptysis,
+      'pulmonary_Sputum': pulmonary_Sputum,
       'pulmonary_Other': pulmonary_Other,
       'gynuro_Normal': gynuro_Normal,
       'gynuro_Dysuria': gynuro_Dysuria,
       'gynuro_Frequency': gynuro_Frequency,
       'gynuro_Urgency': gynuro_Urgency,
+      'gynuro_Hematuria': gynuro_Hematuria,
+      'gynuro_PelvicPain': gynuro_PelvicPain,
       'gynuro_Other': gynuro_Other,
       'neuro_Normal': neuro_Normal,
       'neuro_Migraine': neuro_Migraine,
@@ -174,11 +182,15 @@ class HealthStatusFormModel {
     pulmonary_Wheezing = map['pulmonary_Wheezing'];
     pulmonary_Cough = map['pulmonary_Cough'];
     pulmonary_SOB = map['pulmonary_SOB'];
+    pulmonary_Hemoptysis = map['pulmonary_Hemoptysis'];
+    pulmonary_Sputum = map['pulmonary_Sputum'];
     pulmonary_Other = map['pulmonary_Other'];
     gynuro_Normal = map['gynuro_Normal'];
     gynuro_Dysuria = map['gynuro_Dysuria'];
     gynuro_Frequency = map['gynuro_Frequency'];
     gynuro_Urgency = map['gynuro_Urgency'];
+    gynuro_Hematuria = map['gynuro_Hematuria'];
+    gynuro_PelvicPain = map['gynuro_PelvicPain'];
     gynuro_Other = map['gynuro_Other'];
     neuro_Normal = map['neuro_Normal'];
     neuro_Migraine = map['neuro_Migraine'];

@@ -22,6 +22,7 @@ List<CheckboxListTileModel> getCVList() => [
       CheckboxListTileModel(title: 'Normal'),
       CheckboxListTileModel(title: 'Chest pain'),
       CheckboxListTileModel(title: 'Palpitations'),
+      CheckboxListTileModel(title: 'Murmur'),
       CheckboxListTileModel(title: 'PND/orthopnea'),
       CheckboxListTileModel(title: 'LE swelling'),
       CheckboxListTileModel(title: 'Other:'),
