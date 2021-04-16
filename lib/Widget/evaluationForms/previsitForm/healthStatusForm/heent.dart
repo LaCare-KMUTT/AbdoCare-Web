@@ -102,7 +102,7 @@ class _HeentHealthStatusState extends State<HeentHealthStatus> {
                           setState(() {
                             _isEnableTextField = value;
                             if (_isEnableTextField == false) {
-                              widget.healthStatusModel.general_Other = '-';
+                              widget.healthStatusModel.heent_Other = '-';
                             }
                           });
                         },
