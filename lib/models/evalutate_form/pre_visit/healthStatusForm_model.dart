@@ -1,79 +1,81 @@
 // ignore_for_file: non_constant_identifier_names
 
 class HealthStatusFormModel {
-  bool general_Normal;
-  bool general_AbnormalWeightLost;
-  bool general_AbnormalWeightGain;
-  bool general_Fever;
-  bool general_Fatigue;
-  bool general_ChillsSweats;
-  String general_Other;
+  bool general_Normal = false;
+  bool general_AbnormalWeightLost = false;
+  bool general_AbnormalWeightGain = false;
+  bool general_Fever = false;
+  bool general_Fatigue = false;
+  bool general_ChillsSweats = false;
+  String general_Other = '-';
 
-  bool heent_Normal;
-  bool heent_Headache;
-  bool heent_BlurredVision;
-  bool heent_Tinnitus;
-  String heent_Other;
+  bool heent_Normal = false;
+  bool heent_Headache = false;
+  bool heent_BlurredVision = false;
+  bool heent_Tinnitus = false;
+  bool heent_Dizziness = false;
+  bool heent_Epistaxis = false;
+  String heent_Other = '-';
 
-  bool cv_Normal;
-  bool cv_ChestPain;
-  bool cv_Palpitations;
-  bool cv_Murmur;
-  bool cv_PNDOrthopnea;
-  bool cv_LEswelling;
-  String cv_Other;
+  bool cv_Normal = false;
+  bool cv_ChestPain = false;
+  bool cv_Palpitations = false;
+  bool cv_Murmur = false;
+  bool cv_PNDOrthopnea = false;
+  bool cv_LEswelling = false;
+  String cv_Other = '-';
 
-  bool pulmonary_Normal;
-  bool pulmonary_Wheezing;
-  bool pulmonary_Cough;
-  bool pulmonary_SOB;
-  String pulmonary_Other;
+  bool pulmonary_Normal = false;
+  bool pulmonary_Wheezing = false;
+  bool pulmonary_Cough = false;
+  bool pulmonary_SOB = false;
+  String pulmonary_Other = '-';
 
-  bool gynuro_Normal;
-  bool gynuro_Dysuria;
-  bool gynuro_Frequency;
-  bool gynuro_Urgency;
-  String gynuro_Other;
+  bool gynuro_Normal = false;
+  bool gynuro_Dysuria = false;
+  bool gynuro_Frequency = false;
+  bool gynuro_Urgency = false;
+  String gynuro_Other = '-';
 
-  bool neuro_Normal;
-  bool neuro_Migraine;
-  bool neuro_Seizure;
-  bool neuro_TiaStorke;
-  bool neuro_WeaknessSyncope;
-  bool neuro_SensoryImpairment;
-  String neuro_Other;
+  bool neuro_Normal = false;
+  bool neuro_Migraine = false;
+  bool neuro_Seizure = false;
+  bool neuro_TiaStorke = false;
+  bool neuro_WeaknessSyncope = false;
+  bool neuro_SensoryImpairment = false;
+  String neuro_Other = '-';
 
-  bool gi_Normal;
-  bool gi_GERD;
-  bool gi_NauseaVomiting;
-  bool gi_DiarrheaConstipation;
-  bool gi_BowelHabitChanges;
-  bool gi_Melena;
-  String gi_Other;
+  bool gi_Normal = false;
+  bool gi_GERD = false;
+  bool gi_NauseaVomiting = false;
+  bool gi_DiarrheaConstipation = false;
+  bool gi_BowelHabitChanges = false;
+  bool gi_Melena = false;
+  String gi_Other = '-';
 
-  bool ms_Normal;
-  bool ms_JointSwellingPain;
-  bool ms_LimitationsNeckMobility;
-  bool ms_GaitDifficulty;
-  bool ms_Deformity;
-  bool ms_ProstheticDevices;
-  String ms_Other;
+  bool ms_Normal = false;
+  bool ms_JointSwellingPain = false;
+  bool ms_LimitationsNeckMobility = false;
+  bool ms_GaitDifficulty = false;
+  bool ms_Deformity = false;
+  bool ms_ProstheticDevices = false;
+  String ms_Other = '-';
 
-  bool endocrine_Normal;
-  bool endocrine_HairLoss;
-  bool endocrine_ExcessiveSweat;
-  bool endocrine_ExcessiveThirst;
-  bool endocrine_HeatIntolerance;
-  bool endocrine_ColdIntolerance;
-  String endocrine_Other;
+  bool endocrine_Normal = false;
+  bool endocrine_HairLoss = false;
+  bool endocrine_ExcessiveSweat = false;
+  bool endocrine_ExcessiveThirst = false;
+  bool endocrine_HeatIntolerance = false;
+  bool endocrine_ColdIntolerance = false;
+  String endocrine_Other = '-';
 
-  bool hemeLymph_Normal;
-  bool hemeLymph_BleedingTendency;
-  bool hemeLymph_DVTHistory;
-  bool hemeLymph_EnlargedNodes;
-  bool hemeLymph_Immunosuppression;
-  bool hemeLymph_RecentSteroidUse;
-  String hemeLymph_Other;
+  bool hemeLymph_Normal = false;
+  bool hemeLymph_BleedingTendency = false;
+  bool hemeLymph_DVTHistory = false;
+  bool hemeLymph_EnlargedNodes = false;
+  bool hemeLymph_Immunosuppression = false;
+  bool hemeLymph_RecentSteroidUse = false;
+  String hemeLymph_Other = '-';
 
   Map<String, dynamic> toMap() {
     return {
@@ -88,6 +90,8 @@ class HealthStatusFormModel {
       'heent_Headache': heent_Headache,
       'heent_BlurredVision': heent_BlurredVision,
       'heent_Tinnitus': heent_Tinnitus,
+      'heent_Dizziness': heent_Dizziness,
+      'heent_Epistaxis': heent_Epistaxis,
       'heent_Other': heent_Other,
       'cv_Normal': cv_Normal,
       'cv_ChestPain': cv_ChestPain,
@@ -156,6 +160,8 @@ class HealthStatusFormModel {
     heent_Headache = map['heent_Headache'];
     heent_BlurredVision = map['heent_BlurredVision'];
     heent_Tinnitus = map['heent_Tinnitus'];
+    heent_Dizziness = map['heent_Dizziness'];
+    heent_Epistaxis = map['heent_Epistaxis'];
     heent_Other = map['heent_Other'];
     cv_Normal = map['cv_Normal'];
     cv_ChestPain = map['cv_ChestPain'];
