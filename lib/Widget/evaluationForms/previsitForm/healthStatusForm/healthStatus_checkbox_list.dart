@@ -1,4 +1,4 @@
-import '../../../../models/evalutate_form/pre_visit/checkboxListTile_Model.dart';
+import '../../../../models/evalutate_form/pre_visit/checkboxListTile_model.dart';
 
 List<CheckboxListTileModel> getGeneralList() => [
       CheckboxListTileModel(title: 'Normal'),
@@ -7,7 +7,6 @@ List<CheckboxListTileModel> getGeneralList() => [
       CheckboxListTileModel(title: 'Fever'),
       CheckboxListTileModel(title: 'Fatigue'),
       CheckboxListTileModel(title: 'Chills/Sweats'),
-      // CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getHeentList() => [
@@ -17,7 +16,6 @@ List<CheckboxListTileModel> getHeentList() => [
       CheckboxListTileModel(title: 'Tinnitus'),
       CheckboxListTileModel(title: 'Dizziness'),
       CheckboxListTileModel(title: 'Epistaxis'),
-      CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getCVList() => [
