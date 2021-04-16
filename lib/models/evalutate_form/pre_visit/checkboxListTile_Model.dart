@@ -1,6 +1,6 @@
 class CheckboxListTileModel {
   String title;
-  dynamic value;
+  bool value;
 
   CheckboxListTileModel({this.title, this.value = false});
 }
