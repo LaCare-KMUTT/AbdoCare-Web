@@ -1,13 +1,11 @@
-import 'dart:html';
-
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/healthStatus_checkbox_list.dart';
-import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/checkboxListTile_Model.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/checkboxListTile_model.dart';
 import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/healthStatusForm_model.dart';
 import 'package:flutter/material.dart';
 
 class GeneralHealthStatus extends StatefulWidget {
-  final HealthStatusFormModel data;
-  GeneralHealthStatus({this.data});
+  final HealthStatusFormModel healthStatusModel;
+  GeneralHealthStatus({this.healthStatusModel});
   @override
   _GeneralHealthStatusState createState() => _GeneralHealthStatusState();
 }
@@ -15,7 +13,6 @@ class GeneralHealthStatus extends StatefulWidget {
 class _GeneralHealthStatusState extends State<GeneralHealthStatus> {
   bool _isEnableTextField = false;
 
-  Map<String, dynamic> answer = {};
   final List<CheckboxListTileModel> list = getGeneralList();
 
   @override
@@ -59,24 +56,29 @@ class _GeneralHealthStatusState extends State<GeneralHealthStatus> {
                                 'Check ${list[index].title}   ${list[index].value} is ${list[index].value} value = $value');
                             switch (list[index].title) {
                               case 'Normal':
-                                widget.data.general_Normal = list[index].value;
+                                widget.healthStatusModel.general_Normal =
+                                    list[index].value;
                                 break;
                               case 'Abnormal weight loss':
-                                widget.data.general_AbnormalWeightLost =
+                                widget.healthStatusModel
+                                        .general_AbnormalWeightLost =
                                     list[index].value;
                                 break;
                               case 'Abnormal weight gain':
-                                widget.data.general_AbnormalWeightGain =
+                                widget.healthStatusModel
+                                        .general_AbnormalWeightGain =
                                     list[index].value;
                                 break;
                               case 'Fever':
-                                widget.data.general_Fever = list[index].value;
+                                widget.healthStatusModel.general_Fever =
+                                    list[index].value;
                                 break;
                               case 'Fatigue':
-                                widget.data.general_Fatigue = list[index].value;
+                                widget.healthStatusModel.general_Fatigue =
+                                    list[index].value;
                                 break;
                               case 'Chills/Sweats':
-                                widget.data.general_ChillsSweats =
+                                widget.healthStatusModel.general_ChillsSweats =
                                     list[index].value;
                                 break;
                             }
@@ -102,7 +104,7 @@ class _GeneralHealthStatusState extends State<GeneralHealthStatus> {
                           setState(() {
                             _isEnableTextField = value;
                             if (_isEnableTextField == false) {
-                              widget.data.general_Other = '-';
+                              widget.healthStatusModel.general_Other = '-';
                             }
                           });
                         },
@@ -124,7 +126,8 @@ class _GeneralHealthStatusState extends State<GeneralHealthStatus> {
                                   BorderSide(color: Colors.black26, width: 1),
                             ),
                             labelText: ' Other'),
-                        onSaved: (value) => widget.data.general_Other = value,
+                        onSaved: (value) =>
+                            widget.healthStatusModel.general_Other = value,
                       ),
                     ),
                   ],
