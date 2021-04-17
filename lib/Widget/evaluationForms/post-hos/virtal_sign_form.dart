@@ -67,8 +67,8 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
 
   bool checkNotificationCriteria(String hn, int score) {
     var shouldNotify = PainFormUtility()
-        .withState(patientState)
-        .withDayInState(dayInCurrentState)
+        .withState(_getpatientState)
+        .withDayInState(_getdayInCurrentState)
         .getPainFormCriteria(score);
     print('should notify = $shouldNotify');
     return shouldNotify;
@@ -412,11 +412,9 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                     formName: 'Virtal-Sign',
                                                     data: dataToDB,
                                                     formTime: widget.formTime);
-                                            var patientState =
-                                                await _firebaseService
-                                                    .getPatientState(
-                                                        hn: widget.hn);
-                                            if ((patientState ==
+                                            Dialogs.alertDialogSaveData(context,
+                                                widget.hn, _getpatientState);
+                                            if ((_getpatientState ==
                                                     'Post-Operation@Hospital' &&
                                                 _pain != null)) {
                                               if (checkNotificationCriteria(
