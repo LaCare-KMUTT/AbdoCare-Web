@@ -61,7 +61,6 @@ List<CheckboxListTileModel> getGIList() => [
       CheckboxListTileModel(title: 'Diarrhea/Constipation'),
       CheckboxListTileModel(title: 'Bowel habit changes'),
       CheckboxListTileModel(title: 'Melena'),
-      CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getMSList() => [
