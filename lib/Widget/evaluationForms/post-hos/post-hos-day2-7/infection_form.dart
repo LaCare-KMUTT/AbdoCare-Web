@@ -257,8 +257,9 @@ class _InfectionFormState extends State<InfectionForm> {
                                                     _value7 |
                                                     _value8 !=
                                                 true) {
-                                              Dialogs.alertDialogNoData(
-                                                  context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -279,10 +280,11 @@ class _InfectionFormState extends State<InfectionForm> {
                                                           hn: widget.hn,
                                                           formName: 'Infection',
                                                           data: formDataToDB);
-                                              Dialogs.alertDialogSaveData(
-                                                  context,
-                                                  widget.hn,
-                                                  _getpatientState);
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value3 == true &&
                                                   (_value5 ||
                                                       _value6 == true) &&

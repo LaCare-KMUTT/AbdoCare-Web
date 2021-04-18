@@ -703,8 +703,9 @@ class _DigestiveFormState extends State<DigestiveForm> {
                                                 _value12 == null ||
                                                 _value13 == null ||
                                                 _value14 == null) {
-                                              Dialogs.alertDialogNoData(
-                                                  context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -731,10 +732,11 @@ class _DigestiveFormState extends State<DigestiveForm> {
                                                           hn: widget.hn,
                                                           formName: 'Digestive',
                                                           data: formDataToDB);
-                                              Dialogs.alertDialogSaveData(
-                                                  context,
-                                                  widget.hn,
-                                                  _getpatientState);
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value1 == true &&
                                                   _value2 == false &&
                                                   _value3 == false &&

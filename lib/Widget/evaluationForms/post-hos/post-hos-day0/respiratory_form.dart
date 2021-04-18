@@ -522,7 +522,8 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
                                               _value4 == null ||
                                               _value5 == null ||
                                               _value6 == null) {
-                                            Dialogs.alertDialogNoData(context);
+                                            Dialogs.alertToCompleteEvalutation(
+                                                context);
                                           } else {
                                             Map<String, dynamic> formDataToDB =
                                                 {
@@ -540,8 +541,10 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
                                                     hn: widget.hn,
                                                     formName: 'Respiratory',
                                                     data: formDataToDB);
-                                            Dialogs.alertDialogSaveData(context,
-                                                widget.hn, _getpatientState);
+                                            Dialogs.alertSuccessfullySavedData(
+                                                context,
+                                                widget.hn,
+                                                _getpatientState);
                                             if (_value1 == "ใช่" &&
                                                 _value2 ==
                                                     "5 -10 ครั้ง/รอบ/ชั่วโมง" &&

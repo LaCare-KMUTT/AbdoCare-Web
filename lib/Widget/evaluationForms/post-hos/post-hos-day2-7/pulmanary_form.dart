@@ -374,8 +374,9 @@ class _PulmanaryFormState extends State<PulmanaryForm> {
                                                 _value2 == null ||
                                                 _value3 == null ||
                                                 _value4 == null) {
-                                              Dialogs.alertDialogNoData(
-                                                  context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -393,10 +394,11 @@ class _PulmanaryFormState extends State<PulmanaryForm> {
                                                           formName: 'Pulmanary',
                                                           data: formDataToDB);
                                               print("finish add data");
-                                              Dialogs.alertDialogSaveData(
-                                                  context,
-                                                  widget.hn,
-                                                  _getpatientState);
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value1 == "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
                                                   (_value2 == "ปฏิบัติ" ||
                                                       _value2 ==

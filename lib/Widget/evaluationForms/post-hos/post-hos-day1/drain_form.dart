@@ -267,8 +267,9 @@ class _DrainFormState extends State<DrainForm> {
                                                     _value7 |
                                                     _value8 !=
                                                 true) {
-                                              Dialogs.alertDialogNoData(
-                                                  context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -289,10 +290,11 @@ class _DrainFormState extends State<DrainForm> {
                                                           hn: widget.hn,
                                                           formName: 'Drain',
                                                           data: formDataToDB);
-                                              Dialogs.alertDialogSaveData(
-                                                  context,
-                                                  widget.hn,
-                                                  _getpatientState);
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if ((_value1 ||
                                                       _value2 == true) &&
                                                   _value3 == false &&

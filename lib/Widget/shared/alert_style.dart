@@ -3,7 +3,7 @@ import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:flutter/material.dart';
 
 class Dialogs {
-  static Future<void> alertDialogNoData(BuildContext context) async {
+  static Future<void> alertToCompleteEvalutation(BuildContext context) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -25,7 +25,7 @@ class Dialogs {
     );
   }
 
-  static Future<void> alertDialogSaveData(
+  static Future<void> alertSuccessfullySavedData(
       BuildContext context, String hn, String patients) async {
     await showDialog(
       context: context,

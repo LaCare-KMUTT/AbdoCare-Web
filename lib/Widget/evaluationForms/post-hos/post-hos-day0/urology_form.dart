@@ -170,8 +170,9 @@ class _UrologyFormState extends State<UrologyForm> {
                                               style: TextStyle(fontSize: 18)),
                                           onPressed: () async {
                                             if (_value1 == null) {
-                                              Dialogs.alertDialogNoData(
-                                                  context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -185,10 +186,11 @@ class _UrologyFormState extends State<UrologyForm> {
                                                           hn: widget.hn,
                                                           formName: 'Urology',
                                                           data: formDataToDB);
-                                              Dialogs.alertDialogSaveData(
-                                                  context,
-                                                  widget.hn,
-                                                  _getpatientState);
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value1 ==
                                                   "ถ่ายปัสสาวะแล้ว") {
                                                 result = "Pass";

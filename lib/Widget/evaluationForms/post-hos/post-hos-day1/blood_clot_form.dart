@@ -507,8 +507,9 @@ class _BloodClotFormState extends State<BloodClotForm> {
                                                 _value7 == null ||
                                                 _value8 == null ||
                                                 _value9 == null) {
-                                              Dialogs.alertDialogNoData(
-                                                  context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -530,10 +531,11 @@ class _BloodClotFormState extends State<BloodClotForm> {
                                                           hn: widget.hn,
                                                           formName: 'BloodClot',
                                                           data: formDataToDB);
-                                              Dialogs.alertDialogSaveData(
-                                                  context,
-                                                  widget.hn,
-                                                  _getpatientState);
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value1 == false &&
                                                   _value2 == false &&
                                                   _value3 == false &&

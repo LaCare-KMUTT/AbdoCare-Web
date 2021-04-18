@@ -340,8 +340,9 @@ class _NutritionFormState extends State<NutritionForm> {
                                                 _value2 == null ||
                                                 _value3 == null ||
                                                 _value4 == null) {
-                                              Dialogs.alertDialogNoData(
-                                                  context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -358,10 +359,11 @@ class _NutritionFormState extends State<NutritionForm> {
                                                           hn: widget.hn,
                                                           formName: 'Nutrition',
                                                           data: formDataToDB);
-                                              Dialogs.alertDialogSaveData(
-                                                  context,
-                                                  widget.hn,
-                                                  _getpatientState);
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value1 == "มี" &&
                                                   _value2 == "มี" &&
                                                   _value3 == "ปฏิบัติ" &&

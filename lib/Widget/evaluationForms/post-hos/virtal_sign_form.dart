@@ -412,8 +412,10 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                     formName: 'Virtal-Sign',
                                                     data: dataToDB,
                                                     formTime: widget.formTime);
-                                            Dialogs.alertDialogSaveData(context,
-                                                widget.hn, _getpatientState);
+                                            Dialogs.alertSuccessfullySavedData(
+                                                context,
+                                                widget.hn,
+                                                _getpatientState);
                                             if ((_getpatientState ==
                                                     'Post-Operation@Hospital' &&
                                                 _pain != null)) {
@@ -455,7 +457,8 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                             }
                                             Navigator.pop(context);
                                           } else {
-                                            Dialogs.alertDialogNoData(context);
+                                            Dialogs.alertToCompleteEvalutation(
+                                                context);
                                           }
                                         },
                                       ),
