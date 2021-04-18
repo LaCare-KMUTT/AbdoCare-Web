@@ -34,7 +34,6 @@ List<CheckboxListTileModel> getPulmonaryList() => [
       CheckboxListTileModel(title: 'SOB'),
       CheckboxListTileModel(title: 'Hemoptysis'),
       CheckboxListTileModel(title: 'Sputum'),
-      CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getGYNUROList() => [
