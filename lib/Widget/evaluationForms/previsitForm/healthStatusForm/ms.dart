@@ -4,16 +4,16 @@ import '../../../../models/evalutate_form/pre_visit/checkboxListTile_model.dart'
 import '../../../../models/evalutate_form/pre_visit/healthStatusForm_model.dart';
 import 'healthStatus_checkbox_list.dart';
 
-class GIHealthStatus extends StatefulWidget {
+class MSHealthStatus extends StatefulWidget {
   final HealthStatusFormModel healthStatusModel;
-  GIHealthStatus({this.healthStatusModel});
+  MSHealthStatus({this.healthStatusModel});
   @override
-  _GIHealthStatusState createState() => _GIHealthStatusState();
+  _MSHealthStatusState createState() => _MSHealthStatusState();
 }
 
-class _GIHealthStatusState extends State<GIHealthStatus> {
+class _MSHealthStatusState extends State<MSHealthStatus> {
   bool _isEnableTextField;
-  final List<CheckboxListTileModel> list = getGIList();
+  final List<CheckboxListTileModel> list = getMSList();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _GIHealthStatusState extends State<GIHealthStatus> {
                 Container(
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('GI'),
+                    child: Text('MS'),
                   ),
                 ),
                 ListView.builder(
@@ -56,28 +56,28 @@ class _GIHealthStatusState extends State<GIHealthStatus> {
                                 'Check ${list[index].title}   ${list[index].value} is ${list[index].value} value = $value');
                             switch (list[index].title) {
                               case 'Normal':
-                                widget.healthStatusModel.gi_Normal =
+                                widget.healthStatusModel.ms_Normal =
                                     list[index].value;
                                 break;
-                              case 'GERD':
-                                widget.healthStatusModel.gi_GERD =
+                              case 'Joint swelling/pain':
+                                widget.healthStatusModel.ms_JointSwellingPain =
                                     list[index].value;
                                 break;
-                              case 'Nausea/Vomiting':
-                                widget.healthStatusModel.gi_NauseaVomiting =
-                                    list[index].value;
-                                break;
-                              case 'Diarrhea/Constipation':
+                              case 'Limitations/neck mobility':
                                 widget.healthStatusModel
-                                        .gi_DiarrheaConstipation =
+                                        .ms_LimitationsNeckMobility =
                                     list[index].value;
                                 break;
-                              case 'Bowel habit changes':
-                                widget.healthStatusModel.gi_BowelHabitChanges =
+                              case 'Gait difficulty':
+                                widget.healthStatusModel.ms_GaitDifficulty =
                                     list[index].value;
                                 break;
-                              case 'Melena':
-                                widget.healthStatusModel.gi_Melena =
+                              case 'Deformity':
+                                widget.healthStatusModel.ms_Deformity =
+                                    list[index].value;
+                                break;
+                              case 'Prosthetic devices':
+                                widget.healthStatusModel.ms_ProstheticDevices =
                                     list[index].value;
                                 break;
                             }
@@ -103,7 +103,7 @@ class _GIHealthStatusState extends State<GIHealthStatus> {
                           setState(() {
                             _isEnableTextField = value;
                             if (_isEnableTextField == false) {
-                              widget.healthStatusModel.gi_Other = '-';
+                              widget.healthStatusModel.ms_Other = '-';
                             }
                           });
                         },
@@ -126,7 +126,7 @@ class _GIHealthStatusState extends State<GIHealthStatus> {
                             ),
                             labelText: ' Other'),
                         onSaved: (value) =>
-                            widget.healthStatusModel.gi_Other = value,
+                            widget.healthStatusModel.ms_Other = value,
                       ),
                     ),
                   ],

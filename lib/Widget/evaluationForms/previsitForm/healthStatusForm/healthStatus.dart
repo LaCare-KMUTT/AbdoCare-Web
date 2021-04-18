@@ -1,5 +1,6 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/gi.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/gyn_uro.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/ms.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/neuro.dart';
 import 'package:flutter/material.dart';
 
@@ -286,7 +287,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                       minHeight: constraints.minHeight),
                                   child: IntrinsicWidth(
                                     child: Column(
-                                      children: [
+                                      children: <Widget>[
                                         Card(
                                           child: Column(
                                             children: [
@@ -311,7 +312,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                 ),
                                               ),
                                               Row(
-                                                children: [
+                                                children: <Widget>[
                                                   GeneralHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
@@ -333,7 +334,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                 ],
                                               ),
                                               Row(
-                                                children: [
+                                                children: <Widget>[
                                                   //GYN/URO
                                                   GYNUROHealthStatus(
                                                     healthStatusModel:
@@ -345,284 +346,14 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                         snapshot.data,
                                                   ),
                                                   //GI
-                                                  GiHealthStatus(
+                                                  GIHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
                                                   ),
                                                   //MS
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            15.0),
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            3.0),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .grey[300])),
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(15.0),
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(3.0),
-                                                          height:
-                                                              screenSize.width /
-                                                                  4,
-                                                          width:
-                                                              screenSize.width /
-                                                                  5,
-                                                          child: ListView(
-                                                            children: [
-                                                              Container(
-                                                                child: Align(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .centerLeft,
-                                                                  child: Text(
-                                                                      'MS'),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    CheckboxListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  value:
-                                                                      _msValue1,
-                                                                  selected:
-                                                                      _msValue1,
-                                                                  controlAffinity:
-                                                                      ListTileControlAffinity
-                                                                          .leading,
-                                                                  activeColor:
-                                                                      Color(
-                                                                          0xFFC37447),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      _msValue1 =
-                                                                          value;
-                                                                    });
-                                                                  },
-                                                                  title: Text(
-                                                                      'Normal'),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    CheckboxListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  value:
-                                                                      _msValue2,
-                                                                  selected:
-                                                                      _msValue2,
-                                                                  controlAffinity:
-                                                                      ListTileControlAffinity
-                                                                          .leading,
-                                                                  activeColor:
-                                                                      Color(
-                                                                          0xFFC37447),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      _msValue2 =
-                                                                          value;
-                                                                    });
-                                                                  },
-                                                                  title: Text(
-                                                                      'Joint swelling/pain'),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    CheckboxListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  value:
-                                                                      _msValue3,
-                                                                  selected:
-                                                                      _msValue3,
-                                                                  controlAffinity:
-                                                                      ListTileControlAffinity
-                                                                          .leading,
-                                                                  activeColor:
-                                                                      Color(
-                                                                          0xFFC37447),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      _msValue3 =
-                                                                          value;
-                                                                    });
-                                                                  },
-                                                                  title: Text(
-                                                                      'Limitations/neck mobility'),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    CheckboxListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  value:
-                                                                      _msValue4,
-                                                                  selected:
-                                                                      _msValue4,
-                                                                  controlAffinity:
-                                                                      ListTileControlAffinity
-                                                                          .leading,
-                                                                  activeColor:
-                                                                      Color(
-                                                                          0xFFC37447),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      _msValue4 =
-                                                                          value;
-                                                                    });
-                                                                  },
-                                                                  title: Text(
-                                                                      'Gait difficulty'),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    CheckboxListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  value:
-                                                                      _msValue5,
-                                                                  selected:
-                                                                      _msValue5,
-                                                                  controlAffinity:
-                                                                      ListTileControlAffinity
-                                                                          .leading,
-                                                                  activeColor:
-                                                                      Color(
-                                                                          0xFFC37447),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      _msValue5 =
-                                                                          value;
-                                                                    });
-                                                                  },
-                                                                  title: Text(
-                                                                      'Deformity'),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                child:
-                                                                    CheckboxListTile(
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  value:
-                                                                      _msValue6,
-                                                                  selected:
-                                                                      _msValue6,
-                                                                  controlAffinity:
-                                                                      ListTileControlAffinity
-                                                                          .leading,
-                                                                  activeColor:
-                                                                      Color(
-                                                                          0xFFC37447),
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      _msValue6 =
-                                                                          value;
-                                                                    });
-                                                                  },
-                                                                  title: Text(
-                                                                      'Prosthetic devices'),
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                  child: Row(
-                                                                children: [
-                                                                  Expanded(
-                                                                    flex: 1,
-                                                                    child:
-                                                                        CheckboxListTile(
-                                                                      contentPadding:
-                                                                          EdgeInsets
-                                                                              .zero,
-                                                                      value:
-                                                                          _msValue7,
-                                                                      selected:
-                                                                          _msValue7,
-                                                                      controlAffinity:
-                                                                          ListTileControlAffinity
-                                                                              .leading,
-                                                                      activeColor:
-                                                                          Color(
-                                                                              0xFFC37447),
-                                                                      onChanged:
-                                                                          (value) {
-                                                                        setState(
-                                                                            () {
-                                                                          _msValue7 =
-                                                                              value;
-                                                                          if (_msValue7 ==
-                                                                              false) {
-                                                                            _ms =
-                                                                                '-';
-                                                                          }
-                                                                        });
-                                                                      },
-                                                                      title: Text(
-                                                                          'Other:'),
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child:
-                                                                        TextFormField(
-                                                                      enabled:
-                                                                          _msValue7,
-                                                                      validator:
-                                                                          (value) {
-                                                                        return value.isEmpty
-                                                                            ? 'กรุณากรอก Other'
-                                                                            : null;
-                                                                      },
-                                                                      decoration: InputDecoration(
-                                                                          contentPadding: new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-                                                                          enabledBorder: OutlineInputBorder(
-                                                                            borderSide:
-                                                                                BorderSide(color: Colors.black26, width: 1),
-                                                                          ),
-                                                                          labelText: ' Other'),
-                                                                      onSaved: (value) =>
-                                                                          _ms =
-                                                                              value,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ))
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                  MSHealthStatus(
+                                                    healthStatusModel:
+                                                        snapshot.data,
                                                   ),
                                                 ],
                                               ),

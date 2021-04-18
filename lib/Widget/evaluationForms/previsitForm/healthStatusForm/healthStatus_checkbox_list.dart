@@ -70,7 +70,6 @@ List<CheckboxListTileModel> getMSList() => [
       CheckboxListTileModel(title: 'Gait difficulty'),
       CheckboxListTileModel(title: 'Deformity'),
       CheckboxListTileModel(title: 'Prosthetic devices'),
-      CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getEndocrine() => [
