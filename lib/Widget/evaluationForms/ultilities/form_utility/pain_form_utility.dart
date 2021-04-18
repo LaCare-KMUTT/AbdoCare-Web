@@ -20,11 +20,11 @@ class PainFormUtility {
     assert(score >= 0 && score <= 10);
     if (_state == "Post-Operation@Hospital") {
       if (_dayInState == 0) {
-        score >= 8 ? result = true : false;
+        score >= 8 ? result = true : result = false;
       } else if (_dayInState == 1) {
-        score >= 4 ? result = true : false;
+        score >= 4 ? result = true : result = false;
       } else if (_dayInState >= 2 && _dayInState <= 7) {
-        score >= 6 ? result = true : false;
+        score >= 6 ? result = true : result = false;
       } else {
         result = false;
         throw ('getPainFormCriteria cannot define the minPainToNotify');

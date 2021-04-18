@@ -9,6 +9,7 @@ class ADLFormViewModel {
 
   static Future<ADLFormModel> getModel() async {
     var thisClass = ADLFormViewModel._init();
+    // ignore: await_only_futures
     var model = await thisClass._getModel();
     return model;
   }

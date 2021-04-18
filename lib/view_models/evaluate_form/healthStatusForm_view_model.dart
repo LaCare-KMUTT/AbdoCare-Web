@@ -9,6 +9,7 @@ class HealthStatusFormViewModel {
 
   static Future<HealthStatusFormModel> getModel() async {
     var thisClass = HealthStatusFormViewModel._init();
+    // ignore: await_only_futures
     var model = await thisClass._getModel();
     return model;
   }
