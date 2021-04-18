@@ -374,7 +374,8 @@ class _PulmanaryFormState extends State<PulmanaryForm> {
                                                 _value2 == null ||
                                                 _value3 == null ||
                                                 _value4 == null) {
-                                              Dialogs.alertDialog(context);
+                                              Dialogs.alertDialogNoData(
+                                                  context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {

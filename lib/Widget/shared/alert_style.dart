@@ -3,7 +3,7 @@ import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:flutter/material.dart';
 
 class Dialogs {
-  static Future<void> alertDialog(BuildContext context) async {
+  static Future<void> alertDialogNoData(BuildContext context) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) {

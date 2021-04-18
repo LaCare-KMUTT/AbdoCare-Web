@@ -522,7 +522,7 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
                                               _value4 == null ||
                                               _value5 == null ||
                                               _value6 == null) {
-                                            Dialogs.alertDialog(context);
+                                            Dialogs.alertDialogNoData(context);
                                           } else {
                                             Map<String, dynamic> formDataToDB =
                                                 {

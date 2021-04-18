@@ -267,7 +267,8 @@ class _DrainFormState extends State<DrainForm> {
                                                     _value7 |
                                                     _value8 !=
                                                 true) {
-                                              Dialogs.alertDialog(context);
+                                              Dialogs.alertDialogNoData(
+                                                  context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {

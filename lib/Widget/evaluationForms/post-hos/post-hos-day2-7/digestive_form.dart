@@ -703,7 +703,8 @@ class _DigestiveFormState extends State<DigestiveForm> {
                                                 _value12 == null ||
                                                 _value13 == null ||
                                                 _value14 == null) {
-                                              Dialogs.alertDialog(context);
+                                              Dialogs.alertDialogNoData(
+                                                  context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {

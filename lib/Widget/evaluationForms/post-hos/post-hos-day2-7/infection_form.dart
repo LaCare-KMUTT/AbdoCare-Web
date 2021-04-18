@@ -257,7 +257,8 @@ class _InfectionFormState extends State<InfectionForm> {
                                                     _value7 |
                                                     _value8 !=
                                                 true) {
-                                              Dialogs.alertDialog(context);
+                                              Dialogs.alertDialogNoData(
+                                                  context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {

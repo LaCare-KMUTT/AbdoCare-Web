@@ -170,7 +170,8 @@ class _UrologyFormState extends State<UrologyForm> {
                                               style: TextStyle(fontSize: 18)),
                                           onPressed: () async {
                                             if (_value1 == null) {
-                                              Dialogs.alertDialog(context);
+                                              Dialogs.alertDialogNoData(
+                                                  context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {

@@ -455,7 +455,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                             }
                                             Navigator.pop(context);
                                           } else {
-                                            Dialogs.alertDialog(context);
+                                            Dialogs.alertDialogNoData(context);
                                           }
                                         },
                                       ),
