@@ -72,7 +72,7 @@ List<CheckboxListTileModel> getMSList() => [
       CheckboxListTileModel(title: 'Prosthetic devices'),
     ];
 
-List<CheckboxListTileModel> getEndocrine() => [
+List<CheckboxListTileModel> getEndocrineList() => [
       CheckboxListTileModel(title: 'Normal'),
       CheckboxListTileModel(title: 'Hair loss'),
       CheckboxListTileModel(title: 'Excessive sweat'),
