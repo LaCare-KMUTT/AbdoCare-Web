@@ -33,17 +33,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          padding: const EdgeInsets.fromLTRB(5, 0, 20, 0),
           child: IconButton(
               icon: const Icon(Icons.notifications),
-              onPressed: () {
-                Navigator.pushNamed(context, '/notification_page');
-              }),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-          child: IconButton(
-              icon: const Icon(Icons.account_circle),
               onPressed: () {
                 Navigator.pushNamed(context, '/notification_page');
               }),
