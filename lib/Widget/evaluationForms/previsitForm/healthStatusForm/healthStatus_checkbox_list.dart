@@ -79,7 +79,6 @@ List<CheckboxListTileModel> getEndocrineList() => [
       CheckboxListTileModel(title: 'Excessive thirst'),
       CheckboxListTileModel(title: 'Heat intolerance'),
       CheckboxListTileModel(title: 'Cold intolerance'),
-      CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getHEMELYMPHList() => [
@@ -89,5 +88,4 @@ List<CheckboxListTileModel> getHEMELYMPHList() => [
       CheckboxListTileModel(title: 'Enlarged nodes'),
       CheckboxListTileModel(title: 'Immunosuppression'),
       CheckboxListTileModel(title: 'Recent steroid use'),
-      CheckboxListTileModel(title: 'Other:'),
     ];
