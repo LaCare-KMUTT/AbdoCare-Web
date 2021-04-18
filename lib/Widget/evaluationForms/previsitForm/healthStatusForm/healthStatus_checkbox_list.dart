@@ -52,7 +52,6 @@ List<CheckboxListTileModel> getNeuroList() => [
       CheckboxListTileModel(title: 'TIA/Stroke'),
       CheckboxListTileModel(title: 'Weakness/Syncope'),
       CheckboxListTileModel(title: 'Sensory impairment'),
-      CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getGIList() => [
