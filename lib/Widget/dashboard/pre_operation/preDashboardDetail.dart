@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/generalForm.dart';
 import 'package:flutter/material.dart';
 
 import '../../../page/dashboard_postHome.dart';
@@ -7,7 +6,7 @@ import '../../../page/dashboard_pre.dart';
 import '../../../services/service_locator.dart';
 import '../../../view_models/evaluate_form/evaluationFormButton_view_model.dart';
 import '../../evaluationForms/post-hos/virtal_sign_form.dart';
-import '../../evaluationForms/previsitForm/healthStatusForm/healthStatus.dart';
+import '../../evaluationForms/previsitForm/generalForm/generalForm.dart';
 import '../dashboardGraph.dart';
 import 'preDashboardPatientDetail.dart';
 
@@ -152,14 +151,6 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                       child: Text('แบบประเมิน', style: TextStyle(fontSize: 15)),
                       onPressed: () {
                         print('$heading : ${widget.hn}');
-                        setState(() {});
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => ADLForm(
-                        //         hn: widget.hn,
-                        //       ),
-                        //     ));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -167,13 +158,6 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                                 hn: widget.hn,
                               ),
                             ));
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => HealthStatusForm(
-                        //         hn: widget.hn,
-                        //       ),
-                        //     ));
                       },
                     ),
                   ),
