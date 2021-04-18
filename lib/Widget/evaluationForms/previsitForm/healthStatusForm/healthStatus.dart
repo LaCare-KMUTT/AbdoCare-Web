@@ -1,9 +1,3 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/endocrine.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/gi.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/gyn_uro.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/heme_lymph.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/ms.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/neuro.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/healthStatusForm_model.dart';
@@ -15,8 +9,14 @@ import '../../../../view_models/evaluate_form/%E0%B9%89healthStatusForm_view_mod
 import '../../../appbar.dart';
 import '../../../sidebar.dart';
 import 'cv.dart';
+import 'endocrine.dart';
 import 'general.dart';
+import 'gi.dart';
+import 'gyn_uro.dart';
 import 'heent.dart';
+import 'heme_lymph.dart';
+import 'ms.dart';
+import 'neuro.dart';
 import 'pulmonary.dart';
 
 class HealthStatusForm extends StatefulWidget {
@@ -313,7 +313,6 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                     ),
                                     onPressed: () {
                                       Navigator.pop(context);
-                                      // healthStatusData(0);
                                     },
                                   ),
                                 ),

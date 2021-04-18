@@ -1,10 +1,10 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/healthStatusForm/healthStatus.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/adlForm_model.dart';
 import '../../../../view_models/evaluate_form/adlForm_view_model.dart';
 import '../../../appbar.dart';
 import '../../../sidebar.dart';
+import '../healthStatusForm/healthStatus.dart';
 import '@enum.dart';
 import 'adlQuestions.dart';
 
@@ -35,7 +35,7 @@ class _ADLFormState extends State<ADLForm> {
       bowelsScore,
       bladderScore;
 
-  void adlData(int page) {
+  void adlData() {
     totalscore = feedingScore +
         groomingScore +
         transferScore +
@@ -64,20 +64,15 @@ class _ADLFormState extends State<ADLForm> {
     model.fromMap(formDataToDB2);
     var map = model.toMap();
     print(map);
-    if (page == 0) {
-      //back to previous page
-    } else {
-      //navigate to the next page
-      print('hn in ADLForm = ${widget.hn}');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HealthStatusForm(
-                hn: widget.hn,
-                generalForm: widget.generalForm,
-                adlForm: formDataToDB2),
-          ));
-    }
+    print('hn in ADLForm = ${widget.hn}');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HealthStatusForm(
+              hn: widget.hn,
+              generalForm: widget.generalForm,
+              adlForm: formDataToDB2),
+        ));
   }
 
   @override
@@ -505,8 +500,6 @@ class _ADLFormState extends State<ADLForm> {
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-
-                            // adlData(0);
                           },
                         ),
                       ),
@@ -537,8 +530,7 @@ class _ADLFormState extends State<ADLForm> {
                                 bladderScore == null) {
                               alert(context);
                             } else {
-                              // ADLFormViewModel().
-                              adlData(1);
+                              adlData();
                             }
                           },
                         ),
