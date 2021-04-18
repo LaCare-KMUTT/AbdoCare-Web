@@ -43,7 +43,6 @@ List<CheckboxListTileModel> getGYNUROList() => [
       CheckboxListTileModel(title: 'Urgency'),
       CheckboxListTileModel(title: 'Hematuria'),
       CheckboxListTileModel(title: 'Pelvic pain'),
-      CheckboxListTileModel(title: 'Other:'),
     ];
 
 List<CheckboxListTileModel> getNeuroList() => [
