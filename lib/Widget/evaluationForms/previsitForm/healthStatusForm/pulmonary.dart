@@ -12,7 +12,7 @@ class PulmonaryHealthStatus extends StatefulWidget {
 }
 
 class _PulmonaryHealthStatusState extends State<PulmonaryHealthStatus> {
-  bool _isEnableTextField;
+  bool _isEnableTextField = false;
   final List<CheckboxListTileModel> list = getPulmonaryList();
 
   @override

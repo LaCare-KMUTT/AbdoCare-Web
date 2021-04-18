@@ -12,7 +12,7 @@ class NeuroHealthStatus extends StatefulWidget {
 }
 
 class _NeuroHealthStatusState extends State<NeuroHealthStatus> {
-  bool _isEnableTextField;
+  bool _isEnableTextField = false;
   final List<CheckboxListTileModel> list = getNeuroList();
 
   @override

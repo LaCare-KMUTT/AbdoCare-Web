@@ -81,6 +81,8 @@ class HealthStatusFormModel {
   bool hemeLymph_RecentSteroidUse = false;
   String hemeLymph_Other = '-';
 
+  String abnormalDetails = '-';
+
   Map<String, dynamic> toMap() {
     return {
       'general_Normal': general_Normal,
@@ -153,6 +155,7 @@ class HealthStatusFormModel {
       'hemeLymph_Immunosuppression': hemeLymph_Immunosuppression,
       'hemeLymph_RecentSteroidUse': hemeLymph_RecentSteroidUse,
       'hemeLymph_Other': hemeLymph_Other,
+      'abnormalDetails': abnormalDetails,
     };
   }
 
@@ -227,6 +230,7 @@ class HealthStatusFormModel {
     hemeLymph_Immunosuppression = map['hemeLymph_Immunosuppression'];
     hemeLymph_RecentSteroidUse = map['hemeLymph_RecentSteroidUse'];
     hemeLymph_Other = map['hemeLymph_Other'];
+    abnormalDetails = map['abnormalDetails'];
   }
 
   HealthStatusFormModel getModel() {

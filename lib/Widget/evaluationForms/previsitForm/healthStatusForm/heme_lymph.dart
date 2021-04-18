@@ -12,7 +12,7 @@ class HemeLymphHealthStatus extends StatefulWidget {
 }
 
 class _HemeLymphHealthStatusState extends State<HemeLymphHealthStatus> {
-  bool _isEnableTextField;
+  bool _isEnableTextField = false;
   final List<CheckboxListTileModel> list = getHEMELYMPHList();
 
   @override

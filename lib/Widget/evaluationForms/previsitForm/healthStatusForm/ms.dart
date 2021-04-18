@@ -12,7 +12,7 @@ class MSHealthStatus extends StatefulWidget {
 }
 
 class _MSHealthStatusState extends State<MSHealthStatus> {
-  bool _isEnableTextField;
+  bool _isEnableTextField = false;
   final List<CheckboxListTileModel> list = getMSList();
 
   @override

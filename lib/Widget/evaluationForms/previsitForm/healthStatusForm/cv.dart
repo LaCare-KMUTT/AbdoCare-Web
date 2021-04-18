@@ -12,7 +12,7 @@ class CVHealthStatus extends StatefulWidget {
 }
 
 class _CVHealthStatusState extends State<CVHealthStatus> {
-  bool _isEnableTextField;
+  bool _isEnableTextField = false;
   final List<CheckboxListTileModel> list = getCVList();
 
   @override

@@ -12,7 +12,7 @@ class GIHealthStatus extends StatefulWidget {
 }
 
 class _GIHealthStatusState extends State<GIHealthStatus> {
-  bool _isEnableTextField;
+  bool _isEnableTextField = false;
   final List<CheckboxListTileModel> list = getGIList();
 
   @override

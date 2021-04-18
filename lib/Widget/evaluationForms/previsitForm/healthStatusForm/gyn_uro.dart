@@ -12,7 +12,7 @@ class GYNUROHealthStatus extends StatefulWidget {
 }
 
 class _GYNUROHealthStatusState extends State<GYNUROHealthStatus> {
-  bool _isEnableTextField;
+  bool _isEnableTextField = false;
   final List<CheckboxListTileModel> list = getGYNUROList();
 
   @override

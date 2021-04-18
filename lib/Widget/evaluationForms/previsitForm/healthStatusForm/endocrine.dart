@@ -12,7 +12,7 @@ class EndocrineHealthStatus extends StatefulWidget {
 }
 
 class _EndocrineHealthStatusState extends State<EndocrineHealthStatus> {
-  bool _isEnableTextField;
+  bool _isEnableTextField = false;
   final List<CheckboxListTileModel> list = getEndocrineList();
 
   @override
