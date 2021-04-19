@@ -36,7 +36,9 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   String _bp;
   int _systolic;
   int _diastolic;
+  int _o2sat;
   int _pain;
+  String _status;
   LinearGradient gradient = LinearGradient(
     colors: <Color>[
       Colors.greenAccent[400],
@@ -318,6 +320,40 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                     padding:
                                         const EdgeInsets.fromLTRB(20, 8, 20, 8),
                                     child: Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text('O2sat:\t\t',
+                                              textAlign: TextAlign.end),
+                                        ),
+                                        Expanded(
+                                          flex: 4,
+                                          child: TextFormField(
+                                            validator: (value) {
+                                              return value.isEmpty
+                                                  ? 'กรุณากรอกหมายเลขO2sat'
+                                                  : null;
+                                            },
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.black26,
+                                                      width: 1),
+                                                ),
+                                                labelText: 'O2sat'),
+                                            onSaved: (value) =>
+                                                _o2sat = int.parse(value),
+                                          ),
+                                        ),
+                                        Expanded(flex: 1, child: Text('\t\t %'))
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                                    child: Row(
                                       children: [
                                         Expanded(
                                           flex: 1,
@@ -394,59 +430,84 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                             _bp = '$_systolic' +
                                                 '/' +
                                                 '$_diastolic';
-                                            print(_bp);
                                             Map<String, dynamic> dataToDB = {
                                               'temperature': _bt,
                                               'pulseRate': _pr,
                                               'respirationRate': _rr,
                                               'bloodPressure': _bp,
-                                              'pain': _pain,
+                                              'oxygen': _o2sat
                                             };
+                                            Map<String, dynamic> paindataToDB =
+                                                {'pain': _pain};
+                                            var formId2 = await _firebaseService
+                                                .addDataToFormsCollection(
+                                                    data: paindataToDB,
+                                                    formName: "pain",
+                                                    hn: widget.hn,
+                                                    formTime: widget.formTime);
                                             print(
                                                 'hn in Virtal-Sign = ${widget.hn}');
                                             print(
                                                 'Value in pain_form = $_pain ');
-                                            var formId = await _firebaseService
-                                                .addDataToFormsCollection(
-                                                    hn: widget.hn,
-                                                    formName: 'Vital Sign',
-                                                    data: dataToDB,
-                                                    formTime: widget.formTime);
-                                            Dialogs.alertSuccessfullySavedData(
-                                                context,
-                                                widget.hn,
-                                                _getpatientState);
-                                            if ((_getpatientState ==
-                                                    'Post-Operation@Hospital' &&
-                                                _pain != null)) {
+                                            if (!checkNotificationCriteria(
+                                                    widget.hn, _pain) &&
+                                                (_bt >=
+                                                        Constant
+                                                            .btLowerCriteria &&
+                                                    _bt <=
+                                                        Constant
+                                                            .btUpperCriteria) &&
+                                                (_pr >=
+                                                        Constant
+                                                            .prLowerCriteria &&
+                                                    _pr <=
+                                                        Constant
+                                                            .prUpperCriteria) &&
+                                                (_rr >=
+                                                        Constant
+                                                            .rrLowerCriteria &&
+                                                    _rr <=
+                                                        Constant
+                                                            .rrUpperCriteria) &&
+                                                (_systolic <=
+                                                        Constant
+                                                            .systolicCriteria &&
+                                                    _diastolic <=
+                                                        Constant
+                                                            .diastolicCriteria) &&
+                                                _o2sat >
+                                                    Constant.oxygenCriteria) {
+                                              _status = "ปกติ";
+                                              dataToDB
+                                                  .addAll({'status': _status});
+                                              await _firebaseService
+                                                  .addDataToFormsCollection(
+                                                      hn: widget.hn,
+                                                      formName: 'Vital Sign',
+                                                      data: dataToDB,
+                                                      formTime:
+                                                          widget.formTime);
+                                            } else {
+                                              _status = "ผิดปกติ";
+                                              dataToDB
+                                                  .addAll({'status': _status});
+                                              var formId =
+                                                  await _firebaseService
+                                                      .addDataToFormsCollection(
+                                                          hn: widget.hn,
+                                                          formName:
+                                                              'Vital Sign',
+                                                          data: dataToDB,
+                                                          formTime:
+                                                              widget.formTime);
                                               if (checkNotificationCriteria(
-                                                      widget.hn, _pain) ||
-                                                  (_bt <
-                                                          Constant
-                                                              .btLowerCriteria ||
-                                                      _bt >
-                                                          Constant
-                                                              .btUpperCriteria) ||
-                                                  (_pr <
-                                                          Constant
-                                                              .prLowerCriteria ||
-                                                      _pr >
-                                                          Constant
-                                                              .prUpperCriteria) ||
-                                                  (_rr <
-                                                          Constant
-                                                              .rrLowerCriteria ||
-                                                      _rr >
-                                                          Constant
-                                                              .rrUpperCriteria) ||
-                                                  (_systolic >
-                                                          Constant
-                                                              .systolicCriteria ||
-                                                      _diastolic >
-                                                          Constant
-                                                              .diastolicCriteris)) {
-                                                print(
-                                                    "$_getdayInCurrentState,$_getpatientState");
+                                                  widget.hn, _pain)) {
+                                                _firebaseService
+                                                    .addNotification(
+                                                        hn: widget.hn,
+                                                        formId: formId2,
+                                                        formName: 'pain');
+                                              } else {
                                                 _firebaseService
                                                     .addNotification(
                                                         hn: widget.hn,
@@ -454,7 +515,10 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                         formName: 'Vital Sign');
                                               }
                                             }
-                                            Navigator.pop(context);
+                                            Dialogs.alertSuccessfullySavedData(
+                                                context,
+                                                widget.hn,
+                                                _getpatientState);
                                           } else {
                                             Dialogs.alertToCompleteEvalutation(
                                                 context);
