@@ -4,10 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../models/evalutate_form/pre_visit/generalForm_model.dart';
-import '../../../../services/service_locator.dart';
 import '../../../../view_models/evaluate_form/generalForm_view_model.dart';
 import '../../../appbar.dart';
-import '../../../material.dart';
 import '../../../shared/rounded_date_picker.dart';
 import '../../../sidebar.dart';
 import '../adlForm/adlForm.dart';
@@ -30,7 +28,6 @@ class GeneralForm extends StatefulWidget {
 }
 
 class _GeneralFormState extends State<GeneralForm> {
-  final CustomMaterial _customMaterial = locator<CustomMaterial>();
   final _formKey = GlobalKey<FormState>();
 
   String _hn;
