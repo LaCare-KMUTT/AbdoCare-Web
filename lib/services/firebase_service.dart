@@ -396,7 +396,7 @@ class FirebaseService extends IFirebaseService {
         print('should be here');
         var formsCollection = await _firestore
             .collection('Forms')
-            .doc(formVitalSign.first['formId'])
+            .doc(formVitalSign.last['formId'])
             .get()
             .then((value) => value.data())
             .catchError((onError) {
@@ -474,7 +474,7 @@ class FirebaseService extends IFirebaseService {
       if (formPain != null && formPain.isNotEmpty) {
         var formPainData = await _firestore
             .collection('Forms')
-            .doc(formPain.first['formId'])
+            .doc(formPain.last['formId'])
             .get()
             .then((value) => value.data());
 
