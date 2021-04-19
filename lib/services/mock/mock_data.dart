@@ -121,7 +121,7 @@ class MockFirestore {
         'respirationRate': 50,
         'bloodPressure': 85,
         'oxygen': 88,
-        'heartRate': 14,
+        'pulseRate': 14,
         'status': 'ปกติ',
       },
     };

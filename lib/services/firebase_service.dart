@@ -384,8 +384,9 @@ class FirebaseService extends IFirebaseService {
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
       var temperatureToMap;
       var respirationRateToMap;
-      var heartRateToMap;
-      var bloodPressureToMap;
+      var pulseRateToMap;
+      var systolicToMap;
+      var diastolicToMap;
       var oxygenRateToMap;
       var status;
       var formVitalSign = await getFormListInAnBasedOnState(
@@ -405,9 +406,9 @@ class FirebaseService extends IFirebaseService {
         temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
-        heartRateToMap = formsCollection['formData']['heartRate'] ?? '-';
-        bloodPressureToMap =
-            formsCollection['formData']['bloodPressure'] ?? '-';
+        pulseRateToMap = formsCollection['formData']['pulseRate'] ?? '-';
+        systolicToMap = formsCollection['formData']['systolic'] ?? '-';
+        diastolicToMap = formsCollection['formData']['diastolic'] ?? '-';
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
@@ -421,8 +422,9 @@ class FirebaseService extends IFirebaseService {
         'bedNumber': bedNumberToMap ?? '-',
         'temperature': temperatureToMap ?? '-',
         'respirationRate': respirationRateToMap ?? '-',
-        'heartRate': heartRateToMap ?? '-',
-        'bloodPressure': bloodPressureToMap ?? '-',
+        'pulseRate': pulseRateToMap ?? '-',
+        'systolic': systolicToMap ?? '-',
+        'diastolic': diastolicToMap ?? '-',
         'oxygenRate': oxygenRateToMap ?? '-',
         'status': status ?? '-',
       };
@@ -541,29 +543,34 @@ class FirebaseService extends IFirebaseService {
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
       var temperatureToMap;
       var respirationRateToMap;
-      var heartRateToMap;
-      var bloodPressureToMap;
+      var pulseRateToMap;
+      var systolicToMap;
+      var diastolicToMap;
+
       var oxygenRateToMap;
       var status = '-';
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
           patientState: 'Pre-Operation',
           formName: 'Vital Sign');
+      print('FormVitalSign of ${user.id} = ${formVitalSign.last}');
       if (formVitalSign.isNotEmpty) {
         var formsCollection = await _firestore
             .collection('Forms')
-            .doc(formVitalSign.first['formId'])
+            .doc(formVitalSign.last['formId'])
             .get()
             .then((value) => value.data())
             .catchError((onError) {
           print('no formsCollection on ${user.id}');
         });
+        print('formCollection = $formsCollection');
+
         temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
-        heartRateToMap = formsCollection['formData']['heartRate'] ?? '-';
-        bloodPressureToMap =
-            formsCollection['formData']['bloodPressure'] ?? '-';
+        pulseRateToMap = formsCollection['formData']['pulseRate'] ?? '-';
+        systolicToMap = formsCollection['formData']['systolic'] ?? '-';
+        diastolicToMap = formsCollection['formData']['diastolic'] ?? '-';
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
@@ -576,11 +583,13 @@ class FirebaseService extends IFirebaseService {
         'bedNumber': bedNumberToMap,
         'temperature': temperatureToMap ?? '-',
         'respirationRate': respirationRateToMap ?? '-',
-        'heartRate': heartRateToMap ?? '-',
-        'bloodPressure': bloodPressureToMap ?? '-',
+        'pulseRate': pulseRateToMap ?? '-',
+        'systolic': systolicToMap ?? '-',
+        'diastolic': diastolicToMap ?? '-',
         'oxygenRate': oxygenRateToMap ?? '-',
         'status': status ?? '-',
       };
+      print('MAP in pre-op list $map');
       return map;
     });
     var futureList = Future.wait(returnList);

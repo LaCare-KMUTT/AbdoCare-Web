@@ -409,7 +409,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                             var formId = await _firebaseService
                                                 .addDataToFormsCollection(
                                                     hn: widget.hn,
-                                                    formName: 'Virtal-Sign',
+                                                    formName: 'Vital Sign',
                                                     data: dataToDB,
                                                     formTime: widget.formTime);
                                             Dialogs.alertSuccessfullySavedData(
@@ -451,8 +451,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                     .addNotification(
                                                         hn: widget.hn,
                                                         formId: formId,
-                                                        formName:
-                                                            'Virtal-Sign');
+                                                        formName: 'Vital Sign');
                                               }
                                             }
                                             Navigator.pop(context);
