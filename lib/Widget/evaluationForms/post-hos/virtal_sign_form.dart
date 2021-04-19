@@ -396,10 +396,10 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                 '$_diastolic';
                                             print(_bp);
                                             Map<String, dynamic> dataToDB = {
-                                              'bt': _bt,
-                                              'pr': _pr,
-                                              'rr': _rr,
-                                              'bp': _bp,
+                                              'temperature': _bt,
+                                              'pulseRate': _pr,
+                                              'respirationRate': _rr,
+                                              'bloodPressure': _bp,
                                               'pain': _pain,
                                             };
                                             print(

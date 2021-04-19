@@ -385,8 +385,7 @@ class FirebaseService extends IFirebaseService {
       var temperatureToMap;
       var respirationRateToMap;
       var pulseRateToMap;
-      var systolicToMap;
-      var diastolicToMap;
+      var bloodPressure;
       var oxygenRateToMap;
       var status;
       var formVitalSign = await getFormListInAnBasedOnState(
@@ -407,8 +406,7 @@ class FirebaseService extends IFirebaseService {
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
         pulseRateToMap = formsCollection['formData']['pulseRate'] ?? '-';
-        systolicToMap = formsCollection['formData']['systolic'] ?? '-';
-        diastolicToMap = formsCollection['formData']['diastolic'] ?? '-';
+        bloodPressure = formsCollection['formData']['bloodPressure'] ?? '-';
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
@@ -423,8 +421,7 @@ class FirebaseService extends IFirebaseService {
         'temperature': temperatureToMap ?? '-',
         'respirationRate': respirationRateToMap ?? '-',
         'pulseRate': pulseRateToMap ?? '-',
-        'systolic': systolicToMap ?? '-',
-        'diastolic': diastolicToMap ?? '-',
+        'bloodPressure': bloodPressure ?? '-',
         'oxygenRate': oxygenRateToMap ?? '-',
         'status': status ?? '-',
       };
@@ -544,8 +541,7 @@ class FirebaseService extends IFirebaseService {
       var temperatureToMap;
       var respirationRateToMap;
       var pulseRateToMap;
-      var systolicToMap;
-      var diastolicToMap;
+      var bloodPressureToMap;
 
       var oxygenRateToMap;
       var status = '-';
@@ -569,8 +565,8 @@ class FirebaseService extends IFirebaseService {
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
         pulseRateToMap = formsCollection['formData']['pulseRate'] ?? '-';
-        systolicToMap = formsCollection['formData']['systolic'] ?? '-';
-        diastolicToMap = formsCollection['formData']['diastolic'] ?? '-';
+        bloodPressureToMap =
+            formsCollection['formData']['bloodPressure'] ?? '-';
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
@@ -584,8 +580,7 @@ class FirebaseService extends IFirebaseService {
         'temperature': temperatureToMap ?? '-',
         'respirationRate': respirationRateToMap ?? '-',
         'pulseRate': pulseRateToMap ?? '-',
-        'systolic': systolicToMap ?? '-',
-        'diastolic': diastolicToMap ?? '-',
+        'bloodPressure': bloodPressureToMap ?? '-',
         'oxygenRate': oxygenRateToMap ?? '-',
         'status': status ?? '-',
       };
