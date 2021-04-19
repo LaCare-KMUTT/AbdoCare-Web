@@ -48,7 +48,7 @@ class _PreTableState extends State<PreTable> {
             users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
-              columnSpacing: screenSize.width / 35,
+              columnSpacing: screenSize.width / 41,
               headingRowHeight: 50,
               headingTextStyle: TextStyle(
                   fontSize: 18,

@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,21 @@ class _UrologyFormState extends State<UrologyForm> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   var _value1;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -154,7 +170,9 @@ class _UrologyFormState extends State<UrologyForm> {
                                               style: TextStyle(fontSize: 18)),
                                           onPressed: () async {
                                             if (_value1 == null) {
-                                              alert(context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -168,7 +186,11 @@ class _UrologyFormState extends State<UrologyForm> {
                                                           hn: widget.hn,
                                                           formName: 'Urology',
                                                           data: formDataToDB);
-
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value1 ==
                                                   "ถ่ายปัสสาวะแล้ว") {
                                                 result = "Pass";
@@ -198,22 +220,5 @@ class _UrologyFormState extends State<UrologyForm> {
         },
       ),
     );
-  }
-
-  void alert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true);
-          });
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text("กรุณาทำแบบประเมินให้ครบถ้วน",
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center),
-          );
-        });
   }
 }

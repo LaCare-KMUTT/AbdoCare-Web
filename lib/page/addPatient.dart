@@ -72,7 +72,8 @@ class _AddPatientPageState extends State<AddPatientPage> {
         'state': 'Pre-Operation',
         'weight': 0,
         'height': 0,
-        'oldWeight': 0
+        'oldWeight': 0,
+        'latestStateChange': latestStateChange,
       },
     );
   }

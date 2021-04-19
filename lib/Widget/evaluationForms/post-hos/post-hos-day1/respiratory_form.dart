@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,21 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
   var _value5;
   var _value6;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -506,7 +522,9 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
                                                 _value4 == null ||
                                                 _value5 == null ||
                                                 _value6 == null) {
-                                              alert(context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -526,7 +544,11 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
                                                           formName:
                                                               'Respiratory',
                                                           data: formDataToDB);
-
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value1 == "ใช่" &&
                                                   _value2 ==
                                                       "5 -10 ครั้ง/รอบ/ชั่วโมง" &&
@@ -566,22 +588,5 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
         },
       ),
     );
-  }
-
-  void alert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true);
-          });
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text("กรุณาทำแบบประเมินให้ครบถ้วน",
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center),
-          );
-        });
   }
 }
