@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,20 @@ class _BloodClotFormState extends State<BloodClotForm> {
   var _value8;
   var _value9;
   String result;
+  var patientState;
+  var _getpatientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    setState(() {
+      _getpatientState = patientState;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -492,7 +507,9 @@ class _BloodClotFormState extends State<BloodClotForm> {
                                                 _value7 == null ||
                                                 _value8 == null ||
                                                 _value9 == null) {
-                                              alert(context);
+                                              Dialogs
+                                                  .alertToCompleteEvalutation(
+                                                      context);
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
@@ -514,7 +531,11 @@ class _BloodClotFormState extends State<BloodClotForm> {
                                                           hn: widget.hn,
                                                           formName: 'BloodClot',
                                                           data: formDataToDB);
-
+                                              Dialogs
+                                                  .alertSuccessfullySavedData(
+                                                      context,
+                                                      widget.hn,
+                                                      _getpatientState);
                                               if (_value1 == false &&
                                                   _value2 == false &&
                                                   _value3 == false &&
@@ -556,22 +577,5 @@ class _BloodClotFormState extends State<BloodClotForm> {
         },
       ),
     );
-  }
-
-  void alert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) {
-          Future.delayed(Duration(seconds: 2), () {
-            Navigator.of(context).pop(true);
-          });
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text("กรุณาทำแบบประเมินให้ครบถ้วน",
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center),
-          );
-        });
   }
 }

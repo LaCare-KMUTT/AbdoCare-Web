@@ -25,7 +25,7 @@ class PostHosPatientDetail extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                          minWidth: constraints.minWidth,
+                          minWidth: constraints.maxWidth,
                           minHeight: constraints.minHeight),
                       child: IntrinsicWidth(
                         child: Column(

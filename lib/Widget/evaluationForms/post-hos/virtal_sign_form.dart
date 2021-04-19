@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/pain_form_utility.dart';
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/constants.dart';
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
@@ -66,8 +67,8 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
 
   bool checkNotificationCriteria(String hn, int score) {
     var shouldNotify = PainFormUtility()
-        .withState(patientState)
-        .withDayInState(dayInCurrentState)
+        .withState(_getpatientState)
+        .withDayInState(_getdayInCurrentState)
         .getPainFormCriteria(score);
     print('should notify = $shouldNotify');
     return shouldNotify;
@@ -411,11 +412,11 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                     formName: 'Virtal-Sign',
                                                     data: dataToDB,
                                                     formTime: widget.formTime);
-                                            var patientState =
-                                                await _firebaseService
-                                                    .getPatientState(
-                                                        hn: widget.hn);
-                                            if ((patientState ==
+                                            Dialogs.alertSuccessfullySavedData(
+                                                context,
+                                                widget.hn,
+                                                _getpatientState);
+                                            if ((_getpatientState ==
                                                     'Post-Operation@Hospital' &&
                                                 _pain != null)) {
                                               if (checkNotificationCriteria(
@@ -455,6 +456,9 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                               }
                                             }
                                             Navigator.pop(context);
+                                          } else {
+                                            Dialogs.alertToCompleteEvalutation(
+                                                context);
                                           }
                                         },
                                       ),
