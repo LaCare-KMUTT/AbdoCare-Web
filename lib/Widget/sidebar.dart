@@ -29,7 +29,7 @@ class SideBar extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(50)),
                               child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset('assets/nurse.png',
+                                  child: Image.asset('assets/abdocare_logo.png',
                                       width: 80, height: 80)),
                             ),
                             FutureBuilder<String>(
