@@ -384,8 +384,8 @@ class FirebaseService extends IFirebaseService {
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
       var temperatureToMap;
       var respirationRateToMap;
-      var heartRateToMap;
-      var bloodPressureToMap;
+      var pulseRateToMap;
+      var bloodPressure;
       var oxygenRateToMap;
       var status;
       var formVitalSign = await getFormListInAnBasedOnState(
@@ -396,7 +396,7 @@ class FirebaseService extends IFirebaseService {
         print('should be here');
         var formsCollection = await _firestore
             .collection('Forms')
-            .doc(formVitalSign.first['formId'])
+            .doc(formVitalSign.last['formId'])
             .get()
             .then((value) => value.data())
             .catchError((onError) {
@@ -405,9 +405,8 @@ class FirebaseService extends IFirebaseService {
         temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
-        heartRateToMap = formsCollection['formData']['heartRate'] ?? '-';
-        bloodPressureToMap =
-            formsCollection['formData']['bloodPressure'] ?? '-';
+        pulseRateToMap = formsCollection['formData']['pulseRate'] ?? '-';
+        bloodPressure = formsCollection['formData']['bloodPressure'] ?? '-';
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
@@ -421,8 +420,8 @@ class FirebaseService extends IFirebaseService {
         'bedNumber': bedNumberToMap ?? '-',
         'temperature': temperatureToMap ?? '-',
         'respirationRate': respirationRateToMap ?? '-',
-        'heartRate': heartRateToMap ?? '-',
-        'bloodPressure': bloodPressureToMap ?? '-',
+        'pulseRate': pulseRateToMap ?? '-',
+        'bloodPressure': bloodPressure ?? '-',
         'oxygenRate': oxygenRateToMap ?? '-',
         'status': status ?? '-',
       };
@@ -475,7 +474,7 @@ class FirebaseService extends IFirebaseService {
       if (formPain != null && formPain.isNotEmpty) {
         var formPainData = await _firestore
             .collection('Forms')
-            .doc(formPain.first['formId'])
+            .doc(formPain.last['formId'])
             .get()
             .then((value) => value.data());
 
@@ -541,27 +540,31 @@ class FirebaseService extends IFirebaseService {
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
       var temperatureToMap;
       var respirationRateToMap;
-      var heartRateToMap;
+      var pulseRateToMap;
       var bloodPressureToMap;
+
       var oxygenRateToMap;
       var status = '-';
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
           patientState: 'Pre-Operation',
           formName: 'Vital Sign');
+      print('FormVitalSign of ${user.id} = ${formVitalSign.last}');
       if (formVitalSign.isNotEmpty) {
         var formsCollection = await _firestore
             .collection('Forms')
-            .doc(formVitalSign.first['formId'])
+            .doc(formVitalSign.last['formId'])
             .get()
             .then((value) => value.data())
             .catchError((onError) {
           print('no formsCollection on ${user.id}');
         });
+        print('formCollection = $formsCollection');
+
         temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
-        heartRateToMap = formsCollection['formData']['heartRate'] ?? '-';
+        pulseRateToMap = formsCollection['formData']['pulseRate'] ?? '-';
         bloodPressureToMap =
             formsCollection['formData']['bloodPressure'] ?? '-';
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
@@ -576,11 +579,12 @@ class FirebaseService extends IFirebaseService {
         'bedNumber': bedNumberToMap,
         'temperature': temperatureToMap ?? '-',
         'respirationRate': respirationRateToMap ?? '-',
-        'heartRate': heartRateToMap ?? '-',
+        'pulseRate': pulseRateToMap ?? '-',
         'bloodPressure': bloodPressureToMap ?? '-',
         'oxygenRate': oxygenRateToMap ?? '-',
         'status': status ?? '-',
       };
+      print('MAP in pre-op list $map');
       return map;
     });
     var futureList = Future.wait(returnList);

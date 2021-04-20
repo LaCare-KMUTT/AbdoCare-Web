@@ -44,11 +44,11 @@ class CustomMaterial {
     return Colors.green;
   }
 
-  Color getHeartRateColor(dynamic heartRate) {
-    if (heartRate == '-') {
+  Color getPulseRateColor(dynamic pulseRate) {
+    if (pulseRate == '-') {
       return Color(0xFFC37447);
     } else {
-      if (heartRate < 60 || heartRate > 100) {
+      if (pulseRate < 60 || pulseRate > 100) {
         return Colors.red;
       }
     }

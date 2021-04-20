@@ -6,5 +6,6 @@ class Constant {
   static const rrUpperCriteria = 20;
   static const rrLowerCriteria = 16;
   static const systolicCriteria = 130;
-  static const diastolicCriteris = 80;
+  static const diastolicCriteria = 80;
+  static const oxygenCriteria = 95;
 }
