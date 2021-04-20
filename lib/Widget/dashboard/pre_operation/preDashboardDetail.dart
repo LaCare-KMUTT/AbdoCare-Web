@@ -5,7 +5,7 @@ import '../../../page/dashboard_postHos.dart';
 import '../../../page/dashboard_pre.dart';
 import '../../../services/service_locator.dart';
 import '../../../view_models/evaluate_form/evaluationFormButton_view_model.dart';
-import '../../evaluationForms/post-hos/virtal_sign_form.dart';
+import '../../evaluationForms/post-hos/vital_sign_form.dart';
 import '../../evaluationForms/previsitForm/generalForm/generalForm.dart';
 import '../dashboardGraph.dart';
 import 'preDashboardPatientDetail.dart';
@@ -51,7 +51,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton1(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '02:00 น.',
                                     state: 'Pre-Operation'),
@@ -61,7 +61,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton2(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '06:00 น.',
                                     state: 'Pre-Operation'),
@@ -71,7 +71,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton3(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '10:00 น.',
                                     state: 'Pre-Operation'),
@@ -81,7 +81,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton4(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '14:00 น.',
                                     state: 'Pre-Operation'),
@@ -91,7 +91,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton5(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '18:00 น.',
                                     state: 'Pre-Operation'),
@@ -101,7 +101,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton6(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '22:00 น.',
                                     state: 'Pre-Operation'),

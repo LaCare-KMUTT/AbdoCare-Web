@@ -15,7 +15,7 @@ import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day1/respi
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/digestive_form.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/infection_form.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/pulmanary_form.dart';
-import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/virtal_sign_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/vital_sign_form.dart';
 
 import '../dashboardGraph.dart';
 
@@ -77,7 +77,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton1(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '02:00 น.',
                                     state: 'Post-op',
@@ -88,7 +88,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton2(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '06:00 น.',
                                     state: 'Post-op',
@@ -99,7 +99,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton3(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '10:00 น.',
                                     state: 'Post-op',
@@ -110,7 +110,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton4(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '14:00 น.',
                                     state: 'Post-op',
@@ -121,7 +121,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton5(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '18:00 น.',
                                     state: 'Post-op',
@@ -132,7 +132,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
                                     .disableVirtalSignButton6(false),
-                                child: VirtalSignForm(
+                                child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '22:00 น.',
                                     state: 'Post-op',

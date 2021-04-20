@@ -7,12 +7,12 @@ import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class VirtalSignForm extends StatefulWidget {
+class VitalSignForm extends StatefulWidget {
   final String hn;
   final String formTime;
   final String state;
   final double dayInCurrentState;
-  VirtalSignForm(
+  VitalSignForm(
       {Key key,
       @required this.hn,
       @required this.formTime,
@@ -21,10 +21,10 @@ class VirtalSignForm extends StatefulWidget {
       : super(key: key);
 
   @override
-  _VirtalSignFormState createState() => _VirtalSignFormState();
+  _VitalSignFormState createState() => _VitalSignFormState();
 }
 
-class _VirtalSignFormState extends State<VirtalSignForm> {
+class _VitalSignFormState extends State<VitalSignForm> {
   ICalculationService _calculationService = locator<ICalculationService>();
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   final _formKey = GlobalKey<FormState>();
