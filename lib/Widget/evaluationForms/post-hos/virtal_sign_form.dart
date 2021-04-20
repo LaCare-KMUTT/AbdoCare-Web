@@ -359,67 +359,74 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: Text('Pain:\t\t',
-                                              textAlign: TextAlign.end),
-                                        ),
-                                        Expanded(
-                                          flex: 4,
-                                          child: DropdownButtonFormField(
-                                            isDense: true,
-                                            isExpanded: true,
-                                            validator: (value) => value == null
-                                                ? 'กรุณาเลือกPain'
-                                                : null,
-                                            decoration: InputDecoration(
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.black26,
-                                                      width: 1),
-                                                ),
-                                                labelText: 'Pain'),
-                                            onSaved: (value) {
-                                              _pain = int.parse(value);
-                                            },
-                                            items: [
-                                              '1',
-                                              '2',
-                                              '3',
-                                              '4',
-                                              '5',
-                                              '6',
-                                              '7',
-                                              '8',
-                                              '9',
-                                              '10'
-                                            ]
-                                                .map(
-                                                    (label) => DropdownMenuItem(
+                                  (() {
+                                    if (widget.state != "Pre-Operation") {
+                                      return Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 8, 20, 8),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Text('Pain:\t\t',
+                                                  textAlign: TextAlign.end),
+                                            ),
+                                            Expanded(
+                                              flex: 4,
+                                              child: DropdownButtonFormField(
+                                                isDense: true,
+                                                isExpanded: true,
+                                                validator: (value) =>
+                                                    value == null
+                                                        ? 'กรุณาเลือกPain'
+                                                        : null,
+                                                decoration: InputDecoration(
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.black26,
+                                                          width: 1),
+                                                    ),
+                                                    labelText: 'Pain'),
+                                                onSaved: (value) {
+                                                  _pain = int.parse(value);
+                                                },
+                                                items: [
+                                                  '1',
+                                                  '2',
+                                                  '3',
+                                                  '4',
+                                                  '5',
+                                                  '6',
+                                                  '7',
+                                                  '8',
+                                                  '9',
+                                                  '10'
+                                                ]
+                                                    .map((label) =>
+                                                        DropdownMenuItem(
                                                           child: Text(label),
                                                           value: label,
                                                         ))
-                                                .toList(),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _pain = int.parse(value);
-                                              });
-                                            },
-                                          ),
+                                                    .toList(),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _pain = int.parse(value);
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: SizedBox(width: 0),
+                                            )
+                                          ],
                                         ),
-                                        Expanded(
-                                          flex: 1,
-                                          child: SizedBox(width: 0),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                      );
+                                    } else {
+                                      return Container();
+                                    }
+                                  }()),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
@@ -492,7 +499,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                               //               data: dataToDB,
                                               //               formTime:
                                               //                   widget.formTime);
-                                            } else if (widget.state !=
+                                            } else if (widget.state ==
                                                 "Post-op") {
                                               if (!checkVitalSignNotificationCriteria(
                                                       _bt,
