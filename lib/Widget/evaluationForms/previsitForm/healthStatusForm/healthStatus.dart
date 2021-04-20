@@ -172,12 +172,17 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                               Row(
                                                 children: [
                                                   Padding(
-                                                    padding: EdgeInsets.all(
-                                                        screenSize.height / 70),
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            10, 10, 10, 0),
                                                     child: Container(
                                                       child: Center(
                                                         child: Text(
-                                                            'Details for Abnormal'),
+                                                            'Details for Abnormal',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600)),
                                                       ),
                                                     ),
                                                   ),
@@ -187,9 +192,9 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                 children: [
                                                   Expanded(
                                                     child: Padding(
-                                                      padding: EdgeInsets.all(
-                                                          screenSize.height /
-                                                              70),
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              10, 10, 10, 0),
                                                       child: TextFormField(
                                                         keyboardType:
                                                             TextInputType
@@ -227,50 +232,70 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                   ),
                                                 ],
                                               ),
-                                              Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Padding(
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 10, 10, 0),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                        child: Text(
+                                                            'R.N. Signature: ',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600))),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.all(
+                                                            screenSize.height /
+                                                                70),
+                                                        child: Container(
+                                                          child: FutureBuilder<
+                                                                  String>(
+                                                              future: _firebaseService
+                                                                  .getMedicalTeamSignature(),
+                                                              builder: (context,
+                                                                  signature) {
+                                                                if (!signature
+                                                                    .hasData) {
+                                                                  return CircularProgressIndicator(
+                                                                    strokeWidth:
+                                                                        4,
+                                                                  );
+                                                                } else {
+                                                                  return Text(
+                                                                      ' ${signature.data}');
+                                                                }
+                                                              }),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 10, 10, 0),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                      child: Text('Date: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                    ),
+                                                    Padding(
                                                       padding: EdgeInsets.all(
                                                           screenSize.height /
                                                               70),
                                                       child: Container(
-                                                        child: FutureBuilder<
-                                                                String>(
-                                                            future: _firebaseService
-                                                                .getMedicalTeamSignature(),
-                                                            builder: (context,
-                                                                signature) {
-                                                              if (!signature
-                                                                  .hasData) {
-                                                                return CircularProgressIndicator(
-                                                                  strokeWidth:
-                                                                      4,
-                                                                );
-                                                              } else {
-                                                                return Text(
-                                                                    'R.N. Signature: ${signature.data}');
-                                                              }
-                                                            }),
+                                                        child: Text('$toShow'),
                                                       ),
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                              Row(
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding: EdgeInsets.all(
-                                                        screenSize.height / 70),
-                                                    child: Container(
-                                                      child: Center(
-                                                        child: Text(
-                                                            'Date: $toShow'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               )
                                             ],
                                           ),
