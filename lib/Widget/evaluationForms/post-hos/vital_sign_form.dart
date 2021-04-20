@@ -35,7 +35,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
   String _bp;
   int _systolic;
   int _diastolic;
-  int _o2sat;
+  double _o2sat;
   int _pain;
   String _status;
   var _getdayInCurrentState;
@@ -343,7 +343,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                 ),
                                                 labelText: 'O2sat'),
                                             onSaved: (value) =>
-                                                _o2sat = int.parse(value),
+                                                _o2sat = double.parse(value),
                                           ),
                                         ),
                                         Expanded(flex: 1, child: Text('\t\t %'))
