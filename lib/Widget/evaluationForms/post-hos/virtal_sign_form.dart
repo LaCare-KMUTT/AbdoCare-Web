@@ -1,7 +1,6 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/pain_form_utility.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/vitalSign_form_utility.dart';
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
-import 'package:AbdoCare_Web/constants.dart';
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
@@ -30,7 +29,6 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
   final _formKey = GlobalKey<FormState>();
   DateTime date = DateTime.now();
-
   double _bt;
   double _pr;
   double _rr;
@@ -40,13 +38,6 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
   int _o2sat;
   int _pain;
   String _status;
-  LinearGradient gradient = LinearGradient(
-    colors: <Color>[
-      Colors.greenAccent[400],
-      Colors.orangeAccent[400],
-      Colors.redAccent[700],
-    ],
-  );
   var _getdayInCurrentState;
   var dayInCurrentState;
   var patientState;
@@ -79,11 +70,10 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
 
   bool checkVitalSignNotificationCriteria(
       _bt, _pr, _rr, _systolic, _diastolic, _o2sat) {
-    var shouldNotifyVital = VitalSignFormUtility()
-        .withState(_getpatientState)
+    var shouldNotifyVitalSign = VitalSignFormUtility()
         .getVitalSignFormCriteria(_bt, _pr, _rr, _systolic, _diastolic, _o2sat);
-    print('should notify = $shouldNotifyVital  Jaaaaa');
-    return shouldNotifyVital;
+    print('should notify = $shouldNotifyVitalSign');
+    return shouldNotifyVitalSign;
   }
 
   @override
@@ -456,12 +446,12 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                             };
                                             Map<String, dynamic> paindataToDB =
                                                 {'pain': _pain};
-                                            // var formId2 = await _firebaseService
-                                            //     .addDataToFormsCollection(
-                                            //         data: paindataToDB,
-                                            //         formName: "pain",
-                                            //         hn: widget.hn,
-                                            //         formTime: widget.formTime);
+                                            var formId2 = await _firebaseService
+                                                .addDataToFormsCollection(
+                                                    data: paindataToDB,
+                                                    formName: "pain",
+                                                    hn: widget.hn,
+                                                    formTime: widget.formTime);
                                             print(
                                                 'hn in Virtal-Sign = ${widget.hn}');
                                             print(
@@ -477,29 +467,34 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                   _diastolic,
                                                   _o2sat)) {
                                                 _status = "ปกติ";
-                                                print("ผลลัพธ์ Pre-Operation");
-                                                print(_status);
+                                                dataToDB.addAll(
+                                                    {'status': _status});
+                                                await _firebaseService
+                                                    .addDataToFormsCollection(
+                                                        hn: widget.hn,
+                                                        formName: 'Vital Sign',
+                                                        data: dataToDB,
+                                                        formTime:
+                                                            widget.formTime);
                                               } else {
                                                 _status = "ผิดปกติ";
-                                                //      _firebaseService
-                                                //         .addNotification(
-                                                //             hn: widget.hn,
-                                                //             formId: formId,
-                                                //             formName: 'Vital Sign');
-                                                print("ผลลัพธ์ Pre-Operation");
-                                                print(_status);
+                                                dataToDB.addAll(
+                                                    {'status': _status});
+                                                var formId =
+                                                    await _firebaseService
+                                                        .addDataToFormsCollection(
+                                                            hn: widget.hn,
+                                                            formName:
+                                                                'Vital Sign',
+                                                            data: dataToDB,
+                                                            formTime: widget
+                                                                .formTime);
+                                                _firebaseService
+                                                    .addNotification(
+                                                        hn: widget.hn,
+                                                        formId: formId,
+                                                        formName: 'Vital Sign');
                                               }
-                                              // dataToDB
-                                              //       .addAll({'status': _status});
-                                              // var formId =
-                                              //       await _firebaseService
-                                              //           .addDataToFormsCollection(
-                                              //               hn: widget.hn,
-                                              //               formName:
-                                              //                   'Vital Sign',
-                                              //               data: dataToDB,
-                                              //               formTime:
-                                              //                   widget.formTime);
                                             } else if (widget.state ==
                                                 "Post-op") {
                                               if (!checkVitalSignNotificationCriteria(
@@ -512,114 +507,50 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
                                                   !checkPainNotificationCriteria(
                                                       widget.hn, _pain)) {
                                                 _status = "ปกติ";
-                                                print("ผลลัพธ์ Post-Operation");
-                                                print(_status);
+
+                                                dataToDB.addAll(
+                                                    {'status': _status});
+                                                await _firebaseService
+                                                    .addDataToFormsCollection(
+                                                        hn: widget.hn,
+                                                        formName: 'Vital Sign',
+                                                        data: dataToDB,
+                                                        formTime:
+                                                            widget.formTime);
                                               } else {
                                                 _status = "ผิดปกติ";
+                                                dataToDB.addAll(
+                                                    {'status': _status});
+                                                var formId =
+                                                    await _firebaseService
+                                                        .addDataToFormsCollection(
+                                                            hn: widget.hn,
+                                                            formName:
+                                                                'Vital Sign',
+                                                            data: dataToDB,
+                                                            formTime: widget
+                                                                .formTime);
                                                 if (checkPainNotificationCriteria(
                                                     widget.hn, _pain)) {
-                                                  //     _firebaseService
-                                                  //         .addNotification(
-                                                  //             hn: widget.hn,
-                                                  //             formId: formId2,
-                                                  //             formName: 'pain');
-                                                  print(
-                                                      "ผลลัพธ์ Post-Operation Noti Pain");
-                                                  print(_status);
+                                                  _firebaseService
+                                                      .addNotification(
+                                                          hn: widget.hn,
+                                                          formId: formId2,
+                                                          formName: 'pain');
                                                 } else {
-                                                  //     _firebaseService
-                                                  //         .addNotification(
-                                                  //             hn: widget.hn,
-                                                  //             formId: formId,
-                                                  //             formName: 'Vital Sign');
-                                                  print(
-                                                      "ผลลัพธ์ Post-Operation Noti Vital Sign");
-                                                  print(_status);
+                                                  _firebaseService
+                                                      .addNotification(
+                                                          hn: widget.hn,
+                                                          formId: formId,
+                                                          formName:
+                                                              'Vital Sign');
                                                 }
                                               }
-                                              // dataToDB
-                                              //       .addAll({'status': _status});
-                                              // var formId =
-                                              //       await _firebaseService
-                                              //           .addDataToFormsCollection(
-                                              //               hn: widget.hn,
-                                              //               formName:
-                                              //                   'Vital Sign',
-                                              //               data: dataToDB,
-                                              //               formTime:
-                                              //                   widget.formTime);
                                             }
-
-                                            // if (!checkNotificationCriteria(
-                                            //         widget.hn, _pain) &&
-                                            //     (_bt >=
-                                            //             Constant
-                                            //                 .btLowerCriteria &&
-                                            //         _bt <=
-                                            //             Constant
-                                            //                 .btUpperCriteria) &&
-                                            //     (_pr >=
-                                            //             Constant
-                                            //                 .prLowerCriteria &&
-                                            //         _pr <=
-                                            //             Constant
-                                            //                 .prUpperCriteria) &&
-                                            //     (_rr >=
-                                            //             Constant
-                                            //                 .rrLowerCriteria &&
-                                            //         _rr <=
-                                            //             Constant
-                                            //                 .rrUpperCriteria) &&
-                                            //     (_systolic <=
-                                            //             Constant
-                                            //                 .systolicCriteria &&
-                                            //         _diastolic <=
-                                            //             Constant
-                                            //                 .diastolicCriteria) &&
-                                            //     _o2sat >
-                                            //         Constant.oxygenCriteria) {
-                                            //   _status = "ปกติ";
-                                            //   dataToDB
-                                            //       .addAll({'status': _status});
-                                            //   await _firebaseService
-                                            //       .addDataToFormsCollection(
-                                            //           hn: widget.hn,
-                                            //           formName: 'Vital Sign',
-                                            //           data: dataToDB,
-                                            //           formTime:
-                                            //               widget.formTime);
-                                            // } else {
-                                            //   _status = "ผิดปกติ";
-                                            //   dataToDB
-                                            //       .addAll({'status': _status});
-                                            //   var formId =
-                                            //       await _firebaseService
-                                            //           .addDataToFormsCollection(
-                                            //               hn: widget.hn,
-                                            //               formName:
-                                            //                   'Vital Sign',
-                                            //               data: dataToDB,
-                                            //               formTime:
-                                            //                   widget.formTime);
-                                            //   if (checkNotificationCriteria(
-                                            //       widget.hn, _pain)) {
-                                            //     _firebaseService
-                                            //         .addNotification(
-                                            //             hn: widget.hn,
-                                            //             formId: formId2,
-                                            //             formName: 'pain');
-                                            //   } else {
-                                            //     _firebaseService
-                                            //         .addNotification(
-                                            //             hn: widget.hn,
-                                            //             formId: formId,
-                                            //             formName: 'Vital Sign');
-                                            //   }
-                                            // }
-                                            // Dialogs.alertSuccessfullySavedData(
-                                            //     context,
-                                            //     widget.hn,
-                                            //     _getpatientState);
+                                            Dialogs.alertSuccessfullySavedData(
+                                                context,
+                                                widget.hn,
+                                                patientState);
                                           } else {
                                             Dialogs.alertToCompleteEvalutation(
                                                 context);
