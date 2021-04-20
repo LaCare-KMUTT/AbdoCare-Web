@@ -23,7 +23,7 @@ class PainFormUtility {
         score >= 8 ? result = true : result = false;
       } else if (_dayInState == 1) {
         score >= 4 ? result = true : result = false;
-      } else if (_dayInState >= 2 && _dayInState <= 7) {
+      } else if (_dayInState >= 2) {
         score >= 6 ? result = true : result = false;
       } else {
         result = false;
