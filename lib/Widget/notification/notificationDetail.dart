@@ -9,6 +9,11 @@ class NotificationDetail extends StatefulWidget {
 }
 
 class _NotificationDetailState extends State<NotificationDetail> {
+  bool pressAllState = false;
+  bool pressPreOpState = false;
+  bool pressPostOpHospitalState = true;
+  bool pressPostOpHomeState = false;
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -28,13 +33,25 @@ class _NotificationDetailState extends State<NotificationDetail> {
                         padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
                             screenSize.height / 20, 0),
                         child: RaisedButton(
-                            child:
-                                Text("ทั้งหมด", style: TextStyle(fontSize: 18)),
+                            child: Text("ทั้งหมด",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: pressAllState
+                                        ? Colors.white
+                                        : Colors.black)),
                             padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0)),
+                            color: pressAllState
+                                ? Color(0xFFC37447)
+                                : Colors.grey[300],
                             onPressed: () {
-                              setState(() {});
+                              setState(() {
+                                pressAllState = !pressAllState;
+                                pressPreOpState = false;
+                                pressPostOpHospitalState = false;
+                                pressPostOpHomeState = false;
+                              });
                             }),
                       ),
                     ),
@@ -44,12 +61,28 @@ class _NotificationDetailState extends State<NotificationDetail> {
                         padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
                             screenSize.height / 20, 0),
                         child: RaisedButton(
-                            child: Text("Pre-Operation",
-                                style: TextStyle(fontSize: 18)),
+                            child: Text(
+                              "Pre-Operation",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: pressPreOpState
+                                      ? Colors.white
+                                      : Colors.black),
+                            ),
                             padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0)),
-                            onPressed: () {}),
+                            color: pressPreOpState
+                                ? Color(0xFFC37447)
+                                : Colors.grey[300],
+                            onPressed: () {
+                              setState(() {
+                                pressPreOpState = !pressPreOpState;
+                                pressAllState = false;
+                                pressPostOpHospitalState = false;
+                                pressPostOpHomeState = false;
+                              });
+                            }),
                       ),
                     ),
                     Expanded(
@@ -59,11 +92,26 @@ class _NotificationDetailState extends State<NotificationDetail> {
                             screenSize.height / 20, 0),
                         child: RaisedButton(
                             child: Text("Post-Operation@Hospital",
-                                style: TextStyle(fontSize: 18)),
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: pressPostOpHospitalState
+                                        ? Colors.white
+                                        : Colors.black)),
                             padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0)),
-                            onPressed: () {}),
+                            color: pressPostOpHospitalState
+                                ? Color(0xFFC37447)
+                                : Colors.grey[300],
+                            onPressed: () {
+                              setState(() {
+                                pressPostOpHospitalState =
+                                    !pressPostOpHospitalState;
+                                pressAllState = false;
+                                pressPreOpState = false;
+                                pressPostOpHomeState = false;
+                              });
+                            }),
                       ),
                     ),
                     Expanded(
@@ -73,11 +121,25 @@ class _NotificationDetailState extends State<NotificationDetail> {
                             screenSize.height / 20, 0),
                         child: RaisedButton(
                             child: Text("Post-Operation@Home",
-                                style: TextStyle(fontSize: 18)),
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: pressPostOpHomeState
+                                        ? Colors.white
+                                        : Colors.black)),
                             padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0)),
-                            onPressed: () {}),
+                            color: pressPostOpHomeState
+                                ? Color(0xFFC37447)
+                                : Colors.grey[300],
+                            onPressed: () {
+                              setState(() {
+                                pressPostOpHomeState = !pressPostOpHomeState;
+                                pressAllState = false;
+                                pressPreOpState = false;
+                                pressPostOpHospitalState = false;
+                              });
+                            }),
                       ),
                     ),
                   ],
