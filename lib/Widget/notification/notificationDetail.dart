@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'notification_Table.dart';
+
 class NotificationDetail extends StatefulWidget {
   NotificationDetail({Key key}) : super(key: key);
   @override
@@ -31,7 +33,9 @@ class _NotificationDetailState extends State<NotificationDetail> {
                             padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0)),
-                            onPressed: () {}),
+                            onPressed: () {
+                              setState(() {});
+                            }),
                       ),
                     ),
                     Expanded(
@@ -80,138 +84,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 ),
               ),
             ]),
-            Column(
-              children: <Widget>[
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(screenSize.height / 15,
-                        screenSize.height / 70, screenSize.height / 15, 0),
-                    child: Card(
-                        child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                child: Text(
-                                  "ยังไม่อ่าน",
-                                  style: TextStyle(color: Color(0xFFC37447)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(screenSize.height / 20,
-                              8, screenSize.height / 20, 0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black12)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "นางสาวพรพิมล แก้วใส",
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "Post-op@Hospital",
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "ไม่ผ่านแบบประเมินระบบปัสสาวะ",
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      "ห้อง3 เตียง2",
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      "16:29",
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Container(
-                                  child: Text(
-                                "อ่านแล้ว",
-                                style: TextStyle(color: Color(0xFFC37447)),
-                              )),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(screenSize.height / 20,
-                              8, screenSize.height / 20, 8),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black12)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "นางสาวพรพิมล แก้วใส",
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "Post-op@Hospital",
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      "ไม่ผ่านแบบประเมินระบบปัสสาวะ",
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      "ห้อง3 เตียง2",
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      "16:29",
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-                  ),
-                ),
-              ],
-            ),
+            Container(child: NotificationTable()),
           ],
         ),
       ),
