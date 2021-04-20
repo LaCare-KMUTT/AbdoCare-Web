@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -132,12 +133,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                     widget.hn),
                                             builder: (context, snapshot) {
                                               if (!snapshot.hasData) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                );
+                                                return ProgressBar
+                                                    .circularProgressIndicator(
+                                                        context);
                                               }
                                               return Column(
                                                 children: [

@@ -1,5 +1,6 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/health_status_form_utility.dart';
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/healthStatusForm_model.dart';
@@ -64,10 +65,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                 future: HealthStatusFormViewModel.getModel(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData)
-                    return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CircularProgressIndicator(strokeWidth: 4),
-                    );
+                    return ProgressBar.circularProgressIndicator(context);
                   return Form(
                     key: _formKey,
                     child: ListView(
@@ -259,10 +257,9 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                                   signature) {
                                                                 if (!signature
                                                                     .hasData) {
-                                                                  return CircularProgressIndicator(
-                                                                    strokeWidth:
-                                                                        4,
-                                                                  );
+                                                                  return ProgressBar
+                                                                      .circularProgressIndicator(
+                                                                          context);
                                                                 } else {
                                                                   return Text(
                                                                       ' ${signature.data}');
@@ -360,23 +357,23 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         print(
                                             'MODEL HEALTH STATUS ${model.toMap()}');
 
-                                        // _firebaseService
-                                        //     .addDataToFormsCollection(
-                                        //         data: widget.generalForm,
-                                        //         formName: 'General',
-                                        //         hn: widget.hn);
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                data: widget.generalForm,
+                                                formName: 'General',
+                                                hn: widget.hn);
 
-                                        // _firebaseService
-                                        //     .addDataToFormsCollection(
-                                        //         data: widget.adlForm,
-                                        //         formName: 'ADL',
-                                        //         hn: widget.hn);
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                data: widget.adlForm,
+                                                formName: 'ADL',
+                                                hn: widget.hn);
 
-                                        // _firebaseService
-                                        //     .addDataToFormsCollection(
-                                        //         hn: widget.hn,
-                                        //         formName: 'Health Status',
-                                        //         data: model.toMap());
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                hn: widget.hn,
+                                                formName: 'Health Status',
+                                                data: model.toMap());
 
                                         Navigator.push(
                                             context,

@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/adlForm_model.dart';
@@ -120,11 +121,9 @@ class _ADLFormState extends State<ADLForm> {
                                       future: ADLFormViewModel.getModel(),
                                       builder: (context, snapshot) {
                                         if (!snapshot.hasData) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: CircularProgressIndicator(
-                                                strokeWidth: 4),
-                                          );
+                                          return ProgressBar
+                                              .circularProgressIndicator(
+                                                  context);
                                         }
                                         return Column(
                                           children: <Widget>[
