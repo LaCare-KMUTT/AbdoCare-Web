@@ -50,7 +50,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
-                                    .disableVirtalSignButton1(false),
+                                    .disableVitalSignButton1(false),
                                 child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '02:00 น.',
@@ -60,7 +60,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
-                                    .disableVirtalSignButton2(false),
+                                    .disableVitalSignButton2(false),
                                 child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '06:00 น.',
@@ -70,7 +70,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
-                                    .disableVirtalSignButton3(false),
+                                    .disableVitalSignButton3(false),
                                 child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '10:00 น.',
@@ -80,7 +80,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
-                                    .disableVirtalSignButton4(false),
+                                    .disableVitalSignButton4(false),
                                 child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '14:00 น.',
@@ -90,7 +90,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
-                                    .disableVirtalSignButton5(false),
+                                    .disableVitalSignButton5(false),
                                 child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '18:00 น.',
@@ -100,7 +100,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                               padding: const EdgeInsets.all(8.0),
                               child: AbsorbPointer(
                                 absorbing: !_evaluationFormViewModel
-                                    .disableVirtalSignButton6(false),
+                                    .disableVitalSignButton6(false),
                                 child: VitalSignForm(
                                     hn: widget.hn,
                                     formTime: '22:00 น.',
