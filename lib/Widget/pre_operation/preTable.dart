@@ -22,7 +22,7 @@ class _PreTableState extends State<PreTable> {
   List<PreOpData> users = [];
   bool _sortAsc = true;
   bool _sortRespirationRateAsc = true;
-  bool _sortHeartRateAsc = true;
+  bool _sortPulseRateAsc = true;
   bool _sortOxygenRateAsc = true;
   bool _sortBloodPressureAsc = true;
   bool _sortTemperatureAsc = true;
@@ -116,12 +116,12 @@ class _PreTableState extends State<PreTable> {
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
-                        _sortAsc = _sortHeartRateAsc = sortAscending;
+                        _sortAsc = _sortPulseRateAsc = sortAscending;
                       } else {
                         _sortColumnIndex = columnIndex;
-                        _sortAsc = _sortHeartRateAsc;
+                        _sortAsc = _sortPulseRateAsc;
                       }
-                      _preOpViewModel.sortBy('heartRate', sortAscending);
+                      _preOpViewModel.sortBy('pulseRate', sortAscending);
                     });
                   },
                 ),
@@ -210,11 +210,11 @@ class _PreTableState extends State<PreTable> {
                                     .getTemperatureColor(user.temperature))),
                       ),
                       DataCell(
-                        Text('${user.heartRate.toString()}',
+                        Text('${user.pulseRate.toString()}',
                             style: TextStyle(
                                 fontSize: 17,
                                 color: _customMaterial
-                                    .getHeartRateColor(user.heartRate))),
+                                    .getPulseRateColor(user.pulseRate))),
                       ),
                       DataCell(
                         Text('${user.bloodPressure.toString()}',

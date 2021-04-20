@@ -33,8 +33,8 @@ class PostHosViewModel {
       case 'respirationRate':
         userList.sort((a, b) => a.respirationRate.compareTo(b.respirationRate));
         break;
-      case 'heartRate':
-        userList.sort((a, b) => a.heartRate.compareTo(b.heartRate));
+      case 'pulseRate':
+        userList.sort((a, b) => a.pulseRate.compareTo(b.pulseRate));
         break;
       case 'bloodPressure':
         userList.sort((a, b) => a.bloodPressure.compareTo(b.bloodPressure));

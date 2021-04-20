@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 
-
 import 'package:AbdoCare_Web/models/user_list/post_hos_list_model.dart';
 import 'package:AbdoCare_Web/view_models/user_list/post_hos_list_view_model.dart';
 
@@ -23,7 +22,7 @@ class _PostHosTableState extends State<PostHosTable> {
   List<PostHosData> users = [];
   bool _sortAsc = true;
   bool _sortRespirationRateAsc = true;
-  bool _sortHeartRateAsc = true;
+  bool _sortPulseRateAsc = true;
   bool _sortOxygenRateAsc = true;
   bool _sortBloodPressureAsc = true;
   bool _sortTemperatureAsc = true;
@@ -115,12 +114,12 @@ class _PostHosTableState extends State<PostHosTable> {
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
-                        _sortAsc = _sortHeartRateAsc = sortAscending;
+                        _sortAsc = _sortPulseRateAsc = sortAscending;
                       } else {
                         _sortColumnIndex = columnIndex;
-                        _sortAsc = _sortHeartRateAsc;
+                        _sortAsc = _sortPulseRateAsc;
                       }
-                      _postHosViewModel.sortBy('heartRate', sortAscending);
+                      _postHosViewModel.sortBy('pulseRate', sortAscending);
                     });
                   },
                 ),
@@ -202,10 +201,10 @@ class _PostHosTableState extends State<PostHosTable> {
                                     .getTemperatureColor(user.temperature))),
                       ),
                       DataCell(
-                        Text('${user.heartRate.toString()}',
+                        Text('${user.pulseRate.toString()}',
                             style: TextStyle(
                                 color: _customMaterial
-                                    .getHeartRateColor(user.heartRate))),
+                                    .getPulseRateColor(user.pulseRate))),
                       ),
                       DataCell(
                         Text('${user.bloodPressure.toString()}',
