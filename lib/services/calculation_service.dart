@@ -77,4 +77,9 @@ class CalculationService extends ICalculationService {
     var duration = day.difference(compareTo).inDays;
     return duration.abs();
   }
+
+  String calculateBML({@required int oldWeight, @required int weight}) {
+    var bml = ((oldWeight - weight) / oldWeight) * 100;
+    return bml.toStringAsFixed(2);
+  }
 }

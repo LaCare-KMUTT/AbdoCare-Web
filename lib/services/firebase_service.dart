@@ -510,6 +510,8 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<Map<String, dynamic>>> getPreOpList() async {
+    this.getPatientDetail('HN10001');
+
     var userList = await this.getUserList();
     var returnList = userList.map((user) async {
       var userCollection =
@@ -744,5 +746,43 @@ class FirebaseService extends IFirebaseService {
     var anSubCollection = await getLatestAnSubCollection(docId: userId);
     var patientState = anSubCollection['state'];
     return anSubCollection['state'];
+  }
+
+  Future<Map<String, dynamic>> getPatientDetail(String hn) async {
+    var usersCollection = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) {
+      var map = value.docs.first.data();
+      map['id'] = value.docs.first.id;
+      return map;
+    });
+    var anlength = usersCollection['an'].length - 1;
+    String an = usersCollection['an'][anlength]['an'];
+    var anSubCollection = await _firestore
+        .collection('Users')
+        .doc(usersCollection['id'])
+        .collection('an')
+        .doc(an)
+        .get()
+        .then((value) => value.data());
+    print('anSubCollection = $anSubCollection');
+    print('UsersCollection = $usersCollection');
+    return {
+      'fullName': '${usersCollection['name']} ${usersCollection['surname']}',
+      'gender': usersCollection['gender'] ?? '-',
+      'age': _calculationService.calculateAge(
+          birthDate: usersCollection['dob'].toDate()),
+      'dob': usersCollection['dob'].toDate() ?? '-',
+      'patientTel': usersCollection['patientTel'] ?? '-',
+      'address': usersCollection['address'] ?? '-',
+      'height': anSubCollection['height'] ?? '-',
+      'weight': anSubCollection['oldWeight'] ?? '-',
+      'bwl': '',
+      'careTakerName':
+          '${anSubCollection['careTakerName']} ${anSubCollection['careTakerSurname']}}',
+      'careTakerTel': anSubCollection['careTakerTel'],
+    };
   }
 }
