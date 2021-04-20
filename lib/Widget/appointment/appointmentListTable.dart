@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
@@ -455,7 +456,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
         child: Text("No appointment found."),
       );
     } else {
-      return CircularProgressIndicator();
+      return ProgressBar.circularProgressIndicator(context);
     }
   }
 }
