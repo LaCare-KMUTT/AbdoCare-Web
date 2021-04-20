@@ -7,7 +7,7 @@ class PreOpData {
   String bedNumber;
   dynamic temperature;
   dynamic respirationRate;
-  dynamic heartRate;
+  dynamic pulseRate;
   String bloodPressure;
   dynamic oxygenRate;
   String status;
@@ -24,7 +24,7 @@ class PreOpData {
     this.bedNumber = map['bedNumber'];
     this.temperature = map['temperature'];
     this.respirationRate = map['respirationRate'];
-    this.heartRate = map['heartRate'];
+    this.pulseRate = map['pulseRate'];
     this.bloodPressure = map['bloodPressure'];
     this.oxygenRate = map['oxygenRate'];
     this.status = map['status'];

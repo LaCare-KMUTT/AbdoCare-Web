@@ -119,9 +119,9 @@ class MockFirestore {
       'formData': {
         'temperature': 32.1,
         'respirationRate': 50,
-        'bloodPressure': 85,
+        'bloodPressure': 85 / 65,
         'oxygen': 88,
-        'heartRate': 14,
+        'pulseRate': 14,
         'status': 'ปกติ',
       },
     };
