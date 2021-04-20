@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 class EvaluationFormViewModel {
   // the variable 'check' used to check whether the form has been filled or not
-  bool disableVirtalSignButton1(bool check) {
+  bool disableVitalSignButton1(bool check) {
     DateTime now = DateTime.now();
     DateTime formTime1 = DateFormat.Hm().parse("02:00");
     formTime1 = new DateTime(
@@ -13,7 +13,7 @@ class EvaluationFormViewModel {
     return false;
   }
 
-  bool disableVirtalSignButton2(bool check) {
+  bool disableVitalSignButton2(bool check) {
     DateTime now = DateTime.now();
     DateTime formTime2 = DateFormat.Hm().parse("06:00");
     formTime2 = new DateTime(
@@ -24,7 +24,7 @@ class EvaluationFormViewModel {
     return false;
   }
 
-  bool disableVirtalSignButton3(bool check) {
+  bool disableVitalSignButton3(bool check) {
     DateTime now = DateTime.now();
     DateTime formTime3 = DateFormat.Hm().parse("10:00");
     formTime3 = new DateTime(
@@ -35,7 +35,7 @@ class EvaluationFormViewModel {
     return false;
   }
 
-  bool disableVirtalSignButton4(bool check) {
+  bool disableVitalSignButton4(bool check) {
     DateTime now = DateTime.now();
     DateTime formTime4 = DateFormat.Hm().parse("14:00");
     formTime4 = new DateTime(
@@ -46,7 +46,7 @@ class EvaluationFormViewModel {
     return false;
   }
 
-  bool disableVirtalSignButton5(bool check) {
+  bool disableVitalSignButton5(bool check) {
     DateTime now = DateTime.now();
     DateTime formTime5 = DateFormat.Hm().parse("18:00");
     formTime5 = new DateTime(
@@ -57,7 +57,7 @@ class EvaluationFormViewModel {
     return false;
   }
 
-  bool disableVirtalSignButton6(bool check) {
+  bool disableVitalSignButton6(bool check) {
     DateTime now = DateTime.now();
     DateTime formTime6 = DateFormat.Hm().parse("22:00");
     formTime6 = new DateTime(
