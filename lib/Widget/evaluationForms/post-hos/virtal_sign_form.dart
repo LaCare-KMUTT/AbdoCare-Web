@@ -82,6 +82,7 @@ class _VirtalSignFormState extends State<VirtalSignForm> {
     var shouldNotifyVital = VitalSignFormUtility()
         .withState(_getpatientState)
         .getVitalSignFormCriteria(_bt, _pr, _rr, _systolic, _diastolic, _o2sat);
+    print('should notify = $shouldNotifyVital  Jaaaaa');
     return shouldNotifyVital;
   }
 
