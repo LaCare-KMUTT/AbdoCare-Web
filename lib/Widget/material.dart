@@ -105,6 +105,6 @@ class CustomMaterial {
     if (woundImg == 'ได้รับรูปภาพ') {
       return Colors.lightBlue;
     }
-    return Colors.black;
+    return Color(0xFFC37447);
   }
 }

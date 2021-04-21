@@ -478,7 +478,7 @@ class FirebaseService extends IFirebaseService {
             .get()
             .then((value) => value.data());
 
-        painScoreToMap = formPainData['formData']['Answer'] ?? '-';
+        painScoreToMap = formPainData['formData']['pain'] ?? '-';
       }
       if (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty) {
         var formSurgicalIncisionData = await _firestore
