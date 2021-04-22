@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
@@ -159,7 +160,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
         builder: (context, userCollection) {
           if (!userCollection.hasData) {
             print('userCollection does\'t have data in editPatientForm');
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: ProgressBar.circularProgressIndicator(context));
           } else {
             _fetchAnId(userCollection.data.docs.first.id);
             var user = userCollection.data.docs.first;
@@ -172,7 +174,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                 builder: (context, anSubCollection) {
                   if (!anSubCollection.hasData) {
                     print('anSubCollection doesn\'t have data');
-                    return Center(child: CircularProgressIndicator());
+                    return Center(
+                        child: ProgressBar.circularProgressIndicator(context));
                   } else {
                     return Container(
                       child: ListView(

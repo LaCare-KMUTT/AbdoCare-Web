@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:AbdoCare_Web/models/user_list/pre_op_list_model.dart';
 import 'package:AbdoCare_Web/view_models/user_list/pre_op_list_view_model.dart';
@@ -35,12 +36,7 @@ class _PreTableState extends State<PreTable> {
         future: _preOpViewModel.getUsers(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: CircularProgressIndicator(
-                strokeWidth: 4,
-              ),
-            );
+            return ProgressBar.circularProgressIndicator(context);
           } else {
             if (users.isNotEmpty) {
               users.clear();

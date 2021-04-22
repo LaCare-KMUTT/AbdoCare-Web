@@ -1,3 +1,6 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/health_status_form_utility.dart';
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/healthStatusForm_model.dart';
@@ -32,6 +35,8 @@ class HealthStatusForm extends StatefulWidget {
 class _HealthStatusFormState extends State<HealthStatusForm> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   ICalculationService _calculationService = locator<ICalculationService>();
+  final HealthStatusUtility _healthStatusUtility =
+      locator<HealthStatusUtility>();
   final _formKey = GlobalKey<FormState>();
 
   DateTime date = DateTime.now();
@@ -60,10 +65,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                 future: HealthStatusFormViewModel.getModel(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData)
-                    return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: CircularProgressIndicator(strokeWidth: 4),
-                    );
+                    return ProgressBar.circularProgressIndicator(context);
                   return Form(
                     key: _formKey,
                     child: ListView(
@@ -99,11 +101,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                             children: [
                                               Container(
                                                 child: Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      screenSize.height / 70,
-                                                      screenSize.height / 70,
-                                                      screenSize.height / 70,
-                                                      0),
+                                                  padding: EdgeInsets.all(10),
                                                   child: Row(
                                                     children: [
                                                       Expanded(
@@ -127,12 +125,10 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                     healthStatusModel:
                                                         snapshot.data,
                                                   ),
-                                                  //CV
                                                   CVHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
                                                   ),
-                                                  //PULMONARY
                                                   PulmonaryHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
@@ -141,22 +137,18 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                               ),
                                               Row(
                                                 children: <Widget>[
-                                                  //GYN/URO
                                                   GYNUROHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
                                                   ),
-                                                  //NEURO
                                                   NeuroHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
                                                   ),
-                                                  //GI
                                                   GIHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
                                                   ),
-                                                  //MS
                                                   MSHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
@@ -165,28 +157,30 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                               ),
                                               Row(
                                                 children: <Widget>[
-                                                  //ENDOCRINE
                                                   EndocrineHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
                                                   ),
-                                                  //HEME/LYMPH
                                                   HemeLymphHealthStatus(
                                                     healthStatusModel:
                                                         snapshot.data,
                                                   ),
                                                 ],
                                               ),
-                                              //abnormalDetails
                                               Row(
                                                 children: [
                                                   Padding(
-                                                    padding: EdgeInsets.all(
-                                                        screenSize.height / 70),
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            10, 10, 10, 0),
                                                     child: Container(
                                                       child: Center(
                                                         child: Text(
-                                                            'Details for Abnormal'),
+                                                            'Details for Abnormal',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600)),
                                                       ),
                                                     ),
                                                   ),
@@ -196,9 +190,9 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                 children: [
                                                   Expanded(
                                                     child: Padding(
-                                                      padding: EdgeInsets.all(
-                                                          screenSize.height /
-                                                              70),
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              10, 10, 10, 0),
                                                       child: TextFormField(
                                                         keyboardType:
                                                             TextInputType
@@ -236,50 +230,69 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                                   ),
                                                 ],
                                               ),
-                                              Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Padding(
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 10, 10, 0),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                        child: Text(
+                                                            'R.N. Signature: ',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600))),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Padding(
+                                                        padding: EdgeInsets.all(
+                                                            screenSize.height /
+                                                                70),
+                                                        child: Container(
+                                                          child: FutureBuilder<
+                                                                  String>(
+                                                              future: _firebaseService
+                                                                  .getMedicalTeamSignature(),
+                                                              builder: (context,
+                                                                  signature) {
+                                                                if (!signature
+                                                                    .hasData) {
+                                                                  return ProgressBar
+                                                                      .circularProgressIndicator(
+                                                                          context);
+                                                                } else {
+                                                                  return Text(
+                                                                      ' ${signature.data}');
+                                                                }
+                                                              }),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 10, 10, 0),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                      child: Text('Date: ',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                    ),
+                                                    Padding(
                                                       padding: EdgeInsets.all(
                                                           screenSize.height /
                                                               70),
                                                       child: Container(
-                                                        child: FutureBuilder<
-                                                                String>(
-                                                            future: _firebaseService
-                                                                .getMedicalTeamSignature(),
-                                                            builder: (context,
-                                                                signature) {
-                                                              if (!signature
-                                                                  .hasData) {
-                                                                return CircularProgressIndicator(
-                                                                  strokeWidth:
-                                                                      4,
-                                                                );
-                                                              } else {
-                                                                return Text(
-                                                                    'R.N. Signature: ${signature.data}');
-                                                              }
-                                                            }),
+                                                        child: Text('$toShow'),
                                                       ),
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                              Row(
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding: EdgeInsets.all(
-                                                        screenSize.height / 70),
-                                                    child: Container(
-                                                      child: Center(
-                                                        child: Text(
-                                                            'Date: $toShow'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               )
                                             ],
                                           ),
@@ -331,33 +344,45 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     onPressed: () {
-                                      _formKey.currentState.save();
                                       var model = HealthStatusFormViewModel
                                           .getHealthStatusFormModel();
-                                      print(
-                                          'MODEL HEALTH STATUS ${model.toMap()}');
 
-                                      _firebaseService.addDataToFormsCollection(
-                                          data: widget.generalForm,
-                                          formName: 'General',
-                                          hn: widget.hn);
+                                      var isChecked = _healthStatusUtility
+                                          .getValidateHealthStatus(model);
+                                      if (isChecked == false) {
+                                        Dialogs.alertToCompleteEvalutation(
+                                            context);
+                                      } else {
+                                        _formKey.currentState.save();
+                                        print(
+                                            'MODEL HEALTH STATUS ${model.toMap()}');
 
-                                      _firebaseService.addDataToFormsCollection(
-                                          data: widget.adlForm,
-                                          formName: 'ADL',
-                                          hn: widget.hn);
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                data: widget.generalForm,
+                                                formName: 'General',
+                                                hn: widget.hn);
 
-                                      _firebaseService.addDataToFormsCollection(
-                                          hn: widget.hn,
-                                          formName: 'Health Status',
-                                          data: model.toMap());
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                data: widget.adlForm,
+                                                formName: 'ADL',
+                                                hn: widget.hn);
 
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                PreDashboardPage(hn: widget.hn),
-                                          ));
+                                        _firebaseService
+                                            .addDataToFormsCollection(
+                                                hn: widget.hn,
+                                                formName: 'Health Status',
+                                                data: model.toMap());
+
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PreDashboardPage(
+                                                      hn: widget.hn),
+                                            ));
+                                      }
                                     },
                                   ),
                                 ),
