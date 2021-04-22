@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../models/evalutate_form/pre_visit/radioListTile_model.dart';
 import '../../../../models/evalutate_form/pre_visit/generalForm_radio_list.dart';
@@ -109,6 +110,10 @@ class _AntiPlateletState extends State<AntiPlatelet> {
             enabled: isEnableTextField,
             validator: (value) =>
                 isEnableTextField && value.isEmpty ? 'กรุณากรอกDays' : null,
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),

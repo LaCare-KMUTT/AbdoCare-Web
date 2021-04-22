@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/health_status_form_utility.dart';
 import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/evaluationFormButton_view_model.dart';
@@ -29,6 +30,8 @@ void setupServiceLocator({bool isMock = false}) {
   locator.registerLazySingleton<CustomMaterial>(() => CustomMaterial());
   locator.registerLazySingleton<EvaluationFormViewModel>(
       () => EvaluationFormViewModel());
+  locator
+      .registerLazySingleton<HealthStatusUtility>(() => HealthStatusUtility());
   locator.registerLazySingleton<CloudFunctionService>(
       () => CloudFunctionService());
 }
