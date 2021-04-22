@@ -20,24 +20,21 @@ class _PulmonaryHealthStatusState extends State<PulmonaryHealthStatus> {
     var screenSize = MediaQuery.of(context).size;
 
     return Container(
-      margin: const EdgeInsets.all(15.0),
+      margin: const EdgeInsets.all(10.0),
       padding: const EdgeInsets.all(3.0),
       decoration: BoxDecoration(border: Border.all(color: Colors.grey[300])),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.all(15.0),
-            padding: const EdgeInsets.all(3.0),
+            padding: const EdgeInsets.all(5.0),
+            child: Text('Pulmonary'),
+          ),
+          Container(
             height: screenSize.width / 4,
             width: screenSize.width / 5,
             child: ListView(
               children: <Widget>[
-                Container(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('Pulmonary'),
-                  ),
-                ),
                 ListView.builder(
                   itemCount: list.length,
                   shrinkWrap: true,
@@ -91,7 +88,6 @@ class _PulmonaryHealthStatusState extends State<PulmonaryHealthStatus> {
                     child: Row(
                   children: <Widget>[
                     Expanded(
-                      flex: 1,
                       child: CheckboxListTile(
                         contentPadding: EdgeInsets.zero,
                         value: _isEnableTextField,
@@ -110,11 +106,12 @@ class _PulmonaryHealthStatusState extends State<PulmonaryHealthStatus> {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
                       child: TextFormField(
                         enabled: _isEnableTextField,
                         validator: (value) {
-                          return value.isEmpty ? 'กรุณากรอก Other' : null;
+                          return _isEnableTextField && value.isEmpty
+                              ? 'กรุณากรอก Other'
+                              : null;
                         },
                         decoration: InputDecoration(
                             contentPadding: new EdgeInsets.symmetric(

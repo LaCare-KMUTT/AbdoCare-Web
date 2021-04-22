@@ -1,3 +1,5 @@
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -131,7 +133,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                                     widget.hn),
                                             builder: (context, snapshot) {
                                               if (!snapshot.hasData) {
-                                                return CircularProgressIndicator();
+                                                return ProgressBar
+                                                    .circularProgressIndicator(
+                                                        context);
                                               }
                                               return Column(
                                                 children: [
@@ -1114,7 +1118,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                     _psychologicalStatus == null ||
                                     _drugAndSubstance == null ||
                                     _sleepDisorder == null) {
-                                  alert(context);
+                                  Dialogs.alertToCompleteEvalutation(context);
                                 } else {
                                   _formKey.currentState.save();
                                   Map<String, dynamic> formDataToDB = {
@@ -1165,7 +1169,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                       ));
                                 }
                               } else {
-                                alert(context);
+                                Dialogs.alertToCompleteEvalutation(context);
                               }
                             }),
                       ),
@@ -1178,20 +1182,5 @@ class _GeneralFormState extends State<GeneralForm> {
         ),
       ),
     );
-  }
-
-  void alert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) {
-          Future.delayed(Duration(seconds: 2), () {});
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text("กรุณาทำแบบประเมินให้ครบถ้วน",
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center),
-          );
-        });
   }
 }

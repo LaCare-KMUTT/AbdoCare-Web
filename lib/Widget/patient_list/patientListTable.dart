@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -302,7 +303,7 @@ class _PatientListTableState extends State<PatientListTable> {
         child: Text("No users found."),
       );
     } else {
-      return CircularProgressIndicator();
+      return ProgressBar.circularProgressIndicator(context);
     }
   }
 }

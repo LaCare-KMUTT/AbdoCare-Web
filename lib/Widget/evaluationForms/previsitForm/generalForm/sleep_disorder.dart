@@ -1,6 +1,7 @@
 import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/radioListTile_model.dart';
 import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_radio_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SleepDisorder extends StatefulWidget {
   final FormFieldSetter<String> onSavedSleepDisorder;
@@ -125,6 +126,10 @@ class _SleepDisorderState extends State<SleepDisorder> {
             validator: (value) => isEnableTextField && value.isEmpty
                 ? 'กรุณากรอก On average'
                 : null,
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
             decoration: InputDecoration(
                 contentPadding:
                     new EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),

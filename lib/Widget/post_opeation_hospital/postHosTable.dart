@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 
 import 'package:AbdoCare_Web/models/user_list/post_hos_list_model.dart';
@@ -36,12 +37,7 @@ class _PostHosTableState extends State<PostHosTable> {
         future: _postHosViewModel.getUsers(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: CircularProgressIndicator(
-                strokeWidth: 4,
-              ),
-            );
+            return ProgressBar.circularProgressIndicator(context);
           } else {
             if (users.isNotEmpty) {
               users.clear();
