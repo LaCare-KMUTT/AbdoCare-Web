@@ -535,38 +535,34 @@ class FirebaseService extends IFirebaseService {
       if (anSubCollection['state'] != 'Pre-Operation') {
         return null;
       }
-
       var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
       var temperatureToMap;
       var respirationRateToMap;
       var pulseRateToMap;
-      var bloodPressureToMap;
-
+      var bloodPressure;
       var oxygenRateToMap;
-      var status = '-';
+      var status;
       var formVitalSign = await getFormListInAnBasedOnState(
           userId: user.id,
           patientState: 'Pre-Operation',
           formName: 'Vital Sign');
-      print('FormVitalSign of ${user.id} = ${formVitalSign.last}');
       if (formVitalSign.isNotEmpty) {
+        print('should be here');
         var formsCollection = await _firestore
             .collection('Forms')
             .doc(formVitalSign.last['formId'])
             .get()
             .then((value) => value.data())
             .catchError((onError) {
-          print('no formsCollection on ${user.id}');
+          print('$onError no formsCollection on ${user.id}');
         });
         print('formCollection = $formsCollection');
-
         temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
         pulseRateToMap = formsCollection['formData']['pulseRate'] ?? '-';
-        bloodPressureToMap =
-            formsCollection['formData']['bloodPressure'] ?? '-';
+        bloodPressure = formsCollection['formData']['bloodPressure'] ?? '-';
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
@@ -575,12 +571,12 @@ class FirebaseService extends IFirebaseService {
         'name': nameToMap,
         'gender': genderToMap,
         'age': ageToMap,
-        'roomNumber': roomNumberToMap,
-        'bedNumber': bedNumberToMap,
+        'roomNumber': roomNumberToMap ?? '-',
+        'bedNumber': bedNumberToMap ?? '-',
         'temperature': temperatureToMap ?? '-',
         'respirationRate': respirationRateToMap ?? '-',
         'pulseRate': pulseRateToMap ?? '-',
-        'bloodPressure': bloodPressureToMap ?? '-',
+        'bloodPressure': bloodPressure ?? '-',
         'oxygenRate': oxygenRateToMap ?? '-',
         'status': status ?? '-',
       };
