@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
@@ -104,13 +105,8 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                     if (!appointment.hasData) {
                       print('appointment $appointmentId doesn\'t have data');
                       return Center(
-                          heightFactor: 1,
-                          widthFactor: 1,
-                          child: SizedBox(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 4,
-                            ),
-                          ));
+                          child:
+                              ProgressBar.circularProgressIndicator(context));
                     }
                     return AlertDialog(
                       content: Container(

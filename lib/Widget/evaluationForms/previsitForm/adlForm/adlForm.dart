@@ -1,3 +1,5 @@
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/adlForm_model.dart';
@@ -119,11 +121,9 @@ class _ADLFormState extends State<ADLForm> {
                                       future: ADLFormViewModel.getModel(),
                                       builder: (context, snapshot) {
                                         if (!snapshot.hasData) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: CircularProgressIndicator(
-                                                strokeWidth: 4),
-                                          );
+                                          return ProgressBar
+                                              .circularProgressIndicator(
+                                                  context);
                                         }
                                         return Column(
                                           children: <Widget>[
@@ -528,7 +528,7 @@ class _ADLFormState extends State<ADLForm> {
                                 bathingScore == null ||
                                 bowelsScore == null ||
                                 bladderScore == null) {
-                              alert(context);
+                              Dialogs.alertToCompleteEvalutation(context);
                             } else {
                               adlData();
                             }
@@ -544,20 +544,5 @@ class _ADLFormState extends State<ADLForm> {
         }),
       ),
     );
-  }
-
-  void alert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (_) {
-          Future.delayed(Duration(seconds: 2), () {});
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text("กรุณาทำแบบประเมินให้ครบถ้วน",
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center),
-          );
-        });
   }
 }
