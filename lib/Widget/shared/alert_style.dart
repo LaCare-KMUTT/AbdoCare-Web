@@ -28,9 +28,10 @@ class Dialogs {
   static Future<void> alertSuccessfullySavedData(
       BuildContext context, String hn, String patients) async {
     await showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        Future.delayed(Duration(seconds: 1), () {
+        Future.delayed(Duration(milliseconds: 500), () {
           print(patients);
           if (patients == "Post-Operation@Hospital") {
             return Navigator.push(
