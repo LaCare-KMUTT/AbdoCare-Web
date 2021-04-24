@@ -742,7 +742,6 @@ class FirebaseService extends IFirebaseService {
       print('$onError Cannot find user');
     });
     var anSubCollection = await getLatestAnSubCollection(docId: userId);
-    var patientState = anSubCollection['state'];
     return anSubCollection['state'];
   }
 
