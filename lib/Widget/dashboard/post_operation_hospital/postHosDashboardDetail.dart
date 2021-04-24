@@ -186,7 +186,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                               .disableUrologyButton(false),
                           child: UrologyForm(hn: widget.hn));
                     } else if (heading ==
-                        'แบบประเมินความพร้อมการฟื้นสภาพหลังผ่าตัด') {
+                        'แบบประเมินความพร้อมฟื้นสภาพหลังผ่าตัด') {
                       return AbsorbPointer(
                           absorbing: !_evaluationFormViewModel
                               .disableRecoveryReadinessButton(false),
@@ -430,7 +430,7 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                             return Column(
                                               children: [
                                                 postHosDay0FormCard(
-                                                    'แบบประเมินความพร้อมการฟื้นสภาพหลังผ่าตัด'),
+                                                    'แบบประเมินความพร้อมฟื้นสภาพหลังผ่าตัด'),
                                                 postHosDay0FormCard(
                                                     'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ (Day0)'),
                                                 postHosDay0FormCard(
