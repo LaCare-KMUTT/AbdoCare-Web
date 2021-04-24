@@ -483,7 +483,7 @@ class FirebaseService extends IFirebaseService {
       if (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty) {
         var formSurgicalIncisionData = await _firestore
             .collection('Forms')
-            .doc(formSurgicalIncision.first['formId'])
+            .doc(formSurgicalIncision.last['formId'])
             .get()
             .then((value) => value.data());
         woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
@@ -509,8 +509,6 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<Map<String, dynamic>>> getPreOpList() async {
-    this.getPatientDetail('HN10001');
-
     var userList = await this.getUserList();
     var returnList = userList.map((user) async {
       var userCollection =
@@ -748,7 +746,7 @@ class FirebaseService extends IFirebaseService {
     return anSubCollection['state'];
   }
 
-  Future<Map<String, dynamic>> getPatientDetail(String hn) async {
+  Future<Map<String, dynamic>> getPatientDetail({@required String hn}) async {
     var usersCollection = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
@@ -766,23 +764,56 @@ class FirebaseService extends IFirebaseService {
         .collection('an')
         .doc(an)
         .get()
-        .then((value) => value.data());
-    print('anSubCollection = $anSubCollection');
-    print('UsersCollection = $usersCollection');
-    return {
+        .then((value) => value.data())
+        .catchError((onError) {
+      print('$onError');
+    });
+    var generalForm = await getFormListInAnBasedOnState(
+        userId: usersCollection['id'],
+        patientState: anSubCollection['state'],
+        formName: 'General');
+    var generalFormData = Map();
+    if (generalForm.isNotEmpty)
+      generalFormData = await _firestore
+          .collection('Forms')
+          .doc(generalForm.last['formId'])
+          .get()
+          .then((value) => value.data())
+          .catchError((onError) {
+        print('$onError Cann\'t find General Form on ${usersCollection['hn']}');
+      });
+
+    DateFormat dateFormatter = DateFormat('dd-MM-yyyy');
+    var map = {
       'fullName': '${usersCollection['name']} ${usersCollection['surname']}',
       'gender': usersCollection['gender'] ?? '-',
-      'age': _calculationService.calculateAge(
-          birthDate: usersCollection['dob'].toDate()),
-      'dob': usersCollection['dob'].toDate() ?? '-',
+      'age': _calculationService
+          .calculateAge(birthDate: usersCollection['dob'].toDate())
+          .toString(),
+      'dob': dateFormatter.format(usersCollection['dob'].toDate()) ?? '-',
       'patientTel': usersCollection['patientTel'] ?? '-',
       'address': usersCollection['address'] ?? '-',
-      'height': anSubCollection['height'] ?? '-',
-      'weight': anSubCollection['oldWeight'] ?? '-',
-      'bwl': '',
+      'height': anSubCollection['height'].toString() ?? '-',
+      'weight': anSubCollection['oldWeight'].toString() ?? '-',
+      'bwl': _calculationService
+          .calculateBML(
+              oldWeight: anSubCollection['oldWeight'],
+              weight: anSubCollection['weight'])
+          .toString(),
       'careTakerName':
-          '${anSubCollection['careTakerName']} ${anSubCollection['careTakerSurname']}}',
+          '${anSubCollection['careTakerName'] ?? '-'} ${anSubCollection['careTakerSurname'] ?? '-'}',
       'careTakerTel': anSubCollection['careTakerTel'],
+      'patientState': anSubCollection['state'],
+      'HN': usersCollection['hn'],
+      'AN': anSubCollection['an'],
+      'operationDate':
+          dateFormatter.format(anSubCollection['operationDate'].toDate()) ??
+              '-',
+      'operationName': anSubCollection['operationName'],
+      'operationMethod': anSubCollection['operationMethod'],
+      'asaClass': generalFormData['asaClass'] ?? '-',
+      'previousIllness': generalFormData['previousIllness'] ?? '-',
     };
+    return map;
   }
 }
