@@ -745,4 +745,25 @@ class FirebaseService extends IFirebaseService {
     var patientState = anSubCollection['state'];
     return anSubCollection['state'];
   }
+
+  Future<List<QueryDocumentSnapshot>> getNotificationList() async {
+    var data = await _firestore.collection('Notifications').get();
+    return data.docs;
+  }
+
+  Future<List<Map<String, dynamic>>> getPreOpNotificationList() async {
+    return null;
+  }
+
+  Future<List<Map<String, dynamic>>> getPostHosNotificationList() async {
+    return null;
+  }
+
+  Future<List<Map<String, dynamic>>> getPostHomeNotificationList() async {
+    return null;
+  }
+
+  Future<List<Map<String, dynamic>>> getAllNotificationList() async {
+    return null;
+  }
 }
