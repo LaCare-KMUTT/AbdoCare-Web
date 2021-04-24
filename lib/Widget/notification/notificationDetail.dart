@@ -1,7 +1,13 @@
-import 'package:AbdoCare_Web/models/user_list/pre_op_list_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/all_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/post_home_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/pre_op_notification_model.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
-import 'package:AbdoCare_Web/view_models/user_list/pre_op_list_view_model.dart';
+import 'package:AbdoCare_Web/view_models/notification_list/all_notification_view_model.dart';
+import 'package:AbdoCare_Web/view_models/notification_list/post-hos_notification_view_model.dart';
+import 'package:AbdoCare_Web/view_models/notification_list/post_home_notification_view_model.dart';
+import 'package:AbdoCare_Web/view_models/notification_list/pre_op_notification_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../material.dart';
@@ -18,45 +24,102 @@ class NotificationDetail extends StatefulWidget {
 
 class _NotificationDetailState extends State<NotificationDetail> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  final PreOpViewModel _preOpViewModel = locator<PreOpViewModel>();
+  final PreOpNotiViewModel _preOpNotiViewModel = locator<PreOpNotiViewModel>();
+  final PostHosNotiViewModel _postHosNotiViewModel =
+      locator<PostHosNotiViewModel>();
+  final PostHomeNotiViewModel _postHomeNotiViewModel =
+      locator<PostHomeNotiViewModel>();
+  final AllNotiViewModel _allNotiViewModel = locator<AllNotiViewModel>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
   bool pressAllState = false;
   bool pressPreOpState = false;
   bool pressPostOpHospitalState = true;
   bool pressPostOpHomeState = false;
   String onClickState = "Post-Operation@Hospital";
-  List<PreOpData> users = [];
+  List<PreOpNotiData> preOpData = [];
+  List<PostHosNotiData> postHosData = [];
+  List<PostHomeNotiData> postHomeData = [];
+  List<AllNotiData> allData = [];
   FutureBuilder notificationDataBody(String onClickState) {
-    return FutureBuilder<List<PreOpData>>(
-        future: _preOpViewModel.getUsers(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData || onClickState == null) {
-            return Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: CircularProgressIndicator(
-                strokeWidth: 4,
-              ),
-            );
-          } else {
-            if (users.isNotEmpty) {
-              users.clear();
-            }
-            users.addAll(snapshot.data);
-            if (onClickState == "AllState") {
-              return AllNotificationTable();
-            } else if (onClickState == "Pre-Operation") {
-              return PreNotificationTable();
-            } else if (onClickState == "Post-Operation@Hospital") {
-              return PostHosNotificationTable();
-            } else if (onClickState == "Post-Operation@Home") {
-              return PostHomeNotificationTable();
-            } else {
-              return Container(
-                child: Text("ไม่การแจ้งเตือน"),
+    if (onClickState == "AllState") {
+      return FutureBuilder<List<AllNotiData>>(
+          future: _allNotiViewModel.getUsers(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData || onClickState == null) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CircularProgressIndicator(
+                  strokeWidth: 4,
+                ),
               );
+            } else {
+              if (allData.isNotEmpty) {
+                allData.clear();
+              }
+              allData.addAll(snapshot.data);
+              return AllNotificationTable();
             }
-          }
-        });
+          });
+    } else if (onClickState == "Pre-Operation") {
+      return FutureBuilder<List<PreOpNotiData>>(
+          future: _preOpNotiViewModel.getUsers(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData || onClickState == null) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CircularProgressIndicator(
+                  strokeWidth: 4,
+                ),
+              );
+            } else {
+              if (preOpData.isNotEmpty) {
+                preOpData.clear();
+              }
+              preOpData.addAll(snapshot.data);
+              return PreNotificationTable();
+            }
+          });
+    } else if (onClickState == "Post-Operation@Hospital") {
+      return FutureBuilder<List<PostHosNotiData>>(
+          future: _postHosNotiViewModel.getUsers(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData || onClickState == null) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CircularProgressIndicator(
+                  strokeWidth: 4,
+                ),
+              );
+            } else {
+              if (postHosData.isNotEmpty) {
+                postHosData.clear();
+              }
+              postHosData.addAll(snapshot.data);
+              return PostHosNotificationTable();
+            }
+          });
+    } else if (onClickState == "Post-Operation@Home") {
+      return FutureBuilder<List<PostHomeNotiData>>(
+          future: _postHomeNotiViewModel.getUsers(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData || onClickState == null) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CircularProgressIndicator(
+                  strokeWidth: 4,
+                ),
+              );
+            } else {
+              if (postHomeData.isNotEmpty) {
+                postHomeData.clear();
+              }
+              postHomeData.addAll(snapshot.data);
+              return PostHomeNotificationTable();
+            }
+          });
+    } else {
+      return null;
+    }
   }
 
   @override
