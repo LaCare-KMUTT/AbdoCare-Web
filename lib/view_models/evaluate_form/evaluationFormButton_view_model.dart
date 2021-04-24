@@ -131,4 +131,11 @@ class EvaluationFormViewModel {
     }
     return false;
   }
+
+  bool disableRecoveryReadinessButton(bool check) {
+    if (check == false) {
+      return true;
+    }
+    return false;
+  }
 }
