@@ -1,5 +1,6 @@
 import 'package:AbdoCare_Web/Widget/dashboard/post_operation_hospital/postHosDashboardPatientDetail.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day0/recovery_readiness_form.dart';
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
 import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:AbdoCare_Web/page/dashboard_pre.dart';
@@ -425,51 +426,56 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                           ],
                                         ),
                                         (() {
-                                          print("Day: $_getdayInCurrentState");
-                                          if (dayInCurrentState == 0) {
-                                            return Column(
-                                              children: [
-                                                postHosDay0FormCard(
-                                                    'แบบประเมินความพร้อมฟื้นสภาพหลังผ่าตัด'),
-                                                postHosDay0FormCard(
-                                                    'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ (Day0)'),
-                                                postHosDay0FormCard(
-                                                    'แบบประเมินระบบปัสสาวะ'),
-                                              ],
-                                            );
-                                          } else if (dayInCurrentState == 1) {
-                                            return Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    postHosDay1FormCard(
-                                                        'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ'),
-                                                    postHosDay1FormCard(
-                                                        'แบบประเมินการจัดการแผลผ่าตัดและสายระบาย'),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    postHosDay1FormCard(
-                                                        'แบบประเมินการจัดการภาวะโภชนาการ'),
-                                                    postHosDay1FormCard(
-                                                        'แบบประเมินการเกิดภาวะลิ่มเลือดอุดตัน'),
-                                                  ],
-                                                ),
-                                              ],
-                                            );
-                                          } else if (dayInCurrentState != 1 &&
-                                              dayInCurrentState != 0) {
-                                            return Column(
-                                              children: [
-                                                postHosDay2FormCard(
-                                                    'แบบประเมินการฟื้นฟูระบบทางเดินอาหาร'),
-                                                postHosDay2FormCard(
-                                                    'แบบประเมินการเฝ้าระวังภาวะแทรกซ้อน'),
-                                                postHosDay2FormCard(
-                                                    'แบบประเมินการฟื้นฟูสมรรถภาพของปอด')
-                                              ],
-                                            );
+                                          if (dayInCurrentState == null) {
+                                            return ProgressBar
+                                                .circularProgressIndicator(
+                                                    context);
+                                          } else {
+                                            if (dayInCurrentState == 0) {
+                                              return Column(
+                                                children: [
+                                                  postHosDay0FormCard(
+                                                      'แบบประเมินความพร้อมฟื้นสภาพหลังผ่าตัด'),
+                                                  postHosDay0FormCard(
+                                                      'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ (Day0)'),
+                                                  postHosDay0FormCard(
+                                                      'แบบประเมินระบบปัสสาวะ'),
+                                                ],
+                                              );
+                                            } else if (dayInCurrentState == 1) {
+                                              return Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      postHosDay1FormCard(
+                                                          'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ'),
+                                                      postHosDay1FormCard(
+                                                          'แบบประเมินการจัดการแผลผ่าตัดและสายระบาย'),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      postHosDay1FormCard(
+                                                          'แบบประเมินการจัดการภาวะโภชนาการ'),
+                                                      postHosDay1FormCard(
+                                                          'แบบประเมินการเกิดภาวะลิ่มเลือดอุดตัน'),
+                                                    ],
+                                                  ),
+                                                ],
+                                              );
+                                            } else if (dayInCurrentState >= 1 &&
+                                                dayInCurrentState != 0) {
+                                              return Column(
+                                                children: [
+                                                  postHosDay2FormCard(
+                                                      'แบบประเมินการฟื้นฟูระบบทางเดินอาหาร'),
+                                                  postHosDay2FormCard(
+                                                      'แบบประเมินการเฝ้าระวังภาวะแทรกซ้อน'),
+                                                  postHosDay2FormCard(
+                                                      'แบบประเมินการฟื้นฟูสมรรถภาพของปอด')
+                                                ],
+                                              );
+                                            }
                                           }
                                         }())
                                       ],
