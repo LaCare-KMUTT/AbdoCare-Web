@@ -9,13 +9,19 @@ class PreOpViewModel {
 
   Future<void> _initialize() async {
     var preOpList = await _firebaseService.getPreOpList();
-    preOpList.forEach((mapData) {
-      userList.add(PreOpData(map: mapData));
-    });
+    print('initList');
+    if (preOpList != null) {
+      preOpList.forEach((mapData) {
+        userList.add(PreOpData(map: mapData));
+      });
+    }
   }
 
   Future<List<PreOpData>> getUsers() async {
     if (userList.isEmpty) await _initialize();
+    userList.forEach((element) {
+      print(element.name);
+    });
     return userList;
   }
 
