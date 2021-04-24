@@ -109,4 +109,32 @@ void main() {
       expect(day1, day2);
     });
   });
+
+  group('Calculate BMI', () {
+    test('Calculate BMI should return 0.00 when divider is 0', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+
+      var result = _calculationService.calculateBML(oldWeight: 0, weight: 70);
+      expect(result.runtimeType, String);
+      expect(result, '0.00');
+    });
+
+    test('Calculate BMI should return 0.00 when both values are 0', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+
+      var result = _calculationService.calculateBML(oldWeight: 0, weight: 0);
+      expect(result.runtimeType, String);
+
+      expect(result, '0.00');
+    });
+
+    test('Calculate BMI should calculate properly', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+
+      var result = _calculationService.calculateBML(oldWeight: 70, weight: 68);
+      var result2 = _calculationService.calculateBML(oldWeight: 68, weight: 70);
+      expect(result, '2.86');
+      expect(result2, '-2.94');
+    });
+  });
 }
