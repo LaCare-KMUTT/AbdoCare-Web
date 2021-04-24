@@ -246,7 +246,9 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                   ),
                 ),
                 SizedBox(
-                  child: PrePatientDetail(),
+                  child: PrePatientDetail(
+                    hn: widget.hn,
+                  ),
                 ),
                 SizedBox(
                   height: 500,
