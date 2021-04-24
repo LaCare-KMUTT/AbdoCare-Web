@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/Widget/dashboard/post_operation_hospital/postHosDashboardPatientDetail.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day0/recovery_readiness_form.dart';
 import 'package:AbdoCare_Web/page/dashboard_postHome.dart';
 import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:AbdoCare_Web/page/dashboard_pre.dart';
@@ -184,6 +185,12 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           absorbing: !_evaluationFormViewModel
                               .disableUrologyButton(false),
                           child: UrologyForm(hn: widget.hn));
+                    } else if (heading ==
+                        'แบบประเมินความพร้อมการฟื้นสภาพหลังผ่าตัด') {
+                      return AbsorbPointer(
+                          absorbing: !_evaluationFormViewModel
+                              .disableRecoveryReadinessButton(false),
+                          child: RecoveryReadinessForm(hn: widget.hn));
                     } else {
                       print('form not match');
                       return null;
@@ -422,6 +429,8 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                           if (dayInCurrentState == 0) {
                                             return Column(
                                               children: [
+                                                postHosDay0FormCard(
+                                                    'แบบประเมินความพร้อมการฟื้นสภาพหลังผ่าตัด'),
                                                 postHosDay0FormCard(
                                                     'แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ (Day0)'),
                                                 postHosDay0FormCard(
