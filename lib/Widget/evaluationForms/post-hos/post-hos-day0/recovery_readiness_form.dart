@@ -13,7 +13,6 @@ class RecoveryReadinessForm extends StatefulWidget {
 
 class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
-  var value1 = "ทราบชื่อ";
   var _value1 = false;
   var _value2 = false;
   var _value3 = false;
@@ -164,6 +163,7 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                             setState(() {
                                               _value1 = value;
                                               _value9 = completeAllCheckBox();
+                                              print("Check: $_value9");
                                             });
                                           },
                                           title: Text('1. ทราบชื่อ-สกุล'),
@@ -178,6 +178,7 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                             setState(() {
                                               _value2 = value;
                                               _value9 = completeAllCheckBox();
+                                              print("Check: $_value9");
                                             });
                                           },
                                           title: Text('2. ทราบเวลา'),
@@ -192,6 +193,7 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                             setState(() {
                                               _value3 = value;
                                               _value9 = completeAllCheckBox();
+                                              print("Check: $_value9");
                                             });
                                           },
                                           title: Text('3. ทราบสถานที่'),
@@ -206,6 +208,7 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                             setState(() {
                                               _value4 = value;
                                               _value9 = completeAllCheckBox();
+                                              print("Check: $_value9");
                                             });
                                           },
                                           title: Text('4. ไม่มีไข้'),
@@ -220,6 +223,7 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                             setState(() {
                                               _value5 = value;
                                               _value9 = completeAllCheckBox();
+                                              print("Check: $_value9");
                                             });
                                           },
                                           title:
@@ -309,35 +313,34 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                                 'Choice7': _value7,
                                                 'Choice8': _value8,
                                               };
-                                              if (_value9 = true) {
+                                              if (_value9 == true) {
                                                 formDataToDB.addAll({
                                                   "Result":
                                                       "พร้อมฟื้นสภาพหลังผ่าตัด"
                                                 });
-                                                print(formDataToDB);
-                                                //  var formId =
-                                                //     await _firebaseService
-                                                //         .addDataToFormsCollection(
-                                                //             hn: widget.hn,
-                                                //             formName: 'Recovery Readiness',
-                                                //             data: formDataToDB);
+                                                await _firebaseService
+                                                    .addDataToFormsCollection(
+                                                        hn: widget.hn,
+                                                        formName:
+                                                            'Recovery Readiness',
+                                                        data: formDataToDB);
                                               } else {
                                                 formDataToDB.addAll({
                                                   "Result":
                                                       "ไม่พร้อมฟื้นสภาพหลังผ่าตัด"
                                                 });
-                                                print(formDataToDB);
-                                                //  var formId =
-                                                //     await _firebaseService
-                                                //         .addDataToFormsCollection(
-                                                //             hn: widget.hn,
-                                                //             formName: 'Recovery Readiness',
-                                                //             data: formDataToDB);
-                                                // _firebaseService
-                                                //     .addNotification(
-                                                //         hn: widget.hn,
-                                                //         formId: formId,
-                                                //         formName: 'Recovery Readiness');
+                                                var formId = await _firebaseService
+                                                    .addDataToFormsCollection(
+                                                        hn: widget.hn,
+                                                        formName:
+                                                            'Recovery Readiness',
+                                                        data: formDataToDB);
+                                                await _firebaseService
+                                                    .addNotification(
+                                                        hn: widget.hn,
+                                                        formId: formId,
+                                                        formName:
+                                                            'Recovery Readiness');
                                               }
                                               Dialogs
                                                   .alertSuccessfullySavedData(
