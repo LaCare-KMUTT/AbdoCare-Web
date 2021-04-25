@@ -13,15 +13,15 @@ class RecoveryReadinessForm extends StatefulWidget {
 
 class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
-  var _value1 = false;
-  var _value2 = false;
-  var _value3 = false;
-  var _value4 = false;
-  var _value5 = false;
-  var _value6 = false;
-  var _value7 = false;
-  var _value8 = false;
-  var _value9 = false;
+  var _knowFullName = false;
+  var _knowTime = false;
+  var _knowPlace = false;
+  var _fever = false;
+  var _breathGasp = false;
+  var _palpitations = false;
+  var _dizzy = false;
+  var _vomit = false;
+  var _readyRecover = false;
   var patientState;
   var _getpatientState;
   @override
@@ -38,14 +38,14 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
   }
 
   bool completeAllCheckBox() {
-    if (_value1 &&
-        _value2 &&
-        _value3 &&
-        _value4 &&
-        _value5 &&
-        _value6 &&
-        _value7 &&
-        _value8 == true) {
+    if (_knowFullName &&
+        _knowTime &&
+        _knowPlace &&
+        _fever &&
+        _breathGasp &&
+        _palpitations &&
+        _dizzy &&
+        _vomit == true) {
       return true;
     } else {
       return false;
@@ -128,22 +128,22 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                     ),
                                   ),
                                   CheckboxListTile(
-                                    value: _value9,
-                                    selected: _value9,
+                                    value: _readyRecover,
+                                    selected: _readyRecover,
                                     controlAffinity:
                                         ListTileControlAffinity.leading,
                                     activeColor: Color(0xFFC37447),
                                     onChanged: (value) {
                                       setState(() {
-                                        _value9 = value;
-                                        _value1 = value;
-                                        _value2 = value;
-                                        _value3 = value;
-                                        _value4 = value;
-                                        _value5 = value;
-                                        _value6 = value;
-                                        _value7 = value;
-                                        _value8 = value;
+                                        _readyRecover = value;
+                                        _knowFullName = value;
+                                        _knowTime = value;
+                                        _knowPlace = value;
+                                        _fever = value;
+                                        _breathGasp = value;
+                                        _palpitations = value;
+                                        _dizzy = value;
+                                        _vomit = value;
                                       });
                                     },
                                     title: Text(
@@ -154,120 +154,128 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                     child: Column(
                                       children: [
                                         CheckboxListTile(
-                                          value: _value1,
-                                          selected: _value1,
+                                          value: _knowFullName,
+                                          selected: _knowFullName,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _value1 = value;
-                                              _value9 = completeAllCheckBox();
-                                              print("Check: $_value9");
+                                              _knowFullName = value;
+                                              _readyRecover =
+                                                  completeAllCheckBox();
+                                              print("Check: $_readyRecover");
                                             });
                                           },
                                           title: Text('1. ทราบชื่อ-สกุล'),
                                         ),
                                         CheckboxListTile(
-                                          value: _value2,
-                                          selected: _value2,
+                                          value: _knowTime,
+                                          selected: _knowTime,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _value2 = value;
-                                              _value9 = completeAllCheckBox();
-                                              print("Check: $_value9");
+                                              _knowTime = value;
+                                              _readyRecover =
+                                                  completeAllCheckBox();
+                                              print("Check: $_readyRecover");
                                             });
                                           },
                                           title: Text('2. ทราบเวลา'),
                                         ),
                                         CheckboxListTile(
-                                          value: _value3,
-                                          selected: _value3,
+                                          value: _knowPlace,
+                                          selected: _knowPlace,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _value3 = value;
-                                              _value9 = completeAllCheckBox();
-                                              print("Check: $_value9");
+                                              _knowPlace = value;
+                                              _readyRecover =
+                                                  completeAllCheckBox();
+                                              print("Check: $_readyRecover");
                                             });
                                           },
                                           title: Text('3. ทราบสถานที่'),
                                         ),
                                         CheckboxListTile(
-                                          value: _value4,
-                                          selected: _value4,
+                                          value: _fever,
+                                          selected: _fever,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _value4 = value;
-                                              _value9 = completeAllCheckBox();
-                                              print("Check: $_value9");
+                                              _fever = value;
+                                              _readyRecover =
+                                                  completeAllCheckBox();
+                                              print("Check: $_readyRecover");
                                             });
                                           },
                                           title: Text('4. ไม่มีไข้'),
                                         ),
                                         CheckboxListTile(
-                                          value: _value5,
-                                          selected: _value5,
+                                          value: _breathGasp,
+                                          selected: _breathGasp,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _value5 = value;
-                                              _value9 = completeAllCheckBox();
-                                              print("Check: $_value9");
+                                              _breathGasp = value;
+                                              _readyRecover =
+                                                  completeAllCheckBox();
+                                              print("Check: $_readyRecover");
                                             });
                                           },
                                           title:
                                               Text('5. ไม่มีหายใจหอบเหนื่อย'),
                                         ),
                                         CheckboxListTile(
-                                          value: _value6,
-                                          selected: _value6,
+                                          value: _palpitations,
+                                          selected: _palpitations,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _value6 = value;
-                                              _value9 = completeAllCheckBox();
+                                              _palpitations = value;
+                                              _readyRecover =
+                                                  completeAllCheckBox();
                                             });
                                           },
                                           title: Text('6. ไม่มีอาการใจสั่น'),
                                         ),
                                         CheckboxListTile(
-                                          value: _value7,
-                                          selected: _value7,
+                                          value: _dizzy,
+                                          selected: _dizzy,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _value7 = value;
-                                              _value9 = completeAllCheckBox();
+                                              _dizzy = value;
+                                              _readyRecover =
+                                                  completeAllCheckBox();
                                             });
                                           },
                                           title: Text(
                                               '7. ไม่มีหน้ามืดหรือเวียนศีรษะ'),
                                         ),
                                         CheckboxListTile(
-                                          value: _value8,
-                                          selected: _value8,
+                                          value: _vomit,
+                                          selected: _vomit,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _value8 = value;
-                                              _value9 = completeAllCheckBox();
+                                              _vomit = value;
+                                              _readyRecover =
+                                                  completeAllCheckBox();
                                             });
                                           },
                                           title: Text(
@@ -289,14 +297,14 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                           child: Text('ยืนยัน',
                                               style: TextStyle(fontSize: 18)),
                                           onPressed: () async {
-                                            if (_value1 |
-                                                    _value2 |
-                                                    _value3 |
-                                                    _value4 |
-                                                    _value5 |
-                                                    _value6 |
-                                                    _value7 |
-                                                    _value8 !=
+                                            if (_knowFullName |
+                                                    _knowTime |
+                                                    _knowPlace |
+                                                    _fever |
+                                                    _breathGasp |
+                                                    _palpitations |
+                                                    _dizzy |
+                                                    _vomit !=
                                                 true) {
                                               Dialogs
                                                   .alertToCompleteEvalutation(
@@ -304,16 +312,16 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
-                                                'Choice1': _value1,
-                                                'Choice2': _value2,
-                                                'Choice3': _value3,
-                                                'Choice4': _value4,
-                                                'Choice5': _value5,
-                                                'Choice6': _value6,
-                                                'Choice7': _value7,
-                                                'Choice8': _value8,
+                                                'Choice1': _knowFullName,
+                                                'Choice2': _knowTime,
+                                                'Choice3': _knowPlace,
+                                                'Choice4': _fever,
+                                                'Choice5': _breathGasp,
+                                                'Choice6': _palpitations,
+                                                'Choice7': _dizzy,
+                                                'Choice8': _vomit,
                                               };
-                                              if (_value9 == true) {
+                                              if (_readyRecover == true) {
                                                 formDataToDB.addAll({
                                                   "Result":
                                                       "พร้อมฟื้นสภาพหลังผ่าตัด"
