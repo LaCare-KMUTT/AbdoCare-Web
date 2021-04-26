@@ -312,14 +312,15 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                             } else {
                                               Map<String, dynamic>
                                                   formDataToDB = {
-                                                'Choice1': _knowFullName,
-                                                'Choice2': _knowTime,
-                                                'Choice3': _knowPlace,
-                                                'Choice4': _noFever,
-                                                'Choice5': _noBreathGasp,
-                                                'Choice6': _noPalpitations,
-                                                'Choice7': _noDizzy,
-                                                'Choice8': _noVomit,
+                                                'knowFullName': _knowFullName,
+                                                'knowTime': _knowTime,
+                                                'knowPlace': _knowPlace,
+                                                'noFever': _noFever,
+                                                'noBreathGasp': _noBreathGasp,
+                                                'noPalpitations':
+                                                    _noPalpitations,
+                                                'noDizzy': _noDizzy,
+                                                'noVomit': _noVomit,
                                               };
                                               if (_readyRecover == true) {
                                                 formDataToDB.addAll({
