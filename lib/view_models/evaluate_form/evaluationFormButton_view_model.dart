@@ -8,9 +8,9 @@ class EvaluationFormViewModel {
     formTime1 = new DateTime(
         now.year, now.month, now.day, formTime1.hour, formTime1.minute);
     if (now.isAfter(formTime1) && check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableVitalSignButton2(bool check) {
@@ -19,9 +19,9 @@ class EvaluationFormViewModel {
     formTime2 = new DateTime(
         now.year, now.month, now.day, formTime2.hour, formTime2.minute);
     if (now.isAfter(formTime2) && check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableVitalSignButton3(bool check) {
@@ -30,9 +30,9 @@ class EvaluationFormViewModel {
     formTime3 = new DateTime(
         now.year, now.month, now.day, formTime3.hour, formTime3.minute);
     if (now.isAfter(formTime3) && check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableVitalSignButton4(bool check) {
@@ -41,9 +41,9 @@ class EvaluationFormViewModel {
     formTime4 = new DateTime(
         now.year, now.month, now.day, formTime4.hour, formTime4.minute);
     if (now.isAfter(formTime4) && check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableVitalSignButton5(bool check) {
@@ -52,9 +52,9 @@ class EvaluationFormViewModel {
     formTime5 = new DateTime(
         now.year, now.month, now.day, formTime5.hour, formTime5.minute);
     if (now.isAfter(formTime5) && check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableVitalSignButton6(bool check) {
@@ -63,73 +63,73 @@ class EvaluationFormViewModel {
     formTime6 = new DateTime(
         now.year, now.month, now.day, formTime6.hour, formTime6.minute);
     if (now.isAfter(formTime6) && check == false) {
-      return true;
+      return !check;
     }
 
-    return false;
+    return check;
   }
 
   bool disableRespiratoryDay0Button(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableUrologyButton(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableBloodClotButton(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableDrainButton(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableNutritionButton(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableRespiratoryDay1Button(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableDigestiveButton(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableInfectionButton(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disablePulmanaryButton(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 
   bool disableRecoveryReadinessButton(bool check) {
