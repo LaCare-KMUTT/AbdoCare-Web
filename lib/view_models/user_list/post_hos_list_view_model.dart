@@ -13,7 +13,7 @@ class PostHosViewModel {
     if (postHosList != null) {
       postHosList.forEach((mapData) {
         userList.add(PostHosData(map: mapData));
-        userList.sort((a, b) => b.status.compareTo(a.status));
+        sortBy('status', true);
       });
     }
   }

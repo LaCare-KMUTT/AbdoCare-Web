@@ -11,7 +11,7 @@ class PostHomeViewModel {
     var postHomeList = await _firebaseService.getPostHomeList();
     postHomeList.forEach((mapData) {
       userList.add(PostHomeData(map: mapData));
-      userList.sort((a, b) => b.woundImg.compareTo(a.woundImg));
+      sortBy('woundImg', true);
     });
   }
 
@@ -21,6 +21,7 @@ class PostHomeViewModel {
   }
 
   List<PostHomeData> sortBy(String key, bool isAsc) {
+    userList.sort((a, b) => b.woundImg.compareTo(a.woundImg));
     switch (key) {
       case 'painScore':
         userList.sort((a, b) => a.painScore.compareTo(b.painScore));
