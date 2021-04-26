@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../services/interfaces/firebase_service_interface.dart';
@@ -18,40 +19,66 @@ class SideBar extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    DrawerHeader(
-                      decoration: BoxDecoration(color: Color(0xFFC37447)),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          children: [
-                            Material(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
-                              child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset('assets/abdocare_logo.png',
-                                      width: 80, height: 80)),
-                            ),
-                            FutureBuilder<String>(
-                                future:
-                                    _firebaseService.getMedicalTeamSignature(),
-                                builder: (context, snapshot) {
-                                  if (!snapshot.hasData) {
-                                    return CircularProgressIndicator(
-                                      valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              Colors.white),
-                                      strokeWidth: 4,
-                                    );
-                                  } else {
-                                    return Text('${snapshot.data}',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500));
-                                  }
-                                }),
-                          ],
+                    Container(
+                      height: 190,
+                      child: DrawerHeader(
+                        decoration: BoxDecoration(color: Color(0xFFC37447)),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Material(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50)),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                        'assets/abdocare_logo.png',
+                                        width: 80,
+                                        height: 80)),
+                              ),
+                              FutureBuilder<String>(
+                                  future: _firebaseService
+                                      .getMedicalTeamSignature(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          height: 10,
+                                          width: 10,
+                                          child: ProgressBar
+                                              .circularProgressIndicator(
+                                                  context));
+                                    } else {
+                                      return Text('${snapshot.data}',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400));
+                                    }
+                                  }),
+                              FutureBuilder<String>(
+                                  future: _firebaseService.getMedicalTeamWard(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          height: 10,
+                                          width: 10,
+                                          child: ProgressBar
+                                              .circularProgressIndicator(
+                                                  context));
+                                    } else {
+                                      return Text('Ward ${snapshot.data}',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w400));
+                                    }
+                                  }),
+                            ],
+                          ),
                         ),
                       ),
                     ),
