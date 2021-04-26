@@ -134,8 +134,8 @@ class EvaluationFormViewModel {
 
   bool disableRecoveryReadinessButton(bool check) {
     if (check == false) {
-      return true;
+      return !check;
     }
-    return false;
+    return check;
   }
 }

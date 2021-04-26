@@ -16,14 +16,14 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
   var _knowFullName = false;
   var _knowTime = false;
   var _knowPlace = false;
-  var _fever = false;
-  var _breathGasp = false;
-  var _palpitations = false;
-  var _dizzy = false;
-  var _vomit = false;
+  var _noFever = false;
+  var _noBreathGasp = false;
+  var _noPalpitations = false;
+  var _noDizzy = false;
+  var _noVomit = false;
   var _readyRecover = false;
   var patientState;
-  var _getpatientState;
+  var _getPatientState;
   @override
   void initState() {
     super.initState();
@@ -33,7 +33,7 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
   void initData() async {
     patientState = await _firebaseService.getPatientState(hn: widget.hn);
     setState(() {
-      _getpatientState = patientState;
+      _getPatientState = patientState;
     });
   }
 
@@ -41,11 +41,11 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
     if (_knowFullName &&
         _knowTime &&
         _knowPlace &&
-        _fever &&
-        _breathGasp &&
-        _palpitations &&
-        _dizzy &&
-        _vomit == true) {
+        _noFever &&
+        _noBreathGasp &&
+        _noPalpitations &&
+        _noDizzy &&
+        _noVomit == true) {
       return true;
     } else {
       return false;
@@ -139,11 +139,11 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                         _knowFullName = value;
                                         _knowTime = value;
                                         _knowPlace = value;
-                                        _fever = value;
-                                        _breathGasp = value;
-                                        _palpitations = value;
-                                        _dizzy = value;
-                                        _vomit = value;
+                                        _noFever = value;
+                                        _noBreathGasp = value;
+                                        _noPalpitations = value;
+                                        _noDizzy = value;
+                                        _noVomit = value;
                                       });
                                     },
                                     title: Text(
@@ -202,14 +202,14 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                           title: Text('3. ทราบสถานที่'),
                                         ),
                                         CheckboxListTile(
-                                          value: _fever,
-                                          selected: _fever,
+                                          value: _noFever,
+                                          selected: _noFever,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _fever = value;
+                                              _noFever = value;
                                               _readyRecover =
                                                   completeAllCheckBox();
                                               print("Check: $_readyRecover");
@@ -218,14 +218,14 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                           title: Text('4. ไม่มีไข้'),
                                         ),
                                         CheckboxListTile(
-                                          value: _breathGasp,
-                                          selected: _breathGasp,
+                                          value: _noBreathGasp,
+                                          selected: _noBreathGasp,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _breathGasp = value;
+                                              _noBreathGasp = value;
                                               _readyRecover =
                                                   completeAllCheckBox();
                                               print("Check: $_readyRecover");
@@ -235,14 +235,14 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                               Text('5. ไม่มีหายใจหอบเหนื่อย'),
                                         ),
                                         CheckboxListTile(
-                                          value: _palpitations,
-                                          selected: _palpitations,
+                                          value: _noPalpitations,
+                                          selected: _noPalpitations,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _palpitations = value;
+                                              _noPalpitations = value;
                                               _readyRecover =
                                                   completeAllCheckBox();
                                             });
@@ -250,14 +250,14 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                           title: Text('6. ไม่มีอาการใจสั่น'),
                                         ),
                                         CheckboxListTile(
-                                          value: _dizzy,
-                                          selected: _dizzy,
+                                          value: _noDizzy,
+                                          selected: _noDizzy,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _dizzy = value;
+                                              _noDizzy = value;
                                               _readyRecover =
                                                   completeAllCheckBox();
                                             });
@@ -266,14 +266,14 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                               '7. ไม่มีหน้ามืดหรือเวียนศีรษะ'),
                                         ),
                                         CheckboxListTile(
-                                          value: _vomit,
-                                          selected: _vomit,
+                                          value: _noVomit,
+                                          selected: _noVomit,
                                           controlAffinity:
                                               ListTileControlAffinity.leading,
                                           activeColor: Color(0xFFC37447),
                                           onChanged: (value) {
                                             setState(() {
-                                              _vomit = value;
+                                              _noVomit = value;
                                               _readyRecover =
                                                   completeAllCheckBox();
                                             });
@@ -300,11 +300,11 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                             if (_knowFullName |
                                                     _knowTime |
                                                     _knowPlace |
-                                                    _fever |
-                                                    _breathGasp |
-                                                    _palpitations |
-                                                    _dizzy |
-                                                    _vomit !=
+                                                    _noFever |
+                                                    _noBreathGasp |
+                                                    _noPalpitations |
+                                                    _noDizzy |
+                                                    _noVomit !=
                                                 true) {
                                               Dialogs
                                                   .alertToCompleteEvalutation(
@@ -315,11 +315,11 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                                 'Choice1': _knowFullName,
                                                 'Choice2': _knowTime,
                                                 'Choice3': _knowPlace,
-                                                'Choice4': _fever,
-                                                'Choice5': _breathGasp,
-                                                'Choice6': _palpitations,
-                                                'Choice7': _dizzy,
-                                                'Choice8': _vomit,
+                                                'Choice4': _noFever,
+                                                'Choice5': _noBreathGasp,
+                                                'Choice6': _noPalpitations,
+                                                'Choice7': _noDizzy,
+                                                'Choice8': _noVomit,
                                               };
                                               if (_readyRecover == true) {
                                                 formDataToDB.addAll({
@@ -354,7 +354,7 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                                   .alertSuccessfullySavedData(
                                                       context,
                                                       widget.hn,
-                                                      _getpatientState);
+                                                      _getPatientState);
                                             }
                                           }),
                                     ),
