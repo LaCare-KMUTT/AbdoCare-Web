@@ -289,6 +289,12 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
+  Future<String> getMedicalTeamWard() {
+    // TODO: implement getMedicalTeamWard
+    throw UnimplementedError();
+  }
+
+  @override
   Future<Map<String, dynamic>> getCollectionMap(
       {String collection, String docId}) {
     // TODO: implement getCollectionMap
