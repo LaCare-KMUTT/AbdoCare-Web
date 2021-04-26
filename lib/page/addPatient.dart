@@ -83,7 +83,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'เพิ่มผู้ป่วย',
+          'ลงทะเบียนผู้ป่วย',
           style: TextStyle(fontSize: 24),
         ),
         leading: IconButton(

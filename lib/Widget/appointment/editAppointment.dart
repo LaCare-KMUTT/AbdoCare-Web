@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -446,8 +447,10 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                             'Appointments',
                                                         docId: appointmentId,
                                                         data: dataToDB);
-                                                Navigator.pushNamed(context,
-                                                    '/appointment_page');
+                                                Navigator.pop(context);
+                                              } else {
+                                                Dialogs.alertToCompleteForm(
+                                                    context);
                                               }
                                             },
                                           ),
