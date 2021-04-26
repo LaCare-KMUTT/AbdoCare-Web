@@ -447,8 +447,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                             'Appointments',
                                                         docId: appointmentId,
                                                         data: dataToDB);
-                                                Navigator.pushNamed(context,
-                                                    '/appointment_page');
+                                                Navigator.pop(context);
                                               } else {
                                                 Dialogs.alertToCompleteForm(
                                                     context);
