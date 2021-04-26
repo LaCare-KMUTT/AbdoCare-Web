@@ -13,6 +13,7 @@ class PreOpViewModel {
     if (preOpList != null) {
       preOpList.forEach((mapData) {
         userList.add(PreOpData(map: mapData));
+        sortBy('status', true);
       });
     }
   }
