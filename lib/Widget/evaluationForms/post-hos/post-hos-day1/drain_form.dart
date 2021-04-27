@@ -99,7 +99,7 @@ class _DrainFormState extends State<DrainForm> {
                                   ),
                                   Padding(
                                     padding:
-                                        const EdgeInsets.fromLTRB(20, 8, 20, 0),
+                                        const EdgeInsets.fromLTRB(8, 8, 20, 0),
                                     child: Row(
                                       children: [
                                         Text(
@@ -176,16 +176,19 @@ class _DrainFormState extends State<DrainForm> {
                                     title: Text(
                                         '4. ไม่ทราบ ต้องการให้พยาบาลประเมินแผล'),
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'อาการและอาการแสดง:',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1,
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ],
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(8, 8, 20, 0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'อาการและอาการแสดง:',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   CheckboxListTile(
                                     value: _value5,
