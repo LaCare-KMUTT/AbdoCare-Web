@@ -1,6 +1,3 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/health_status_form_utility.dart';
-import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
-import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/healthStatusForm_model.dart';
@@ -10,7 +7,10 @@ import '../../../../services/interfaces/firebase_service_interface.dart';
 import '../../../../services/service_locator.dart';
 import '../../../../view_models/evaluate_form/healthStatusForm_view_model.dart';
 import '../../../appbar.dart';
+import '../../../shared/alert_style.dart';
+import '../../../shared/progress_bar.dart';
 import '../../../sidebar.dart';
+import '../../ultilities/form_utility/health_status_form_utility.dart';
 import 'cv.dart';
 import 'endocrine.dart';
 import 'general.dart';
