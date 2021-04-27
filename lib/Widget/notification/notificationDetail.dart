@@ -136,10 +136,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
-                            screenSize.height / 20, 0),
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 40, 0,
+                            screenSize.height / 40, 0),
                         child: RaisedButton(
                             child: Text("ทั้งหมด",
                                 style: TextStyle(
@@ -165,10 +165,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
-                            screenSize.height / 20, 0),
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 40, 0,
+                            screenSize.height / 40, 0),
                         child: RaisedButton(
                             child: Text(
                               "Pre-Operation",
@@ -178,7 +178,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                       ? Colors.white
                                       : Colors.black),
                             ),
-                            padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0)),
                             color: pressPreOpState
@@ -196,10 +196,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
-                            screenSize.height / 20, 0),
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 40, 0,
+                            screenSize.height / 40, 0),
                         child: RaisedButton(
                             child: Text("Post-Operation@Hospital",
                                 style: TextStyle(
@@ -226,10 +226,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 20, 0,
-                            screenSize.height / 20, 0),
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 40, 0,
+                            screenSize.height / 40, 0),
                         child: RaisedButton(
                             child: Text("Post-Operation@Home",
                                 style: TextStyle(
@@ -237,7 +237,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                     color: pressPostOpHomeState
                                         ? Colors.white
                                         : Colors.black)),
-                            padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(7.0)),
                             color: pressPostOpHomeState
