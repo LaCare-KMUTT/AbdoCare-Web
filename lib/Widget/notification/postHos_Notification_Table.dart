@@ -6,6 +6,8 @@ import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
+import 'notificationDetail.dart';
+
 class PostHosNotificationTable extends StatefulWidget {
   final List<PostHosNotiData> postHosData;
   PostHosNotificationTable({Key key, @required this.postHosData})
@@ -52,9 +54,8 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
             return DataRow(
                 onSelectChanged: (newValue) {
                   print(user.notiId);
-                  alertSuccessfullyChangeStatus2(context, user.notiId);
-
-                  //Dialogs.alertSuccessfullyChangeStatus(context, user.notiId);
+                  alertSuccessfullyChangeStatus(context, user.notiId);
+                  setState(() {});
                 },
                 cells: [
                   DataCell(Center(child: Text(user.formDate))),
@@ -74,9 +75,10 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
         ));
   }
 
-  void alertSuccessfullyChangeStatus2(BuildContext context, notiId) {
+  Future<void> alertSuccessfullyChangeStatus(
+      BuildContext context, notiId) async {
     final IFirebaseService _firebaseService = locator<IFirebaseService>();
-    showDialog(
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -93,9 +95,10 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                     //     collection: 'Notifications',
                     //     docId: notiId,
                     //     data: {'seen': true});
-                    // Navigator.pushNamed(context, '/notification_page')
+
+                    //Navigator.pushNamed(context, '/notification_page');
                     //     .then((value) => _stateUpdate());
-                    final value = await Navigator.push(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => NotificationPage()));
