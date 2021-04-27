@@ -5,7 +5,7 @@ import 'package:AbdoCare_Web/models/notification_list/pre_op_notification_model.
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/all_notification_view_model.dart';
-import 'package:AbdoCare_Web/view_models/notification_list/post-hos_notification_view_model.dart';
+import 'package:AbdoCare_Web/view_models/notification_list/post_hos_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/post_home_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/pre_op_notification_view_model.dart';
 import 'package:flutter/material.dart';

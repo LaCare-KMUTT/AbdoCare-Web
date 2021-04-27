@@ -3,7 +3,7 @@ import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/evaluationFormButton_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/all_notification_view_model.dart';
-import 'package:AbdoCare_Web/view_models/notification_list/post-hos_notification_view_model.dart';
+import 'package:AbdoCare_Web/view_models/notification_list/post_hos_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/post_home_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/pre_op_notification_view_model.dart';
 import 'package:get_it/get_it.dart';

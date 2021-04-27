@@ -761,11 +761,17 @@ class FirebaseService extends IFirebaseService {
     return anSubCollection['state'];
   }
 
-  Future<List<QueryDocumentSnapshot>> getNotificationList() async {
-    var data = await _firestore
-        .collection('Notifications')
-        .where('patientState', isEqualTo: 'Post-Operation@Hospital')
-        .get();
+  Future<List<QueryDocumentSnapshot>> getNotificationList(
+      String patientState) async {
+    var data;
+    if (patientState == 'AllState') {
+      data = await _firestore.collection('Notifications').get();
+    } else {
+      data = await _firestore
+          .collection('Notifications')
+          .where('patientState', isEqualTo: patientState)
+          .get();
+    }
     return data.docs;
   }
 
@@ -774,48 +780,23 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<Map<String, dynamic>>> getPostHosNotificationList() async {
-    var notiList = await this.getNotificationList();
+    var notiList = await this.getNotificationList("Post-Operation@Hospital");
     var returnList = notiList.map((user) async {
-      var docId = await _firestore
-          .collection("Notifications")
-          .doc(user.id)
-          .get()
-          .then((value) {
-        var docId = value.get("userId");
-        return docId;
-      }).catchError((onError) {
-        print('$onError : Cannot find userId');
-      });
-      var seen = await _firestore
-          .collection("Notifications")
-          .doc(user.id)
-          .get()
-          .then((value) {
-        var seen = value.get("seen");
-        if (seen == false) {
-          seen = "ยังไม่ได้ดำเนินการ";
-        } else
-          seen = "ดำเนินการแล้ว";
-        return seen;
-      }).catchError((onError) {
-        print('$onError : Cannot find seen');
-      });
-      var formName = await _firestore
-          .collection("Notifications")
-          .doc(user.id)
-          .get()
-          .then((value) {
-        var formName = value.get("formName");
-        return formName;
-      });
-      // var formTime = await _firestore
-      //     .collection("Notifications")
-      //     .doc(user.id)
-      //     .get()
-      //     .then((value) {
-      //   var formTime = value.get("creation");
-      //   return formTime;
-      // });
+      var notiCollection = await this
+          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
+      var docId = notiCollection['userId'];
+      var seen = notiCollection['seen'];
+      if (seen == false) {
+        seen = "ยังไม่ได้ดำเนินการ";
+      } else {
+        seen = "ดำเนินการแล้ว";
+      }
+      var formName = notiCollection['formName'];
+      var time = notiCollection['creation'];
+      var formTime =
+          DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+      var formDateToShow = DateFormat.yMd().format(formTime).toString();
+      var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: docId);
       var hnToMap = userCollection.data()['hn'] ?? '-';
@@ -843,7 +824,8 @@ class FirebaseService extends IFirebaseService {
         'roomNumber': roomNumberToMap ?? '-',
         'bedNumber': bedNumberToMap ?? '-',
         'formName': formName ?? '-',
-        'formTime': '-',
+        'formTime': formTimeToShow ?? '-',
+        'formDate': formDateToShow ?? '-',
         'seen': seen ?? '-',
       };
       return map;
@@ -861,8 +843,6 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<Map<String, dynamic>>> getAllNotificationList() async {
-    var notiList = await this.getNotificationList();
-    var returnList = notiList.map((user) async {});
     return null;
   }
 }

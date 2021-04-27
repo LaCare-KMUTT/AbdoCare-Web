@@ -35,13 +35,14 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
               color: Colors.black54,
               fontStyle: FontStyle.italic),
           columns: [
+            DataColumn(label: Expanded(child: Center(child: Text(' วันที่ ')))),
+            DataColumn(label: Expanded(child: Center(child: Text(' เวลา ')))),
             DataColumn(label: Expanded(child: Center(child: Text('HN')))),
             DataColumn(
                 label: Expanded(child: Center(child: Text('ชื่อ-นามสกุล')))),
             DataColumn(label: Expanded(child: Center(child: Text('ห้อง')))),
             DataColumn(label: Expanded(child: Center(child: Text('เตียง')))),
             DataColumn(label: Expanded(child: Center(child: Text('หมายเหตุ')))),
-            DataColumn(label: Expanded(child: Center(child: Text(' เวลา ')))),
             DataColumn(
                 label: Expanded(child: Center(child: Text('สถานะการดูแล'))))
           ],
@@ -51,6 +52,10 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                   Dialogs.alertSuccessfullyChangeStatus(context);
                 },
                 cells: [
+                  DataCell(
+                      Container(child: Center(child: Text(user.formDate)))),
+                  DataCell(
+                      Container(child: Center(child: Text(user.formTime)))),
                   DataCell(Container(child: Center(child: Text(user.hn)))),
                   DataCell(Container(child: Text(user.name))),
                   DataCell(
@@ -59,8 +64,6 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                       Container(child: Center(child: Text(user.bedNumber)))),
                   DataCell(
                       Container(child: Center(child: Text(user.formName)))),
-                  DataCell(
-                      Container(child: Center(child: Text(user.formTime)))),
                   DataCell(Container(
                       child: Center(
                           child: Text(user.seen,
