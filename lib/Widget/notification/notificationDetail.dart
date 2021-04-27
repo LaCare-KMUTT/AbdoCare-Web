@@ -9,8 +9,6 @@ import 'package:AbdoCare_Web/view_models/notification_list/post-hos_notification
 import 'package:AbdoCare_Web/view_models/notification_list/post_home_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/pre_op_notification_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../material.dart';
 import 'postHome_Notification_Table.dart';
 import 'postHos_Notification_Table.dart';
 import 'pre_Notification_Table.dart';
@@ -30,7 +28,6 @@ class _NotificationDetailState extends State<NotificationDetail> {
   final PostHomeNotiViewModel _postHomeNotiViewModel =
       locator<PostHomeNotiViewModel>();
   final AllNotiViewModel _allNotiViewModel = locator<AllNotiViewModel>();
-  final CustomMaterial _customMaterial = locator<CustomMaterial>();
   bool pressAllState = false;
   bool pressPreOpState = false;
   bool pressPostOpHospitalState = true;
@@ -95,7 +92,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 postHosData.clear();
               }
               postHosData.addAll(snapshot.data);
-              return PostHosNotificationTable();
+              return PostHosNotificationTable(postHosData: postHosData);
             }
           });
     } else if (onClickState == "Post-Operation@Home") {

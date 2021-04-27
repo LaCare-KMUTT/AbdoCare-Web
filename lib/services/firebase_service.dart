@@ -762,7 +762,10 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<QueryDocumentSnapshot>> getNotificationList() async {
-    var data = await _firestore.collection('Notifications').get();
+    var data = await _firestore
+        .collection('Notifications')
+        .where('patientState', isEqualTo: 'Post-Operation@Hospital')
+        .get();
     return data.docs;
   }
 
@@ -771,7 +774,86 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<Map<String, dynamic>>> getPostHosNotificationList() async {
-    return null;
+    var notiList = await this.getNotificationList();
+    var returnList = notiList.map((user) async {
+      var docId = await _firestore
+          .collection("Notifications")
+          .doc(user.id)
+          .get()
+          .then((value) {
+        var docId = value.get("userId");
+        return docId;
+      }).catchError((onError) {
+        print('$onError : Cannot find userId');
+      });
+      var seen = await _firestore
+          .collection("Notifications")
+          .doc(user.id)
+          .get()
+          .then((value) {
+        var seen = value.get("seen");
+        if (seen == false) {
+          seen = "ยังไม่ได้ดำเนินการ";
+        } else
+          seen = "ดำเนินการแล้ว";
+        return seen;
+      }).catchError((onError) {
+        print('$onError : Cannot find seen');
+      });
+      var formName = await _firestore
+          .collection("Notifications")
+          .doc(user.id)
+          .get()
+          .then((value) {
+        var formName = value.get("formName");
+        return formName;
+      });
+      // var formTime = await _firestore
+      //     .collection("Notifications")
+      //     .doc(user.id)
+      //     .get()
+      //     .then((value) {
+      //   var formTime = value.get("creation");
+      //   return formTime;
+      // });
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: docId);
+      var hnToMap = userCollection.data()['hn'] ?? '-';
+      var nameToMap =
+          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var anSubCollection = await _firestore
+          .collection('Users')
+          .doc(docId)
+          .collection('an')
+          .orderBy('operationDate', descending: true)
+          .limit(1)
+          .get()
+          .then((value) => value.docs.first.data())
+          .catchError((onError) {
+        print('$onError no anSubCollection on ${user.id}');
+      });
+      if (anSubCollection['state'] != 'Post-Operation@Hospital') {
+        return null;
+      }
+      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
+      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
+      var map = {
+        'hn': hnToMap ?? '-',
+        'name': nameToMap ?? '-',
+        'roomNumber': roomNumberToMap ?? '-',
+        'bedNumber': bedNumberToMap ?? '-',
+        'formName': formName ?? '-',
+        'formTime': '-',
+        'seen': seen ?? '-',
+      };
+      return map;
+    });
+    var futureList = Future.wait(returnList);
+    var returnValue = await futureList;
+    if (returnValue != null) {
+      returnValue.removeWhere((element) => element == null);
+    }
+    return returnValue;
   }
 
   Future<List<Map<String, dynamic>>> getPostHomeNotificationList() async {
@@ -779,6 +861,8 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<Map<String, dynamic>>> getAllNotificationList() async {
+    var notiList = await this.getNotificationList();
+    var returnList = notiList.map((user) async {});
     return null;
   }
 }

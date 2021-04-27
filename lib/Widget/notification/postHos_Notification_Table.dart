@@ -1,14 +1,20 @@
+import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
+import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
+import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class PostHosNotificationTable extends StatefulWidget {
-  PostHosNotificationTable({Key key}) : super(key: key);
+  final List<PostHosNotiData> postHosData;
+  PostHosNotificationTable({Key key, @required this.postHosData})
+      : super(key: key);
   @override
   _PostHosNotificationTableState createState() =>
       _PostHosNotificationTableState();
 }
 
 class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -39,26 +45,30 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
             DataColumn(
                 label: Expanded(child: Center(child: Text('สถานะการดูแล'))))
           ],
-          rows: [
-            DataRow(
+          rows: widget.postHosData.map((user) {
+            return DataRow(
                 onSelectChanged: (newValue) {
                   Dialogs.alertSuccessfullyChangeStatus(context);
                 },
                 cells: [
-                  DataCell(Container(child: Center(child: Text("HN20001")))),
-                  DataCell(Container(child: Text("นายสมชาย นามสกุล"))),
-                  DataCell(Container(child: Center(child: Text("1")))),
-                  DataCell(Container(child: Center(child: Text("1")))),
+                  DataCell(Container(child: Center(child: Text(user.hn)))),
+                  DataCell(Container(child: Text(user.name))),
+                  DataCell(
+                      Container(child: Center(child: Text(user.roomNumber)))),
+                  DataCell(
+                      Container(child: Center(child: Text(user.bedNumber)))),
+                  DataCell(
+                      Container(child: Center(child: Text(user.formName)))),
+                  DataCell(
+                      Container(child: Center(child: Text(user.formTime)))),
                   DataCell(Container(
                       child: Center(
-                          child: Text("ไม่ผ่านแบบประเมินอาการที่ผิดปกติ")))),
-                  DataCell(Container(child: Center(child: Text("16.30")))),
-                  DataCell(Container(
-                      child: Center(
-                          child: Text("ยังไม่ได้ดำเนินการ",
-                              style: TextStyle(color: Colors.red)))))
-                ]),
-          ],
+                          child: Text(user.seen,
+                              style: TextStyle(
+                                  color: _customMaterial
+                                      .getNotiStatusColor(user.seen))))))
+                ]);
+          }).toList(),
         ));
   }
 }
