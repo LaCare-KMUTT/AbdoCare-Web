@@ -13,6 +13,8 @@ class PostHosNotiViewModel {
     if (postHosNotiList != null) {
       postHosNotiList.forEach((mapData) {
         userList.add(PostHosNotiData(map: mapData));
+        sortBy("formTime", true);
+        sortBy("seen", true);
       });
     }
   }
@@ -20,6 +22,22 @@ class PostHosNotiViewModel {
   Future<List<PostHosNotiData>> getUsers() async {
     if (userList.isEmpty) await _initialize();
     userList.forEach((element) {});
+    return userList;
+  }
+
+  List<PostHosNotiData> sortBy(String key, bool isAsc) {
+    switch (key) {
+      case 'seen':
+        userList.sort((a, b) => a.seen.compareTo(b.seen));
+        break;
+      case 'formTime':
+        userList.sort((a, b) => a.formTime.compareTo(b.formTime));
+        break;
+    }
+    if (isAsc) {
+      userList = userList.reversed.toList();
+    }
+
     return userList;
   }
 }
