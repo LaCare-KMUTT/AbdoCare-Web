@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/models/notification_list/formName_Notification_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -792,6 +793,7 @@ class FirebaseService extends IFirebaseService {
         seen = "ดำเนินการแล้ว";
       }
       var formName = notiCollection['formName'];
+      formName = "ไม่ผ่าน" + formNameModel[formName];
       var time = notiCollection['creation'];
       var formTime =
           DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
@@ -827,6 +829,7 @@ class FirebaseService extends IFirebaseService {
         'formTime': formTimeToShow ?? '-',
         'formDate': formDateToShow ?? '-',
         'seen': seen ?? '-',
+        'notiId': user.id ?? '-'
       };
       return map;
     });

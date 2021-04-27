@@ -7,6 +7,7 @@ class PostHosNotiData {
   String formName;
   String formTime;
   String formDate;
+  String notiId;
   Map<String, dynamic> map;
 
   PostHosNotiData({
@@ -20,5 +21,6 @@ class PostHosNotiData {
     this.formName = map['formName'];
     this.formTime = map['formTime'];
     this.formDate = map['formDate'];
+    this.notiId = map['notiId'];
   }
 }

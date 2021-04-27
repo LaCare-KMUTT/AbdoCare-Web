@@ -41,7 +41,7 @@ class _PreNotificationTableState extends State<PreNotificationTable> {
           rows: [
             DataRow(
                 onSelectChanged: (newValue) {
-                  Dialogs.alertSuccessfullyChangeStatus(context);
+                  //Dialogs.alertSuccessfullyChangeStatus(context);
                 },
                 cells: [
                   DataCell(Container(child: Center(child: Text("HN20001")))),

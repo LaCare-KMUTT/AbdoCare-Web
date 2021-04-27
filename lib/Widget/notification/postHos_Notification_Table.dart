@@ -1,6 +1,8 @@
 import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
+import 'package:AbdoCare_Web/page/notification.dart';
+import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +29,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
         },
         child: DataTable(
           showCheckboxColumn: false,
-          columnSpacing: screenSize.width / 20,
+          columnSpacing: screenSize.width / 40,
           headingRowHeight: 50,
           headingTextStyle: TextStyle(
               fontSize: 18,
@@ -36,7 +38,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
               fontStyle: FontStyle.italic),
           columns: [
             DataColumn(label: Expanded(child: Center(child: Text(' วันที่ ')))),
-            DataColumn(label: Expanded(child: Center(child: Text(' เวลา ')))),
+            DataColumn(label: Expanded(child: Center(child: Text('เวลา')))),
             DataColumn(label: Expanded(child: Center(child: Text('HN')))),
             DataColumn(
                 label: Expanded(child: Center(child: Text('ชื่อ-นามสกุล')))),
@@ -49,29 +51,67 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
           rows: widget.postHosData.map((user) {
             return DataRow(
                 onSelectChanged: (newValue) {
-                  Dialogs.alertSuccessfullyChangeStatus(context);
+                  print(user.notiId);
+                  alertSuccessfullyChangeStatus2(context, user.notiId);
+
+                  //Dialogs.alertSuccessfullyChangeStatus(context, user.notiId);
                 },
                 cells: [
-                  DataCell(
-                      Container(child: Center(child: Text(user.formDate)))),
-                  DataCell(
-                      Container(child: Center(child: Text(user.formTime)))),
-                  DataCell(Container(child: Center(child: Text(user.hn)))),
-                  DataCell(Container(child: Text(user.name))),
-                  DataCell(
-                      Container(child: Center(child: Text(user.roomNumber)))),
-                  DataCell(
-                      Container(child: Center(child: Text(user.bedNumber)))),
-                  DataCell(
-                      Container(child: Center(child: Text(user.formName)))),
-                  DataCell(Container(
-                      child: Center(
-                          child: Text(user.seen,
-                              style: TextStyle(
-                                  color: _customMaterial
-                                      .getNotiStatusColor(user.seen))))))
+                  DataCell(Center(child: Text(user.formDate))),
+                  DataCell(Center(child: Text(user.formTime))),
+                  DataCell(Center(child: Text(user.hn))),
+                  DataCell(Text(user.name)),
+                  DataCell(Center(child: Text(user.roomNumber))),
+                  DataCell(Center(child: Text(user.bedNumber))),
+                  DataCell(Text(user.formName)),
+                  DataCell(Center(
+                      child: Text(user.seen,
+                          style: TextStyle(
+                              color: _customMaterial
+                                  .getNotiStatusColor(user.seen)))))
                 ]);
           }).toList(),
         ));
+  }
+
+  void alertSuccessfullyChangeStatus2(BuildContext context, notiId) {
+    final IFirebaseService _firebaseService = locator<IFirebaseService>();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            content: Text("บุคลากรทางการแพทย์ได้ดำเนินการแล้ว",
+                style: Theme.of(context).textTheme.bodyText2,
+                textAlign: TextAlign.center),
+            actions: [
+              FlatButton(
+                  child: Text('ดำเนินการแล้ว'),
+                  onPressed: () async {
+                    // _firebaseService.updateDataToCollectionField(
+                    //     collection: 'Notifications',
+                    //     docId: notiId,
+                    //     data: {'seen': true});
+                    // Navigator.pushNamed(context, '/notification_page')
+                    //     .then((value) => _stateUpdate());
+                    final value = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationPage()));
+                    //Navigator.popAndPushNamed(context, '/notification_page');
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => NotificationPage()));
+                  }),
+              FlatButton(
+                  child: Text('ยกเลิก'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  })
+            ]);
+      },
+    );
   }
 }
