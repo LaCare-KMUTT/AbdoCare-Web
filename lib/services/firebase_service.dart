@@ -808,14 +808,23 @@ class FirebaseService extends IFirebaseService {
         var formName = value.get("formName");
         return formName;
       });
-      // var formTime = await _firestore
-      //     .collection("Notifications")
-      //     .doc(user.id)
-      //     .get()
-      //     .then((value) {
-      //   var formTime = value.get("creation");
-      //   return formTime;
-      // });
+
+      var formTime = await _firestore
+          .collection("Notifications")
+          .doc(user.id)
+          .get()
+          .then((value) {
+        Timestamp time = value.get("creation");
+        var formTime =
+            DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+        //can change.yMd() to other format
+        var formDateToShow = DateFormat.yMd().format(formTime).toString();
+        var formTimeToShow = DateFormat.Hm().format(formTime).toString();
+        return '$formTimeToShow $formDateToShow';
+      }).catchError((onError) {
+        print('$onError : Cannot find formTime');
+      });
+
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: docId);
       var hnToMap = userCollection.data()['hn'] ?? '-';
@@ -843,7 +852,7 @@ class FirebaseService extends IFirebaseService {
         'roomNumber': roomNumberToMap ?? '-',
         'bedNumber': bedNumberToMap ?? '-',
         'formName': formName ?? '-',
-        'formTime': '-',
+        'formTime': formTime ?? '-',
         'seen': seen ?? '-',
       };
       return map;
