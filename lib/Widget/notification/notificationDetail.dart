@@ -2,7 +2,6 @@ import 'package:AbdoCare_Web/models/notification_list/all_notification_model.dar
 import 'package:AbdoCare_Web/models/notification_list/post_home_notification_model.dart';
 import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
 import 'package:AbdoCare_Web/models/notification_list/pre_op_notification_model.dart';
-import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/all_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/post_hos_notification_view_model.dart';
@@ -21,7 +20,6 @@ class NotificationDetail extends StatefulWidget {
 }
 
 class _NotificationDetailState extends State<NotificationDetail> {
-  final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final PreOpNotiViewModel _preOpNotiViewModel = locator<PreOpNotiViewModel>();
   final PostHosNotiViewModel _postHosNotiViewModel =
       locator<PostHosNotiViewModel>();
@@ -32,11 +30,26 @@ class _NotificationDetailState extends State<NotificationDetail> {
   bool pressPreOpState = false;
   bool pressPostOpHospitalState = true;
   bool pressPostOpHomeState = false;
+  Future<List<PostHosNotiData>> _postHosData;
   String onClickState = "Post-Operation@Hospital";
   List<PreOpNotiData> preOpData = [];
   List<PostHosNotiData> postHosData = [];
   List<PostHomeNotiData> postHomeData = [];
   List<AllNotiData> allData = [];
+  void callPostHosData() {
+    setState(() {
+      _postHosData = _postHosNotiViewModel.getUsers();
+    });
+  }
+
+  @override
+  void initState() {
+    setState(() {
+      _postHosData = _postHosNotiViewModel.getUsers();
+    });
+    super.initState();
+  }
+
   FutureBuilder notificationDataBody(String onClickState) {
     if (onClickState == "AllState") {
       return FutureBuilder<List<AllNotiData>>(
@@ -78,7 +91,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
           });
     } else if (onClickState == "Post-Operation@Hospital") {
       return FutureBuilder<List<PostHosNotiData>>(
-          future: _postHosNotiViewModel.getUsers(),
+          future: _postHosData,
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
@@ -92,7 +105,8 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 postHosData.clear();
               }
               postHosData.addAll(snapshot.data);
-              return PostHosNotificationTable(postHosData: postHosData);
+              return PostHosNotificationTable(
+                  postHosData: postHosData, callPostHosData: callPostHosData);
             }
           });
     } else if (onClickState == "Post-Operation@Home") {

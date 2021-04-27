@@ -1,16 +1,14 @@
 import 'package:AbdoCare_Web/Widget/material.dart';
-import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
-import 'package:AbdoCare_Web/page/notification.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
-import 'notificationDetail.dart';
-
 class PostHosNotificationTable extends StatefulWidget {
   final List<PostHosNotiData> postHosData;
-  PostHosNotificationTable({Key key, @required this.postHosData})
+  final Function callPostHosData;
+  PostHosNotificationTable(
+      {Key key, @required this.postHosData, this.callPostHosData})
       : super(key: key);
   @override
   _PostHosNotificationTableState createState() =>
@@ -19,6 +17,7 @@ class PostHosNotificationTable extends StatefulWidget {
 
 class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -54,8 +53,11 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
             return DataRow(
                 onSelectChanged: (newValue) {
                   print(user.notiId);
-                  alertSuccessfullyChangeStatus(context, user.notiId);
-                  setState(() {});
+                  alertSuccessfullyChangeStatus(
+                    context,
+                    user.notiId,
+                  );
+                  // widget.callPostHosData();
                 },
                 cells: [
                   DataCell(Center(child: Text(user.formDate))),
@@ -91,22 +93,11 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
               FlatButton(
                   child: Text('ดำเนินการแล้ว'),
                   onPressed: () async {
-                    // _firebaseService.updateDataToCollectionField(
-                    //     collection: 'Notifications',
-                    //     docId: notiId,
-                    //     data: {'seen': true});
-
-                    //Navigator.pushNamed(context, '/notification_page');
-                    //     .then((value) => _stateUpdate());
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NotificationPage()));
-                    //Navigator.popAndPushNamed(context, '/notification_page');
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => NotificationPage()));
+                    _firebaseService.updateDataToCollectionField(
+                        collection: 'Notifications',
+                        docId: notiId,
+                        data: {'seen': true});
+                    Navigator.pop(context);
                   }),
               FlatButton(
                   child: Text('ยกเลิก'),
@@ -115,6 +106,6 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                   })
             ]);
       },
-    );
+    ).then((value) => widget.callPostHosData());
   }
 }
