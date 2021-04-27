@@ -16,17 +16,17 @@ import 'services/service_locator.dart';
 import 'page/notification.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  await Firebase.initializeApp(
-    name: 'Abdocare-Register-Service',
-    options: const FirebaseOptions(
-        projectId: 'abdocare-bdab0',
-        apiKey: 'AIzaSyDu8_HYCIsMBc8PkNs5oddKhjcJLFoNaVk',
-        authDomain: 'abdocare-bdab0.firebaseapp.com',
-        appId: '1:611491873650:web:7c3d372d1cdf8f314393eb',
-        messagingSenderId: '611491873650'),
-  );
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  // await Firebase.initializeApp(
+  //   name: 'Abdocare-Register-Service',
+  //   options: const FirebaseOptions(
+  //       projectId: 'abdocare-bdab0',
+  //       apiKey: 'AIzaSyDu8_HYCIsMBc8PkNs5oddKhjcJLFoNaVk',
+  //       authDomain: 'abdocare-bdab0.firebaseapp.com',
+  //       appId: '1:611491873650:web:7c3d372d1cdf8f314393eb',
+  //       messagingSenderId: '611491873650'),
+  // );
   //ignore: await_only_futures
   await setupServiceLocator(isMock: false);
   runApp(MyApp());
