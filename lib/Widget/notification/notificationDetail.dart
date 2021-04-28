@@ -32,6 +32,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
   bool pressPostOpHomeState = false;
   Future<List<PostHosNotiData>> _postHosData;
   Future<List<PreOpNotiData>> _preOpData;
+  Future<List<AllNotiData>> _allData;
   String onClickState = "Post-Operation@Hospital";
   List<PreOpNotiData> preOpData = [];
   List<PostHosNotiData> postHosData = [];
@@ -46,6 +47,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
       setState(() {
         _preOpData = _preOpNotiViewModel.getUsers();
       });
+    } else {
+      setState(() {
+        _allData = _allNotiViewModel.getUsers();
+      });
     }
   }
 
@@ -54,6 +59,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
     setState(() {
       _postHosData = _postHosNotiViewModel.getUsers();
       _preOpData = _preOpNotiViewModel.getUsers();
+      _allData = _allNotiViewModel.getUsers();
     });
     super.initState();
   }
@@ -61,7 +67,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
   FutureBuilder notificationDataBody(String onClickState) {
     if (onClickState == "AllState") {
       return FutureBuilder<List<AllNotiData>>(
-          future: _allNotiViewModel.getUsers(),
+          future: _allData,
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
@@ -75,7 +81,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 allData.clear();
               }
               allData.addAll(snapshot.data);
-              return AllNotificationTable();
+              return AllNotificationTable(
+                  allData: allData,
+                  callAllData: callData,
+                  patientState: onClickState);
             }
           });
     } else if (onClickState == "Pre-Operation") {
@@ -184,6 +193,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                 pressPostOpHospitalState = false;
                                 pressPostOpHomeState = false;
                                 onClickState = "AllState";
+                                callData(onClickState);
                               });
                             }),
                       ),
