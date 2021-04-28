@@ -198,6 +198,21 @@ class FirebaseService extends IFirebaseService {
     return signature;
   }
 
+  Future<String> getMedicalTeamWard() async {
+    var medicalTeamUserId = getUserId();
+    var ward = await _firestore
+        .collection('MedicalTeams')
+        .doc(medicalTeamUserId)
+        .get()
+        .then((value) {
+      var ward = value.get('ward');
+      return "$ward";
+    }).catchError((onError) {
+      print('$onError : Cannot find medical ward');
+    });
+    return ward;
+  }
+
   Future<String> addDataToFormsCollection(
       {@required Map<String, dynamic> data,
       @required String formName,
