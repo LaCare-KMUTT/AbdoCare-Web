@@ -6,6 +6,7 @@ import '../../../../services/interfaces/calculation_service_interface.dart';
 import '../../../../services/interfaces/firebase_service_interface.dart';
 import '../../../../services/service_locator.dart';
 import '../../../../view_models/evaluate_form/healthStatusForm_view_model.dart';
+import '../../../../view_models/evaluate_form/pre_visit_view_model.dart';
 import '../../../appbar.dart';
 import '../../../shared/alert_style.dart';
 import '../../../shared/progress_bar.dart';
@@ -34,7 +35,9 @@ class HealthStatusForm extends StatefulWidget {
 
 class _HealthStatusFormState extends State<HealthStatusForm> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  ICalculationService _calculationService = locator<ICalculationService>();
+  final ICalculationService _calculationService =
+      locator<ICalculationService>();
+  final PreVisitViewModel _preVisitViewModel = locator<PreVisitViewModel>();
   final HealthStatusUtility _healthStatusUtility =
       locator<HealthStatusUtility>();
   final _formKey = GlobalKey<FormState>();
@@ -357,23 +360,29 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
                                         print(
                                             'MODEL HEALTH STATUS ${model.toMap()}');
 
-                                        _firebaseService
-                                            .addDataToFormsCollection(
-                                                data: widget.generalForm,
-                                                formName: 'General',
-                                                hn: widget.hn);
+                                        // GeneralFormViewModel()
+                                        //     .updateToDatabase();
+                                        _preVisitViewModel.saveHealthStatusForm(
+                                            model.toMap());
+                                        _preVisitViewModel.saveDataToDatabase(
+                                            hn: widget.hn);
+                                        // _firebaseService
+                                        //     .addDataToFormsCollection(
+                                        //         data: widget.generalForm,
+                                        //         formName: 'General',
+                                        //         hn: widget.hn);
 
-                                        _firebaseService
-                                            .addDataToFormsCollection(
-                                                data: widget.adlForm,
-                                                formName: 'ADL',
-                                                hn: widget.hn);
+                                        // _firebaseService
+                                        //     .addDataToFormsCollection(
+                                        //         data: widget.adlForm,
+                                        //         formName: 'ADL',
+                                        //         hn: widget.hn);
 
-                                        _firebaseService
-                                            .addDataToFormsCollection(
-                                                hn: widget.hn,
-                                                formName: 'Health Status',
-                                                data: model.toMap());
+                                        // _firebaseService
+                                        //     .addDataToFormsCollection(
+                                        //         hn: widget.hn,
+                                        //         formName: 'Health Status',
+                                        //         data: model.toMap());
 
                                         Navigator.push(
                                             context,
