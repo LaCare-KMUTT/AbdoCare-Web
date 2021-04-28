@@ -408,7 +408,8 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                               .addDocumentToCollection(
                                                   collection: 'Appointments',
                                                   docData: dataToDB);
-                                          Navigator.pop(context);
+                                          Navigator.popAndPushNamed(
+                                              context, "/appointment_page");
                                         } else {
                                           Dialogs.alertToCompleteForm(context);
                                         }
