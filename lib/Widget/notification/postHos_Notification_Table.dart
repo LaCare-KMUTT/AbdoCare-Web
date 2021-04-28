@@ -34,7 +34,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
         },
         child: DataTable(
           showCheckboxColumn: false,
-          columnSpacing: screenSize.width / 40,
+          columnSpacing: screenSize.width / 20,
           headingRowHeight: 50,
           headingTextStyle: TextStyle(
               fontSize: 18,
@@ -42,16 +42,16 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
               color: Colors.black54,
               fontStyle: FontStyle.italic),
           columns: [
-            DataColumn(label: Expanded(child: Center(child: Text(' วันที่ ')))),
-            DataColumn(label: Expanded(child: Center(child: Text('เวลา')))),
+            DataColumn(
+                label: Expanded(child: Center(child: Text('สถานะการดูแล')))),
             DataColumn(label: Expanded(child: Center(child: Text('HN')))),
             DataColumn(
                 label: Expanded(child: Center(child: Text('ชื่อ-นามสกุล')))),
             DataColumn(label: Expanded(child: Center(child: Text('ห้อง')))),
             DataColumn(label: Expanded(child: Center(child: Text('เตียง')))),
             DataColumn(label: Expanded(child: Center(child: Text('หมายเหตุ')))),
-            DataColumn(
-                label: Expanded(child: Center(child: Text('สถานะการดูแล'))))
+            DataColumn(label: Expanded(child: Center(child: Text('เวลา')))),
+            DataColumn(label: Expanded(child: Center(child: Text('วันที่'))))
           ],
           rows: widget.postHosData.map((user) {
             return DataRow(
@@ -61,18 +61,28 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                       context, user.notiId, user.formName);
                 },
                 cells: [
-                  DataCell(Center(child: Text(user.formDate))),
-                  DataCell(Center(child: Text(user.formTime))),
-                  DataCell(Center(child: Text(user.hn))),
-                  DataCell(Text(user.name)),
-                  DataCell(Center(child: Text(user.roomNumber))),
-                  DataCell(Center(child: Text(user.bedNumber))),
-                  DataCell(Text(user.formName)),
                   DataCell(Center(
                       child: Text(user.seen,
                           style: TextStyle(
+                              fontSize: 16,
                               color: _customMaterial
-                                  .getNotiStatusColor(user.seen)))))
+                                  .getNotiStatusColor(user.seen))))),
+                  DataCell(Center(
+                      child: Text(user.hn, style: TextStyle(fontSize: 16)))),
+                  DataCell(Text(user.name, style: TextStyle(fontSize: 16))),
+                  DataCell(Center(
+                      child: Text(user.roomNumber,
+                          style: TextStyle(fontSize: 16)))),
+                  DataCell(Center(
+                      child: Text(user.bedNumber,
+                          style: TextStyle(fontSize: 16)))),
+                  DataCell(Text(user.formName, style: TextStyle(fontSize: 16))),
+                  DataCell(Center(
+                      child:
+                          Text(user.formTime, style: TextStyle(fontSize: 16)))),
+                  DataCell(Center(
+                      child:
+                          Text(user.formDate, style: TextStyle(fontSize: 16))))
                 ]);
           }).toList(),
         ));

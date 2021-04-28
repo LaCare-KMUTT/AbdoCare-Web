@@ -7,7 +7,7 @@ class AllNotiData {
   String seen;
   String formName;
   String formTime;
-  String formDate;
+  dynamic formDate;
   String notiId;
   Map<String, dynamic> map;
 

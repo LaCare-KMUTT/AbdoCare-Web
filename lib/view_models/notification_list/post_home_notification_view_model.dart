@@ -13,13 +13,32 @@ class PostHomeNotiViewModel {
     if (postHomeNotiList != null) {
       postHomeNotiList.forEach((mapData) {
         userList.add(PostHomeNotiData(map: mapData));
+        sortBy("formTime", true);
+        sortBy("seen", true);
       });
     }
   }
 
   Future<List<PostHomeNotiData>> getUsers() async {
-    if (userList.isEmpty) await _initialize();
+    userList.clear();
+    await _initialize();
     userList.forEach((element) {});
+    return userList;
+  }
+
+  List<PostHomeNotiData> sortBy(String key, bool isAsc) {
+    switch (key) {
+      case 'seen':
+        userList.sort((a, b) => a.seen.compareTo(b.seen));
+        break;
+      case 'formTime':
+        userList.sort((a, b) => a.formTime.compareTo(b.formTime));
+        break;
+    }
+    if (isAsc) {
+      userList = userList.reversed.toList();
+    }
+
     return userList;
   }
 }

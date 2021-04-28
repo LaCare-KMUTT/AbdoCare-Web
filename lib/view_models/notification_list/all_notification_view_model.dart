@@ -13,6 +13,7 @@ class AllNotiViewModel {
     if (allNotiList != null) {
       allNotiList.forEach((mapData) {
         userList.add(AllNotiData(map: mapData));
+        sortBy("formDate", true);
         sortBy("formTime", true);
         sortBy("seen", true);
       });
@@ -33,6 +34,9 @@ class AllNotiViewModel {
         break;
       case 'formTime':
         userList.sort((a, b) => a.formTime.compareTo(b.formTime));
+        break;
+      case 'formDate':
+        userList.sort((a, b) => a.formDate.compareTo(b.formDate));
         break;
     }
     if (isAsc) {

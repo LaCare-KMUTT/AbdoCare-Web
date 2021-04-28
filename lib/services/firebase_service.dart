@@ -899,7 +899,60 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<Map<String, dynamic>>> getPostHomeNotificationList() async {
-    return null;
+    var notiList = await this.getNotificationList("Post-Operation@Home");
+    var returnList = notiList.map((user) async {
+      var notiCollection = await this
+          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
+      var docId = notiCollection['userId'];
+      var seen = notiCollection['seen'];
+      if (seen == false) {
+        seen = "ยังไม่ได้ดำเนินการ";
+      } else {
+        seen = "ดำเนินการแล้ว";
+      }
+      var formName = notiCollection['formName'];
+      formName = "ไม่ผ่าน" + formNameModel[formName];
+      var time = notiCollection['creation'];
+      var formTime =
+          DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+      var formDateToShow = DateFormat.yMd().format(formTime).toString();
+      var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: docId);
+      var hnToMap = userCollection.data()['hn'] ?? '-';
+      var nameToMap =
+          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var anSubCollection = await _firestore
+          .collection('Users')
+          .doc(docId)
+          .collection('an')
+          .orderBy('operationDate', descending: true)
+          .limit(1)
+          .get()
+          .then((value) => value.docs.first.data())
+          .catchError((onError) {
+        print('$onError no anSubCollection on ${user.id}');
+      });
+      if (anSubCollection['state'] != 'Post-Operation@Home') {
+        return null;
+      }
+      var map = {
+        'hn': hnToMap ?? '-',
+        'name': nameToMap ?? '-',
+        'formName': formName ?? '-',
+        'formTime': formTimeToShow ?? '-',
+        'formDate': formDateToShow ?? '-',
+        'seen': seen ?? '-',
+        'notiId': user.id ?? '-'
+      };
+      return map;
+    });
+    var futureList = Future.wait(returnList);
+    var returnValue = await futureList;
+    if (returnValue != null) {
+      returnValue.removeWhere((element) => element == null);
+    }
+    return returnValue;
   }
 
   Future<List<Map<String, dynamic>>> getAllNotificationList() async {
@@ -919,7 +972,7 @@ class FirebaseService extends IFirebaseService {
       var time = notiCollection['creation'];
       var formTime =
           DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat.yMd().format(formTime).toString();
+      var formDateToShow = DateFormat.yMd().format(formTime);
       var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: docId);
