@@ -793,7 +793,7 @@ class FirebaseService extends IFirebaseService {
       var time = notiCollection['creation'];
       var formTime =
           DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat.yMd().format(formTime).toString();
+      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
       var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: docId);
@@ -824,6 +824,7 @@ class FirebaseService extends IFirebaseService {
         'formName': formName ?? '-',
         'formTime': formTimeToShow ?? '-',
         'formDate': formDateToShow ?? '-',
+        'formDateTimeSort': formTime ?? '-',
         'seen': seen ?? '-',
         'notiId': user.id ?? '-'
       };
@@ -854,7 +855,7 @@ class FirebaseService extends IFirebaseService {
       var time = notiCollection['creation'];
       var formTime =
           DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat.yMd().format(formTime).toString();
+      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
       var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: docId);
@@ -885,6 +886,7 @@ class FirebaseService extends IFirebaseService {
         'formName': formName ?? '-',
         'formTime': formTimeToShow ?? '-',
         'formDate': formDateToShow ?? '-',
+        'formDateTimeSort': formTime ?? '-',
         'seen': seen ?? '-',
         'notiId': user.id ?? '-'
       };
@@ -915,7 +917,7 @@ class FirebaseService extends IFirebaseService {
       var time = notiCollection['creation'];
       var formTime =
           DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat.yMd().format(formTime).toString();
+      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
       var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: docId);
@@ -942,6 +944,7 @@ class FirebaseService extends IFirebaseService {
         'formName': formName ?? '-',
         'formTime': formTimeToShow ?? '-',
         'formDate': formDateToShow ?? '-',
+        'formDateTimeSort': formTime ?? '-',
         'seen': seen ?? '-',
         'notiId': user.id ?? '-'
       };
@@ -972,7 +975,7 @@ class FirebaseService extends IFirebaseService {
       var time = notiCollection['creation'];
       var formTime =
           DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat.yMd().format(formTime);
+      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
       var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: docId);
@@ -1001,6 +1004,7 @@ class FirebaseService extends IFirebaseService {
         'patientState': patientStateToMap ?? '-',
         'formName': formName ?? '-',
         'formTime': formTimeToShow ?? '-',
+        'formDateTimeSort': formTime ?? '-',
         'formDate': formDateToShow ?? '-',
         'seen': seen ?? '-',
         'notiId': user.id ?? '-'

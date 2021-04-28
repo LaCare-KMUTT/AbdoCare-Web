@@ -13,7 +13,7 @@ class PreOpNotiViewModel {
     if (preOpNotiList != null) {
       preOpNotiList.forEach((mapData) {
         userList.add(PreOpNotiData(map: mapData));
-        sortBy("formTime", true);
+        sortBy("formDateTimeSort", true);
         sortBy("seen", true);
       });
     }
@@ -31,8 +31,9 @@ class PreOpNotiViewModel {
       case 'seen':
         userList.sort((a, b) => a.seen.compareTo(b.seen));
         break;
-      case 'formTime':
-        userList.sort((a, b) => a.formTime.compareTo(b.formTime));
+      case 'formDateTimeSort':
+        userList
+            .sort((a, b) => a.formDateTimeSort.compareTo(b.formDateTimeSort));
         break;
     }
     if (isAsc) {

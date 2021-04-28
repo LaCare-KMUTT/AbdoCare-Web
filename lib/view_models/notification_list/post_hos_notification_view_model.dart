@@ -13,7 +13,7 @@ class PostHosNotiViewModel {
     if (postHosNotiList != null) {
       postHosNotiList.forEach((mapData) {
         userList.add(PostHosNotiData(map: mapData));
-        sortBy("formTime", true);
+        sortBy("formDateTimeSort", true);
         sortBy("seen", true);
       });
     }
@@ -31,8 +31,9 @@ class PostHosNotiViewModel {
       case 'seen':
         userList.sort((a, b) => a.seen.compareTo(b.seen));
         break;
-      case 'formTime':
-        userList.sort((a, b) => a.formTime.compareTo(b.formTime));
+      case 'formDateTimeSort':
+        userList
+            .sort((a, b) => a.formDateTimeSort.compareTo(b.formDateTimeSort));
         break;
     }
     if (isAsc) {

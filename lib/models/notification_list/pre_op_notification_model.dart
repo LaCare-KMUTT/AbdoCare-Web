@@ -7,6 +7,7 @@ class PreOpNotiData {
   String formName;
   String formTime;
   String formDate;
+  DateTime formDateTimeSort;
   String notiId;
   Map<String, dynamic> map;
 
@@ -21,6 +22,7 @@ class PreOpNotiData {
     this.formName = map['formName'];
     this.formTime = map['formTime'];
     this.formDate = map['formDate'];
+    this.formDateTimeSort = map['formDateTimeSort'];
     this.notiId = map['notiId'];
   }
 }

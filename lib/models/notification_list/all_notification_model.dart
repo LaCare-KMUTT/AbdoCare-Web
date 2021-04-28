@@ -7,7 +7,8 @@ class AllNotiData {
   String seen;
   String formName;
   String formTime;
-  dynamic formDate;
+  DateTime formDateTimeSort;
+  String formDate;
   String notiId;
   Map<String, dynamic> map;
 
@@ -22,6 +23,7 @@ class AllNotiData {
     this.seen = map["seen"];
     this.formName = map['formName'];
     this.formTime = map['formTime'];
+    this.formDateTimeSort = map['formDateTimeSort'];
     this.formDate = map['formDate'];
     this.notiId = map['notsiId'];
   }

@@ -78,8 +78,8 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                       child:
                           Text(user.formTime, style: TextStyle(fontSize: 16)))),
                   DataCell(Center(
-                      child: Text(user.formDate.toString(),
-                          style: TextStyle(fontSize: 16)))),
+                      child:
+                          Text(user.formDate, style: TextStyle(fontSize: 16)))),
                   DataCell(Center(
                       child: Text(user.patientState,
                           style: TextStyle(fontSize: 16)))),

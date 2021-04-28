@@ -13,8 +13,7 @@ class AllNotiViewModel {
     if (allNotiList != null) {
       allNotiList.forEach((mapData) {
         userList.add(AllNotiData(map: mapData));
-        sortBy("formDate", true);
-        sortBy("formTime", true);
+        sortBy("formDateTimeSort", true);
         sortBy("seen", true);
       });
     }
@@ -32,11 +31,9 @@ class AllNotiViewModel {
       case 'seen':
         userList.sort((a, b) => a.seen.compareTo(b.seen));
         break;
-      case 'formTime':
-        userList.sort((a, b) => a.formTime.compareTo(b.formTime));
-        break;
-      case 'formDate':
-        userList.sort((a, b) => a.formDate.compareTo(b.formDate));
+      case 'formDateTimeSort':
+        userList
+            .sort((a, b) => a.formDateTimeSort.compareTo(b.formDateTimeSort));
         break;
     }
     if (isAsc) {
