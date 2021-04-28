@@ -31,21 +31,29 @@ class _NotificationDetailState extends State<NotificationDetail> {
   bool pressPostOpHospitalState = true;
   bool pressPostOpHomeState = false;
   Future<List<PostHosNotiData>> _postHosData;
+  Future<List<PreOpNotiData>> _preOpData;
   String onClickState = "Post-Operation@Hospital";
   List<PreOpNotiData> preOpData = [];
   List<PostHosNotiData> postHosData = [];
   List<PostHomeNotiData> postHomeData = [];
   List<AllNotiData> allData = [];
-  void callPostHosData() {
-    setState(() {
-      _postHosData = _postHosNotiViewModel.getUsers();
-    });
+  void callData(String patientState) {
+    if (patientState == "Post-Operation@Hospital") {
+      setState(() {
+        _postHosData = _postHosNotiViewModel.getUsers();
+      });
+    } else if (patientState == "Pre-Operation") {
+      setState(() {
+        _preOpData = _preOpNotiViewModel.getUsers();
+      });
+    }
   }
 
   @override
   void initState() {
     setState(() {
       _postHosData = _postHosNotiViewModel.getUsers();
+      _preOpData = _preOpNotiViewModel.getUsers();
     });
     super.initState();
   }
@@ -72,7 +80,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
           });
     } else if (onClickState == "Pre-Operation") {
       return FutureBuilder<List<PreOpNotiData>>(
-          future: _preOpNotiViewModel.getUsers(),
+          future: _preOpData,
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
@@ -86,7 +94,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 preOpData.clear();
               }
               preOpData.addAll(snapshot.data);
-              return PreNotificationTable();
+              return PreNotificationTable(
+                  preOpData: preOpData,
+                  callPreOpData: callData,
+                  patientState: onClickState);
             }
           });
     } else if (onClickState == "Post-Operation@Hospital") {
@@ -106,7 +117,9 @@ class _NotificationDetailState extends State<NotificationDetail> {
               }
               postHosData.addAll(snapshot.data);
               return PostHosNotificationTable(
-                  postHosData: postHosData, callPostHosData: callPostHosData);
+                  postHosData: postHosData,
+                  callPostHosData: callData,
+                  patientState: onClickState);
             }
           });
     } else if (onClickState == "Post-Operation@Home") {
@@ -202,6 +215,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                 pressPostOpHospitalState = false;
                                 pressPostOpHomeState = false;
                                 onClickState = "Pre-Operation";
+                                callData(onClickState);
                               });
                             }),
                       ),
@@ -232,6 +246,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                 pressPreOpState = false;
                                 pressPostOpHomeState = false;
                                 onClickState = "Post-Operation@Hospital";
+                                callData(onClickState);
                               });
                             }),
                       ),

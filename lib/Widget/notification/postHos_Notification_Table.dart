@@ -7,8 +7,12 @@ import 'package:flutter/material.dart';
 class PostHosNotificationTable extends StatefulWidget {
   final List<PostHosNotiData> postHosData;
   final Function callPostHosData;
+  final String patientState;
   PostHosNotificationTable(
-      {Key key, @required this.postHosData, this.callPostHosData})
+      {Key key,
+      @required this.postHosData,
+      this.callPostHosData,
+      this.patientState})
       : super(key: key);
   @override
   _PostHosNotificationTableState createState() =>
@@ -54,10 +58,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                 onSelectChanged: (newValue) {
                   print(user.notiId);
                   alertSuccessfullyChangeStatus(
-                    context,
-                    user.notiId,
-                  );
-                  // widget.callPostHosData();
+                      context, user.notiId, user.formName);
                 },
                 cells: [
                   DataCell(Center(child: Text(user.formDate))),
@@ -78,7 +79,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
   }
 
   Future<void> alertSuccessfullyChangeStatus(
-      BuildContext context, notiId) async {
+      BuildContext context, notiId, formName) async {
     final IFirebaseService _firebaseService = locator<IFirebaseService>();
     await showDialog(
       context: context,
@@ -86,7 +87,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
         return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            content: Text("บุคลากรทางการแพทย์ได้ดำเนินการแล้ว",
+            content: Text("ผู้ป่วย$formName",
                 style: Theme.of(context).textTheme.bodyText2,
                 textAlign: TextAlign.center),
             actions: [
@@ -106,6 +107,6 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                   })
             ]);
       },
-    ).then((value) => widget.callPostHosData());
+    ).then((value) => widget.callPostHosData(widget.patientState));
   }
 }
