@@ -1,5 +1,5 @@
-import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
-import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
+import 'package:AbdoCare_Web/services/service_locator.dart';
+import 'package:AbdoCare_Web/view_models/evaluate_form/pre_visit_view_model.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import '../../../../models/evalutate_form/pre_visit/generalForm_model.dart';
 import '../../../../view_models/evaluate_form/generalForm_view_model.dart';
 import '../../../appbar.dart';
+import '../../../shared/alert_style.dart';
+import '../../../shared/progress_bar.dart';
 import '../../../shared/rounded_date_picker.dart';
 import '../../../sidebar.dart';
 import '../adlForm/adlForm.dart';
@@ -31,6 +33,8 @@ class GeneralForm extends StatefulWidget {
 
 class _GeneralFormState extends State<GeneralForm> {
   final _formKey = GlobalKey<FormState>();
+
+  final _preVisitViewModel = locator<PreVisitViewModel>();
 
   String _hn;
   String _an;
@@ -609,9 +613,13 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 .fromLTRB(10,
                                                                     10, 10, 0),
                                                             child: ConsentSign(
-                                                                onSaved: (value) =>
-                                                                    _consentSigned =
-                                                                        value,
+                                                                onSaved:
+                                                                    (value) {
+                                                                  print(
+                                                                      "Value in Consent $value");
+                                                                  _consentSigned =
+                                                                      value;
+                                                                },
                                                                 consentFromDb:
                                                                     snapshot
                                                                         .data
@@ -685,9 +693,12 @@ class _GeneralFormState extends State<GeneralForm> {
                                                         ),
 
                                                         PreviousIllness(
-                                                            onSaved: (value) =>
-                                                                _previousIllness =
-                                                                    value),
+                                                            onSaved: (value) {
+                                                          print(
+                                                              "Value in previous Illness $value");
+                                                          _previousIllness =
+                                                              value;
+                                                        }),
                                                         //Drug used
                                                         Container(
                                                           child: Padding(
@@ -1108,6 +1119,7 @@ class _GeneralFormState extends State<GeneralForm> {
                                 Text('ถัดไป', style: TextStyle(fontSize: 18)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
+                                _formKey.currentState.save();
                                 if (_typeOfAnesthesia == null ||
                                     _consentSigned == null ||
                                     _previousIllness == null ||
@@ -1120,7 +1132,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                     _sleepDisorder == null) {
                                   Dialogs.alertToCompleteEvalutation(context);
                                 } else {
-                                  _formKey.currentState.save();
                                   Map<String, dynamic> formDataToDB = {
                                     'hn': _hn,
                                     'an': _an,
@@ -1138,9 +1149,9 @@ class _GeneralFormState extends State<GeneralForm> {
                                     'previousIllness': _previousIllness,
                                     'drugUsed': _drugUsed,
                                     'asaClass': _asaClass,
-                                    'bw': int.parse(_bw),
-                                    'high': int.parse(_high),
-                                    'weight': int.parse(_weight),
+                                    'weight': int.parse(_bw),
+                                    'height': int.parse(_high),
+                                    'oldWeight': int.parse(_weight),
                                     'previousSurgery': _previousSurgery,
                                     'antiPlateletReason': _antiPlateletReason,
                                     'antiPlateletDays': _antiPlateletDays,
@@ -1158,8 +1169,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                   var model = GeneralFormViewModel
                                       .getGeneralFormModel();
                                   model.fromMap(formDataToDB);
-                                  var map = model.toMap();
-                                  print('Model =  : $map');
+                                  _preVisitViewModel
+                                      .saveGeneralForm(formDataToDB);
+                                  _preVisitViewModel
+                                      .saveMapUpdateToDatabase(model.toMap());
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
