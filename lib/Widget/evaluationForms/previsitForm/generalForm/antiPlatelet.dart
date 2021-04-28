@@ -127,7 +127,7 @@ class _AntiPlateletState extends State<AntiPlatelet> {
                 setState(() {
                   _day = value ?? '-';
                 });
-                onSavedDay(_day);
+                onSavedDay(_day ?? '-');
               }
             },
           ),

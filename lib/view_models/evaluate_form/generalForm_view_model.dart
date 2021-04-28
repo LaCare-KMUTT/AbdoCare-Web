@@ -44,41 +44,4 @@ class GeneralFormViewModel {
 
     return model;
   }
-
-  void updateToDatabase() {
-    //Removed from GeneralForm due to already filled in from db.
-    // "hn",
-    // "patientName",
-    // "patientSurname",
-    // "dob",
-    // "gender",
-    // "an",
-    // "operationDate",
-    // "operationMethod",
-
-//Removed from GeneralForm and update to AnSubCollection directly.
-    // List<String> updateToDB = [
-    //   "previousIllness",
-    //   "ward",
-    //   "oldWeight",
-    //   "height",
-    //   "weight",
-    // ];
-
-    var model = getGeneralFormModel();
-    Map<String, dynamic> updateToAnSubCollection = {
-      'previousIllness': model.previousIllness,
-      'ward': model.ward,
-      'oldWeight': model.weight,
-      'height': model.high,
-      'weight': model.bw,
-    };
-
-    _firebaseService.updateFieldToSubCollection(
-        collection: 'Users',
-        docId: userCollection['id'],
-        subCollection: 'an',
-        subCollectionDoc: anSubCollection['id'],
-        data: updateToAnSubCollection);
-  }
 }

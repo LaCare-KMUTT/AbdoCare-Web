@@ -1,4 +1,4 @@
-import 'package:AbdoCare_Web/view_models/evaluate_form/generalForm_view_model.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/evalutate_form/pre_visit/pre_visit_model.dart';
@@ -8,7 +8,7 @@ import '../../services/service_locator.dart';
 class PreVisitViewModel {
   PreVisitFormModel _preVisitFormModel;
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-
+  GeneralFormModel _generalFormModel;
   PreVisitViewModel() {
     _preVisitFormModel = PreVisitFormModel().getModel();
   }
@@ -29,22 +29,52 @@ class PreVisitViewModel {
     _preVisitFormModel.setHealthStatusForm(healthStatusForm);
   }
 
-  void saveMapUpdateToDatabase(Map<String, dynamic> updateToDatabase) {
+  void saveMapUpdateToDatabase(Map<String, dynamic> updateToDatabase,
+      GeneralFormModel generalFormModel) {
     _preVisitFormModel.setUpdateToDatabase(updateToDatabase);
+    _generalFormModel = generalFormModel;
   }
 
-  void saveDataToDatabase({@required String hn}) {
-    _firebaseService.addDataToFormsCollection(
-        data: _preVisitFormModel.getGeneralForm(), formName: 'General', hn: hn);
+  Future<void> saveDataToDatabase({@required String hn}) async {
+    // await _firebaseService.addDataToFormsCollection(
+    //     data: _preVisitFormModel.getGeneralForm(), formName: 'General', hn: hn);
 
-    GeneralFormViewModel().updateToDatabase();
+    var updateToDb = _preVisitFormModel.getUpdateToDatabase();
+    print('updateToDb = $updateToDb');
+    var generalForm = _preVisitFormModel.getGeneralForm();
+    Map<String, dynamic> updateToAnSubCollection = {
+      'previousIllness': generalForm['previousIllness'],
+      'ward': generalForm['ward'],
+      'oldWeight': generalForm['oldWeight'],
+      'height': generalForm['height'],
+      'weight': generalForm['weight'],
+    };
+    print('updateToAnSubCollection = $updateToAnSubCollection');
+    // var userCollection = await _firebaseService
+    //     .searchDocumentByField(collection: 'Users', field: 'hn', fieldValue: hn)
+    //     .then((value) {
+    //   return {
+    //     ...value.docs.first.data(),
+    //     'id': value.docs.first.id,
+    //   };
+    // });
 
-    _firebaseService.addDataToFormsCollection(
-        data: _preVisitFormModel.getADLForm(), formName: 'ADL', hn: hn);
+    // var anSubCollection = await _firebaseService.getLatestAnSubCollection(
+    //     docId: userCollection['id']);
 
-    _firebaseService.addDataToFormsCollection(
-        data: _preVisitFormModel.getHealthStatusForm(),
-        formName: 'Health Status',
-        hn: hn);
+    // await _firebaseService.updateFieldToSubCollection(
+    //     collection: 'Users',
+    //     docId: userCollection['id'],
+    //     subCollection: 'an',
+    //     subCollectionDoc: anSubCollection['id'],
+    //     data: updateToAnSubCollection);
+
+    // await _firebaseService.addDataToFormsCollection(
+    //     data: _preVisitFormModel.getADLForm(), formName: 'ADL', hn: hn);
+
+    // await _firebaseService.addDataToFormsCollection(
+    //     data: _preVisitFormModel.getHealthStatusForm(),
+    //     formName: 'Health Status',
+    //     hn: hn);
   }
 }

@@ -13,12 +13,8 @@ import '@enum.dart';
 import 'adlQuestions.dart';
 
 class ADLForm extends StatefulWidget {
-  ADLForm(
-      {Key key, this.generalForm, this.adlForm, this.healthStatusForm, this.hn})
-      : super(key: key);
-  final Map<String, dynamic> generalForm;
-  final Map<String, dynamic> adlForm;
-  final Map<String, dynamic> healthStatusForm;
+  ADLForm({Key key, this.hn}) : super(key: key);
+
   final String hn;
 
   @override
@@ -76,9 +72,8 @@ class _ADLFormState extends State<ADLForm> {
         context,
         MaterialPageRoute(
           builder: (context) => HealthStatusForm(
-              hn: widget.hn,
-              generalForm: widget.generalForm,
-              adlForm: formDataToDB2),
+            hn: widget.hn,
+          ),
         ));
   }
 

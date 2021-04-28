@@ -191,9 +191,9 @@ class GeneralFormModel {
     _previousIllness = map['previousIllness'];
     _drugUsed = map['drugUsed'];
     _asaClass = map['asaClass'];
-    _bw = map['bw'];
-    _high = map['high'];
-    _weight = map['weight'];
+    _bw = map['weight'];
+    _high = map['height'];
+    _weight = map['oldWeight'];
     _previousSurgery = map['previousSurgery'];
     _antiPlateletReason = map['antiPlateletReason'];
     _antiPlateletDays = map['antiPlateletDays'];
@@ -210,25 +210,12 @@ class GeneralFormModel {
 //Comments are things that's not gonna be stored in DB
   Map<String, dynamic> toMap() {
     return {
-      // 'hn': _hn,
-      // 'an': _an,
-      // 'patientName': _patientName,
-      // 'patientSurname': _patientSurname,
-      // 'dob': _dob,
-      // 'operationDate': _operationDate,
-      // 'gender': _gender,
-      // 'ward': _ward,
-      // 'operationMethod': _operationMethod,
       'diagnosis': _diagnosis,
       'consentSigned': _consentSigned,
       'preMedication': _preMedication,
       'typeOfAnesthesia': _typeOfAnesthesia,
-      // 'previousIllness': _previousIllness,
       'drugUsed': _drugUsed,
       'asaClass': _asaClass,
-      // 'bw': _bw,
-      // 'high': _high,
-      // 'weight': _weight,
       'previousSurgery': _previousSurgery,
       'antiPlateletReason': _antiPlateletReason,
       'antiPlateletDays': _antiPlateletDays,

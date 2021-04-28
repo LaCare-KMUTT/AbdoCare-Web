@@ -1171,14 +1171,14 @@ class _GeneralFormState extends State<GeneralForm> {
                                   model.fromMap(formDataToDB);
                                   _preVisitViewModel
                                       .saveGeneralForm(formDataToDB);
-                                  _preVisitViewModel
-                                      .saveMapUpdateToDatabase(model.toMap());
+                                  _preVisitViewModel.saveMapUpdateToDatabase(
+                                      model.toMap(), model);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ADLForm(
-                                            hn: widget.hn,
-                                            generalForm: formDataToDB),
+                                          hn: widget.hn,
+                                        ),
                                       ));
                                 }
                               } else {

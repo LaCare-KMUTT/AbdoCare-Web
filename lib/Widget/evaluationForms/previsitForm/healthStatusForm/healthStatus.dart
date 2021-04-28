@@ -24,11 +24,8 @@ import 'neuro.dart';
 import 'pulmonary.dart';
 
 class HealthStatusForm extends StatefulWidget {
-  HealthStatusForm({Key key, this.generalForm, this.adlForm, this.hn})
-      : super(key: key);
-  final Map<String, dynamic> adlForm;
+  HealthStatusForm({Key key, this.hn}) : super(key: key);
   final String hn;
-  final Map<String, dynamic> generalForm;
   @override
   _HealthStatusFormState createState() => _HealthStatusFormState();
 }
@@ -352,13 +349,11 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
 
                                       var isChecked = _healthStatusUtility
                                           .getValidateHealthStatus(model);
-                                      if (isChecked == false) {
+                                      if (false) {
                                         Dialogs.alertToCompleteEvalutation(
                                             context);
                                       } else {
                                         _formKey.currentState.save();
-                                        print(
-                                            'MODEL HEALTH STATUS ${model.toMap()}');
 
                                         // GeneralFormViewModel()
                                         //     .updateToDatabase();
