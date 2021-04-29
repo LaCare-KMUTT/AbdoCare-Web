@@ -203,8 +203,6 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           content: Builder(
             builder: (context) {
               var height = MediaQuery.of(context).size.height;
@@ -215,89 +213,71 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                 child: ListView(
                   shrinkWrap: true,
                   children: [
+                    Text('หมายเหตุการแจ้งเตือน',
+                        style:
+                            TextStyle(fontSize: 24, color: Color(0xFFC37447))),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('หมายเหตุการแจ้งเตือน',
-                          style: TextStyle(
-                              fontSize: 24, color: Color(0xFFC37447))),
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("ผู้ป่วย$formName",
+                          style: Theme.of(context).textTheme.bodyText2,
+                          textAlign: TextAlign.center),
                     ),
-                    Text("ผู้ป่วย$formName",
-                        style: Theme.of(context).textTheme.bodyText2,
-                        textAlign: TextAlign.center),
                     Text("เวลา $formTime  วันที่ $formDate",
                         style: Theme.of(context).textTheme.bodyText2,
                         textAlign: TextAlign.center),
-
-                    // Padding(
-                    //   padding: const EdgeInsets.all(20),
-                    //   child: Row(
-                    //     children: [
-                    //       Expanded(
-                    //         flex: 2,
-                    //         child: Text(
-                    //           'HN:  ',
-                    //           textAlign: TextAlign.end,
-                    //           style: Theme.of(context).textTheme.bodyText2,
-                    //         ),
-                    //       ),
-                    //       Expanded(
-                    //           flex: 5,
-                    //           child: Text(
-                    //             "$hn",
-                    //             style: Theme.of(context).textTheme.bodyText2,
-                    //           )),
-
-                    //       // Expanded(
-                    //       //   flex: 1,
-                    //       //   child: SizedBox(),
-                    //       // )
-                    //     ],
-                    //   ),
-                    // ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(60, 10, 20, 10),
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                       child: Row(
                         children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              'ชื่อ-นามสกุล:  ',
-                              textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.bodyText2,
+                          Flexible(
+                            flex: 2,
+                            child: Container(
+                              child: Text(
+                                'ชื่อ-นามสกุล:  ',
+                                textAlign: TextAlign.end,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
                             ),
                           ),
                           Expanded(
                               flex: 2,
-                              child: Text(
-                                "$name",
-                                style: Theme.of(context).textTheme.bodyText2,
+                              child: Container(
+                                child: Text(
+                                  "$name",
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
                               )),
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              'HN:  ',
-                              textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: Text(
-                                "$hn",
-                                textAlign: TextAlign.end,
-                                style: Theme.of(context).textTheme.bodyText2,
-                              )),
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(),
-                          )
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(60, 0, 20, 0),
-                      child: Expanded(
-                        flex: 2,
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            flex: 1,
+                            child: Container(
+                              child: Text(
+                                'HN:  ',
+                                textAlign: TextAlign.end,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Container(
+                                child: Text(
+                                  "$hn",
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              )),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 8),
+                      child: Container(
                         child: Text(
                           'รูปภาพแผล:',
                           style: Theme.of(context).textTheme.bodyText2,
@@ -305,96 +285,76 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 8, bottom: 8),
-                      width: width / 2.5,
-                      height: height / 2.5,
+                      padding: EdgeInsets.only(top: 0, bottom: 8),
+                      width: 400,
+                      height: 300,
                       child: Image.network(imgURl),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'ระดับความรุนแรง:\t\t',
-                              textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: DropdownButtonFormField(
-                              isDense: true,
-                              isExpanded: true,
-                              validator: (value) => value == null
-                                  ? 'กรุณาเลือกระดับความรุนแรง'
-                                  : null,
-                              decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black26, width: 1),
-                                  ),
-                                  labelText: 'ระดับความรุนแรง'),
-                              onSaved: (value) {
-                                _severity = int.parse(value);
-                              },
-                              items: [
-                                '1',
-                                '2',
-                                '3',
-                                '4',
-                                '5',
-                              ]
-                                  .map((label) => DropdownMenuItem(
-                                        child: Text(label),
-                                        value: label,
-                                      ))
-                                  .toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _severity = int.parse(value);
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(),
-                          )
-                        ],
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: Container(
+                        child: Text(
+                          'ระดับความรุนแรง:\t\t',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'คำแนะนำ:\t\t',
-                              textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.bodyText2,
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                      child: DropdownButtonFormField(
+                        isDense: true,
+                        isExpanded: true,
+                        validator: (value) =>
+                            value == null ? 'กรุณาเลือกระดับความรุนแรง' : null,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black26, width: 1),
                             ),
-                          ),
-                          Expanded(
-                              flex: 4,
-                              child: TextFormField(
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black26, width: 1),
-                                    ),
-                                    labelText: 'คำแนะนำ'),
-                                onChanged: (value) => _adviceDetail = value,
-                              )),
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(),
-                          )
-                        ],
+                            labelText: 'ระดับความรุนแรง'),
+                        onSaved: (value) {
+                          _severity = int.parse(value);
+                        },
+                        items: [
+                          '1',
+                          '2',
+                          '3',
+                          '4',
+                          '5',
+                        ]
+                            .map((label) => DropdownMenuItem(
+                                  child: Text(label),
+                                  value: label,
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _severity = int.parse(value);
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+                      child: Container(
+                        child: Text(
+                          'คำแนะนำ:\t\t',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                      child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black26, width: 1),
+                            ),
+                            labelText: 'คำแนะนำ'),
+                        onChanged: (value) => _adviceDetail = value,
                       ),
                     ),
                     Padding(
