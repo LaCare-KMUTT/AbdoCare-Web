@@ -25,6 +25,6 @@ class AllNotiData {
     this.formTime = map['formTime'];
     this.formDateTimeSort = map['formDateTimeSort'];
     this.formDate = map['formDate'];
-    this.notiId = map['notsiId'];
+    this.notiId = map['notiId'];
   }
 }
