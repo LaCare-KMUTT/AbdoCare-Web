@@ -781,6 +781,7 @@ class FirebaseService extends IFirebaseService {
         .catchError((onError) {
       print('$onError');
     });
+
     var generalForm = await getFormListInAnBasedOnState(
         userId: usersCollection['id'],
         patientState: anSubCollection['state'],
@@ -824,16 +825,21 @@ class FirebaseService extends IFirebaseService {
       'bwl': bwl,
       'careTakerName':
           '${anSubCollection['careTakerName'] ?? '-'} ${anSubCollection['careTakerSurname'] ?? '-'}',
-      'careTakerTel': anSubCollection['careTakerTel'],
-      'patientState': anSubCollection['state'],
-      'HN': usersCollection['hn'],
-      'AN': anSubCollection['an'],
+      'careTakerTel': anSubCollection['careTakerTel'] ?? '-',
+      'patientState': anSubCollection['state'] ?? '-',
+      'HN': usersCollection['hn'] ?? '-',
+      'AN': anSubCollection['an'] ?? '-',
       'operationDate': operationDate ?? '-',
-      'operationName': anSubCollection['operationName'],
-      'operationMethod': anSubCollection['operationMethod'],
-      'asaClass': generalFormData['formData']['asaClass'] ?? '-',
-      'previousIllness': generalFormData['formData']['previousIllness'] ?? '-',
+      'operationName': anSubCollection['operationName'] ?? '-',
+      'operationMethod': anSubCollection['operationMethod'] ?? '-',
+      'asaClass': generalFormData.length != 0
+          ? generalFormData['formData']['asaClass']
+          : '-',
+      'previousIllness': generalFormData.length != 0
+          ? generalFormData['formData']['previousIllness']
+          : '-',
     };
+    print('map $map');
     return map;
   }
 }
