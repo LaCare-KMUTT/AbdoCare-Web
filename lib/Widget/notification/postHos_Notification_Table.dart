@@ -58,7 +58,13 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                 onSelectChanged: (newValue) {
                   print(user.notiId);
                   alertSuccessfullyChangeStatus(
-                      context, user.notiId, user.formName);
+                      context,
+                      user.notiId,
+                      user.formName,
+                      user.hn,
+                      user.formTime,
+                      user.formDate,
+                      user.name);
                 },
                 cells: [
                   DataCell(Center(
@@ -88,34 +94,90 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
         ));
   }
 
-  Future<void> alertSuccessfullyChangeStatus(
-      BuildContext context, notiId, formName) async {
+  Future<void> alertSuccessfullyChangeStatus(BuildContext context, notiId,
+      formName, hn, formTime, formDate, name) async {
     final IFirebaseService _firebaseService = locator<IFirebaseService>();
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            content: Text("ผู้ป่วย$formName",
-                style: Theme.of(context).textTheme.bodyText2,
-                textAlign: TextAlign.center),
-            actions: [
-              FlatButton(
-                  child: Text('ดำเนินการแล้ว'),
-                  onPressed: () async {
-                    _firebaseService.updateDataToCollectionField(
-                        collection: 'Notifications',
-                        docId: notiId,
-                        data: {'seen': true});
-                    Navigator.pop(context);
-                  }),
-              FlatButton(
-                  child: Text('ยกเลิก'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  })
-            ]);
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          content: Builder(
+            builder: (context) {
+              var height = MediaQuery.of(context).size.height;
+              var width = MediaQuery.of(context).size.width;
+              return Container(
+                height: height / 4,
+                width: width / 3,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Text('หมายเหตุการแจ้งเตือน',
+                          style: TextStyle(
+                              fontSize: 22, color: Color(0xFFC37447))),
+                    ),
+                    Text("$hn  ชื่อ $name",
+                        style: Theme.of(context).textTheme.bodyText2,
+                        textAlign: TextAlign.center),
+                    Text("ผู้ป่วย$formName",
+                        style: Theme.of(context).textTheme.bodyText2,
+                        textAlign: TextAlign.center),
+                    Text("เวลา $formTime  วันที่ $formDate",
+                        style: Theme.of(context).textTheme.bodyText2,
+                        textAlign: TextAlign.center),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(right: 0),
+                            margin: EdgeInsets.only(right: 0),
+                            width: 150,
+                            height: 40,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFFEBEBEB),
+                                    onPrimary: Colors.black,
+                                    padding: EdgeInsets.all(15)),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('ยกเลิก',
+                                    style: TextStyle(fontSize: 16))),
+                          ),
+                          Container(
+                            width: 150,
+                            height: 40,
+                            margin: EdgeInsets.only(left: 20),
+                            padding: const EdgeInsets.only(left: 0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFF2ED47A),
+                                    onPrimary: Colors.white,
+                                    padding: EdgeInsets.all(15)),
+                                onPressed: () {
+                                  _firebaseService.updateDataToCollectionField(
+                                      collection: 'Notifications',
+                                      docId: notiId,
+                                      data: {'seen': true});
+                                  Navigator.pop(context);
+                                },
+                                child: Text('ดำเนินการแล้ว',
+                                    style: TextStyle(fontSize: 16))),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        );
       },
     ).then((value) => widget.callPostHosData(widget.patientState));
   }

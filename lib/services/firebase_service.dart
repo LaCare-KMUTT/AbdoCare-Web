@@ -906,6 +906,7 @@ class FirebaseService extends IFirebaseService {
       var notiCollection = await this
           .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
       var docId = notiCollection['userId'];
+      var imgURL = notiCollection['imgURL'];
       var seen = notiCollection['seen'];
       if (seen == false) {
         seen = "ยังไม่ได้ดำเนินการ";
@@ -946,7 +947,8 @@ class FirebaseService extends IFirebaseService {
         'formDate': formDateToShow ?? '-',
         'formDateTimeSort': formTime ?? '-',
         'seen': seen ?? '-',
-        'notiId': user.id ?? '-'
+        'notiId': user.id ?? '-',
+        'imgURL': imgURL ?? '-'
       };
       return map;
     });
@@ -1007,8 +1009,13 @@ class FirebaseService extends IFirebaseService {
         'formDateTimeSort': formTime ?? '-',
         'formDate': formDateToShow ?? '-',
         'seen': seen ?? '-',
-        'notiId': user.id ?? '-'
+        'notiId': user.id ?? '-',
+        'imgURL': '-'
       };
+      if (patientStateToMap == "Post-Operation@Home") {
+        var imgURL = notiCollection['imgURL'] ?? '-';
+        map.addAll({'imgURL': imgURL ?? '-'});
+      }
       return map;
     });
     var futureList = Future.wait(returnList);

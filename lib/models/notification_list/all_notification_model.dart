@@ -10,6 +10,7 @@ class AllNotiData {
   DateTime formDateTimeSort;
   String formDate;
   String notiId;
+  String imgURL;
   Map<String, dynamic> map;
 
   AllNotiData({
@@ -26,5 +27,6 @@ class AllNotiData {
     this.formDateTimeSort = map['formDateTimeSort'];
     this.formDate = map['formDate'];
     this.notiId = map['notiId'];
+    this.imgURL = map['imgURL'];
   }
 }
