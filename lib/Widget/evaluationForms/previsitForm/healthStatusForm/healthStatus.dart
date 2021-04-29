@@ -349,36 +349,15 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
 
                                       var isChecked = _healthStatusUtility
                                           .getValidateHealthStatus(model);
-                                      if (false) {
+                                      if (isChecked) {
                                         Dialogs.alertToCompleteEvalutation(
                                             context);
                                       } else {
                                         _formKey.currentState.save();
-
-                                        // GeneralFormViewModel()
-                                        //     .updateToDatabase();
                                         _preVisitViewModel.saveHealthStatusForm(
                                             model.toMap());
                                         _preVisitViewModel.saveDataToDatabase(
                                             hn: widget.hn);
-                                        // _firebaseService
-                                        //     .addDataToFormsCollection(
-                                        //         data: widget.generalForm,
-                                        //         formName: 'General',
-                                        //         hn: widget.hn);
-
-                                        // _firebaseService
-                                        //     .addDataToFormsCollection(
-                                        //         data: widget.adlForm,
-                                        //         formName: 'ADL',
-                                        //         hn: widget.hn);
-
-                                        // _firebaseService
-                                        //     .addDataToFormsCollection(
-                                        //         hn: widget.hn,
-                                        //         formName: 'Health Status',
-                                        //         data: model.toMap());
-
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(

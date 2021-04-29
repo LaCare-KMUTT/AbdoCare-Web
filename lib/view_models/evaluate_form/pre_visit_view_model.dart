@@ -36,11 +36,8 @@ class PreVisitViewModel {
   }
 
   Future<void> saveDataToDatabase({@required String hn}) async {
-    // await _firebaseService.addDataToFormsCollection(
-    //     data: _preVisitFormModel.getGeneralForm(), formName: 'General', hn: hn);
-
-    var updateToDb = _preVisitFormModel.getUpdateToDatabase();
-    print('updateToDb = $updateToDb');
+    await _firebaseService.addDataToFormsCollection(
+        data: _preVisitFormModel.getGeneralForm(), formName: 'General', hn: hn);
     var generalForm = _preVisitFormModel.getGeneralForm();
     Map<String, dynamic> updateToAnSubCollection = {
       'previousIllness': generalForm['previousIllness'],
@@ -50,31 +47,31 @@ class PreVisitViewModel {
       'weight': generalForm['weight'],
     };
     print('updateToAnSubCollection = $updateToAnSubCollection');
-    // var userCollection = await _firebaseService
-    //     .searchDocumentByField(collection: 'Users', field: 'hn', fieldValue: hn)
-    //     .then((value) {
-    //   return {
-    //     ...value.docs.first.data(),
-    //     'id': value.docs.first.id,
-    //   };
-    // });
+    var userCollection = await _firebaseService
+        .searchDocumentByField(collection: 'Users', field: 'hn', fieldValue: hn)
+        .then((value) {
+      return {
+        ...value.docs.first.data(),
+        'id': value.docs.first.id,
+      };
+    });
 
-    // var anSubCollection = await _firebaseService.getLatestAnSubCollection(
-    //     docId: userCollection['id']);
+    var anSubCollection = await _firebaseService.getLatestAnSubCollection(
+        docId: userCollection['id']);
 
-    // await _firebaseService.updateFieldToSubCollection(
-    //     collection: 'Users',
-    //     docId: userCollection['id'],
-    //     subCollection: 'an',
-    //     subCollectionDoc: anSubCollection['id'],
-    //     data: updateToAnSubCollection);
+    await _firebaseService.updateFieldToSubCollection(
+        collection: 'Users',
+        docId: userCollection['id'],
+        subCollection: 'an',
+        subCollectionDoc: anSubCollection['id'],
+        data: updateToAnSubCollection);
 
-    // await _firebaseService.addDataToFormsCollection(
-    //     data: _preVisitFormModel.getADLForm(), formName: 'ADL', hn: hn);
+    await _firebaseService.addDataToFormsCollection(
+        data: _preVisitFormModel.getADLForm(), formName: 'ADL', hn: hn);
 
-    // await _firebaseService.addDataToFormsCollection(
-    //     data: _preVisitFormModel.getHealthStatusForm(),
-    //     formName: 'Health Status',
-    //     hn: hn);
+    await _firebaseService.addDataToFormsCollection(
+        data: _preVisitFormModel.getHealthStatusForm(),
+        formName: 'Health Status',
+        hn: hn);
   }
 }
