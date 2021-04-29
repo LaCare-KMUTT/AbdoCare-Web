@@ -215,70 +215,112 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    Text('หมายเหตุการแจ้งเตือน',
-                        style:
-                            TextStyle(fontSize: 22, color: Color(0xFFC37447))),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('หมายเหตุการแจ้งเตือน',
+                          style: TextStyle(
+                              fontSize: 24, color: Color(0xFFC37447))),
+                    ),
                     Text("ผู้ป่วย$formName",
                         style: Theme.of(context).textTheme.bodyText2,
                         textAlign: TextAlign.center),
                     Text("เวลา $formTime  วันที่ $formDate",
                         style: Theme.of(context).textTheme.bodyText2,
                         textAlign: TextAlign.center),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.all(20),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         flex: 2,
+                    //         child: Text(
+                    //           'HN:  ',
+                    //           textAlign: TextAlign.end,
+                    //           style: Theme.of(context).textTheme.bodyText2,
+                    //         ),
+                    //       ),
+                    //       Expanded(
+                    //           flex: 5,
+                    //           child: Text(
+                    //             "$hn",
+                    //             style: Theme.of(context).textTheme.bodyText2,
+                    //           )),
+
+                    //       // Expanded(
+                    //       //   flex: 1,
+                    //       //   child: SizedBox(),
+                    //       // )
+                    //     ],
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(60, 10, 20, 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'ชื่อ-นามสกุล:  ',
+                              textAlign: TextAlign.end,
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: Text(
+                                "$name",
+                                style: Theme.of(context).textTheme.bodyText2,
+                              )),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'HN:  ',
+                              textAlign: TextAlign.end,
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                          ),
+                          Expanded(
+                              flex: 1,
+                              child: Text(
+                                "$hn",
+                                textAlign: TextAlign.end,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              )),
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(60, 0, 20, 0),
+                      child: Expanded(
+                        flex: 2,
+                        child: Text(
+                          'รูปภาพแผล:',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                    ),
                     Container(
-                      padding: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(top: 8, bottom: 8),
                       width: width / 2.5,
                       height: height / 2.5,
                       child: Image.network(imgURl),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: Row(
                         children: [
                           Expanded(
                             flex: 2,
-                            child: Text('HN:\t', textAlign: TextAlign.end),
-                          ),
-                          Expanded(
-                              flex: 4,
-                              child: Text(
-                                "$hn",
-                              )),
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(width: 0),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text('ชื่อ-นามสกุล:\t',
-                                textAlign: TextAlign.end),
-                          ),
-                          Expanded(
-                              flex: 4,
-                              child: Text(
-                                "$name",
-                              )),
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(width: 0),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text('ระดับความรุนแรง:\t\t',
-                                textAlign: TextAlign.end),
+                            child: Text(
+                              'ระดับความรุนแรง:\t\t',
+                              textAlign: TextAlign.end,
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
                           ),
                           Expanded(
                             flex: 4,
@@ -318,19 +360,22 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: SizedBox(width: 0),
+                            child: SizedBox(),
                           )
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: Row(
                         children: [
                           Expanded(
                             flex: 2,
-                            child:
-                                Text('คำแนะนำ:\t\t', textAlign: TextAlign.end),
+                            child: Text(
+                              'คำแนะนำ:\t\t',
+                              textAlign: TextAlign.end,
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
                           ),
                           Expanded(
                               flex: 4,
@@ -338,22 +383,22 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black26, width: 1),
-                                  ),
-                                ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.black26, width: 1),
+                                    ),
+                                    labelText: 'คำแนะนำ'),
                                 onChanged: (value) => _adviceDetail = value,
                               )),
                           Expanded(
                             flex: 1,
-                            child: SizedBox(width: 0),
+                            child: SizedBox(),
                           )
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      padding: const EdgeInsets.only(top: 20, bottom: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -364,6 +409,10 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                             height: 40,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(7.0),
+                                    ),
                                     primary: Color(0xFFEBEBEB),
                                     onPrimary: Colors.black,
                                     padding: EdgeInsets.all(15)),
@@ -371,7 +420,7 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                                   Navigator.pop(context);
                                 },
                                 child: Text('ยกเลิก',
-                                    style: TextStyle(fontSize: 16))),
+                                    style: TextStyle(fontSize: 18))),
                           ),
                           Container(
                             width: 150,
@@ -380,6 +429,10 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                             padding: const EdgeInsets.only(left: 0),
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(7.0),
+                                    ),
                                     primary: Color(0xFF2ED47A),
                                     onPrimary: Colors.white,
                                     padding: EdgeInsets.all(15)),
@@ -395,7 +448,7 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                                   Navigator.pop(context);
                                 },
                                 child: Text('ดำเนินการแล้ว',
-                                    style: TextStyle(fontSize: 16))),
+                                    style: TextStyle(fontSize: 18))),
                           ),
                         ],
                       ),
