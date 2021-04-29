@@ -1,8 +1,7 @@
+import 'package:AbdoCare_Web/Widget/dashboard/state_dropdown.dart';
+import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:flutter/material.dart';
 
-import '../../../page/dashboard_postHome.dart';
-import '../../../page/dashboard_postHos.dart';
-import '../../../page/dashboard_pre.dart';
 import '../../../services/service_locator.dart';
 import '../../../view_models/evaluate_form/evaluationFormButton_view_model.dart';
 import '../../evaluationForms/post-hos/vital_sign_form.dart';
@@ -19,8 +18,20 @@ class PreDashboardDetail extends StatefulWidget {
 
 class _PreDashboardDetailState extends State<PreDashboardDetail> {
   final ScrollController controller = ScrollController();
+  final _firebaseService = locator<IFirebaseService>();
   final EvaluationFormViewModel _evaluationFormViewModel =
       locator<EvaluationFormViewModel>();
+  var patientState;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  initData() async {
+    patientState = await _firebaseService.getPatientState(hn: widget.hn);
+    print(' patientState: $patientState');
+  }
 
   Container virtalSignFormCard(String heading, String hn) {
     return Container(
@@ -170,7 +181,6 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
     );
   }
 
-  String dropdownValue = 'Pre-Operation';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,69 +191,9 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
               children: <Widget>[
                 SizedBox(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black26)),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          isExpanded: true,
-                          value: dropdownValue,
-                          items: <String>[
-                            'Pre-Operation',
-                            'Post-Operation@Hospital',
-                            'Post-Operation@Home'
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Center(
-                                  child: Text(value,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Color(0xFFC37447)))),
-                            );
-                          }).toList(),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              dropdownValue = newValue;
-                              switch (newValue) {
-                                case "Pre-Operation":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PreDashboardPage(hn: widget.hn)),
-                                  );
-                                  break;
-                                case "Post-Operation@Hospital":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PostHosDashboardPage(
-                                                hn: widget.hn)),
-                                  );
-                                  break;
-                                case "Post-Operation@Home":
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PostHomeDashboardPage(
-                                                hn: widget.hn)),
-                                  );
-                                  break;
-                              }
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: Dropdown(
+                          dropdownValue: 'Pre-Operation', hn: widget.hn)),
                 ),
                 SizedBox(
                   child: PrePatientDetail(
