@@ -330,7 +330,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           dropdownValue: 'Post-Operation@Hospital',
                           hn: widget.hn)),
                 ),
-                SizedBox(child: PostHosPatientDetail()),
+                SizedBox(
+                    child: PostHosPatientDetail(
+                  hn: widget.hn,
+                )),
                 SizedBox(
                   height: 500,
                   child: Padding(

@@ -830,14 +830,17 @@ class FirebaseService extends IFirebaseService {
       'HN': usersCollection['hn'] ?? '-',
       'AN': anSubCollection['an'] ?? '-',
       'operationDate': operationDate ?? '-',
-      'operationName': anSubCollection['operationName'] ?? '-',
-      'operationMethod': anSubCollection['operationMethod'] ?? '-',
+      'operationName': anSubCollection['operationName'] ??= '-',
+      'operationMethod': anSubCollection['operationMethod'] ??= '-',
+      'bedNumber': anSubCollection['bedNumber'] ??= '-',
+      'roomNumber': anSubCollection['roomNumber'] ??= '-',
       'asaClass': generalFormData.length != 0
           ? generalFormData['formData']['asaClass']
           : '-',
       'previousIllness': generalFormData.length != 0
           ? generalFormData['formData']['previousIllness']
           : '-',
+      'readiness': anSubCollection['readiness'] ??= '-',
     };
     print('map $map');
     return map;
