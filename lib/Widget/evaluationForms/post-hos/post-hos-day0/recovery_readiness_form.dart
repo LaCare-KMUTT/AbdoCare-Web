@@ -323,21 +323,33 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                                 'noVomit': _noVomit,
                                               };
                                               if (_readyRecover == true) {
-                                                formDataToDB.addAll({
-                                                  "Result":
+                                                Map<String, dynamic>
+                                                    recoveryReadinessDataToDB =
+                                                    {
+                                                  "recoveryReadiness":
                                                       "พร้อมฟื้นสภาพหลังผ่าตัด"
-                                                });
+                                                };
+                                                formDataToDB.addAll(
+                                                    recoveryReadinessDataToDB);
                                                 await _firebaseService
                                                     .addDataToFormsCollection(
                                                         hn: widget.hn,
                                                         formName:
                                                             'Recovery Readiness',
                                                         data: formDataToDB);
+                                                saveRecoveryReadinessToDatabase(
+                                                    hn: widget.hn,
+                                                    recoveryReadinessData:
+                                                        recoveryReadinessDataToDB);
                                               } else {
-                                                formDataToDB.addAll({
-                                                  "Result":
+                                                Map<String, dynamic>
+                                                    recoveryReadinessDataToDB =
+                                                    {
+                                                  "recoveryReadiness":
                                                       "ไม่พร้อมฟื้นสภาพหลังผ่าตัด"
-                                                });
+                                                };
+                                                formDataToDB.addAll(
+                                                    recoveryReadinessDataToDB);
                                                 var formId = await _firebaseService
                                                     .addDataToFormsCollection(
                                                         hn: widget.hn,
@@ -350,6 +362,10 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                                         formId: formId,
                                                         formName:
                                                             'Recovery Readiness');
+                                                saveRecoveryReadinessToDatabase(
+                                                    hn: widget.hn,
+                                                    recoveryReadinessData:
+                                                        recoveryReadinessDataToDB);
                                               }
                                               Dialogs
                                                   .alertSuccessfullySavedData(
@@ -373,5 +389,26 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
         },
       ),
     );
+  }
+
+  Future<void> saveRecoveryReadinessToDatabase(
+      {@required String hn,
+      @required Map<String, dynamic> recoveryReadinessData}) async {
+    var userCollection = await _firebaseService
+        .searchDocumentByField(collection: 'Users', field: 'hn', fieldValue: hn)
+        .then((value) {
+      return {
+        ...value.docs.first.data(),
+        'id': value.docs.first.id,
+      };
+    });
+    var anSubCollection = await _firebaseService.getLatestAnSubCollection(
+        docId: userCollection['id']);
+    await _firebaseService.updateFieldToSubCollection(
+        collection: 'Users',
+        docId: userCollection['id'],
+        subCollection: 'an',
+        subCollectionDoc: anSubCollection['id'],
+        data: recoveryReadinessData);
   }
 }
