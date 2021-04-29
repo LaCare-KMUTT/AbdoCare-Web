@@ -141,7 +141,7 @@ void main() {
       ICalculationService _calculationService = locator<ICalculationService>();
       var result =
           _calculationService.calculateBML(oldWeight: null, weight: null);
-      expect(result, 0.00);
+      expect(result, '0.00');
     });
   });
 }
