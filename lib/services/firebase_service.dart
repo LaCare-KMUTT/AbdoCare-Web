@@ -811,11 +811,11 @@ class FirebaseService extends IFirebaseService {
 
     var map = {
       'fullName': '${usersCollection['name']} ${usersCollection['surname']}',
-      'gender': usersCollection['gender'] ?? '-',
+      'gender': usersCollection['gender'] ??= '-',
       'age': age,
       'dob': dob,
-      'patientTel': usersCollection['patientTel'] ?? '-',
-      'address': usersCollection['address'] ?? '-',
+      'patientTel': usersCollection['patientTel'] ??= '-',
+      'address': usersCollection['address'] ??= '-',
       'height': anSubCollection['height'] != null
           ? anSubCollection['height'].toString()
           : '-',
@@ -825,11 +825,11 @@ class FirebaseService extends IFirebaseService {
       'bwl': bwl,
       'careTakerName':
           '${anSubCollection['careTakerName'] ?? '-'} ${anSubCollection['careTakerSurname'] ?? '-'}',
-      'careTakerTel': anSubCollection['careTakerTel'] ?? '-',
-      'patientState': anSubCollection['state'] ?? '-',
-      'HN': usersCollection['hn'] ?? '-',
-      'AN': anSubCollection['an'] ?? '-',
-      'operationDate': operationDate ?? '-',
+      'careTakerTel': anSubCollection['careTakerTel'] ??= '-',
+      'patientState': anSubCollection['state'] ??= '-',
+      'HN': usersCollection['hn'] ??= '-',
+      'AN': anSubCollection['an'] ??= '-',
+      'operationDate': operationDate ??= '-',
       'operationName': anSubCollection['operationName'] ??= '-',
       'operationMethod': anSubCollection['operationMethod'] ??= '-',
       'bedNumber': anSubCollection['bedNumber'] ??= '-',

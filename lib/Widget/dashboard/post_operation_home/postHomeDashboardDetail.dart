@@ -28,7 +28,9 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                           dropdownValue: 'Post-Operation@Home', hn: widget.hn)),
                 ),
                 SizedBox(
-                  child: PostHomePatientDetail(),
+                  child: PostHomePatientDetail(
+                    hn: widget.hn,
+                  ),
                 ),
                 SizedBox(
                   child: ShowDashboard(patientstate: 'Post-Operation@Home'),

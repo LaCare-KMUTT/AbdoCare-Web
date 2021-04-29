@@ -319,7 +319,7 @@ class PrePatientDetail extends StatelessWidget {
                                           margin:
                                               EdgeInsets.fromLTRB(20, 0, 0, 0),
                                           child: Text(
-                                              snapshot.data['operationMethod']),
+                                              snapshot.data['patientState']),
                                         ),
                                       ),
                                       Expanded(
