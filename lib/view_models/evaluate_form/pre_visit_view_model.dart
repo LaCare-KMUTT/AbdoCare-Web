@@ -8,7 +8,6 @@ import '../../services/service_locator.dart';
 class PreVisitViewModel {
   PreVisitFormModel _preVisitFormModel;
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  GeneralFormModel _generalFormModel;
   PreVisitViewModel() {
     _preVisitFormModel = PreVisitFormModel().getModel();
   }
@@ -29,10 +28,10 @@ class PreVisitViewModel {
     _preVisitFormModel.setHealthStatusForm(healthStatusForm);
   }
 
-  void saveMapUpdateToDatabase(Map<String, dynamic> updateToDatabase,
-      GeneralFormModel generalFormModel) {
+  void saveMapUpdateToDatabase(
+    Map<String, dynamic> updateToDatabase,
+  ) {
     _preVisitFormModel.setUpdateToDatabase(updateToDatabase);
-    _generalFormModel = generalFormModel;
   }
 
   Future<void> saveDataToDatabase({@required String hn}) async {
@@ -46,7 +45,6 @@ class PreVisitViewModel {
       'height': generalForm['height'],
       'weight': generalForm['weight'],
     };
-    print('updateToAnSubCollection = $updateToAnSubCollection');
     var userCollection = await _firebaseService
         .searchDocumentByField(collection: 'Users', field: 'hn', fieldValue: hn)
         .then((value) {

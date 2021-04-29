@@ -1171,8 +1171,8 @@ class _GeneralFormState extends State<GeneralForm> {
                                   model.fromMap(formDataToDB);
                                   _preVisitViewModel
                                       .saveGeneralForm(formDataToDB);
-                                  _preVisitViewModel.saveMapUpdateToDatabase(
-                                      model.toMap(), model);
+                                  _preVisitViewModel
+                                      .saveMapUpdateToDatabase(model.toMap());
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
