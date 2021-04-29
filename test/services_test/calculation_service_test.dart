@@ -136,5 +136,12 @@ void main() {
       expect(result, '2.86');
       expect(result2, '-2.94');
     });
+
+    test('Calculate BMI should handle null value', () {
+      ICalculationService _calculationService = locator<ICalculationService>();
+      var result =
+          _calculationService.calculateBML(oldWeight: null, weight: null);
+      expect(result, 0.00);
+    });
   });
 }

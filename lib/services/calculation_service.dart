@@ -79,6 +79,10 @@ class CalculationService extends ICalculationService {
   }
 
   String calculateBML({@required int oldWeight, @required int weight}) {
+    // assert(oldWeight != null && weight != null);
+    oldWeight = oldWeight ?? 0;
+    weight = weight ?? 0;
+
     var bml = ((oldWeight - weight) / oldWeight) * 100;
     if (bml.isNaN || bml.isInfinite) bml = 0;
     return bml.toStringAsFixed(2);
