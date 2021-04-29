@@ -572,7 +572,6 @@ class FirebaseService extends IFirebaseService {
             .catchError((onError) {
           print('$onError no formsCollection on ${user.id}');
         });
-        print('formCollection = $formsCollection');
         temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
@@ -787,46 +786,53 @@ class FirebaseService extends IFirebaseService {
         patientState: anSubCollection['state'],
         formName: 'General');
     var generalFormData = Map();
-    if (generalForm.isNotEmpty)
-      generalFormData = await _firestore
+    if (generalForm.isNotEmpty) {
+      await _firestore
           .collection('Forms')
           .doc(generalForm.last['formId'])
           .get()
-          .then((value) => value.data())
-          .catchError((onError) {
+          .then((value) {
+        generalFormData.addAll(value.data());
+      }).catchError((onError) {
         print('$onError Cann\'t find General Form on ${usersCollection['hn']}');
       });
-
+    }
     DateFormat dateFormatter = DateFormat('dd-MM-yyyy');
+    var age = _calculationService
+        .calculateAge(birthDate: usersCollection['dob'].toDate())
+        .toString();
+    var dob = dateFormatter.format(usersCollection['dob'].toDate());
+    var bwl = _calculationService.calculateBML(
+        oldWeight: anSubCollection['oldWeight'],
+        weight: anSubCollection['weight']);
+    var operationDate =
+        dateFormatter.format(anSubCollection['operationDate'].toDate());
+
     var map = {
       'fullName': '${usersCollection['name']} ${usersCollection['surname']}',
       'gender': usersCollection['gender'] ?? '-',
-      'age': _calculationService
-          .calculateAge(birthDate: usersCollection['dob'].toDate())
-          .toString(),
-      'dob': dateFormatter.format(usersCollection['dob'].toDate()) ?? '-',
+      'age': age,
+      'dob': dob,
       'patientTel': usersCollection['patientTel'] ?? '-',
       'address': usersCollection['address'] ?? '-',
-      'height': anSubCollection['height'].toString() ?? '-',
-      'weight': anSubCollection['oldWeight'].toString() ?? '-',
-      'bwl': _calculationService
-          .calculateBML(
-              oldWeight: anSubCollection['oldWeight'],
-              weight: anSubCollection['weight'])
-          .toString(),
+      'height': anSubCollection['height'] != null
+          ? anSubCollection['height'].toString()
+          : '-',
+      'weight': anSubCollection['oldWeight'] != null
+          ? anSubCollection['oldWeight'].toString()
+          : '-',
+      'bwl': bwl,
       'careTakerName':
           '${anSubCollection['careTakerName'] ?? '-'} ${anSubCollection['careTakerSurname'] ?? '-'}',
       'careTakerTel': anSubCollection['careTakerTel'],
       'patientState': anSubCollection['state'],
       'HN': usersCollection['hn'],
       'AN': anSubCollection['an'],
-      'operationDate':
-          dateFormatter.format(anSubCollection['operationDate'].toDate()) ??
-              '-',
+      'operationDate': operationDate ?? '-',
       'operationName': anSubCollection['operationName'],
       'operationMethod': anSubCollection['operationMethod'],
-      'asaClass': generalFormData['asaClass'] ?? '-',
-      'previousIllness': generalFormData['previousIllness'] ?? '-',
+      'asaClass': generalFormData['formData']['asaClass'] ?? '-',
+      'previousIllness': generalFormData['formData']['previousIllness'] ?? '-',
     };
     return map;
   }
