@@ -20,12 +20,9 @@ class PostHomeNotificationTable extends StatefulWidget {
 }
 
 class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
-  final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
-  //final _detailController = TextEditingController();
-  // bool _validateDetail = false;
-  String _adviceDetail = '';
-  int _severity;
+  String _adviceDetail = '-';
+  int _severity = 0;
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -58,8 +55,15 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
           rows: widget.postHomeData.map((user) {
             return DataRow(
                 onSelectChanged: (newValue) {
-                  alertSuccessfullyChangeStatus(
-                      context, user.notiId, user.formName, user.imgURL);
+                  alertSuccessfullyChangeStatusPostHome(
+                      context,
+                      user.notiId,
+                      user.formName,
+                      user.hn,
+                      user.formTime,
+                      user.formDate,
+                      user.name,
+                      user.imgURL);
                 },
                 cells: [
                   DataCell(Center(
@@ -83,15 +87,13 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
         ));
   }
 
-  Future<void> alertSuccessfullyChangeStatus(
-      BuildContext context, notiId, formName, imgURl) async {
+  Future<void> alertSuccessfullyChangeStatusPostHome(BuildContext context,
+      notiId, formName, hn, formTime, formDate, name, imgURL) async {
     final IFirebaseService _firebaseService = locator<IFirebaseService>();
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           content: Builder(
             builder: (context) {
               var height = MediaQuery.of(context).size.height;
@@ -104,99 +106,141 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
                   children: [
                     Text('หมายเหตุการแจ้งเตือน',
                         style:
-                            TextStyle(fontSize: 22, color: Color(0xFFC37447))),
-                    Text("ผู้ป่วย$formName",
+                            TextStyle(fontSize: 24, color: Color(0xFFC37447))),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text("ผู้ป่วย$formName",
+                          style: Theme.of(context).textTheme.bodyText2,
+                          textAlign: TextAlign.center),
+                    ),
+                    Text("เวลา $formTime  วันที่ $formDate",
                         style: Theme.of(context).textTheme.bodyText2,
                         textAlign: TextAlign.center),
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      width: width / 2,
-                      height: height / 2,
-                      child: Image.network(imgURl),
-                    ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                       child: Row(
                         children: [
-                          Expanded(
+                          Flexible(
                             flex: 2,
-                            child: Text('ระดับความรุนแรง:\t\t',
-                                textAlign: TextAlign.end),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: DropdownButtonFormField(
-                              isDense: true,
-                              isExpanded: true,
-                              validator: (value) => value == null
-                                  ? 'กรุณาเลือกระดับความรุนแรง'
-                                  : null,
-                              decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black26, width: 1),
-                                  ),
-                                  labelText: 'ระดับความรุนแรง'),
-                              onSaved: (value) {
-                                _severity = int.parse(value);
-                              },
-                              items: [
-                                '1',
-                                '2',
-                                '3',
-                                '4',
-                                '5',
-                              ]
-                                  .map((label) => DropdownMenuItem(
-                                        child: Text(label),
-                                        value: label,
-                                      ))
-                                  .toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _severity = int.parse(value);
-                                });
-                              },
+                            child: Container(
+                              child: Text('HN:  ',
+                                  textAlign: TextAlign.end,
+                                  style: Theme.of(context).textTheme.bodyText2),
                             ),
                           ),
                           Expanded(
-                            flex: 1,
-                            child: SizedBox(width: 0),
-                          )
+                            flex: 2,
+                            child: Container(
+                              child: Text("$hn",
+                                  style: Theme.of(context).textTheme.bodyText2),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                       child: Row(
                         children: [
-                          Expanded(
+                          Flexible(
                             flex: 2,
-                            child:
-                                Text('คำแนะนำ:\t\t', textAlign: TextAlign.end),
+                            child: Container(
+                              child: Text('ชื่อ-นามสกุล:  ',
+                                  textAlign: TextAlign.end,
+                                  style: Theme.of(context).textTheme.bodyText2),
+                            ),
                           ),
                           Expanded(
-                              flex: 4,
-                              child: TextFormField(
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black26, width: 1),
-                                  ),
-                                ),
-                                onChanged: (value) => _adviceDetail = value,
-                              )),
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(width: 0),
-                          )
+                            flex: 2,
+                            child: Container(
+                              child: Text("$name",
+                                  style: Theme.of(context).textTheme.bodyText2),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 8),
+                      child: Container(
+                        child: Text('รูปภาพแผล:',
+                            style: Theme.of(context).textTheme.bodyText2),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 0, bottom: 8),
+                      width: 400,
+                      height: 300,
+                      child: Image.network(imgURL),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: Container(
+                        child: Text('ระดับความรุนแรง:\t\t',
+                            style: Theme.of(context).textTheme.bodyText2),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                      child: DropdownButtonFormField(
+                        isDense: true,
+                        isExpanded: true,
+                        validator: (value) =>
+                            value == null ? 'กรุณาเลือกระดับความรุนแรง' : null,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black26, width: 1),
+                            ),
+                            labelText: 'ระบุระดับความรุนแรง'),
+                        onSaved: (value) {
+                          _severity = int.parse(value);
+                        },
+                        items: [
+                          '0',
+                          '1',
+                          '2',
+                          '3',
+                          '4',
+                          '5',
+                        ]
+                            .map((label) => DropdownMenuItem(
+                                  child: Text(label),
+                                  value: label,
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _severity = int.parse(value);
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: Container(
+                        child: Text(
+                          'คำแนะนำ:\t\t',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                      child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black26, width: 1),
+                            ),
+                            labelText: 'กรอกคำแนะนำ'),
+                        onChanged: (value) => _adviceDetail = value,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -207,6 +251,10 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
                             height: 40,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(7.0),
+                                    ),
                                     primary: Color(0xFFEBEBEB),
                                     onPrimary: Colors.black,
                                     padding: EdgeInsets.all(15)),
@@ -214,7 +262,7 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
                                   Navigator.pop(context);
                                 },
                                 child: Text('ยกเลิก',
-                                    style: TextStyle(fontSize: 16))),
+                                    style: TextStyle(fontSize: 18))),
                           ),
                           Container(
                             width: 150,
@@ -223,22 +271,26 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
                             padding: const EdgeInsets.only(left: 0),
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(7.0),
+                                    ),
                                     primary: Color(0xFF2ED47A),
                                     onPrimary: Colors.white,
                                     padding: EdgeInsets.all(15)),
                                 onPressed: () {
-                                  // _firebaseService.updateDataToCollectionField(
-                                  //     collection: 'Notifications',
-                                  //     docId: notiId,
-                                  //     data: {
-                                  //       'severity': _severity,
-                                  //       'advice': _adviceDetail,
-                                  //       'seen': true
-                                  //     });
+                                  _firebaseService.updateDataToCollectionField(
+                                      collection: 'Notifications',
+                                      docId: notiId,
+                                      data: {
+                                        'severity': _severity,
+                                        'advice': _adviceDetail,
+                                        'seen': true
+                                      });
                                   Navigator.pop(context);
                                 },
-                                child: Text('ดำเนินการแล้ว',
-                                    style: TextStyle(fontSize: 16))),
+                                child: Text('ดำเนินการ',
+                                    style: TextStyle(fontSize: 18))),
                           ),
                         ],
                       ),

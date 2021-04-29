@@ -109,12 +109,12 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
               var width = MediaQuery.of(context).size.width;
               return Container(
                 height: height / 4,
-                width: width / 3,
+                width: width / 2,
                 child: ListView(
                   shrinkWrap: true,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: Text('หมายเหตุการแจ้งเตือน',
                           style: TextStyle(
                               fontSize: 22, color: Color(0xFFC37447))),

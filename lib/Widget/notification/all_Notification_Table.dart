@@ -17,8 +17,8 @@ class AllNotificationTable extends StatefulWidget {
 
 class _AllNotificationTableState extends State<AllNotificationTable> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
-  String _adviceDetail = '';
-  int _severity;
+  String _adviceDetail = "-";
+  int _severity = 0;
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -123,12 +123,12 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
               var width = MediaQuery.of(context).size.width;
               return Container(
                 height: height / 4,
-                width: width / 3,
+                width: width / 2,
                 child: ListView(
                   shrinkWrap: true,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: Text('หมายเหตุการแจ้งเตือน',
                           style: TextStyle(
                               fontSize: 22, color: Color(0xFFC37447))),
@@ -197,7 +197,7 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
   }
 
   Future<void> alertSuccessfullyChangeStatusPostHome(BuildContext context,
-      notiId, formName, hn, formTime, formDate, name, imgURl) async {
+      notiId, formName, hn, formTime, formDate, name, imgURL) async {
     final IFirebaseService _firebaseService = locator<IFirebaseService>();
     await showDialog(
       context: context,
@@ -232,21 +232,18 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                           Flexible(
                             flex: 2,
                             child: Container(
-                              child: Text(
-                                'ชื่อ-นามสกุล:  ',
-                                textAlign: TextAlign.end,
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
+                              child: Text('HN:  ',
+                                  textAlign: TextAlign.end,
+                                  style: Theme.of(context).textTheme.bodyText2),
                             ),
                           ),
                           Expanded(
-                              flex: 2,
-                              child: Container(
-                                child: Text(
-                                  "$name",
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              )),
+                            flex: 2,
+                            child: Container(
+                              child: Text("$hn",
+                                  style: Theme.of(context).textTheme.bodyText2),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -255,48 +252,41 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                       child: Row(
                         children: [
                           Flexible(
-                            flex: 1,
+                            flex: 2,
                             child: Container(
-                              child: Text(
-                                'HN:  ',
-                                textAlign: TextAlign.end,
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
+                              child: Text('ชื่อ-นามสกุล:  ',
+                                  textAlign: TextAlign.end,
+                                  style: Theme.of(context).textTheme.bodyText2),
                             ),
                           ),
                           Expanded(
-                              flex: 2,
-                              child: Container(
-                                child: Text(
-                                  "$hn",
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              )),
+                            flex: 2,
+                            child: Container(
+                              child: Text("$name",
+                                  style: Theme.of(context).textTheme.bodyText2),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(30, 0, 30, 8),
                       child: Container(
-                        child: Text(
-                          'รูปภาพแผล:',
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
+                        child: Text('รูปภาพแผล:',
+                            style: Theme.of(context).textTheme.bodyText2),
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 0, bottom: 8),
                       width: 400,
                       height: 300,
-                      child: Image.network(imgURl),
+                      child: Image.network(imgURL),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                       child: Container(
-                        child: Text(
-                          'ระดับความรุนแรง:\t\t',
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
+                        child: Text('ระดับความรุนแรง:\t\t',
+                            style: Theme.of(context).textTheme.bodyText2),
                       ),
                     ),
                     Padding(
@@ -311,11 +301,12 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                               borderSide:
                                   BorderSide(color: Colors.black26, width: 1),
                             ),
-                            labelText: 'ระดับความรุนแรง'),
+                            labelText: 'ระบุระดับความรุนแรง'),
                         onSaved: (value) {
                           _severity = int.parse(value);
                         },
                         items: [
+                          '0',
                           '1',
                           '2',
                           '3',
@@ -335,7 +326,7 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                       child: Container(
                         child: Text(
                           'คำแนะนำ:\t\t',
@@ -353,7 +344,7 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                               borderSide:
                                   BorderSide(color: Colors.black26, width: 1),
                             ),
-                            labelText: 'คำแนะนำ'),
+                            labelText: 'กรอกคำแนะนำ'),
                         onChanged: (value) => _adviceDetail = value,
                       ),
                     ),
@@ -397,17 +388,17 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                                     onPrimary: Colors.white,
                                     padding: EdgeInsets.all(15)),
                                 onPressed: () {
-                                  // _firebaseService.updateDataToCollectionField(
-                                  //     collection: 'Notifications',
-                                  //     docId: notiId,
-                                  //     data: {
-                                  //       'severity': _severity,
-                                  //       'advice': _adviceDetail,
-                                  //       'seen': true
-                                  //     });
+                                  _firebaseService.updateDataToCollectionField(
+                                      collection: 'Notifications',
+                                      docId: notiId,
+                                      data: {
+                                        'severity': _severity,
+                                        'advice': _adviceDetail,
+                                        'seen': true
+                                      });
                                   Navigator.pop(context);
                                 },
-                                child: Text('ดำเนินการแล้ว',
+                                child: Text('ดำเนินการ',
                                     style: TextStyle(fontSize: 18))),
                           ),
                         ],
