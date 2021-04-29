@@ -1,6 +1,7 @@
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
+import 'package:AbdoCare_Web/view_models/evaluate_form/recoveryReadiness_view_model.dart';
 import 'package:flutter/material.dart';
 
 class RecoveryReadinessForm extends StatefulWidget {
@@ -13,6 +14,8 @@ class RecoveryReadinessForm extends StatefulWidget {
 
 class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final RecoveryReadinessFormViewModel _recoveryReadinessFormViewModel =
+      locator<RecoveryReadinessFormViewModel>();
   var _knowFullName = false;
   var _knowTime = false;
   var _knowPlace = false;
@@ -323,21 +326,32 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                                 'noVomit': _noVomit,
                                               };
                                               if (_readyRecover == true) {
-                                                formDataToDB.addAll({
-                                                  "Result":
+                                                Map<String, dynamic>
+                                                    recoveryReadinessData = {
+                                                  "recoveryReadiness":
                                                       "พร้อมฟื้นสภาพหลังผ่าตัด"
-                                                });
+                                                };
+                                                formDataToDB.addAll(
+                                                    recoveryReadinessData);
                                                 await _firebaseService
                                                     .addDataToFormsCollection(
                                                         hn: widget.hn,
                                                         formName:
                                                             'Recovery Readiness',
                                                         data: formDataToDB);
+                                                _recoveryReadinessFormViewModel
+                                                    .saveRecoveryReadinessToDatabase(
+                                                        hn: widget.hn,
+                                                        recoveryReadinessData:
+                                                            recoveryReadinessData);
                                               } else {
-                                                formDataToDB.addAll({
-                                                  "Result":
+                                                Map<String, dynamic>
+                                                    recoveryReadinessData = {
+                                                  "recoveryReadiness":
                                                       "ไม่พร้อมฟื้นสภาพหลังผ่าตัด"
-                                                });
+                                                };
+                                                formDataToDB.addAll(
+                                                    recoveryReadinessData);
                                                 var formId = await _firebaseService
                                                     .addDataToFormsCollection(
                                                         hn: widget.hn,
@@ -350,6 +364,11 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
                                                         formId: formId,
                                                         formName:
                                                             'Recovery Readiness');
+                                                _recoveryReadinessFormViewModel
+                                                    .saveRecoveryReadinessToDatabase(
+                                                        hn: widget.hn,
+                                                        recoveryReadinessData:
+                                                            recoveryReadinessData);
                                               }
                                               Dialogs
                                                   .alertSuccessfullySavedData(
