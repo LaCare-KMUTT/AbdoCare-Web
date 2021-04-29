@@ -21,6 +21,7 @@ class PrePatientDetail extends StatelessWidget {
               future: _firebaseService.getPatientDetail(hn: hn),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
+                  print('snapshot data = ${snapshot.connectionState}');
                   return ProgressBar.circularProgressIndicator(context);
                 }
                 return Card(
