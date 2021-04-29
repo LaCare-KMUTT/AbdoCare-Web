@@ -469,8 +469,8 @@ class PostHosPatientDetail extends StatelessWidget {
                                         child: Container(
                                           margin:
                                               EdgeInsets.fromLTRB(20, 10, 0, 0),
-                                          child:
-                                              Text(snapshot.data['readiness']),
+                                          child: Text(snapshot
+                                              .data['recoveryReadiness']),
                                         ),
                                       ),
                                     ],

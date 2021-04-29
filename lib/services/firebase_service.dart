@@ -840,7 +840,7 @@ class FirebaseService extends IFirebaseService {
       'previousIllness': generalFormData.length != 0
           ? generalFormData['formData']['previousIllness']
           : '-',
-      'readiness': anSubCollection['readiness'] ??= '-',
+      'recoveryReadiness': anSubCollection['recoveryReadiness'] ??= '-',
     };
     print('map $map');
     return map;
