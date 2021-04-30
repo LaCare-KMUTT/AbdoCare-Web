@@ -197,7 +197,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                 : Colors.grey[300],
                             onPressed: () {
                               setState(() {
-                                pressAllState = !pressAllState;
+                                pressAllState = true;
                                 pressPreOpState = false;
                                 pressPostOpHospitalState = false;
                                 pressPostOpHomeState = false;
@@ -229,7 +229,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                 : Colors.grey[300],
                             onPressed: () {
                               setState(() {
-                                pressPreOpState = !pressPreOpState;
+                                pressPreOpState = true;
                                 pressAllState = false;
                                 pressPostOpHospitalState = false;
                                 pressPostOpHomeState = false;
@@ -259,8 +259,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                 : Colors.grey[300],
                             onPressed: () {
                               setState(() {
-                                pressPostOpHospitalState =
-                                    !pressPostOpHospitalState;
+                                pressPostOpHospitalState = true;
                                 pressAllState = false;
                                 pressPreOpState = false;
                                 pressPostOpHomeState = false;
@@ -290,7 +289,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                 : Colors.grey[300],
                             onPressed: () {
                               setState(() {
-                                pressPostOpHomeState = !pressPostOpHomeState;
+                                pressPostOpHomeState = true;
                                 pressAllState = false;
                                 pressPreOpState = false;
                                 pressPostOpHospitalState = false;
