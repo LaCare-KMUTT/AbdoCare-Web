@@ -1,6 +1,7 @@
-import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
-import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:flutter/material.dart';
+
+import '../../page/dashboard_postHos.dart';
+import '../../page/dashboard_pre.dart';
 
 class Dialogs {
   static Future<void> alertToCompleteEvalutation(BuildContext context) async {
@@ -68,6 +69,28 @@ class Dialogs {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: Text("กรุณากรอกข้อมูลให้ครบถ้วน",
+                style: Theme.of(context).textTheme.bodyText2,
+                textAlign: TextAlign.center),
+            actions: [
+              FlatButton(
+                child: Text('ตกลง'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ]);
+      },
+    );
+  }
+
+  static Future<void> alertDashboardDetail(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: Text("ผู้ป่วยยังไม่มีข้อมูลในขั้นตอนการรักษานี้",
                 style: Theme.of(context).textTheme.bodyText2,
                 textAlign: TextAlign.center),
             actions: [

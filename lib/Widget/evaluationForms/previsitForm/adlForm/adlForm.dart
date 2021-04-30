@@ -1,5 +1,7 @@
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
+import 'package:AbdoCare_Web/services/service_locator.dart';
+import 'package:AbdoCare_Web/view_models/evaluate_form/pre_visit_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/adlForm_model.dart';
@@ -11,12 +13,8 @@ import '@enum.dart';
 import 'adlQuestions.dart';
 
 class ADLForm extends StatefulWidget {
-  ADLForm(
-      {Key key, this.generalForm, this.adlForm, this.healthStatusForm, this.hn})
-      : super(key: key);
-  final Map<String, dynamic> generalForm;
-  final Map<String, dynamic> adlForm;
-  final Map<String, dynamic> healthStatusForm;
+  ADLForm({Key key, this.hn}) : super(key: key);
+
   final String hn;
 
   @override
@@ -24,6 +22,8 @@ class ADLForm extends StatefulWidget {
 }
 
 class _ADLFormState extends State<ADLForm> {
+  final _preVisitViewModel = locator<PreVisitViewModel>();
+
   int bladderIsSelected;
   int totalscore = 0;
   int feedingScore,
@@ -64,6 +64,7 @@ class _ADLFormState extends State<ADLForm> {
     };
     var model = ADLFormViewModel.getADLFormModel();
     model.fromMap(formDataToDB2);
+    _preVisitViewModel.saveADlForm(formDataToDB2);
     var map = model.toMap();
     print(map);
     print('hn in ADLForm = ${widget.hn}');
@@ -71,9 +72,8 @@ class _ADLFormState extends State<ADLForm> {
         context,
         MaterialPageRoute(
           builder: (context) => HealthStatusForm(
-              hn: widget.hn,
-              generalForm: widget.generalForm,
-              adlForm: formDataToDB2),
+            hn: widget.hn,
+          ),
         ));
   }
 

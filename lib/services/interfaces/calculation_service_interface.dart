@@ -10,4 +10,6 @@ abstract class ICalculationService {
 
   int calculateDayDifference(
       {@required DateTime day, @required DateTime compareTo});
+
+  String calculateBML({@required int oldWeight, @required int weight});
 }
