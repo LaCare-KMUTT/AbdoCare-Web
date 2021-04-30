@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:AbdoCare_Web/models/notification_list/all_notification_model.dart';
 import 'package:AbdoCare_Web/models/notification_list/post_home_notification_model.dart';
 import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
@@ -77,11 +78,8 @@ class _NotificationDetailState extends State<NotificationDetail> {
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CircularProgressIndicator(
-                  strokeWidth: 4,
-                ),
-              );
+                  padding: const EdgeInsets.all(10.0),
+                  child: ProgressBar.circularProgressIndicator(context));
             } else {
               if (allData.isNotEmpty) {
                 allData.clear();
@@ -99,11 +97,8 @@ class _NotificationDetailState extends State<NotificationDetail> {
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CircularProgressIndicator(
-                  strokeWidth: 4,
-                ),
-              );
+                  padding: const EdgeInsets.all(10.0),
+                  child: ProgressBar.circularProgressIndicator(context));
             } else {
               if (preOpData.isNotEmpty) {
                 preOpData.clear();
@@ -121,11 +116,8 @@ class _NotificationDetailState extends State<NotificationDetail> {
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CircularProgressIndicator(
-                  strokeWidth: 4,
-                ),
-              );
+                  padding: const EdgeInsets.all(10.0),
+                  child: ProgressBar.circularProgressIndicator(context));
             } else {
               if (postHosData.isNotEmpty) {
                 postHosData.clear();
@@ -143,11 +135,8 @@ class _NotificationDetailState extends State<NotificationDetail> {
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CircularProgressIndicator(
-                  strokeWidth: 4,
-                ),
-              );
+                  padding: const EdgeInsets.all(10.0),
+                  child: ProgressBar.circularProgressIndicator(context));
             } else {
               if (postHomeData.isNotEmpty) {
                 postHomeData.clear();
