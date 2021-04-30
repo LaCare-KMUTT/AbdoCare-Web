@@ -1022,7 +1022,8 @@ class FirebaseService extends IFirebaseService {
       returnValue.removeWhere((element) => element == null);
     }
     return returnValue;
-    
+  }
+
   Future<Map<String, dynamic>> getPatientDetail({@required String hn}) async {
     var usersCollection = await _firestore
         .collection('Users')
@@ -1108,6 +1109,5 @@ class FirebaseService extends IFirebaseService {
     };
     print('map $map');
     return map;
-
   }
 }
