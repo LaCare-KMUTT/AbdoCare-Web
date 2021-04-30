@@ -1,6 +1,7 @@
-import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
-import 'package:AbdoCare_Web/page/dashboard_pre.dart';
 import 'package:flutter/material.dart';
+
+import '../../page/dashboard_postHos.dart';
+import '../../page/dashboard_pre.dart';
 
 class Dialogs {
   static Future<void> alertToCompleteEvalutation(BuildContext context) async {
@@ -89,7 +90,7 @@ class Dialogs {
         return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            title: Text("คนไข้ยังไม่มีข้อมูลในขั้นตอนการรักษานี้",
+            title: Text("ผู้ป่วยยังไม่มีข้อมูลในขั้นตอนการรักษานี้",
                 style: Theme.of(context).textTheme.bodyText2,
                 textAlign: TextAlign.center),
             actions: [
