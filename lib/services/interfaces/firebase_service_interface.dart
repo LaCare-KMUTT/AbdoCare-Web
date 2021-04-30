@@ -103,4 +103,6 @@ abstract class IFirebaseService {
   Future<List<Map<String, dynamic>>> getPostHomeNotificationList();
 
   Future<List<Map<String, dynamic>>> getAllNotificationList();
+
+  Future<Map<String, dynamic>> getPatientDetail({@required String hn});
 }

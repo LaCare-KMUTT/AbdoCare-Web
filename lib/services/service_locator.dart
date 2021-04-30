@@ -8,10 +8,15 @@ import 'package:AbdoCare_Web/view_models/notification_list/post_home_notificatio
 import 'package:AbdoCare_Web/view_models/notification_list/pre_op_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/recoveryReadiness_view_model.dart';
 import 'package:get_it/get_it.dart';
+import '../Widget/evaluationForms/ultilities/form_utility/health_status_form_utility.dart';
+import '../Widget/material.dart';
+import '../view_models/evaluate_form/evaluationFormButton_view_model.dart';
+import '../view_models/evaluate_form/pre_visit_view_model.dart';
 import '../view_models/user_list/post_home_list_view_model.dart';
 import '../view_models/user_list/post_hos_list_view_model.dart';
 import '../view_models/user_list/pre_op_list_view_model.dart';
 import 'calculation_service.dart';
+import 'cloud_function_service.dart';
 import 'firebase_service.dart';
 import 'interfaces/calculation_service_interface.dart';
 import 'interfaces/firebase_service_interface.dart';
@@ -44,6 +49,7 @@ void setupServiceLocator({bool isMock = false}) {
   locator.registerLazySingleton<PostHomeNotiViewModel>(
       () => PostHomeNotiViewModel());
   locator.registerLazySingleton<AllNotiViewModel>(() => AllNotiViewModel());
+  locator.registerLazySingleton<PreVisitViewModel>(() => PreVisitViewModel());
   locator.registerLazySingleton<RecoveryReadinessFormViewModel>(
       () => RecoveryReadinessFormViewModel());
 }

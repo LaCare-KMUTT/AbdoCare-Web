@@ -499,7 +499,7 @@ class FirebaseService extends IFirebaseService {
       if (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty) {
         var formSurgicalIncisionData = await _firestore
             .collection('Forms')
-            .doc(formSurgicalIncision.first['formId'])
+            .doc(formSurgicalIncision.last['formId'])
             .get()
             .then((value) => value.data());
         woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
@@ -573,7 +573,6 @@ class FirebaseService extends IFirebaseService {
             .catchError((onError) {
           print('$onError no formsCollection on ${user.id}');
         });
-        print('formCollection = $formsCollection');
         temperatureToMap = formsCollection['formData']['temperature'] ?? '-';
         respirationRateToMap =
             formsCollection['formData']['respirationRate'] ?? '-';
@@ -758,7 +757,6 @@ class FirebaseService extends IFirebaseService {
       print('$onError Cannot find user');
     });
     var anSubCollection = await getLatestAnSubCollection(docId: userId);
-    var patientState = anSubCollection['state'];
     return anSubCollection['state'];
   }
 
@@ -1024,5 +1022,92 @@ class FirebaseService extends IFirebaseService {
       returnValue.removeWhere((element) => element == null);
     }
     return returnValue;
+    
+  Future<Map<String, dynamic>> getPatientDetail({@required String hn}) async {
+    var usersCollection = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) {
+      var map = value.docs.first.data();
+      map['id'] = value.docs.first.id;
+      return map;
+    });
+    var anlength = usersCollection['an'].length - 1;
+    String an = usersCollection['an'][anlength]['an'];
+    var anSubCollection = await _firestore
+        .collection('Users')
+        .doc(usersCollection['id'])
+        .collection('an')
+        .doc(an)
+        .get()
+        .then((value) => value.data())
+        .catchError((onError) {
+      print('$onError');
+    });
+
+    var generalForm = await getFormListInAnBasedOnState(
+        userId: usersCollection['id'],
+        patientState: anSubCollection['state'],
+        formName: 'General');
+    var generalFormData = Map();
+    if (generalForm.isNotEmpty) {
+      await _firestore
+          .collection('Forms')
+          .doc(generalForm.last['formId'])
+          .get()
+          .then((value) {
+        generalFormData.addAll(value.data());
+      }).catchError((onError) {
+        print('$onError Cann\'t find General Form on ${usersCollection['hn']}');
+      });
+    }
+    DateFormat dateFormatter = DateFormat('dd-MM-yyyy');
+    var age = _calculationService
+        .calculateAge(birthDate: usersCollection['dob'].toDate())
+        .toString();
+    var dob = dateFormatter.format(usersCollection['dob'].toDate());
+    var bwl = _calculationService.calculateBML(
+        oldWeight: anSubCollection['oldWeight'],
+        weight: anSubCollection['weight']);
+    var operationDate =
+        dateFormatter.format(anSubCollection['operationDate'].toDate());
+
+    var map = {
+      'fullName': '${usersCollection['name']} ${usersCollection['surname']}',
+      'gender': usersCollection['gender'] ??= '-',
+      'age': age,
+      'dob': dob,
+      'patientTel': usersCollection['patientTel'] ??= '-',
+      'address': usersCollection['address'] ??= '-',
+      'height': anSubCollection['height'] != null
+          ? anSubCollection['height'].toString()
+          : '-',
+      'weight': anSubCollection['oldWeight'] != null
+          ? anSubCollection['oldWeight'].toString()
+          : '-',
+      'bwl': bwl,
+      'careTakerName':
+          '${anSubCollection['careTakerName'] ?? '-'} ${anSubCollection['careTakerSurname'] ?? '-'}',
+      'careTakerTel': anSubCollection['careTakerTel'] ??= '-',
+      'patientState': anSubCollection['state'] ??= '-',
+      'HN': usersCollection['hn'] ??= '-',
+      'AN': anSubCollection['an'] ??= '-',
+      'operationDate': operationDate ??= '-',
+      'operationName': anSubCollection['operationName'] ??= '-',
+      'operationMethod': anSubCollection['operationMethod'] ??= '-',
+      'bedNumber': anSubCollection['bedNumber'] ??= '-',
+      'roomNumber': anSubCollection['roomNumber'] ??= '-',
+      'asaClass': generalFormData.length != 0
+          ? generalFormData['formData']['asaClass']
+          : '-',
+      'previousIllness': generalFormData.length != 0
+          ? generalFormData['formData']['previousIllness']
+          : '-',
+      'recoveryReadiness': anSubCollection['recoveryReadiness'] ??= '-',
+    };
+    print('map $map');
+    return map;
+
   }
 }
