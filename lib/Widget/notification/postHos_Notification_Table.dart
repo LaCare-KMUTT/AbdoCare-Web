@@ -64,7 +64,8 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                       user.hn,
                       user.formTime,
                       user.formDate,
-                      user.name);
+                      user.name,
+                      user.seen);
                 },
                 cells: [
                   DataCell(Center(
@@ -95,7 +96,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
   }
 
   Future<void> alertSuccessfullyChangeStatus(BuildContext context, notiId,
-      formName, hn, formTime, formDate, name) async {
+      formName, hn, formTime, formDate, name, seen) async {
     final IFirebaseService _firebaseService = locator<IFirebaseService>();
     await showDialog(
       context: context,
@@ -130,47 +131,67 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
                         textAlign: TextAlign.center),
                     Padding(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.only(right: 0),
-                            margin: EdgeInsets.only(right: 0),
-                            width: 150,
-                            height: 40,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFFEBEBEB),
-                                    onPrimary: Colors.black,
-                                    padding: EdgeInsets.all(15)),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text('ยกเลิก',
-                                    style: TextStyle(fontSize: 16))),
-                          ),
-                          Container(
-                            width: 150,
-                            height: 40,
-                            margin: EdgeInsets.only(left: 20),
-                            padding: const EdgeInsets.only(left: 0),
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFF2ED47A),
-                                    onPrimary: Colors.white,
-                                    padding: EdgeInsets.all(15)),
-                                onPressed: () {
-                                  _firebaseService.updateDataToCollectionField(
-                                      collection: 'Notifications',
-                                      docId: notiId,
-                                      data: {'seen': true});
-                                  Navigator.pop(context);
-                                },
-                                child: Text('ดำเนินการแล้ว',
-                                    style: TextStyle(fontSize: 16))),
-                          ),
-                        ],
-                      ),
+                      child: (() {
+                        if (seen == "ยังไม่ได้ดำเนินการ") {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(right: 0),
+                                margin: EdgeInsets.only(right: 0),
+                                width: 150,
+                                height: 40,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Color(0xFFEBEBEB),
+                                        onPrimary: Colors.black,
+                                        padding: EdgeInsets.all(15)),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('ยกเลิก',
+                                        style: TextStyle(fontSize: 16))),
+                              ),
+                              Container(
+                                width: 150,
+                                height: 40,
+                                margin: EdgeInsets.only(left: 20),
+                                padding: const EdgeInsets.only(left: 0),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Color(0xFF2ED47A),
+                                        onPrimary: Colors.white,
+                                        padding: EdgeInsets.all(15)),
+                                    onPressed: () {
+                                      _firebaseService
+                                          .updateDataToCollectionField(
+                                              collection: 'Notifications',
+                                              docId: notiId,
+                                              data: {'seen': true});
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('ดำเนินการแล้ว',
+                                        style: TextStyle(fontSize: 16))),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.check_circle_outline_rounded,
+                                size: 40,
+                                color: Colors.greenAccent,
+                              ),
+                              Text(" $seen",
+                                  style: TextStyle(
+                                      color: Color(0xFF2ED47A), fontSize: 24),
+                                  textAlign: TextAlign.center),
+                            ],
+                          );
+                        }
+                      }()),
                     )
                   ],
                 ),
