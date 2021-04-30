@@ -220,7 +220,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     ),
                                   ),
                                   Expanded(
-                                    flex: 2,
+                                    flex: 1,
                                     child: Text(
                                       'AN:\t\t\t',
                                       style:
@@ -262,10 +262,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                           ? 'กรุณาเลือกWard'
                                           : null,
                                       decoration: InputDecoration(
-                                          contentPadding:
-                                              new EdgeInsets.symmetric(
-                                                  vertical: 8.0,
-                                                  horizontal: 10.0),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: Colors.black26,
@@ -344,7 +340,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     ),
                                   ),
                                   Expanded(
-                                    flex: 3,
+                                    flex: 2,
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
@@ -453,11 +449,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     ),
                                   ),
                                   Expanded(
-                                    flex: 2,
+                                    flex: 1,
                                     child: Container(
                                       width: 150,
                                       child: Text(
-                                        'วัน/เดือน/ปี เกิด:\t\t\t',
+                                        'วัน/เดือน/ปี เกิด:\t',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2,
@@ -544,9 +540,9 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     ),
                                   ),
                                   Expanded(
-                                    flex: 3,
+                                    flex: 2,
                                     child: SizedBox(
-                                      width: 100,
+                                      width: 0,
                                     ),
                                   )
                                 ],
