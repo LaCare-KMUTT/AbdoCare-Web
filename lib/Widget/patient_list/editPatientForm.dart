@@ -267,7 +267,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    flex: 2,
+                                                    flex: 1,
                                                     child: Text(
                                                       'AN:\t\t\t',
                                                       style: Theme.of(context)
@@ -379,7 +379,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    flex: 3,
+                                                    flex: 2,
                                                     child: Container(
                                                       width: 300,
                                                       child: TextFormField(
@@ -519,11 +519,11 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    flex: 2,
+                                                    flex: 1,
                                                     child: Container(
                                                       width: 150,
                                                       child: Text(
-                                                        'วัน/เดือน/ปี เกิด:\t\t\t',
+                                                        'วัน/เดือน/ปี เกิด:\t',
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodyText2,
@@ -641,10 +641,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    flex: 3,
-                                                    child: SizedBox(
-                                                      width: 100,
-                                                    ),
+                                                    flex: 2,
+                                                    child: SizedBox(),
                                                   )
                                                 ],
                                               ),
@@ -745,7 +743,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    flex: 3,
+                                                    flex: 2,
                                                     child: Container(
                                                       width: 300,
                                                       child: TextFormField(
@@ -826,7 +824,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
-                                                      0, 10, 8, 20),
+                                                      0, 10, 20, 20),
                                               child: Row(children: <Widget>[
                                                 Expanded(
                                                   flex: 2,
@@ -842,7 +840,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   ),
                                                 ),
                                                 Expanded(
-                                                  flex: 3,
+                                                  flex: 4,
                                                   child: Container(
                                                     width: 300,
                                                     child: TextFormField(
@@ -872,8 +870,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   ),
                                                 ),
                                                 Expanded(
-                                                  flex: 4,
-                                                  child: SizedBox(width: 0),
+                                                  flex: 3,
+                                                  child: SizedBox(),
                                                 )
                                               ]),
                                             )
