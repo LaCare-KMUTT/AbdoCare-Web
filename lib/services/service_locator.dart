@@ -6,8 +6,8 @@ import 'package:AbdoCare_Web/view_models/notification_list/all_notification_view
 import 'package:AbdoCare_Web/view_models/notification_list/post_hos_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/post_home_notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/pre_op_notification_view_model.dart';
+import 'package:AbdoCare_Web/view_models/evaluate_form/recoveryReadiness_view_model.dart';
 import 'package:get_it/get_it.dart';
-
 import '../view_models/user_list/post_home_list_view_model.dart';
 import '../view_models/user_list/post_hos_list_view_model.dart';
 import '../view_models/user_list/pre_op_list_view_model.dart';
@@ -44,4 +44,6 @@ void setupServiceLocator({bool isMock = false}) {
   locator.registerLazySingleton<PostHomeNotiViewModel>(
       () => PostHomeNotiViewModel());
   locator.registerLazySingleton<AllNotiViewModel>(() => AllNotiViewModel());
+  locator.registerLazySingleton<RecoveryReadinessFormViewModel>(
+      () => RecoveryReadinessFormViewModel());
 }
