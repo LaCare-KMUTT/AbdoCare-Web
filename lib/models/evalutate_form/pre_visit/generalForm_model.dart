@@ -10,9 +10,11 @@ class GeneralFormModel {
   DateTime _operationDate;
   String _operationMethod;
   String _diagnosis;
-  int _weight;
-  int _bw;
-  int _high;
+
+  int _weight; /* oldWeight for field in db*/
+  int _bw; /* weight for field in db*/
+  int _high; /* height for field in db*/
+
   String _previousIllness;
 
   String _consentSigned;
