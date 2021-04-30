@@ -1,6 +1,3 @@
-import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/health_status_form_utility.dart';
-import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
-import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/evalutate_form/pre_visit/healthStatusForm_model.dart';
@@ -9,8 +6,12 @@ import '../../../../services/interfaces/calculation_service_interface.dart';
 import '../../../../services/interfaces/firebase_service_interface.dart';
 import '../../../../services/service_locator.dart';
 import '../../../../view_models/evaluate_form/healthStatusForm_view_model.dart';
+import '../../../../view_models/evaluate_form/pre_visit_view_model.dart';
 import '../../../appbar.dart';
+import '../../../shared/alert_style.dart';
+import '../../../shared/progress_bar.dart';
 import '../../../sidebar.dart';
+import '../../ultilities/form_utility/health_status_form_utility.dart';
 import 'cv.dart';
 import 'endocrine.dart';
 import 'general.dart';
@@ -23,18 +24,17 @@ import 'neuro.dart';
 import 'pulmonary.dart';
 
 class HealthStatusForm extends StatefulWidget {
-  HealthStatusForm({Key key, this.generalForm, this.adlForm, this.hn})
-      : super(key: key);
-  final Map<String, dynamic> adlForm;
+  HealthStatusForm({Key key, this.hn}) : super(key: key);
   final String hn;
-  final Map<String, dynamic> generalForm;
   @override
   _HealthStatusFormState createState() => _HealthStatusFormState();
 }
 
 class _HealthStatusFormState extends State<HealthStatusForm> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  ICalculationService _calculationService = locator<ICalculationService>();
+  final ICalculationService _calculationService =
+      locator<ICalculationService>();
+  final PreVisitViewModel _preVisitViewModel = locator<PreVisitViewModel>();
   final HealthStatusUtility _healthStatusUtility =
       locator<HealthStatusUtility>();
   final _formKey = GlobalKey<FormState>();
@@ -349,32 +349,15 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
 
                                       var isChecked = _healthStatusUtility
                                           .getValidateHealthStatus(model);
-                                      if (isChecked == false) {
+                                      if (isChecked) {
                                         Dialogs.alertToCompleteEvalutation(
                                             context);
                                       } else {
                                         _formKey.currentState.save();
-                                        print(
-                                            'MODEL HEALTH STATUS ${model.toMap()}');
-
-                                        _firebaseService
-                                            .addDataToFormsCollection(
-                                                data: widget.generalForm,
-                                                formName: 'General',
-                                                hn: widget.hn);
-
-                                        _firebaseService
-                                            .addDataToFormsCollection(
-                                                data: widget.adlForm,
-                                                formName: 'ADL',
-                                                hn: widget.hn);
-
-                                        _firebaseService
-                                            .addDataToFormsCollection(
-                                                hn: widget.hn,
-                                                formName: 'Health Status',
-                                                data: model.toMap());
-
+                                        _preVisitViewModel.saveHealthStatusForm(
+                                            model.toMap());
+                                        _preVisitViewModel.saveDataToDatabase(
+                                            hn: widget.hn);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(

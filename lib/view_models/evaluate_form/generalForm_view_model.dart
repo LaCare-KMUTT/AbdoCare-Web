@@ -9,7 +9,10 @@ class GeneralFormViewModel {
   String hn;
   static GeneralFormModel _generalFormModel;
   final _firebaseService = locator<IFirebaseService>();
+  var userCollection;
+  var anSubCollection;
 
+  GeneralFormViewModel();
   GeneralFormViewModel._init(this.hn) {
     _generalFormModel = new GeneralFormModel();
   }
@@ -21,7 +24,7 @@ class GeneralFormViewModel {
   }
 
   Future<GeneralFormModel> query() async {
-    var userCollection = await _firebaseService
+    userCollection = await _firebaseService
         .searchDocumentByField(collection: 'Users', field: 'hn', fieldValue: hn)
         .then((value) {
       return {
@@ -30,7 +33,7 @@ class GeneralFormViewModel {
       };
     });
     var model = _generalFormModel.setUserCollectionFromDb(userCollection);
-    var anSubCollection = await _firebaseService.getLatestAnSubCollection(
+    anSubCollection = await _firebaseService.getLatestAnSubCollection(
         docId: userCollection['id']);
     model = _generalFormModel.setAnSubCollectionFromDb(anSubCollection);
     return model;
@@ -38,6 +41,7 @@ class GeneralFormViewModel {
 
   static GeneralFormModel getGeneralFormModel() {
     var model = _generalFormModel.getModel();
+
     return model;
   }
 }
