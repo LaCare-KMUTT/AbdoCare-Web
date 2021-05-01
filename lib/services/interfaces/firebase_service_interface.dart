@@ -96,13 +96,8 @@ abstract class IFirebaseService {
       @required String formName});
   Future<String> getPatientState({@required String hn});
 
-  Future<List<Map<String, dynamic>>> getPreOpNotificationList();
-
-  Future<List<Map<String, dynamic>>> getPostHosNotificationList();
-
-  Future<List<Map<String, dynamic>>> getPostHomeNotificationList();
-
-  Future<List<Map<String, dynamic>>> getAllNotificationList();
+  Future<List<Map<String, dynamic>>> getNotification(
+      {@required String patientState});
 
   Future<Map<String, dynamic>> getPatientDetail({@required String hn});
 }

@@ -1,15 +1,15 @@
 import 'package:AbdoCare_Web/Widget/material.dart';
-import 'package:AbdoCare_Web/models/notification_list/all_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/notification_model.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class AllNotificationTable extends StatefulWidget {
-  final List<AllNotiData> allData;
+  final List<NotiData> notiData;
   final Function callAllData;
   final String patientState;
   AllNotificationTable(
-      {Key key, @required this.allData, this.callAllData, this.patientState})
+      {Key key, @required this.notiData, this.callAllData, this.patientState})
       : super(key: key);
   @override
   _AllNotificationTableState createState() => _AllNotificationTableState();
@@ -53,7 +53,7 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
             DataColumn(
                 label: Expanded(child: Center(child: Text('ขั้นตอนการรักษา')))),
           ],
-          rows: widget.allData.map((user) {
+          rows: widget.notiData.map((user) {
             return DataRow(
                 onSelectChanged: (newValue) async {
                   print(user.notiId);

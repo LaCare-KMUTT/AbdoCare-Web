@@ -1,11 +1,11 @@
-import 'package:AbdoCare_Web/models/notification_list/post_home_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/notification_model.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import '../material.dart';
 
 class PostHomeNotificationTable extends StatefulWidget {
-  final List<PostHomeNotiData> postHomeData;
+  final List<NotiData> postHomeData;
   final Function callPostHomeData;
   final String patientState;
   PostHomeNotificationTable(

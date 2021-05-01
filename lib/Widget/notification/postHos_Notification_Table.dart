@@ -1,11 +1,11 @@
 import 'package:AbdoCare_Web/Widget/material.dart';
-import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/notification_model.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class PostHosNotificationTable extends StatefulWidget {
-  final List<PostHosNotiData> postHosData;
+  final List<NotiData> postHosData;
   final Function callPostHosData;
   final String patientState;
   PostHosNotificationTable(
@@ -56,7 +56,6 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
           rows: widget.postHosData.map((user) {
             return DataRow(
                 onSelectChanged: (newValue) {
-                  print(user.notiId);
                   alertSuccessfullyChangeStatus(
                       context,
                       user.notiId,

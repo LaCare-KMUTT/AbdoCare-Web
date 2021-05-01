@@ -1,11 +1,11 @@
-import 'package:AbdoCare_Web/models/notification_list/pre_op_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/notification_model.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import '../material.dart';
 
 class PreNotificationTable extends StatefulWidget {
-  final List<PreOpNotiData> preOpData;
+  final List<NotiData> preOpData;
   final Function callPreOpData;
   final String patientState;
   PreNotificationTable(
@@ -54,7 +54,6 @@ class _PreNotificationTableState extends State<PreNotificationTable> {
           rows: widget.preOpData.map((user) {
             return DataRow(
                 onSelectChanged: (newValue) {
-                  print(user.notiId);
                   alertSuccessfullyChangeStatus(
                       context,
                       user.notiId,

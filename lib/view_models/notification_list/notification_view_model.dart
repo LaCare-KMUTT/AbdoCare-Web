@@ -1,32 +1,33 @@
-import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/notification_model.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 
-class PostHosNotiViewModel {
-  PostHosNotiViewModel();
+class NotiViewModel {
+  NotiViewModel();
   final _firebaseService = locator<IFirebaseService>();
-  List<PostHosNotiData> userList = [];
+  List<NotiData> userList = [];
 
-  Future<void> _initialize() async {
-    var postHosNotiList = await _firebaseService.getPostHosNotificationList();
+  Future<void> _initialize(String patientState) async {
+    var allNotiList =
+        await _firebaseService.getNotification(patientState: patientState);
     print('initList');
-    if (postHosNotiList != null) {
-      postHosNotiList.forEach((mapData) {
-        userList.add(PostHosNotiData(map: mapData));
+    if (allNotiList != null) {
+      allNotiList.forEach((mapData) {
+        userList.add(NotiData(map: mapData));
         sortBy("formDateTimeSort", true);
         sortBy("seen", true);
       });
     }
   }
 
-  Future<List<PostHosNotiData>> getUsers() async {
+  Future<List<NotiData>> getUsers(String patientState) async {
     userList.clear();
-    await _initialize();
+    await _initialize(patientState);
     userList.forEach((element) {});
     return userList;
   }
 
-  List<PostHosNotiData> sortBy(String key, bool isAsc) {
+  List<NotiData> sortBy(String key, bool isAsc) {
     switch (key) {
       case 'seen':
         userList.sort((a, b) => a.seen.compareTo(b.seen));

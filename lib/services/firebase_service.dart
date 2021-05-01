@@ -774,256 +774,6 @@ class FirebaseService extends IFirebaseService {
     return data.docs;
   }
 
-  Future<List<Map<String, dynamic>>> getPreOpNotificationList() async {
-    var notiList = await this.getNotificationList("Pre-Operation");
-    var returnList = notiList.map((user) async {
-      var notiCollection = await this
-          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
-      var docId = notiCollection['userId'];
-      var seen = notiCollection['seen'];
-      if (seen == false) {
-        seen = "ยังไม่ได้ดำเนินการ";
-      } else {
-        seen = "ดำเนินการแล้ว";
-      }
-      var formName = notiCollection['formName'];
-      formName = "ไม่ผ่าน" + formNameModel[formName];
-      var time = notiCollection['creation'];
-      var formTime =
-          DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
-      var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
-      var userCollection =
-          await this.searchDocumentByDocId(collection: 'Users', docId: docId);
-      var hnToMap = userCollection.data()['hn'] ?? '-';
-      var nameToMap =
-          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-      var anSubCollection = await _firestore
-          .collection('Users')
-          .doc(docId)
-          .collection('an')
-          .orderBy('operationDate', descending: true)
-          .limit(1)
-          .get()
-          .then((value) => value.docs.first.data())
-          .catchError((onError) {
-        print('$onError no anSubCollection on ${user.id}');
-      });
-      if (anSubCollection['state'] != 'Pre-Operation') {
-        return null;
-      }
-      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
-      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var map = {
-        'hn': hnToMap ?? '-',
-        'name': nameToMap ?? '-',
-        'roomNumber': roomNumberToMap ?? '-',
-        'bedNumber': bedNumberToMap ?? '-',
-        'formName': formName ?? '-',
-        'formTime': formTimeToShow ?? '-',
-        'formDate': formDateToShow ?? '-',
-        'formDateTimeSort': formTime ?? '-',
-        'seen': seen ?? '-',
-        'notiId': user.id ?? '-'
-      };
-      return map;
-    });
-    var futureList = Future.wait(returnList);
-    var returnValue = await futureList;
-    if (returnValue != null) {
-      returnValue.removeWhere((element) => element == null);
-    }
-    return returnValue;
-  }
-
-  Future<List<Map<String, dynamic>>> getPostHosNotificationList() async {
-    var notiList = await this.getNotificationList("Post-Operation@Hospital");
-    var returnList = notiList.map((user) async {
-      var notiCollection = await this
-          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
-      var docId = notiCollection['userId'];
-      var seen = notiCollection['seen'];
-      if (seen == false) {
-        seen = "ยังไม่ได้ดำเนินการ";
-      } else {
-        seen = "ดำเนินการแล้ว";
-      }
-      var formName = notiCollection['formName'];
-      formName = "ไม่ผ่าน" + formNameModel[formName];
-      var time = notiCollection['creation'];
-      var formTime =
-          DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
-      var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
-      var userCollection =
-          await this.searchDocumentByDocId(collection: 'Users', docId: docId);
-      var hnToMap = userCollection.data()['hn'] ?? '-';
-      var nameToMap =
-          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-      var anSubCollection = await _firestore
-          .collection('Users')
-          .doc(docId)
-          .collection('an')
-          .orderBy('operationDate', descending: true)
-          .limit(1)
-          .get()
-          .then((value) => value.docs.first.data())
-          .catchError((onError) {
-        print('$onError no anSubCollection on ${user.id}');
-      });
-      if (anSubCollection['state'] != 'Post-Operation@Hospital') {
-        return null;
-      }
-      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
-      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var map = {
-        'hn': hnToMap ?? '-',
-        'name': nameToMap ?? '-',
-        'roomNumber': roomNumberToMap ?? '-',
-        'bedNumber': bedNumberToMap ?? '-',
-        'formName': formName ?? '-',
-        'formTime': formTimeToShow ?? '-',
-        'formDate': formDateToShow ?? '-',
-        'formDateTimeSort': formTime ?? '-',
-        'seen': seen ?? '-',
-        'notiId': user.id ?? '-'
-      };
-      return map;
-    });
-    var futureList = Future.wait(returnList);
-    var returnValue = await futureList;
-    if (returnValue != null) {
-      returnValue.removeWhere((element) => element == null);
-    }
-    return returnValue;
-  }
-
-  Future<List<Map<String, dynamic>>> getPostHomeNotificationList() async {
-    var notiList = await this.getNotificationList("Post-Operation@Home");
-    var returnList = notiList.map((user) async {
-      var notiCollection = await this
-          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
-      var docId = notiCollection['userId'];
-      var imgURL = notiCollection['imgURL'];
-      var seen = notiCollection['seen'];
-      if (seen == false) {
-        seen = "ยังไม่ได้ดำเนินการ";
-      } else {
-        seen = "ดำเนินการแล้ว";
-      }
-      var formName = notiCollection['formName'];
-      formName = "ไม่ผ่าน" + formNameModel[formName];
-      var time = notiCollection['creation'];
-      var formTime =
-          DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
-      var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
-      var userCollection =
-          await this.searchDocumentByDocId(collection: 'Users', docId: docId);
-      var hnToMap = userCollection.data()['hn'] ?? '-';
-      var nameToMap =
-          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-      var anSubCollection = await _firestore
-          .collection('Users')
-          .doc(docId)
-          .collection('an')
-          .orderBy('operationDate', descending: true)
-          .limit(1)
-          .get()
-          .then((value) => value.docs.first.data())
-          .catchError((onError) {
-        print('$onError no anSubCollection on ${user.id}');
-      });
-      if (anSubCollection['state'] != 'Post-Operation@Home') {
-        return null;
-      }
-      var map = {
-        'hn': hnToMap ?? '-',
-        'name': nameToMap ?? '-',
-        'formName': formName ?? '-',
-        'formTime': formTimeToShow ?? '-',
-        'formDate': formDateToShow ?? '-',
-        'formDateTimeSort': formTime ?? '-',
-        'seen': seen ?? '-',
-        'notiId': user.id ?? '-',
-        'imgURL': imgURL ?? '-'
-      };
-      return map;
-    });
-    var futureList = Future.wait(returnList);
-    var returnValue = await futureList;
-    if (returnValue != null) {
-      returnValue.removeWhere((element) => element == null);
-    }
-    return returnValue;
-  }
-
-  Future<List<Map<String, dynamic>>> getAllNotificationList() async {
-    var notiList = await this.getNotificationList("AllState");
-    var returnList = notiList.map((user) async {
-      var notiCollection = await this
-          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
-      var docId = notiCollection['userId'];
-      var seen = notiCollection['seen'];
-      if (seen == false) {
-        seen = "ยังไม่ได้ดำเนินการ";
-      } else {
-        seen = "ดำเนินการแล้ว";
-      }
-      var formName = notiCollection['formName'];
-      formName = "ไม่ผ่าน" + formNameModel[formName];
-      var time = notiCollection['creation'];
-      var formTime =
-          DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
-      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
-      var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
-      var userCollection =
-          await this.searchDocumentByDocId(collection: 'Users', docId: docId);
-      var hnToMap = userCollection.data()['hn'] ?? '-';
-      var nameToMap =
-          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-      var anSubCollection = await _firestore
-          .collection('Users')
-          .doc(docId)
-          .collection('an')
-          .orderBy('operationDate', descending: true)
-          .limit(1)
-          .get()
-          .then((value) => value.docs.first.data())
-          .catchError((onError) {
-        print('$onError no anSubCollection on ${user.id}');
-      });
-      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
-      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var patientStateToMap = anSubCollection['state'] ?? '-';
-      var map = {
-        'hn': hnToMap ?? '-',
-        'name': nameToMap ?? '-',
-        'roomNumber': roomNumberToMap ?? '-',
-        'bedNumber': bedNumberToMap ?? '-',
-        'patientState': patientStateToMap ?? '-',
-        'formName': formName ?? '-',
-        'formTime': formTimeToShow ?? '-',
-        'formDateTimeSort': formTime ?? '-',
-        'formDate': formDateToShow ?? '-',
-        'seen': seen ?? '-',
-        'notiId': user.id ?? '-',
-        'imgURL': '-'
-      };
-      if (patientStateToMap == "Post-Operation@Home") {
-        var imgURL = notiCollection['imgURL'] ?? '-';
-        map.addAll({'imgURL': imgURL ?? '-'});
-      }
-      return map;
-    });
-    var futureList = Future.wait(returnList);
-    var returnValue = await futureList;
-    if (returnValue != null) {
-      returnValue.removeWhere((element) => element == null);
-    }
-    return returnValue;
-  }
-
   Future<Map<String, dynamic>> getPatientDetail({@required String hn}) async {
     var usersCollection = await _firestore
         .collection('Users')
@@ -1109,5 +859,72 @@ class FirebaseService extends IFirebaseService {
     };
     print('map $map');
     return map;
+  }
+
+  Future<List<Map<String, dynamic>>> getNotification(
+      {@required String patientState}) async {
+    var notiList = await this.getNotificationList(patientState);
+    var returnList = notiList.map((user) async {
+      var notiCollection = await this
+          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
+      var docId = notiCollection['userId'];
+      var seen = notiCollection['seen'];
+      if (seen == false) {
+        seen = "ยังไม่ได้ดำเนินการ";
+      } else {
+        seen = "ดำเนินการแล้ว";
+      }
+      var formName = notiCollection['formName'];
+      formName = "ไม่ผ่าน" + formNameModel[formName];
+      var time = notiCollection['creation'];
+      var formTime =
+          DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
+      var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: docId);
+      var hnToMap = userCollection.data()['hn'] ?? '-';
+      var nameToMap =
+          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var anSubCollection = await _firestore
+          .collection('Users')
+          .doc(docId)
+          .collection('an')
+          .orderBy('operationDate', descending: true)
+          .limit(1)
+          .get()
+          .then((value) => value.docs.first.data())
+          .catchError((onError) {
+        print('$onError no anSubCollection on ${user.id}');
+      });
+      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
+      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
+      var patientStateToMap = anSubCollection['state'] ?? '-';
+      var map = {
+        'hn': hnToMap ?? '-',
+        'name': nameToMap ?? '-',
+        'roomNumber': roomNumberToMap ?? '-',
+        'bedNumber': bedNumberToMap ?? '-',
+        'patientState': patientStateToMap ?? '-',
+        'formName': formName ?? '-',
+        'formTime': formTimeToShow ?? '-',
+        'formDateTimeSort': formTime ?? '-',
+        'formDate': formDateToShow ?? '-',
+        'seen': seen ?? '-',
+        'notiId': user.id ?? '-',
+        'imgURL': '-'
+      };
+      if (patientStateToMap == "Post-Operation@Home") {
+        var imgURL = notiCollection['imgURL'] ?? '-';
+        map.addAll({'imgURL': imgURL ?? '-'});
+      }
+      return map;
+    });
+    var futureList = Future.wait(returnList);
+    var returnValue = await futureList;
+    if (returnValue != null) {
+      returnValue.removeWhere((element) => element == null);
+    }
+    return returnValue;
   }
 }

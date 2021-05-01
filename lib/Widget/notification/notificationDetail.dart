@@ -1,12 +1,6 @@
-import 'package:AbdoCare_Web/models/notification_list/all_notification_model.dart';
-import 'package:AbdoCare_Web/models/notification_list/post_home_notification_model.dart';
-import 'package:AbdoCare_Web/models/notification_list/post_hos_notification_model.dart';
-import 'package:AbdoCare_Web/models/notification_list/pre_op_notification_model.dart';
+import 'package:AbdoCare_Web/models/notification_list/notification_model.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
-import 'package:AbdoCare_Web/view_models/notification_list/all_notification_view_model.dart';
-import 'package:AbdoCare_Web/view_models/notification_list/post_hos_notification_view_model.dart';
-import 'package:AbdoCare_Web/view_models/notification_list/post_home_notification_view_model.dart';
-import 'package:AbdoCare_Web/view_models/notification_list/pre_op_notification_view_model.dart';
+import 'package:AbdoCare_Web/view_models/notification_list/notification_view_model.dart';
 import 'package:flutter/material.dart';
 import 'postHome_Notification_Table.dart';
 import 'postHos_Notification_Table.dart';
@@ -20,60 +14,32 @@ class NotificationDetail extends StatefulWidget {
 }
 
 class _NotificationDetailState extends State<NotificationDetail> {
-  final PreOpNotiViewModel _preOpNotiViewModel = locator<PreOpNotiViewModel>();
-  final PostHosNotiViewModel _postHosNotiViewModel =
-      locator<PostHosNotiViewModel>();
-  final PostHomeNotiViewModel _postHomeNotiViewModel =
-      locator<PostHomeNotiViewModel>();
-  final AllNotiViewModel _allNotiViewModel = locator<AllNotiViewModel>();
+  final NotiViewModel _notiViewModel = locator<NotiViewModel>();
   bool pressAllState = true;
   bool pressPreOpState = false;
   bool pressPostOpHospitalState = false;
   bool pressPostOpHomeState = false;
-  Future<List<PostHosNotiData>> _postHosData;
-  Future<List<PreOpNotiData>> _preOpData;
-  Future<List<AllNotiData>> _allData;
-  Future<List<PostHomeNotiData>> _postHomeData;
-  List<PreOpNotiData> preOpData = [];
-  List<PostHosNotiData> postHosData = [];
-  List<PostHomeNotiData> postHomeData = [];
-  List<AllNotiData> allData = [];
+  Future<List<NotiData>> _notidata;
+  List<NotiData> notidata = [];
   String onClickState = "AllState";
   void callData(String patientState) {
-    if (patientState == "Pre-Operation") {
-      setState(() {
-        _preOpData = _preOpNotiViewModel.getUsers();
-      });
-    } else if (patientState == "Post-Operation@Hospital") {
-      setState(() {
-        _postHosData = _postHosNotiViewModel.getUsers();
-      });
-    } else if (patientState == "Post-Operation@Home") {
-      setState(() {
-        _postHomeData = _postHomeNotiViewModel.getUsers();
-      });
-    } else {
-      setState(() {
-        _allData = _allNotiViewModel.getUsers();
-      });
-    }
+    setState(() {
+      _notidata = _notiViewModel.getUsers(patientState);
+    });
   }
 
   @override
   void initState() {
     setState(() {
-      _allData = _allNotiViewModel.getUsers();
-      _preOpData = _preOpNotiViewModel.getUsers();
-      _postHosData = _postHosNotiViewModel.getUsers();
-      _postHomeData = _postHomeNotiViewModel.getUsers();
+      _notidata = _notiViewModel.getUsers("AllState");
     });
     super.initState();
   }
 
   FutureBuilder notificationDataBody(String onClickState) {
     if (onClickState == "AllState") {
-      return FutureBuilder<List<AllNotiData>>(
-          future: _allData,
+      return FutureBuilder<List<NotiData>>(
+          future: _notidata,
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
@@ -83,19 +49,19 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 ),
               );
             } else {
-              if (allData.isNotEmpty) {
-                allData.clear();
+              if (notidata.isNotEmpty) {
+                notidata.clear();
               }
-              allData.addAll(snapshot.data);
+              notidata.addAll(snapshot.data);
               return AllNotificationTable(
-                  allData: allData,
+                  notiData: notidata,
                   callAllData: callData,
                   patientState: onClickState);
             }
           });
     } else if (onClickState == "Pre-Operation") {
-      return FutureBuilder<List<PreOpNotiData>>(
-          future: _preOpData,
+      return FutureBuilder<List<NotiData>>(
+          future: _notidata,
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
@@ -105,19 +71,19 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 ),
               );
             } else {
-              if (preOpData.isNotEmpty) {
-                preOpData.clear();
+              if (notidata.isNotEmpty) {
+                notidata.clear();
               }
-              preOpData.addAll(snapshot.data);
+              notidata.addAll(snapshot.data);
               return PreNotificationTable(
-                  preOpData: preOpData,
+                  preOpData: notidata,
                   callPreOpData: callData,
                   patientState: onClickState);
             }
           });
     } else if (onClickState == "Post-Operation@Hospital") {
-      return FutureBuilder<List<PostHosNotiData>>(
-          future: _postHosData,
+      return FutureBuilder<List<NotiData>>(
+          future: _notidata,
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
@@ -127,19 +93,19 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 ),
               );
             } else {
-              if (postHosData.isNotEmpty) {
-                postHosData.clear();
+              if (notidata.isNotEmpty) {
+                notidata.clear();
               }
-              postHosData.addAll(snapshot.data);
+              notidata.addAll(snapshot.data);
               return PostHosNotificationTable(
-                  postHosData: postHosData,
+                  postHosData: notidata,
                   callPostHosData: callData,
                   patientState: onClickState);
             }
           });
     } else if (onClickState == "Post-Operation@Home") {
-      return FutureBuilder<List<PostHomeNotiData>>(
-          future: _postHomeData,
+      return FutureBuilder<List<NotiData>>(
+          future: _notidata,
           builder: (context, snapshot) {
             if (!snapshot.hasData || onClickState == null) {
               return Padding(
@@ -149,12 +115,12 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 ),
               );
             } else {
-              if (postHomeData.isNotEmpty) {
-                postHomeData.clear();
+              if (notidata.isNotEmpty) {
+                notidata.clear();
               }
-              postHomeData.addAll(snapshot.data);
+              notidata.addAll(snapshot.data);
               return PostHomeNotificationTable(
-                  postHomeData: postHomeData,
+                  postHomeData: notidata,
                   callPostHomeData: callData,
                   patientState: onClickState);
             }
