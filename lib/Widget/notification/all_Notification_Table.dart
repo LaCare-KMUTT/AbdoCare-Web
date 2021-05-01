@@ -239,7 +239,6 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
       seen,
       serverity,
       advice) async {
-    final IFirebaseService _firebaseService = locator<IFirebaseService>();
     await showDialog(
       context: context,
       builder: (BuildContext context) {

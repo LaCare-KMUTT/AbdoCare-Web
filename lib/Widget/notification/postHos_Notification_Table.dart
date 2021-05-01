@@ -21,7 +21,7 @@ class PostHosNotificationTable extends StatefulWidget {
 
 class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
-
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -96,7 +96,6 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
 
   Future<void> alertSuccessfullyChangeStatus(BuildContext context, notiId,
       formName, hn, formTime, formDate, name, seen) async {
-    final IFirebaseService _firebaseService = locator<IFirebaseService>();
     await showDialog(
       context: context,
       builder: (BuildContext context) {

@@ -20,6 +20,7 @@ class PreNotificationTable extends StatefulWidget {
 
 class _PreNotificationTableState extends State<PreNotificationTable> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
+  final IFirebaseService _firebaseService = locator<IFirebaseService>();
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -94,7 +95,6 @@ class _PreNotificationTableState extends State<PreNotificationTable> {
 
   Future<void> alertSuccessfullyChangeStatus(BuildContext context, notiId,
       formName, hn, formTime, formDate, name, seen) async {
-    final IFirebaseService _firebaseService = locator<IFirebaseService>();
     await showDialog(
       context: context,
       builder: (BuildContext context) {
