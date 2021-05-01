@@ -331,4 +331,9 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
+
+  Future<int> getNoticounter() {
+    // TODO: implement getPatientDetail
+    throw UnimplementedError();
+  }
 }

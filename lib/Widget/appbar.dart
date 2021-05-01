@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'notification_appbar.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Text title;
   final AppBar appBar;
-
   const BaseAppBar({Key key, this.title, this.appBar}) : super(key: key);
 
   @override
@@ -34,11 +34,13 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(5, 0, 20, 0),
-          child: IconButton(
-              icon: const Icon(Icons.notifications),
-              onPressed: () {
-                Navigator.pushNamed(context, '/notification_page');
-              }),
+          child: NotiIcon(
+            iconData: Icons.notifications,
+            notificationCount: 0,
+            onTap: () {
+              Navigator.pushNamed(context, '/notification_page');
+            },
+          ),
         ),
       ],
     );

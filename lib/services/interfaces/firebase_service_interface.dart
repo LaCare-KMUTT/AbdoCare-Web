@@ -100,4 +100,5 @@ abstract class IFirebaseService {
       {@required String patientState});
 
   Future<Map<String, dynamic>> getPatientDetail({@required String hn});
+  Future<int> getNoticounter();
 }
