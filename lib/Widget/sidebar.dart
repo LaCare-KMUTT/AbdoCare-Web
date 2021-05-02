@@ -1,11 +1,14 @@
+import 'package:AbdoCare_Web/Widget/medicalteam/medicalTeamRegisterForm.dart';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
+import 'material.dart';
 
 class SideBar extends StatelessWidget {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +23,12 @@ class SideBar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      height: 190,
+                      height: 250,
                       child: DrawerHeader(
-                        decoration: BoxDecoration(color: Color(0xFFC37447)),
+                        decoration: BoxDecoration(
+                          color: _customMaterial
+                              .createMaterialColor(Color(0xFFC37447)),
+                        ),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child: Column(
@@ -75,6 +81,40 @@ class SideBar extends StatelessWidget {
                                               color: Colors.white,
                                               fontSize: 18,
                                               fontWeight: FontWeight.w400));
+                                    }
+                                  }),
+                              FutureBuilder<String>(
+                                  future: _firebaseService.getMedicalTeamRole(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          height: 10,
+                                          width: 10,
+                                          child: ProgressBar
+                                              .circularProgressIndicator(
+                                                  context));
+                                    } else if (snapshot.data ==
+                                        'Medical Admin') {
+                                      return Material(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20.0)),
+                                        child: ListTile(
+                                          leading: Icon(
+                                            Icons.assignment_ind,
+                                          ),
+                                          title: Text('ลงทะเบียนผู้ใช้งาน',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2),
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                '/addMedicalTeam_page');
+                                          },
+                                        ),
+                                      );
+                                    } else {
+                                      return SizedBox();
                                     }
                                   }),
                             ],
