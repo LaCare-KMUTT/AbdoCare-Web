@@ -1,5 +1,4 @@
 import * as functions from "firebase-functions";
-// const functions = require('firebase-function');
 import * as admin from'firebase-admin';
 
 // Use this when cloud_function is able to use.
