@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/models/notification_list/formName_Notification_model.dart';
+import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,6 +15,8 @@ class FirebaseService extends IFirebaseService {
   final _auth = FirebaseAuth.instance;
   final ICalculationService _calculationService =
       locator<ICalculationService>();
+  final CloudFunctionService _cloudFunctionService =
+      locator<CloudFunctionService>();
 
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
@@ -75,36 +78,27 @@ class FirebaseService extends IFirebaseService {
     String docId,
     @required Map<String, dynamic> data,
   }) async {
-    print('createUser using CreatePatient FirebaseInterface');
-    var firebaseRegisterInstance = Firebase.app("Abdocare-Register-Service");
-    var firebaseRegisterApp =
-        FirebaseAuth.instanceFor(app: firebaseRegisterInstance);
+    var addedUserId = await _cloudFunctionService.createUser(
+        email: data['username'], password: data['uniqueKey']);
+    if (addedUserId != '0') {
+      await _firestore
+          .collection('Users')
+          .doc(addedUserId)
+          .set(data)
+          .then((value) => print(
+              'Success setting $data for $addedUserId in Users collection'))
+          .catchError((onError) {
+        print(
+            '$onError having error in setting $data for $addedUserId in Users collection');
+      });
 
-    var addedUserId = await firebaseRegisterApp
-        .createUserWithEmailAndPassword(
-            email: data['username'], password: data['uniqueKey'])
-        .then((value) => value.user.uid)
-        .catchError((onError) {
-      print(
-          '$onError Failed to createAuthFor User ${data['username']} ${data['uniqueKey']}');
-    });
-    await firebaseRegisterApp.signOut();
-    await _firestore
-        .collection('Users')
-        .doc(addedUserId)
-        .set(data)
-        .then((value) =>
-            print('Success setting $data for $addedUserId in Users collection'))
-        .catchError((onError) {
-      print(
-          '$onError having error in setting $data for $addedUserId in Users collection');
-    });
+      var setRoleStatus = await _setRoleToUser(
+          uid: addedUserId, username: data['username'], role: 'patient');
+      setRoleStatus
+          ? print('success creating patient')
+          : print('failed creating patient');
+    }
 
-    var setRoleStatus = await _setRoleToUser(
-        uid: addedUserId, username: data['username'], role: 'patient');
-    setRoleStatus
-        ? print('success creating patient')
-        : print('failed creating patient');
     return addedUserId;
   }
 
@@ -588,7 +582,6 @@ class FirebaseService extends IFirebaseService {
           patientState: 'Pre-Operation',
           formName: 'Vital Sign');
       if (formVitalSign.isNotEmpty) {
-        print('should be here');
         var formsCollection = await _firestore
             .collection('Forms')
             .doc(formVitalSign.last['formId'])
@@ -719,7 +712,6 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<int> getDayInCurrentState({@required String hn}) async {
-    print('hn = $hn');
     var userId = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
@@ -772,7 +764,6 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<String> getPatientState({@required String hn}) async {
-    print('hn = $hn');
     var userId = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
@@ -882,7 +873,6 @@ class FirebaseService extends IFirebaseService {
           : '-',
       'recoveryReadiness': anSubCollection['recoveryReadiness'] ??= '-',
     };
-    print('map $map');
     return map;
   }
 
@@ -969,7 +959,6 @@ class FirebaseService extends IFirebaseService {
     var futureList = Future.wait(returnList);
     var returnValue = await futureList;
     count = returnValue.last;
-    print("This is count $count");
     return count;
   }
 }
