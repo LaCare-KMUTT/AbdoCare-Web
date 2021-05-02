@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/models/notification_list/formName_Notification_model.dart';
+import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,6 +15,8 @@ class FirebaseService extends IFirebaseService {
   final _auth = FirebaseAuth.instance;
   final ICalculationService _calculationService =
       locator<ICalculationService>();
+  final CloudFunctionService _cloudFunctionService =
+      locator<CloudFunctionService>();
 
   Future<void> setDataToCollectionWithSpecificDoc({
     @required String collection,
@@ -75,20 +78,9 @@ class FirebaseService extends IFirebaseService {
     String docId,
     @required Map<String, dynamic> data,
   }) async {
-    print('createUser using CreatePatient FirebaseInterface');
-    var firebaseRegisterInstance = Firebase.app("Abdocare-Register-Service");
-    var firebaseRegisterApp =
-        FirebaseAuth.instanceFor(app: firebaseRegisterInstance);
+    var addedUserId = await _cloudFunctionService.createUser(
+        email: data['username'], password: data['uniqueKey']);
 
-    var addedUserId = await firebaseRegisterApp
-        .createUserWithEmailAndPassword(
-            email: data['username'], password: data['uniqueKey'])
-        .then((value) => value.user.uid)
-        .catchError((onError) {
-      print(
-          '$onError Failed to createAuthFor User ${data['username']} ${data['uniqueKey']}');
-    });
-    await firebaseRegisterApp.signOut();
     await _firestore
         .collection('Users')
         .doc(addedUserId)
