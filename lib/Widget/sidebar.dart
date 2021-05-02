@@ -1,4 +1,3 @@
-import 'package:AbdoCare_Web/Widget/medicalteam/medicalTeamRegisterForm.dart';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +22,7 @@ class SideBar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      height: 250,
+                      height: 235,
                       child: DrawerHeader(
                         decoration: BoxDecoration(
                           color: _customMaterial
