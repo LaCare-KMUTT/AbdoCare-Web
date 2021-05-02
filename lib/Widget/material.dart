@@ -107,4 +107,15 @@ class CustomMaterial {
     }
     return Color(0xFFC37447);
   }
+
+  Color getNotiStatusColor(dynamic notiStatus) {
+    if (notiStatus == '-') {
+      return Color(0xFFC37447);
+    } else {
+      if (notiStatus == "ยังไม่ได้ดำเนินการ") {
+        return Colors.red;
+      }
+    }
+    return Colors.green;
+  }
 }
