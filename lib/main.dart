@@ -15,17 +15,20 @@ import 'page/pre.dart';
 import 'services/service_locator.dart';
 import 'page/notification.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotENV;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DotENV.load(fileName: 'config.env');
   await Firebase.initializeApp();
   await Firebase.initializeApp(
-    name: 'Abdocare-Register-Service',
-    options: const FirebaseOptions(
-        projectId: 'abdocare-bdab0',
-        apiKey: 'AIzaSyDu8_HYCIsMBc8PkNs5oddKhjcJLFoNaVk',
-        authDomain: 'abdocare-bdab0.firebaseapp.com',
-        appId: '1:611491873650:web:7c3d372d1cdf8f314393eb',
-        messagingSenderId: '611491873650'),
+    name: DotENV.env['REGISTER_FIREBASE_NAME'],
+    options: FirebaseOptions(
+        projectId: DotENV.env['PROJECT_ID'],
+        apiKey: DotENV.env['API_KEY'],
+        authDomain: DotENV.env['AUTH_DOMAIN'],
+        appId: DotENV.env['APP_ID'],
+        messagingSenderId: DotENV.env['MESSAGING_SENDER_ID']),
   );
   //ignore: await_only_futures
   await setupServiceLocator(isMock: false);
