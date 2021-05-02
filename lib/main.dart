@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'services/service_locator.dart';
 import 'Widget/material.dart';
 import 'page/mockDataPage.dart';
 import 'page/addPatient.dart';
@@ -13,6 +12,8 @@ import 'page/patientList.dart';
 import 'page/postHome.dart';
 import 'page/postHos.dart';
 import 'page/pre.dart';
+import 'services/service_locator.dart';
+import 'page/notification.dart';
 import 'page/addMedicalTeam.dart';
 
 void main() async {
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         '/mock': (context) => MockDataPage(),
         '/appointment_page': (context) => AppointmentPage(),
         '/addMedicalTeam_page': (context) => AddMedicalTeamPage(),
+        '/notification_page': (context) => NotificationPage(),
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
