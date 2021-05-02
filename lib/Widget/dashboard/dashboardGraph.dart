@@ -16,6 +16,28 @@ class _ShowDashboardState extends State<ShowDashboard> {
       child: Column(
         children: [
           Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              child: Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text('ข้อมูลจากแบบฟอร์มการประเมิน',
+                          style: TextStyle(
+                              fontSize: 18, color: Color(0xFFC37447))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      child: DashboardTable(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: Container(
               child: Card(
@@ -79,7 +101,7 @@ class _ShowDashboardState extends State<ShowDashboard> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.all(10),
-                      child: Text('ข้อมูลจากแบบฟรอมการประเมิน',
+                      child: Text('ข้อมูลจากแบบฟอร์มการประเมิน',
                           style: TextStyle(
                               fontSize: 18, color: Color(0xFFC37447))),
                     ),

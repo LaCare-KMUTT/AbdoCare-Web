@@ -1,6 +1,4 @@
-import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_radio_list.dart';
-import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
 class PreviousIllness extends StatefulWidget {
@@ -18,10 +16,7 @@ class _PreviousIllnessState extends State<PreviousIllness> {
   final TextEditingController _controller = TextEditingController();
 
   _PreviousIllnessState({this.onSaved});
-  final CustomMaterial _customMaterial = locator<CustomMaterial>();
-
   bool isEnableTextField = false;
-
   List list1 = getPreviousIllnessList1();
   List list2 = getPreviousIllnessList2();
   String _toSave = '-';

@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/models/notification_list/formName_Notification_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -759,6 +760,20 @@ class FirebaseService extends IFirebaseService {
     return anSubCollection['state'];
   }
 
+  Future<List<QueryDocumentSnapshot>> getNotificationList(
+      String patientState) async {
+    var data;
+    if (patientState == 'AllState') {
+      data = await _firestore.collection('Notifications').get();
+    } else {
+      data = await _firestore
+          .collection('Notifications')
+          .where('patientState', isEqualTo: patientState)
+          .get();
+    }
+    return data.docs;
+  }
+
   Future<Map<String, dynamic>> getPatientDetail({@required String hn}) async {
     var usersCollection = await _firestore
         .collection('Users')
@@ -844,5 +859,92 @@ class FirebaseService extends IFirebaseService {
     };
     print('map $map');
     return map;
+  }
+
+  Future<List<Map<String, dynamic>>> getNotification(
+      {@required String patientState}) async {
+    var notiList = await this.getNotificationList(patientState);
+    var returnList = notiList.map((user) async {
+      var notiCollection = await this
+          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
+      var docId = notiCollection['userId'];
+      var seen = notiCollection['seen'];
+      if (seen == false) {
+        seen = "ยังไม่ได้ดำเนินการ";
+      } else {
+        seen = "ดำเนินการแล้ว";
+      }
+      var formName = notiCollection['formName'];
+      formName = "ไม่ผ่าน" + formNameModel[formName];
+      var time = notiCollection['creation'];
+      var formTime =
+          DateTime.fromMicrosecondsSinceEpoch(time.microsecondsSinceEpoch);
+      var formDateToShow = DateFormat('dd/MM/yyyy').format(formTime);
+      var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
+      var userCollection =
+          await this.searchDocumentByDocId(collection: 'Users', docId: docId);
+      var hnToMap = userCollection.data()['hn'] ?? '-';
+      var nameToMap =
+          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var anSubCollection = await _firestore
+          .collection('Users')
+          .doc(docId)
+          .collection('an')
+          .orderBy('operationDate', descending: true)
+          .limit(1)
+          .get()
+          .then((value) => value.docs.first.data())
+          .catchError((onError) {
+        print('$onError no anSubCollection on ${user.id}');
+      });
+      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
+      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
+      var patientStateToMap = anSubCollection['state'] ?? '-';
+      var map = {
+        'hn': hnToMap ?? '-',
+        'name': nameToMap ?? '-',
+        'roomNumber': roomNumberToMap ?? '-',
+        'bedNumber': bedNumberToMap ?? '-',
+        'patientState': patientStateToMap ?? '-',
+        'formName': formName ?? '-',
+        'formTime': formTimeToShow ?? '-',
+        'formDateTimeSort': formTime ?? '-',
+        'formDate': formDateToShow ?? '-',
+        'seen': seen ?? '-',
+        'notiId': user.id ?? '-',
+        'imgURL': '-'
+      };
+      if (patientStateToMap == "Post-Operation@Home") {
+        var imgURL = notiCollection['imgURL'] ?? '-';
+        map.addAll({'imgURL': imgURL ?? '-'});
+      }
+      return map;
+    });
+    var futureList = Future.wait(returnList);
+    var returnValue = await futureList;
+    if (returnValue != null) {
+      returnValue.removeWhere((element) => element == null);
+    }
+    return returnValue;
+  }
+
+  Future<int> getNoticounter() async {
+    int count = 0;
+    var notiList = await this.getNotificationList("AllState");
+    var returnList = notiList.map((user) async {
+      var notiCollection = await this
+          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
+      var seen = notiCollection['seen'];
+      if (seen == false) {
+        seen = "ยังไม่ได้ดำเนินการ";
+        count = count + 1;
+      }
+      return count;
+    });
+    var futureList = Future.wait(returnList);
+    var returnValue = await futureList;
+    count = returnValue.last;
+    print("This is count $count");
+    return count;
   }
 }

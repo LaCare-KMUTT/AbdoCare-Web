@@ -16,7 +16,8 @@ class PostHomeViewModel {
   }
 
   Future<List<PostHomeData>> getUsers() async {
-    if (userList.isEmpty) await _initialize();
+    userList.clear();
+    await _initialize();
     return userList;
   }
 
