@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -202,6 +203,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[a-zA-Z0-9]"))
+                                        ],
                                         validator: (value) {
                                           return value.isEmpty
                                               ? 'กรุณากรอกหมายเลขHN'
@@ -233,6 +238,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[a-zA-Z0-9]"))
+                                        ],
                                         validator: (value) {
                                           return value.isEmpty
                                               ? 'กรุณากรอกหมายเลขAN'
@@ -432,6 +441,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[0-9]"))
+                                        ],
                                         validator: (value) {
                                           return value.isEmpty
                                               ? 'กรุณากรอกเบอร์โทร'
@@ -667,6 +680,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[0-9]"))
+                                        ],
                                         validator: (value) {
                                           return value.isEmpty
                                               ? 'กรุณากรอกเบอร์โทร'

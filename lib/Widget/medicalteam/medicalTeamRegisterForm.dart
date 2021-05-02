@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
@@ -77,6 +78,10 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                                   Expanded(
                                     flex: 2,
                                     child: TextFormField(
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp("[a-zA-Z0-9]"))
+                                      ],
                                       validator: (value) {
                                         return value.isEmpty
                                             ? 'กรุณากรอกรหัสพยาบาล'
