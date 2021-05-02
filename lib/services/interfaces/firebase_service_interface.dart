@@ -85,6 +85,8 @@ abstract class IFirebaseService {
 
   Future<String> getMedicalTeamWard();
 
+  Future<String> getMedicalTeamRole();
+
   Future<Map<String, dynamic>> getCollectionMap(
       {@required String collection, @required String docId});
 
