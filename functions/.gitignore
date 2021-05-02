@@ -12,3 +12,5 @@ typings/
 node_modules/
 
 service_account/
+
+yarn.lock
