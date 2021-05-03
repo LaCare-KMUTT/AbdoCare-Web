@@ -103,36 +103,26 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<void> createMedicalTeam({@required Map<String, dynamic> data}) async {
-    print('createUser using CreatePatient FirebaseInterface');
-    var firebaseRegisterInstance = Firebase.app("Abdocare-Register-Service");
-    var firebaseRegisterApp =
-        FirebaseAuth.instanceFor(app: firebaseRegisterInstance);
-
-    var addedUserId = await firebaseRegisterApp
-        .createUserWithEmailAndPassword(
-            email: data['username'], password: data['password'])
-        .then((value) => value.user.uid)
-        .catchError((onError) {
-      print(
-          '$onError Failed to createAuthFor User ${data['username']} ${data['password']}');
-    });
-    await firebaseRegisterApp.signOut();
-    await _firestore
-        .collection('MedicalTeams')
-        .doc(addedUserId)
-        .set(data)
-        .then((value) {
-      print(
-          'Success setting $data for $addedUserId in Medical Team collection');
-    }).catchError((onError) {
-      print(
-          '$onError having error in setting $data for $addedUserId in Medical Team collection');
-    });
-    var setRoleStatus = await _setRoleToUser(
-        uid: addedUserId, username: data['username'], role: data['role']);
-    setRoleStatus
-        ? print('Success set role to ${data['username']} as medical team')
-        : print('failed setting role to ${data['username']} as medical team');
+    var addedUserId = await _cloudFunctionService.createUser(
+        email: data['username'], password: data['password']);
+    if (addedUserId != '0') {
+      await _firestore
+          .collection('MedicalTeams')
+          .doc(addedUserId)
+          .set(data)
+          .then((value) {
+        print(
+            'Success setting $data for $addedUserId in Medical Team collection');
+      }).catchError((onError) {
+        print(
+            '$onError having error in setting $data for $addedUserId in Medical Team collection');
+      });
+      var setRoleStatus = await _setRoleToUser(
+          uid: addedUserId, username: data['username'], role: data['role']);
+      setRoleStatus
+          ? print('Success set role to ${data['username']} as medical team')
+          : print('failed setting role to ${data['username']} as medical team');
+    }
   }
 
   Future<DocumentReference> addDocumentToCollection({
