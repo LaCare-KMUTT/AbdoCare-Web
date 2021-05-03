@@ -739,6 +739,7 @@ class FirebaseService extends IFirebaseService {
       'creation': creation,
       'patientState': patientState,
       'seen': false,
+      'patientSeen': false
     };
     await _firestore
         .collection('Notifications')
