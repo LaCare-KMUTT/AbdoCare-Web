@@ -16,6 +16,19 @@ class MedicalTeamRegisterForm extends StatefulWidget {
 
 class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
+  TextEditingController _controller = new TextEditingController();
+
+  void onValueChange() {
+    setState(() {
+      _controller.text;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(onValueChange);
+  }
 
   final _formKey = GlobalKey<FormState>();
   String _medicalcode;
@@ -68,11 +81,16 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child: Text(
-                                      'รหัสพยาบาล:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 25.0),
+                                      child: Text(
+                                        'รหัสพยาบาล:\t\t\t',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                        textAlign: TextAlign.end,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -85,7 +103,7 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                                       ],
                                       validator: (value) {
                                         return value.isEmpty
-                                            ? 'กรุณากรอกรหัสพยาบาล'
+                                            ? 'กรุณากรอกรหัสพยาบาลให้ถูกต้อง'
                                             : null;
                                       },
                                       decoration: InputDecoration(
@@ -95,27 +113,42 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                                                 width: 1),
                                           ),
                                           labelText: 'รหัสพยาบาล'),
-                                      onSaved: (value) => _medicalcode = value,
+                                      onSaved: (value) =>
+                                          _medicalcode = value.toUpperCase(),
                                     ),
                                   ),
                                   Expanded(
                                     flex: 1,
-                                    child: Text(
-                                      'Password:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 25.0),
+                                      child: Text(
+                                        'Password:\t\t\t',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                        textAlign: TextAlign.end,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
                                     flex: 2,
                                     child: TextFormField(
+                                      maxLines: null,
+                                      controller: _controller,
                                       validator: (value) {
-                                        return value.isEmpty || value.length < 6
-                                            ? 'Passwordต้องมีตัวอักษรมากกว่า6ตัว'
+                                        return value.isEmpty ||
+                                                _controller.text.length < 6
+                                            ? 'Passwordต้องมีตัวอักษรมากกว่า 6 ตัว'
                                             : null;
                                       },
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp("[a-zA-Z0-9]"))
+                                      ],
                                       decoration: InputDecoration(
+                                          counterText:
+                                              '${_controller.text.length}',
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: Colors.black26,
@@ -129,7 +162,7 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 8, 40, 8),
+                              padding: const EdgeInsets.fromLTRB(10, 8, 40, 33),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -173,7 +206,7 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                                     child: TextFormField(
                                       validator: (value) {
                                         return value.isEmpty
-                                            ? 'กรุณากรอกนามสกุล'
+                                            ? 'กรุณากรอกนามสกุลให้ถูกต้อง'
                                             : null;
                                       },
                                       decoration: InputDecoration(
