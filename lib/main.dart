@@ -1,9 +1,9 @@
-import 'package:AbdoCare_Web/page/mockDataPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'Widget/material.dart';
+import 'page/mockDataPage.dart';
 import 'page/addPatient.dart';
 import 'page/appointment.dart';
 import 'page/editPatient.dart';
@@ -14,6 +14,7 @@ import 'page/postHos.dart';
 import 'page/pre.dart';
 import 'services/service_locator.dart';
 import 'page/notification.dart';
+import 'page/addMedicalTeam.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         '/login_page': (context) => LoginPage(),
         '/mock': (context) => MockDataPage(),
         '/appointment_page': (context) => AppointmentPage(),
+        '/addMedicalTeam_page': (context) => AddMedicalTeamPage(),
         '/notification_page': (context) => NotificationPage(),
       },
       localizationsDelegates: [

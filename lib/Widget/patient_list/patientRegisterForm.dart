@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -154,7 +155,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
         child: ListView(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.all(30),
+              margin: EdgeInsets.fromLTRB(30, 30, 30, 8),
               child: Card(
                 child: Form(
                   key: _formKey,
@@ -190,11 +191,16 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child: Text(
-                                      'HN:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 25.0),
+                                      child: Text(
+                                        'HN:\t\t\t',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                        textAlign: TextAlign.end,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -202,6 +208,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        maxLength: 7,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[a-zA-Z0-9]"))
+                                        ],
                                         validator: (value) {
                                           return value.isEmpty
                                               ? 'กรุณากรอกหมายเลขHN'
@@ -221,11 +232,16 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                   Expanded(
                                     flex: 1,
-                                    child: Text(
-                                      'AN:\t\t\t',
-                                      style:
-                                          Theme.of(context).textTheme.bodyText2,
-                                      textAlign: TextAlign.end,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 25.0),
+                                      child: Text(
+                                        'AN:\t\t\t',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                        textAlign: TextAlign.end,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -233,6 +249,11 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        maxLength: 7,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[a-zA-Z0-9]"))
+                                        ],
                                         validator: (value) {
                                           return value.isEmpty
                                               ? 'กรุณากรอกหมายเลขAN'
@@ -252,43 +273,51 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                   ),
                                   Expanded(
                                       flex: 1,
-                                      child: Text('Ward:\t\t\t',
-                                          textAlign: TextAlign.end)),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 25.0),
+                                        child: Text('Ward:\t\t\t',
+                                            textAlign: TextAlign.end),
+                                      )),
                                   Expanded(
                                     flex: 2,
-                                    child: DropdownButtonFormField(
-                                      isExpanded: true,
-                                      validator: (value) => value == null
-                                          ? 'กรุณาเลือกWard'
-                                          : null,
-                                      decoration: InputDecoration(
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.black26,
-                                                width: 1),
-                                          ),
-                                          labelText: 'Ward'),
-                                      onSaved: (value) {
-                                        _ward = value;
-                                      },
-                                      items: ['1', '2', '3', '4']
-                                          .map((label) => DropdownMenuItem(
-                                                child: Text(label),
-                                                value: label,
-                                              ))
-                                          .toList(),
-                                      onChanged: (value) {
-                                        setState(() {
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 25.0),
+                                      child: DropdownButtonFormField(
+                                        isExpanded: true,
+                                        validator: (value) => value == null
+                                            ? 'กรุณาเลือกWard'
+                                            : null,
+                                        decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.black26,
+                                                  width: 1),
+                                            ),
+                                            labelText: 'Ward'),
+                                        onSaved: (value) {
                                           _ward = value;
-                                        });
-                                      },
+                                        },
+                                        items: ['1', '2', '3', '4']
+                                            .map((label) => DropdownMenuItem(
+                                                  child: Text(label),
+                                                  value: label,
+                                                ))
+                                            .toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _ward = value;
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
+                              padding: const EdgeInsets.fromLTRB(0, 8, 20, 33),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -411,7 +440,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
+                              padding: const EdgeInsets.fromLTRB(0, 8, 20, 33),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -432,6 +461,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[0-9]"))
+                                        ],
                                         validator: (value) {
                                           return value.isEmpty
                                               ? 'กรุณากรอกเบอร์โทร'
@@ -576,7 +609,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 8, 20, 8),
+                              padding: const EdgeInsets.fromLTRB(0, 8, 20, 33),
                               child: Row(
                                 children: <Widget>[
                                   Expanded(
@@ -667,6 +700,10 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp("[0-9]"))
+                                        ],
                                         validator: (value) {
                                           return value.isEmpty
                                               ? 'กรุณากรอกเบอร์โทร'
@@ -734,39 +771,41 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                           ],
                         ),
                       ),
-                      Center(
-                        child: Container(
-                          width: 100,
-                          margin: EdgeInsets.all(20),
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7.0),
-                            ),
-                            padding: EdgeInsets.all(15),
-                            onPressed: () async {
-                              _uniqueKey = _generateUniqueKey(6);
-
-                              if (_formKey.currentState.validate()) {
-                                _trySubmit();
-                                showAlertDialog(context, _uniqueKey, _hn);
-                              } else {
-                                Dialogs.alertToCompleteForm(context);
-                              }
-                            },
-                            textColor: Colors.white,
-                            color: Color(0xFF2ED47A),
-                            child: Text(
-                              'ยืนยัน',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 20),
+              child: Center(
+                child: Container(
+                  width: 100,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0),
+                    ),
+                    padding: EdgeInsets.all(15),
+                    onPressed: () async {
+                      _uniqueKey = _generateUniqueKey(6);
+
+                      if (_formKey.currentState.validate()) {
+                        _trySubmit();
+                        showAlertDialog(context, _uniqueKey, _hn);
+                      } else {
+                        Dialogs.alertToCompleteForm(context);
+                      }
+                    },
+                    textColor: Colors.white,
+                    color: Color(0xFF2ED47A),
+                    child: Text(
+                      'ยืนยัน',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

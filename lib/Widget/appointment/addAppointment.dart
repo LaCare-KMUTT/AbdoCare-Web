@@ -1,5 +1,6 @@
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
@@ -135,11 +136,15 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                       Container(
                                         child: Column(
                                           children: <Widget>[
-                                            Text(
-                                              'HN',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2,
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 25.0),
+                                              child: Text(
+                                                'HN',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -150,6 +155,11 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 8, 0, 8),
                                           child: TextFormField(
+                                            maxLength: 7,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp("[a-zA-Z0-9]"))
+                                            ],
                                             decoration: InputDecoration(
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -171,11 +181,15 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                         child: Container(
                                           child: Column(
                                             children: <Widget>[
-                                              Text(
-                                                'AN',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText2,
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 25.0),
+                                                child: Text(
+                                                  'AN',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText2,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -187,6 +201,11 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 8, 0, 8),
                                           child: TextFormField(
+                                            maxLength: 7,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp("[a-zA-Z0-9]"))
+                                            ],
                                             decoration: InputDecoration(
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(

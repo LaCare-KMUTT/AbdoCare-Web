@@ -102,28 +102,27 @@ class FirebaseService extends IFirebaseService {
     return addedUserId;
   }
 
-  Future<void> createMedicalTeam({Map<String, dynamic> data}) async {
-    print('create temp user via Firebase Service Mock');
-
-    var firebaseRegisterInstance = Firebase.app("Abdocare-Register-Service");
-    var firebaseTempApp =
-        FirebaseAuth.instanceFor(app: firebaseRegisterInstance);
-
-    var addedUserId = await firebaseTempApp
-        .createUserWithEmailAndPassword(
-            email: data['username'], password: data['uniqueKey'])
-        .then((value) => value.user.uid)
-        .catchError((onError) {
-      print(
-          '$onError Failed to createAuthFor User ${data['username']} ${data['uniqueKey']}');
-    });
-    await firebaseTempApp.signOut();
-
-    var setRoleStatus = await _setRoleToUser(
-        uid: addedUserId, username: data['username'], role: 'Medical Team');
-    setRoleStatus
-        ? print('Success set role to ${data['username']} as medical team')
-        : print('failed setting role to ${data['username']} as medical team');
+  Future<void> createMedicalTeam({@required Map<String, dynamic> data}) async {
+    var addedUserId = await _cloudFunctionService.createUser(
+        email: data['username'], password: data['password']);
+    if (addedUserId != '0') {
+      await _firestore
+          .collection('MedicalTeams')
+          .doc(addedUserId)
+          .set(data)
+          .then((value) {
+        print(
+            'Success setting $data for $addedUserId in Medical Team collection');
+      }).catchError((onError) {
+        print(
+            '$onError having error in setting $data for $addedUserId in Medical Team collection');
+      });
+      var setRoleStatus = await _setRoleToUser(
+          uid: addedUserId, username: data['username'], role: data['role']);
+      setRoleStatus
+          ? print('Success set role to ${data['username']} as medical team')
+          : print('failed setting role to ${data['username']} as medical team');
+    }
   }
 
   Future<DocumentReference> addDocumentToCollection({
@@ -208,12 +207,26 @@ class FirebaseService extends IFirebaseService {
     return ward;
   }
 
+  Future<String> getMedicalTeamRole() async {
+    var medicalTeamUserId = getUserId();
+    var role = await _firestore
+        .collection('MedicalTeams')
+        .doc(medicalTeamUserId)
+        .get()
+        .then((value) {
+      var role = value.get('role');
+      return "$role";
+    }).catchError((onError) {
+      print('$onError : Cannot find medical role');
+    });
+    return role;
+  }
+
   Future<String> addDataToFormsCollection(
       {@required Map<String, dynamic> data,
       @required String formName,
       @required String hn,
       String formTime}) async {
-    print('hn = $hn');
     var userId = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
@@ -242,11 +255,9 @@ class FirebaseService extends IFirebaseService {
       dataToAdd.addAll({'formTime': formTime});
     }
 
-    print('Here is data to add $dataToAdd');
     var forms = await this
         .addDocumentToCollection(collection: 'Forms', docData: dataToAdd);
 
-    print('\n\n When Adding userId =  $userId');
     var formId = forms.id;
     await _firestore
         .collection('Users')
@@ -613,8 +624,9 @@ class FirebaseService extends IFirebaseService {
 
   Future<bool> signIn(
       {@required String username, @required String password}) async {
+    var email = '$username@abdocare.com';
     var loginResult = await _auth
-        .signInWithEmailAndPassword(email: username, password: password)
+        .signInWithEmailAndPassword(email: email, password: password)
         .then((result) {
       print('${result.user.email} has logined!');
       return true;
@@ -727,6 +739,7 @@ class FirebaseService extends IFirebaseService {
       'creation': creation,
       'patientState': patientState,
       'seen': false,
+      'patientSeen': false
     };
     await _firestore
         .collection('Notifications')

@@ -2,6 +2,7 @@ import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
@@ -153,11 +154,16 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                             Container(
                                               child: Column(
                                                 children: <Widget>[
-                                                  Text(
-                                                    'HN',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyText2,
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 25.0),
+                                                    child: Text(
+                                                      'HN',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText2,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -169,6 +175,12 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                     const EdgeInsets.fromLTRB(
                                                         20, 8, 0, 8),
                                                 child: TextFormField(
+                                                  maxLength: 7,
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter
+                                                        .allow(RegExp(
+                                                            "[a-zA-Z0-9]"))
+                                                  ],
                                                   decoration: InputDecoration(
                                                     enabledBorder:
                                                         OutlineInputBorder(
@@ -194,11 +206,16 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                               child: Container(
                                                 child: Column(
                                                   children: <Widget>[
-                                                    Text(
-                                                      'AN',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText2,
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 25.0),
+                                                      child: Text(
+                                                        'AN',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText2,
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -211,6 +228,12 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                     const EdgeInsets.fromLTRB(
                                                         20, 8, 0, 8),
                                                 child: TextFormField(
+                                                  maxLength: 7,
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter
+                                                        .allow(RegExp(
+                                                            "[a-zA-Z0-9]"))
+                                                  ],
                                                   decoration: InputDecoration(
                                                     enabledBorder:
                                                         OutlineInputBorder(

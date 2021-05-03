@@ -39,7 +39,7 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
           columnSpacing: screenSize.width / 16,
           headingRowHeight: 50,
           headingTextStyle: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontFamily: 'Prompt',
               color: Colors.black54,
               fontStyle: FontStyle.italic),
