@@ -128,15 +128,15 @@ class _NotificationDetailState extends State<NotificationDetail> {
           children: <Widget>[
             Column(children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(screenSize.height / 15,
-                    screenSize.height / 20, screenSize.height / 15, 0),
+                padding: EdgeInsets.fromLTRB(screenSize.height / 25,
+                    screenSize.height / 20, screenSize.height / 25, 0),
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 1,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 40, 0,
-                            screenSize.height / 40, 0),
+                        padding: EdgeInsets.fromLTRB(
+                            5, 0, screenSize.height / 50, 0),
                         child: RaisedButton(
                             child: Text("ทั้งหมด",
                                 style: TextStyle(
@@ -163,10 +163,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       ),
                     ),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 40, 0,
-                            screenSize.height / 40, 0),
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 50, 0,
+                            screenSize.height / 50, 0),
                         child: RaisedButton(
                             child: Text(
                               "Pre-Operation",
@@ -195,10 +195,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       ),
                     ),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 40, 0,
-                            screenSize.height / 40, 0),
+                        padding: EdgeInsets.fromLTRB(screenSize.height / 50, 0,
+                            screenSize.height / 50, 0),
                         child: RaisedButton(
                             child: Text("Post-Operation@Hospital",
                                 style: TextStyle(
@@ -225,10 +225,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       ),
                     ),
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(screenSize.height / 40, 0,
-                            screenSize.height / 40, 0),
+                        padding: EdgeInsets.fromLTRB(
+                            screenSize.height / 50, 0, 5, 0),
                         child: RaisedButton(
                             child: Text("Post-Operation@Home",
                                 style: TextStyle(

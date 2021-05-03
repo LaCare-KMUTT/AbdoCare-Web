@@ -15,9 +15,19 @@ class _AddMedicalTeamPageState extends State<AddMedicalTeamPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BaseAppBar(
-        title: Text('ลงทะเบียนผู้ใช้งาน'),
-        appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'ลงทะเบียนผู้ใช้งาน',
+          style: TextStyle(fontSize: 24),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () => Navigator.pushNamed(context, '/postHos_page'),
+        ),
       ),
       body: MedicalTeamRegisterForm(),
       drawer: SideBar(),

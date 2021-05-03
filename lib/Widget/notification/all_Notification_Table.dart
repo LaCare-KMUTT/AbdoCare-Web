@@ -35,7 +35,7 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
           columnSpacing: screenSize.width / 25,
           headingRowHeight: 50,
           headingTextStyle: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontFamily: 'Prompt',
               color: Colors.black54,
               fontStyle: FontStyle.italic),
@@ -48,7 +48,7 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
             DataColumn(label: Expanded(child: Center(child: Text('ห้อง')))),
             DataColumn(label: Expanded(child: Center(child: Text('เตียง')))),
             DataColumn(label: Expanded(child: Center(child: Text('หมายเหตุ')))),
-            DataColumn(label: Expanded(child: Center(child: Text('เวลา')))),
+            DataColumn(label: Expanded(child: Center(child: Text(' เวลา ')))),
             DataColumn(label: Expanded(child: Center(child: Text('วันที่')))),
             DataColumn(
                 label: Expanded(child: Center(child: Text('ขั้นตอนการรักษา')))),
@@ -100,17 +100,17 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                   DataCell(Text(user.name, style: TextStyle(fontSize: 16))),
                   DataCell(Center(
                       child: Text(user.roomNumber,
-                          style: TextStyle(fontSize: 16)))),
+                          style: TextStyle(fontSize: 15)))),
                   DataCell(Center(
                       child: Text(user.bedNumber,
-                          style: TextStyle(fontSize: 16)))),
+                          style: TextStyle(fontSize: 15)))),
                   DataCell(Text(user.formName, style: TextStyle(fontSize: 16))),
                   DataCell(Center(
                       child:
-                          Text(user.formTime, style: TextStyle(fontSize: 16)))),
+                          Text(user.formTime, style: TextStyle(fontSize: 15)))),
                   DataCell(Center(
                       child:
-                          Text(user.formDate, style: TextStyle(fontSize: 16)))),
+                          Text(user.formDate, style: TextStyle(fontSize: 15)))),
                   DataCell(Center(
                       child: Text(user.patientState,
                           style: TextStyle(fontSize: 16)))),

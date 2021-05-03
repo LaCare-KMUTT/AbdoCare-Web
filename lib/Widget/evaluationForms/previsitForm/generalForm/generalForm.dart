@@ -258,13 +258,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 Expanded(
                                                                   child:
                                                                       TextFormField(
-                                                                    maxLength:
-                                                                        7,
-                                                                    inputFormatters: [
-                                                                      FilteringTextInputFormatter
-                                                                          .allow(
-                                                                              RegExp("[a-zA-Z0-9]"))
-                                                                    ],
                                                                     initialValue:
                                                                         snapshot
                                                                             .data
@@ -302,13 +295,6 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 Expanded(
                                                                   child:
                                                                       TextFormField(
-                                                                    maxLength:
-                                                                        7,
-                                                                    inputFormatters: [
-                                                                      FilteringTextInputFormatter
-                                                                          .allow(
-                                                                              RegExp("[a-zA-Z0-9]"))
-                                                                    ],
                                                                     initialValue:
                                                                         snapshot
                                                                             .data

@@ -136,11 +136,15 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                       Container(
                                         child: Column(
                                           children: <Widget>[
-                                            Text(
-                                              'HN',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyText2,
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 25.0),
+                                              child: Text(
+                                                'HN',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText2,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -177,11 +181,15 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                         child: Container(
                                           child: Column(
                                             children: <Widget>[
-                                              Text(
-                                                'AN',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText2,
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 25.0),
+                                                child: Text(
+                                                  'AN',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText2,
+                                                ),
                                               ),
                                             ],
                                           ),

@@ -48,7 +48,7 @@ class _NotiIconState extends State<NotiIcon> {
           children: [
             Icon(
               widget.iconData,
-              size: 35,
+              size: 30,
             ),
             Positioned(
                 top: 0,
@@ -58,7 +58,7 @@ class _NotiIconState extends State<NotiIcon> {
                     return ProgressBar.circularProgressIndicator(context);
                   } else {
                     return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 5),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle, color: Colors.red),
                       alignment: Alignment.center,

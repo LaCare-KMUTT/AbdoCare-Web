@@ -190,7 +190,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                         child: ListView(
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.all(30),
+                              margin: EdgeInsets.fromLTRB(30, 30, 30, 8),
                               child: Card(
                                 child: Form(
                                   key: _formKey,
@@ -231,12 +231,18 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                 children: <Widget>[
                                                   Expanded(
                                                     flex: 1,
-                                                    child: Text(
-                                                      'HN:\t\t\t',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText2,
-                                                      textAlign: TextAlign.end,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 25.0),
+                                                      child: Text(
+                                                        'HN:\t\t\t',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText2,
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                      ),
                                                     ),
                                                   ),
                                                   Expanded(
@@ -275,12 +281,18 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                   ),
                                                   Expanded(
                                                     flex: 1,
-                                                    child: Text(
-                                                      'AN:\t\t\t',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText2,
-                                                      textAlign: TextAlign.end,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 25.0),
+                                                      child: Text(
+                                                        'AN:\t\t\t',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyText2,
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                      ),
                                                     ),
                                                   ),
                                                   Expanded(
@@ -331,7 +343,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
-                                                      0, 8, 20, 8),
+                                                      0, 8, 20, 33),
                                               child: Row(
                                                 children: <Widget>[
                                                   Expanded(
@@ -486,7 +498,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
-                                                      0, 8, 20, 8),
+                                                      0, 8, 20, 33),
                                               child: Row(
                                                 children: <Widget>[
                                                   Expanded(
@@ -698,7 +710,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
-                                                      0, 8, 20, 8),
+                                                      0, 8, 20, 33),
                                               child: Row(
                                                 children: <Widget>[
                                                   Expanded(
@@ -902,14 +914,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                         ),
                                       ),
                                       Container(
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            bottom: BorderSide(
-                                              color: Colors.grey[300],
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                        ),
                                         margin:
                                             EdgeInsets.fromLTRB(20, 0, 20, 20),
                                         child: Column(
@@ -931,7 +935,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
-                                                      0, 8, 20, 8),
+                                                      0, 8, 20, 33),
                                               child: Row(
                                                 children: <Widget>[
                                                   Expanded(
@@ -1100,7 +1104,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
-                                                      0, 8, 20, 8),
+                                                      0, 8, 20, 33),
                                               child: Row(
                                                 children: <Widget>[
                                                   Expanded(
@@ -1392,41 +1396,42 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                           ],
                                         ),
                                       ),
-                                      Center(
-                                        child: Container(
-                                          width: 100,
-                                          margin: EdgeInsets.all(30),
-                                          child: RaisedButton(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(7.0),
-                                            ),
-                                            padding: EdgeInsets.all(15),
-                                            onPressed: () async {
-                                              if (_formKey.currentState
-                                                  .validate()) {
-                                                _trySubmit();
-                                                Navigator.pushNamed(context,
-                                                    '/patientList_page');
-                                              } else {
-                                                Dialogs.alertToCompleteForm(
-                                                    context);
-                                              }
-                                            },
-                                            textColor: Colors.white,
-                                            color: Color(0xFF2ED47A),
-                                            child: Text(
-                                              'ยืนยัน',
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
                                     ],
                                   ),
                                 ),
                               ),
-                            )
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 20),
+                              child: Center(
+                                child: Container(
+                                  width: 100,
+                                  margin: EdgeInsets.all(30),
+                                  child: RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(7.0),
+                                    ),
+                                    padding: EdgeInsets.all(15),
+                                    onPressed: () async {
+                                      if (_formKey.currentState.validate()) {
+                                        _trySubmit();
+                                        Navigator.pushNamed(
+                                            context, '/patientList_page');
+                                      } else {
+                                        Dialogs.alertToCompleteForm(context);
+                                      }
+                                    },
+                                    textColor: Colors.white,
+                                    color: Color(0xFF2ED47A),
+                                    child: Text(
+                                      'ยืนยัน',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),

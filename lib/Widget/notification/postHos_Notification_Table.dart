@@ -37,7 +37,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
           columnSpacing: screenSize.width / 20,
           headingRowHeight: 50,
           headingTextStyle: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontFamily: 'Prompt',
               color: Colors.black54,
               fontStyle: FontStyle.italic),
