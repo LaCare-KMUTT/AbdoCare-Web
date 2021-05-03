@@ -170,6 +170,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                     const EdgeInsets.fromLTRB(
                                                         20, 8, 0, 8),
                                                 child: TextFormField(
+                                                  maxLength: 7,
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
                                                         .allow(RegExp(
@@ -217,6 +218,7 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                                     const EdgeInsets.fromLTRB(
                                                         20, 8, 0, 8),
                                                 child: TextFormField(
+                                                  maxLength: 7,
                                                   inputFormatters: [
                                                     FilteringTextInputFormatter
                                                         .allow(RegExp(

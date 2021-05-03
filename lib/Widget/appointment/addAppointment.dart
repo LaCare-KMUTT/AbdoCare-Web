@@ -151,6 +151,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 8, 0, 8),
                                           child: TextFormField(
+                                            maxLength: 7,
                                             inputFormatters: [
                                               FilteringTextInputFormatter.allow(
                                                   RegExp("[a-zA-Z0-9]"))
@@ -192,6 +193,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 8, 0, 8),
                                           child: TextFormField(
+                                            maxLength: 7,
                                             inputFormatters: [
                                               FilteringTextInputFormatter.allow(
                                                   RegExp("[a-zA-Z0-9]"))

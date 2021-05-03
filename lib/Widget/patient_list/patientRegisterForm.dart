@@ -203,6 +203,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        maxLength: 7,
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(
                                               RegExp("[a-zA-Z0-9]"))
@@ -238,6 +239,7 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                     child: Container(
                                       width: 300,
                                       child: TextFormField(
+                                        maxLength: 7,
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(
                                               RegExp("[a-zA-Z0-9]"))

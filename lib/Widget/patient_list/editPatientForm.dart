@@ -244,6 +244,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     child: Container(
                                                       width: 300,
                                                       child: TextFormField(
+                                                        maxLength: 7,
                                                         inputFormatters: [
                                                           FilteringTextInputFormatter
                                                               .allow(RegExp(
@@ -287,6 +288,7 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                     child: Container(
                                                       width: 300,
                                                       child: TextFormField(
+                                                        maxLength: 7,
                                                         inputFormatters: [
                                                           FilteringTextInputFormatter
                                                               .allow(RegExp(

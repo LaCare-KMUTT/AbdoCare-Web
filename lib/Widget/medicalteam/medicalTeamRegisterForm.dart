@@ -78,6 +78,7 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                                   Expanded(
                                     flex: 2,
                                     child: TextFormField(
+                                      maxLength: 6,
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(
                                             RegExp("[a-zA-Z0-9]"))

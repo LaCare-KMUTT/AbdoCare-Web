@@ -258,6 +258,8 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 Expanded(
                                                                   child:
                                                                       TextFormField(
+                                                                    maxLength:
+                                                                        7,
                                                                     inputFormatters: [
                                                                       FilteringTextInputFormatter
                                                                           .allow(
@@ -300,6 +302,8 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                 Expanded(
                                                                   child:
                                                                       TextFormField(
+                                                                    maxLength:
+                                                                        7,
                                                                     inputFormatters: [
                                                                       FilteringTextInputFormatter
                                                                           .allow(
