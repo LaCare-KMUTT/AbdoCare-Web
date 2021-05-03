@@ -227,7 +227,6 @@ class FirebaseService extends IFirebaseService {
       @required String formName,
       @required String hn,
       String formTime}) async {
-    print('hn = $hn');
     var userId = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
@@ -256,11 +255,9 @@ class FirebaseService extends IFirebaseService {
       dataToAdd.addAll({'formTime': formTime});
     }
 
-    print('Here is data to add $dataToAdd');
     var forms = await this
         .addDocumentToCollection(collection: 'Forms', docData: dataToAdd);
 
-    print('\n\n When Adding userId =  $userId');
     var formId = forms.id;
     await _firestore
         .collection('Users')
