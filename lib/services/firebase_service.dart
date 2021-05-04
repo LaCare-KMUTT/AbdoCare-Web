@@ -871,6 +871,7 @@ class FirebaseService extends IFirebaseService {
       var notiCollection = await this
           .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
       var docId = notiCollection['userId'];
+      var patientStateToMap = notiCollection['patientState'];
       var seen = notiCollection['seen'];
       if (seen == false) {
         seen = "ยังไม่ได้ดำเนินการ";
@@ -902,7 +903,6 @@ class FirebaseService extends IFirebaseService {
       });
       var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var patientStateToMap = anSubCollection['state'] ?? '-';
       var map = {
         'hn': hnToMap ?? '-',
         'name': nameToMap ?? '-',
@@ -913,10 +913,11 @@ class FirebaseService extends IFirebaseService {
         'formTime': formTimeToShow ?? '-',
         'formDateTimeSort': formTime ?? '-',
         'formDate': formDateToShow ?? '-',
-        'seen': seen ?? '-',
+        'seen': seen ?? 'ยังไม่ได้ดำเนินการ',
         'notiId': user.id ?? '-',
         'imgURL': '-'
       };
+
       if (patientStateToMap == "Post-Operation@Home") {
         var imgURL = notiCollection['imgURL'] ?? '-';
         map.addAll({'imgURL': imgURL ?? '-'});
