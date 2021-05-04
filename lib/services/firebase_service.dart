@@ -954,4 +954,48 @@ class FirebaseService extends IFirebaseService {
     }
     return count;
   }
+
+  Future<String> getEvaluationStatus(
+      {@required String hn,
+      @required String formName,
+      @required String patientState}) async {
+    var formCreation;
+    var evaluationStatus;
+    var formDateToShow;
+    var dateCompare;
+    var formTime;
+    var dateToCompare;
+    var userId = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) => value.docs.first.id)
+        .catchError((onError) {
+      print('$onError Cannot find user');
+    });
+    var formStatus = await getFormListInAnBasedOnState(
+        userId: userId, patientState: patientState, formName: formName);
+    if (formStatus.isNotEmpty) {
+      var formsCollection = await _firestore
+          .collection('Forms')
+          .doc(formStatus.last['formId'])
+          .get()
+          .then((value) => value.data())
+          .catchError((onError) {
+        print('$onError no formsCollection');
+      });
+      formCreation = formsCollection['creation'] ?? '-';
+      formTime = DateTime.fromMicrosecondsSinceEpoch(
+          formCreation.microsecondsSinceEpoch);
+      formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
+      dateToCompare = _calculationService.formatDate(date: DateTime.now());
+      dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
+      if (formDateToShow == dateCompare) {
+        evaluationStatus = "completed";
+      }
+    } else {
+      evaluationStatus = "notCompleted";
+    }
+    return evaluationStatus;
+  }
 }
