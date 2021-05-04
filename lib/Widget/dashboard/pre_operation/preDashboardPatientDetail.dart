@@ -10,8 +10,7 @@ class PrePatientDetail extends StatelessWidget {
   final hn;
   PrePatientDetail({@required this.hn});
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  final _scrollController1 = ScrollController();
-  final _scrollController2 = ScrollController();
+  final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -30,23 +29,15 @@ class PrePatientDetail extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          child: Text(
-                            'ข้อมูลผู้ป่วย',
-                            style: TextStyle(
-                                fontSize: 18, color: Color(0xFFC37447)),
-                          ),
-                        ),
                         Scrollbar(
                           isAlwaysShown: true,
                           thickness: 5,
                           //showTrackOnHover: true,
-                          controller: _scrollController1,
+                          controller: _scrollController,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                             child: SingleChildScrollView(
-                              controller: _scrollController1,
+                              controller: _scrollController,
                               scrollDirection: Axis.horizontal,
                               child: ConstrainedBox(
                                 constraints: BoxConstraints(
@@ -57,6 +48,16 @@ class PrePatientDetail extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
+                                      Container(
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                        child: Text(
+                                          'ข้อมูลผู้ป่วย',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color(0xFFC37447)),
+                                        ),
+                                      ),
                                       Container(
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(
@@ -285,197 +286,182 @@ class PrePatientDetail extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                          child: Text(
-                            'ข้อมูลการรักษา',
-                            style: TextStyle(
-                                fontSize: 18, color: Color(0xFFC37447)),
-                          ),
-                        ),
-                        Scrollbar(
-                          isAlwaysShown: true,
-                          thickness: 5,
-                          //showTrackOnHover: true,
-                          controller: _scrollController2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SingleChildScrollView(
-                              controller: _scrollController2,
-                              scrollDirection: Axis.horizontal,
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(
-                                    minWidth: constraints.minWidth,
-                                    minHeight: constraints.minHeight),
-                                child: IntrinsicWidth(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  90, 0, 0, 0),
-                                              child: Text('ขั้นตอนการรักษา:',
-                                                  textAlign: TextAlign.end),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 0, 0, 0),
-                                              child: Text(snapshot
-                                                  .data['patientState']),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 0, 0, 0),
-                                              child: Text('HN:',
-                                                  textAlign: TextAlign.end),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 0, 0, 0),
-                                              child: Text(snapshot.data['HN']),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 0, 0, 0),
-                                              child: Text('AN:',
-                                                  textAlign: TextAlign.end),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 0, 0, 0),
-                                              child: Text(snapshot.data['AN']),
-                                            ),
-                                          ),
-                                        ],
+                                      Container(
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 20, 0, 20),
+                                        child: Text(
+                                          'ข้อมูลการรักษา',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color(0xFFC37447)),
+                                        ),
                                       ),
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  90, 10, 0, 0),
-                                              child: Text('วันที่รับการรักษา:',
-                                                  textAlign: TextAlign.end),
+                                      Container(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    90, 0, 0, 0),
+                                                child: Text('ขั้นตอนการรักษา:',
+                                                    textAlign: TextAlign.end),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 10, 0, 0),
-                                              child: Text(snapshot
-                                                  .data['operationDate']),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 0, 0, 0),
+                                                child: Text(snapshot
+                                                    .data['patientState']),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 10, 0, 0),
-                                              child: Text('ชื่อการผ่าตัด:',
-                                                  textAlign: TextAlign.end),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 0, 0, 0),
+                                                child: Text('HN:',
+                                                    textAlign: TextAlign.end),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 10, 0, 0),
-                                              child: Text(snapshot
-                                                  .data['operationName']),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 0, 0, 0),
+                                                child:
+                                                    Text(snapshot.data['HN']),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 10, 0, 0),
-                                              child: Text('วิธีการผ่าตัด:',
-                                                  textAlign: TextAlign.end),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 0, 0, 0),
+                                                child: Text('AN:',
+                                                    textAlign: TextAlign.end),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 10, 0, 0),
-                                              child: Text(snapshot
-                                                  .data['operationMethod']),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 0, 0, 0),
+                                                child:
+                                                    Text(snapshot.data['AN']),
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  120, 10, 0, 0),
-                                              child: Text('ASA Class:',
-                                                  textAlign: TextAlign.end),
+                                      Container(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    90, 10, 0, 0),
+                                                child: Text(
+                                                    'วันที่รับการรักษา:',
+                                                    textAlign: TextAlign.end),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 10, 0, 0),
-                                              child: Text(
-                                                  snapshot.data['asaClass']),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 10, 0, 0),
+                                                child: Text(snapshot
+                                                    .data['operationDate']),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 10, 0, 0),
-                                              child: Text('โรคร่วม:',
-                                                  textAlign: TextAlign.end),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 10, 0, 0),
+                                                child: Text('ชื่อการผ่าตัด:',
+                                                    textAlign: TextAlign.end),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  20, 10, 0, 0),
-                                              child: Text(snapshot
-                                                  .data['previousIllness']),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 10, 0, 0),
+                                                child: Text(snapshot
+                                                    .data['operationName']),
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Container(),
-                                          )
-                                        ],
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 10, 0, 0),
+                                                child: Text('วิธีการผ่าตัด:',
+                                                    textAlign: TextAlign.end),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 10, 0, 0),
+                                                child: Text(snapshot
+                                                    .data['operationMethod']),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    120, 10, 0, 0),
+                                                child: Text('ASA Class:',
+                                                    textAlign: TextAlign.end),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 10, 0, 0),
+                                                child: Text(
+                                                    snapshot.data['asaClass']),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 10, 0, 0),
+                                                child: Text('โรคร่วม:',
+                                                    textAlign: TextAlign.end),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    20, 10, 0, 0),
+                                                child: Text(snapshot
+                                                    .data['previousIllness']),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Container(),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
