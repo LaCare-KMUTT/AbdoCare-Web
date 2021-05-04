@@ -35,7 +35,7 @@ class _DropdownState extends State<Dropdown> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
             color: Colors.white,
-            border: Border.all(color: Colors.black26)),
+            border: Border.all(color: Colors.black12)),
         child: DropdownButtonHideUnderline(
           child: DropdownButton(
             isExpanded: true,
@@ -51,7 +51,7 @@ class _DropdownState extends State<Dropdown> {
                     child: Text(value,
                         textAlign: TextAlign.center,
                         style:
-                            TextStyle(fontSize: 18, color: Color(0xFFC37447)))),
+                            TextStyle(fontSize: 20, color: Color(0xFFC37447)))),
               );
             }).toList(),
             onChanged: (String newValue) {
