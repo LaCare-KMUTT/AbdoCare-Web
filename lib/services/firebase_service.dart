@@ -935,19 +935,23 @@ class FirebaseService extends IFirebaseService {
   Future<int> getNoticounter() async {
     int count = 0;
     var notiList = await this.getNotificationList("AllState");
-    var returnList = notiList.map((user) async {
-      var notiCollection = await this
-          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
-      var seen = notiCollection['seen'];
-      if (seen == false) {
-        seen = "ยังไม่ได้ดำเนินการ";
-        count = count + 1;
-      }
-      return count;
-    });
-    var futureList = Future.wait(returnList);
-    var returnValue = await futureList;
-    count = returnValue.last;
+    if (notiList.isNotEmpty) {
+      var returnList = notiList.map((user) async {
+        var notiCollection = await this
+            .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
+        var seen = notiCollection['seen'];
+        if (seen == false) {
+          seen = "ยังไม่ได้ดำเนินการ";
+          count = count + 1;
+        }
+        return count;
+      });
+      var futureList = Future.wait(returnList);
+      var returnValue = await futureList;
+      count = returnValue.last;
+    } else {
+      count = 0;
+    }
     return count;
   }
 }
