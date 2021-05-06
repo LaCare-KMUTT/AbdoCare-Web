@@ -1,10 +1,10 @@
+import 'dart:html';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/pre_visit_view_model.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../models/evalutate_form/pre_visit/generalForm_model.dart';
 import '../../../../view_models/evaluate_form/generalForm_view_model.dart';
 import '../../../appbar.dart';
@@ -79,6 +79,22 @@ class _GeneralFormState extends State<GeneralForm> {
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
+      child: RaisedButton(
+        child: Text("แบบประเมิน", style: TextStyle(fontSize: 15)),
+        padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => generaform(context)));
+        },
+      ),
+    );
+  }
+
+  Widget generaform(BuildContext context) {
     final format = DateFormat('dd/MM/yyyy');
     return Scaffold(
       appBar: BaseAppBar(
