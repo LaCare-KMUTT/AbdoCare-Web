@@ -90,16 +90,16 @@ class EvaluationViewModel {
       EvaluationFormTopic selected, String hn, String evaluateStatus) {
     switch (selected) {
       case EvaluationFormTopic.recoveryReadiness0:
-        return RecoveryReadinessForm(hn: hn);
+        return RecoveryReadinessForm(hn: hn, evaluateStatus: evaluateStatus);
         break;
       case EvaluationFormTopic.respiratory0:
-        return RespiratoryDay0Form(hn: hn);
+        return RespiratoryDay0Form(hn: hn, evaluateStatus: evaluateStatus);
         break;
       case EvaluationFormTopic.drain0:
         return DrainForm(hn: hn, evaluateStatus: evaluateStatus);
         break;
       case EvaluationFormTopic.urology0:
-        return UrologyForm(hn: hn);
+        return UrologyForm(hn: hn, evaluateStatus: evaluateStatus);
         break;
       case EvaluationFormTopic.respiratory1:
         return RespiratoryDay1Form(hn: hn, evaluateStatus: evaluateStatus);

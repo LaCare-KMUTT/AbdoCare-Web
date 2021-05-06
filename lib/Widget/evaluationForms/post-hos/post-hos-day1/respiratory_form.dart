@@ -50,7 +50,21 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
       child: AbsorbPointer(
         absorbing: evaluationButton,
         child: ElevatedButton(
-          child: Text("แบบประเมิน", style: TextStyle(fontSize: 15)),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  child: evaluationButton
+                      ? Icon(
+                          Icons.check,
+                          color: Colors.green,
+                          size: 20.0,
+                        )
+                      : SizedBox()),
+              Text(" แบบประเมิน", style: TextStyle(fontSize: 15)),
+            ],
+          ),
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
             primary: evaluationButton ? Colors.grey[100] : Colors.grey[300],
