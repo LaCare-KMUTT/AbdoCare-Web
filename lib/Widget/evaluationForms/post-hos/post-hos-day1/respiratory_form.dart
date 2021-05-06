@@ -593,7 +593,6 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
                                                           formName:
                                                               'Respiratory');
                                                 }
-                                                Navigator.pop(context);
                                               }
                                             }),
                                       ),

@@ -578,7 +578,6 @@ class _BloodClotFormState extends State<BloodClotForm> {
                                                           formName:
                                                               'BloodClot');
                                                 }
-                                                Navigator.pop(context);
                                               }
                                             }),
                                       ),

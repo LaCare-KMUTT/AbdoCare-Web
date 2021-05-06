@@ -202,7 +202,6 @@ class _UrologyFormState extends State<UrologyForm> {
                                                         formId: formId,
                                                         formName: 'Urology');
                                               }
-                                              Navigator.pop(context);
                                             }
                                           }),
                                     ),

@@ -396,7 +396,6 @@ class _NutritionFormState extends State<NutritionForm> {
                                                           formName:
                                                               'Nutrition');
                                                 }
-                                                Navigator.pop(context);
                                               }
                                             }),
                                       ),
