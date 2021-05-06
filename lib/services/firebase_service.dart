@@ -992,10 +992,13 @@ class FirebaseService extends IFirebaseService {
       dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
       if (formDateToShow == dateCompare) {
         evaluationStatus = "completed";
+      } else {
+        evaluationStatus = "notCompleted";
       }
     } else {
       evaluationStatus = "notCompleted";
     }
+    print(evaluationStatus);
     return evaluationStatus;
   }
 }

@@ -176,7 +176,7 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                                 ),
                                 FutureBuilder<Map<String, Widget>>(
                                     future: _evaluationViewModel.getevaluations(
-                                        context, widget.hn),
+                                        context, widget.hn, "Pre-Operation"),
                                     builder: (context, snapshot) {
                                       if (!snapshot.hasData) {
                                         return ProgressBar

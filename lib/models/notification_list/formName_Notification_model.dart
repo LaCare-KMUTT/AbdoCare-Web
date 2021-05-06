@@ -13,6 +13,7 @@ Map<String, String> formNameModel = {
   'Pulmanary': 'แบบประเมินการฟื้นฟูสมรรถภาพของปอด',
   'Surgical Incision': 'แบบประเมินแผล',
   'Abnormal Symptom': 'แบบประเมินอาการแสดงที่ผิดปกติ',
+  "General": "แบบประเมิน Pre-Visit",
   'แบบประเมินการปฏิบัติกิจวัตรประจำวัน': 'ADL',
   'แบบประเมินความพร้อมการฟื้นสภาพหลังผ่าตัด': 'Recovery Readiness',
   'แบบประเมินระบบทางเดินหายใจหลังผ่าตัด': 'Respiratory',
@@ -27,4 +28,5 @@ Map<String, String> formNameModel = {
   'แบบประเมินการฟื้นฟูสมรรถภาพของปอด': 'Pulmanary',
   'แบบประเมินแผล': 'Surgical Incision',
   'แบบประเมินอาการแสดงที่ผิดปกติ': 'Abnormal Symptom',
+  "แบบประเมิน Pre-Visit": "General",
 };

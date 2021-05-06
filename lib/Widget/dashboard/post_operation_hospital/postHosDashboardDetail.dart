@@ -188,7 +188,9 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                 ),
                                 FutureBuilder<Map<String, Widget>>(
                                     future: _evaluationViewModel.getevaluations(
-                                        context, widget.hn),
+                                        context,
+                                        widget.hn,
+                                        "Post-Operation@Hospital"),
                                     builder: (context, snapshot) {
                                       if (!snapshot.hasData) {
                                         return ProgressBar

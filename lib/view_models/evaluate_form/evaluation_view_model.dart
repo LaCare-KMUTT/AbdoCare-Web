@@ -21,8 +21,7 @@ class EvaluationViewModel {
   final _firebaseService = locator<IFirebaseService>();
   final _evaluationModel = locator<EvaluationModel>();
   Future<Map<String, Widget>> getevaluations(
-      BuildContext context, String hn) async {
-    String patientState;
+      BuildContext context, String hn, String patientState) async {
     var evaluateStatus;
     List<Map<String, Object>> mustShowList = [];
     List<Map<String, Object>> mustShowList2 = [];
@@ -31,7 +30,7 @@ class EvaluationViewModel {
     Column mustShowToColumn = Column();
     Column mustShowToColumn2 = Column();
     Row mustShow = Row();
-    patientState = await _firebaseService.getPatientState(hn: hn);
+
     var dayInCurrentState = await _firebaseService.getDayInCurrentState(hn: hn);
 
     if (patientState == "Pre-Operation") {
@@ -123,7 +122,7 @@ class EvaluationViewModel {
         return DigestiveForm(hn: hn, evaluateStatus: evaluateStatus);
         break;
       case EvaluationFormTopic.generalForm:
-        return GeneralForm(hn: hn);
+        return GeneralForm(hn: hn, evaluateStatus: evaluateStatus);
         break;
     }
   }
