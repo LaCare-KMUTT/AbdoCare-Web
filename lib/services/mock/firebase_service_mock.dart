@@ -347,7 +347,7 @@ class FirebaseServiceMock extends IFirebaseService {
       {@required String hn,
       @required String formName,
       @required String patientState,
-      String formTime}) {
+      String vitalSignFormTime}) {
     // TODO: implement getPatientDetail
     throw UnimplementedError();
   }

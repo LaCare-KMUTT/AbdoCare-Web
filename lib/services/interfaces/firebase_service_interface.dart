@@ -109,5 +109,5 @@ abstract class IFirebaseService {
       {@required String hn,
       @required String formName,
       @required String patientState,
-      String formTime});
+      String vitalSignFormTime});
 }

@@ -363,9 +363,7 @@ class FirebaseService extends IFirebaseService {
       userForm.forEach((form) {
         if (form['formName'] == formName) {
           list.add(form);
-        } else {
-          print('$userId does not have $formName');
-        }
+        } else {}
       });
     } else {
       print('userForm = null');
@@ -959,9 +957,9 @@ class FirebaseService extends IFirebaseService {
       {@required String hn,
       @required String formName,
       @required String patientState,
-      String formTime}) async {
+      String vitalSignFormTime}) async {
     var formCreation;
-    var evaluationStatus;
+    var evaluationStatus = "notCompleted";
     var formDateToShow;
     var dateCompare;
     var formTime;
@@ -974,32 +972,62 @@ class FirebaseService extends IFirebaseService {
         .catchError((onError) {
       print('$onError Cannot find user');
     });
-    var formStatus = await getFormListInAnBasedOnState(
-        userId: userId, patientState: patientState, formName: formName);
-    if (formStatus.isNotEmpty) {
-      var formsCollection = await _firestore
-          .collection('Forms')
-          .doc(formStatus.last['formId'])
-          .get()
-          .then((value) => value.data())
-          .catchError((onError) {
-        print('$onError no formsCollection');
-      });
-      formCreation = formsCollection['creation'] ?? '-';
-      formTime = DateTime.fromMicrosecondsSinceEpoch(
-          formCreation.microsecondsSinceEpoch);
-      formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
-      dateToCompare = _calculationService.formatDate(date: DateTime.now());
-      dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
-      if (formDateToShow == dateCompare) {
-        evaluationStatus = "completed";
+    if (vitalSignFormTime == null) {
+      var formStatus = await getFormListInAnBasedOnState(
+          userId: userId, patientState: patientState, formName: formName);
+      if (formStatus.isNotEmpty) {
+        var formsCollection = await _firestore
+            .collection('Forms')
+            .doc(formStatus.last['formId'])
+            .get()
+            .then((value) => value.data())
+            .catchError((onError) {
+          print('$onError no formsCollection');
+        });
+        formCreation = formsCollection['creation'] ?? '-';
+        formTime = DateTime.fromMicrosecondsSinceEpoch(
+            formCreation.microsecondsSinceEpoch);
+        formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
+        dateToCompare = _calculationService.formatDate(date: DateTime.now());
+        dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
+        if (formDateToShow == dateCompare) {
+          evaluationStatus = "completed";
+        }
       } else {
         evaluationStatus = "notCompleted";
       }
-    } else {
-      evaluationStatus = "notCompleted";
+    } else if (vitalSignFormTime != null) {
+      var formsCollection = await _firestore
+          .collection('Forms')
+          .where('formTime', isEqualTo: vitalSignFormTime)
+          .where('hn', isEqualTo: hn)
+          .where('formName', isEqualTo: formName)
+          .get()
+          .then((value) => value.docs.first.id)
+          .catchError((onError) {});
+      print("Helloooooo$formsCollection");
+      if (formsCollection != null) {
+        var formsCollection2 = await _firestore
+            .collection('Forms')
+            .doc(formsCollection)
+            .get()
+            .then((value) => value.data())
+            .catchError((onError) {
+          print('$onError no formsCollection');
+        });
+        formCreation = formsCollection2['creation'] ?? '-';
+        formTime = DateTime.fromMicrosecondsSinceEpoch(
+            formCreation.microsecondsSinceEpoch);
+        formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
+        dateToCompare = _calculationService.formatDate(date: DateTime.now());
+        dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
+        if (formDateToShow == dateCompare) {
+          evaluationStatus = "completed";
+        }
+      } else {
+        evaluationStatus = "notCompleted";
+      }
     }
-    print(evaluationStatus);
     return evaluationStatus;
   }
 }
