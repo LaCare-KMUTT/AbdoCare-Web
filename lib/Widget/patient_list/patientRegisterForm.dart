@@ -299,7 +299,12 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                                         onSaved: (value) {
                                           _ward = value;
                                         },
-                                        items: ['1', '2', '3', '4']
+                                        items: [
+                                          'ศัลยกรรมทั่วไปชาย 1',
+                                          'ศัลยกรรมทั่วไปชาย 2',
+                                          'ศัลยกรรมทั่วไปหญิง 1',
+                                          'ศัลยกรรมทั่วไปหญิง 2'
+                                        ]
                                             .map((label) => DropdownMenuItem(
                                                   child: Text(label),
                                                   value: label,

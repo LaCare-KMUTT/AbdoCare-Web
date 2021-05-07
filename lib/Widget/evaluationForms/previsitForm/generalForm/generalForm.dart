@@ -411,10 +411,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                           value;
                                                                     },
                                                                     items: [
-                                                                      '1',
-                                                                      '2',
-                                                                      '3',
-                                                                      '4'
+                                                                      'ศัลยกรรมทั่วไปชาย 1',
+                                                                      'ศัลยกรรมทั่วไปชาย 2',
+                                                                      'ศัลยกรรมทั่วไปหญิง 1',
+                                                                      'ศัลยกรรมทั่วไปหญิง 2'
                                                                     ]
                                                                         .map((label) =>
                                                                             DropdownMenuItem(
