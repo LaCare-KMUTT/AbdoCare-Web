@@ -16,6 +16,7 @@ import 'package:AbdoCare_Web/models/notification_list/formName_Notification_mode
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EvaluationViewModel {
   EvaluationViewModel();
@@ -56,6 +57,7 @@ class EvaluationViewModel {
         vitalSignList.addAll(_evaluationModel.vitalSignList);
       }
     }
+    //Used for getVitalSignCardList
     for (var item in vitalSignList) {
       var formName = formNameModel[item['formName']];
       var formTime = item['formTime'];
@@ -63,7 +65,7 @@ class EvaluationViewModel {
           hn: hn,
           formName: formName,
           patientState: patientState,
-          formTime: formTime);
+          vitalSignFormTime: formTime);
       vitalSignCardList.add(EvaluationMenuCard()
           .getVitalSignCard(context, item, evaluateStatus, hn, formTime));
     }
@@ -73,7 +75,7 @@ class EvaluationViewModel {
         children: vitalSignCardList,
       );
     }
-
+    //Used for get EvaluationForm first column card list
     for (var item in mustShowList) {
       var formName = formNameModel[item['formName']];
       evaluateStatus = await _firebaseService.getEvaluationStatus(
@@ -87,9 +89,8 @@ class EvaluationViewModel {
         children: mustShowCardList,
       );
     }
-
+    //Used for get EvaluationForm second column card list
     for (var item in mustShowList2) {
-      print(mustShowList2.length);
       var formName = formNameModel[item['formName']];
       evaluateStatus = await _firebaseService.getEvaluationStatus(
           hn: hn, formName: formName, patientState: patientState);
@@ -197,6 +198,19 @@ class EvaluationViewModel {
 
   bool disableEvaluationformButton(String check) {
     if (check == "completed") {
+      return true;
+    }
+    return false;
+  }
+
+  bool disableVitalSignformButton(String check, String formTime) {
+    DateTime now = DateTime.now();
+    var formTimeSplit = formTime.split(" ");
+    var newFormTime = formTimeSplit[0];
+    DateTime formTimeToCompare = DateFormat.Hm().parse(newFormTime);
+    formTimeToCompare = new DateTime(now.year, now.month, now.day,
+        formTimeToCompare.hour, formTimeToCompare.minute);
+    if (check == "completed" || now.isBefore(formTimeToCompare)) {
       return true;
     }
     return false;

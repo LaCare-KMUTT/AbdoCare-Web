@@ -81,8 +81,8 @@ class _VitalSignFormState extends State<VitalSignForm> {
     var dateToShow = _calculationService.formatDateToThaiString(
         date: date, isBuddhist: false);
     var timeToShow = DateFormat.Hm().format(DateTime.now()).toString();
-    var evaluationButton =
-        _evaluationViewModel.disableEvaluationformButton(widget.evaluateStatus);
+    var evaluationButton = _evaluationViewModel.disableVitalSignformButton(
+        widget.evaluateStatus, widget.formTime);
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
@@ -93,13 +93,14 @@ class _VitalSignFormState extends State<VitalSignForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  child: evaluationButton
-                      ? Icon(
-                          Icons.check,
-                          color: Colors.green,
-                          size: 20.0,
-                        )
-                      : SizedBox()),
+                  child:
+                      evaluationButton && widget.evaluateStatus == "completed"
+                          ? Icon(
+                              Icons.check,
+                              color: Colors.green,
+                              size: 20.0,
+                            )
+                          : SizedBox()),
               Text(widget.formTime, style: TextStyle(fontSize: 15)),
             ],
           ),
@@ -466,14 +467,6 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                   paindataToDB = {
                                                 'pain': _pain
                                               };
-                                              var formId2 =
-                                                  await _firebaseService
-                                                      .addDataToFormsCollection(
-                                                          data: paindataToDB,
-                                                          formName: "pain",
-                                                          hn: widget.hn,
-                                                          formTime:
-                                                              widget.formTime);
                                               print(
                                                   'hn in Virtal-Sign = ${widget.hn}');
                                               print(
@@ -521,6 +514,14 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                 }
                                               } else if (_getpatientState ==
                                                   "Post-Operation@Hospital") {
+                                                var formId2 =
+                                                    await _firebaseService
+                                                        .addDataToFormsCollection(
+                                                            data: paindataToDB,
+                                                            formName: "pain",
+                                                            hn: widget.hn,
+                                                            formTime: widget
+                                                                .formTime);
                                                 if (!checkVitalSignNotificationCriteria(
                                                         _bt,
                                                         _pr,
