@@ -266,14 +266,14 @@ class _DashboardTableState extends State<DashboardTable> {
                                         style: TextStyle(
                                             fontStyle: FontStyle.italic,
                                             color: Colors.white,
-                                            fontSize: 16),
+                                            fontSize: 15),
                                       ),
                                       Text(
                                         item['Time'],
                                         style: TextStyle(
                                             fontStyle: FontStyle.italic,
                                             color: Colors.white,
-                                            fontSize: 16),
+                                            fontSize: 15),
                                       )
                                     ]),
                                   ),
@@ -295,9 +295,8 @@ class _DashboardTableState extends State<DashboardTable> {
                               ),
                               for (var item in dashboardTable)
                                 Column(children: [
-                                  Text(
-                                    item['Admission'].toString(),
-                                  )
+                                  Text(item['Admission'].toString(),
+                                      style: TextStyle(fontSize: 16))
                                 ]),
                             ]),
                             TableRow(children: [
@@ -316,9 +315,8 @@ class _DashboardTableState extends State<DashboardTable> {
                               ),
                               for (var item in dashboardTable)
                                 Column(children: [
-                                  Text(
-                                    item['Operation'].toString(),
-                                  )
+                                  Text(item['Operation'].toString(),
+                                      style: TextStyle(fontSize: 16))
                                 ]),
                             ]),
                             TableRow(children: [
@@ -339,6 +337,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 Column(children: [
                                   Text(item['RespirationsRate'].toString(),
                                       style: TextStyle(
+                                          fontSize: 16,
                                           color: _customMaterial
                                               .getRespirationRateColor(
                                                   item['RespirationsRate'])))
@@ -364,6 +363,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 Column(children: [
                                   Text(item['BloodPressure'],
                                       style: TextStyle(
+                                          fontSize: 16,
                                           color: _customMaterial
                                               .getBloodPressureColor(
                                                   item['BloodPressure'])))
@@ -387,6 +387,7 @@ class _DashboardTableState extends State<DashboardTable> {
                                 Column(children: [
                                   Text(item['O2Sat'].toString(),
                                       style: TextStyle(
+                                          fontSize: 16,
                                           color: _customMaterial
                                               .getOxygenRateColor(
                                                   item['O2Sat'])))
@@ -408,9 +409,8 @@ class _DashboardTableState extends State<DashboardTable> {
                               ),
                               for (var item in dashboardTable)
                                 Column(children: [
-                                  Text(
-                                    item['WtHt'].toString(),
-                                  )
+                                  Text(item['WtHt'].toString(),
+                                      style: TextStyle(fontSize: 16))
                                 ]),
                             ]),
                           ],
