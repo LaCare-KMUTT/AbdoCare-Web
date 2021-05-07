@@ -958,7 +958,8 @@ class FirebaseService extends IFirebaseService {
   Future<String> getEvaluationStatus(
       {@required String hn,
       @required String formName,
-      @required String patientState}) async {
+      @required String patientState,
+      String formTime}) async {
     var formCreation;
     var evaluationStatus;
     var formDateToShow;
