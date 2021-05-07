@@ -30,12 +30,27 @@ class EvaluationMenuCard {
                     width: double.infinity,
                     margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
                     child: _evaluationViewModel.navigateOnTopic(
-                        item['selectedForm'], hn, evaluateStatus),
+                        item['selectedForm'], hn, evaluateStatus, "-"),
                   ),
                 ),
               ],
             ),
           )),
+    );
+    return evaluationCard;
+  }
+
+  Widget getVitalSignCard(BuildContext context, Map<String, Object> item,
+      String evaluateStatus, String hn, String formTime) {
+    var evaluationCard = Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: 40,
+        width: double.infinity,
+        margin: EdgeInsets.only(left: 10, top: 5, right: 10, bottom: 10),
+        child: _evaluationViewModel.navigateOnTopic(
+            item['selectedForm'], hn, evaluateStatus, formTime),
+      ),
     );
     return evaluationCard;
   }
