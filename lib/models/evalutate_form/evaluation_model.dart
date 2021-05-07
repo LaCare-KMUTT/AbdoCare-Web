@@ -10,10 +10,48 @@ enum EvaluationFormTopic {
   infection2,
   pulmanary2,
   digestive2,
-  generalForm
+  generalForm,
+  vitalSign1,
+  vitalSign2,
+  vitalSign3,
+  vitalSign4,
+  vitalSign5,
+  vitalSign6,
 }
 
 class EvaluationModel {
+  List<Map<String, Object>> vitalSignList = [
+    {
+      "formName": "แบบประเมินสัญญาณชีพ",
+      "formTime": "02.00 น.",
+      "selectedForm": EvaluationFormTopic.vitalSign1,
+    },
+    {
+      "formName": "แบบประเมินสัญญาณชีพ",
+      "formTime": "06.00 น.",
+      "selectedForm": EvaluationFormTopic.vitalSign2,
+    },
+    {
+      "formName": "แบบประเมินสัญญาณชีพ",
+      "formTime": "10.00 น.",
+      "selectedForm": EvaluationFormTopic.vitalSign3,
+    },
+    {
+      "formName": "แบบประเมินสัญญาณชีพ",
+      "formTime": "14.00 น.",
+      "selectedForm": EvaluationFormTopic.vitalSign4,
+    },
+    {
+      "formName": "แบบประเมินสัญญาณชีพ",
+      "formTime": "18.00 น.",
+      "selectedForm": EvaluationFormTopic.vitalSign5,
+    },
+    {
+      "formName": "แบบประเมินสัญญาณชีพ",
+      "formTime": "22.00 น.",
+      "selectedForm": EvaluationFormTopic.vitalSign6,
+    },
+  ];
   List<Map<String, Object>> postOpHospitalDay0List = [
     {
       "formName": "แบบประเมินความพร้อมฟื้นสภาพหลังผ่าตัด",

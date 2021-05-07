@@ -9,6 +9,7 @@ import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day1/respi
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/digestive_form.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/infection_form.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/post-hos-day2-7/pulmanary_form.dart';
+import 'package:AbdoCare_Web/Widget/evaluationForms/post-hos/vital_sign_form.dart';
 import 'package:AbdoCare_Web/Widget/evaluationForms/previsitForm/generalForm/generalForm.dart';
 import 'package:AbdoCare_Web/models/evalutate_form/evaluation_model.dart';
 import 'package:AbdoCare_Web/models/notification_list/formName_Notification_model.dart';
@@ -25,28 +26,52 @@ class EvaluationViewModel {
     var evaluateStatus;
     List<Map<String, Object>> mustShowList = [];
     List<Map<String, Object>> mustShowList2 = [];
+    List<Map<String, Object>> vitalSignList = [];
     List<Widget> mustShowCardList = [];
     List<Widget> mustShowCardList2 = [];
+    List<Widget> vitalSignCardList = [];
     Column mustShowToColumn = Column();
     Column mustShowToColumn2 = Column();
+    Column vitalSignToColumn = Column();
     Row mustShow = Row();
 
     var dayInCurrentState = await _firebaseService.getDayInCurrentState(hn: hn);
 
     if (patientState == "Pre-Operation") {
       mustShowList.addAll(_evaluationModel.preOpHos);
+      vitalSignList.addAll(_evaluationModel.vitalSignList);
     } else if (patientState == "Post-Operation@Hospital") {
       if (dayInCurrentState == 0) {
         mustShowList.addAll(_evaluationModel.postOpHospitalDay0List);
         mustShowList2.addAll(_evaluationModel.postOpHospitalDay0List2);
+        vitalSignList.addAll(_evaluationModel.vitalSignList);
       }
       if (dayInCurrentState == 1) {
         mustShowList.addAll(_evaluationModel.postOpHospitalDay1List);
         mustShowList2.addAll(_evaluationModel.postOpHospitalDay1List2);
+        vitalSignList.addAll(_evaluationModel.vitalSignList);
       }
       if (dayInCurrentState >= 2) {
         mustShowList.addAll(_evaluationModel.postOpHospitalDay2List);
+        vitalSignList.addAll(_evaluationModel.vitalSignList);
       }
+    }
+    for (var item in vitalSignList) {
+      var formName = formNameModel[item['formName']];
+      var formTime = item['formTime'];
+      evaluateStatus = await _firebaseService.getEvaluationStatus(
+          hn: hn,
+          formName: formName,
+          patientState: patientState,
+          formTime: formTime);
+      vitalSignCardList.add(EvaluationMenuCard()
+          .getVitalSignCard(context, item, evaluateStatus, hn, formTime));
+    }
+
+    if (vitalSignCardList != null) {
+      vitalSignToColumn = Column(
+        children: vitalSignCardList,
+      );
     }
 
     for (var item in mustShowList) {
@@ -81,12 +106,13 @@ class EvaluationViewModel {
 
     Map<String, Widget> cardLists = {
       'mustShow': mustShow,
+      'vitalSignShow': vitalSignToColumn,
     };
     return cardLists;
   }
 
-  navigateOnTopic(
-      EvaluationFormTopic selected, String hn, String evaluateStatus) {
+  navigateOnTopic(EvaluationFormTopic selected, String hn,
+      String evaluateStatus, String formTime) {
     switch (selected) {
       case EvaluationFormTopic.recoveryReadiness0:
         return RecoveryReadinessForm(hn: hn, evaluateStatus: evaluateStatus);
@@ -123,6 +149,48 @@ class EvaluationViewModel {
         break;
       case EvaluationFormTopic.generalForm:
         return GeneralForm(hn: hn, evaluateStatus: evaluateStatus);
+        break;
+      case EvaluationFormTopic.vitalSign1:
+        return VitalSignForm(
+          hn: hn,
+          evaluateStatus: evaluateStatus,
+          formTime: formTime,
+        );
+        break;
+      case EvaluationFormTopic.vitalSign2:
+        return VitalSignForm(
+          hn: hn,
+          evaluateStatus: evaluateStatus,
+          formTime: formTime,
+        );
+        break;
+      case EvaluationFormTopic.vitalSign3:
+        return VitalSignForm(
+          hn: hn,
+          evaluateStatus: evaluateStatus,
+          formTime: formTime,
+        );
+        break;
+      case EvaluationFormTopic.vitalSign4:
+        return VitalSignForm(
+          hn: hn,
+          evaluateStatus: evaluateStatus,
+          formTime: formTime,
+        );
+        break;
+      case EvaluationFormTopic.vitalSign5:
+        return VitalSignForm(
+          hn: hn,
+          evaluateStatus: evaluateStatus,
+          formTime: formTime,
+        );
+        break;
+      case EvaluationFormTopic.vitalSign6:
+        return VitalSignForm(
+          hn: hn,
+          evaluateStatus: evaluateStatus,
+          formTime: formTime,
+        );
         break;
     }
   }
