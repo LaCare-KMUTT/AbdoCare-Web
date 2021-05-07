@@ -49,7 +49,6 @@ class _PulmanaryFormState extends State<PulmanaryForm> {
         absorbing: evaluationButton,
         child: ElevatedButton(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(

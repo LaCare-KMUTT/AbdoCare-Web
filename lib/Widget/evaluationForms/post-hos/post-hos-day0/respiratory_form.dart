@@ -49,7 +49,6 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
       margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
       child: ElevatedButton(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(

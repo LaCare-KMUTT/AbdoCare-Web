@@ -52,7 +52,6 @@ class _DrainFormState extends State<DrainForm> {
         absorbing: evaluationButton,
         child: ElevatedButton(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(

@@ -72,7 +72,6 @@ class _RecoveryReadinessFormState extends State<RecoveryReadinessForm> {
         absorbing: evaluationButton,
         child: ElevatedButton(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(

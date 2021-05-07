@@ -89,7 +89,6 @@ class _GeneralFormState extends State<GeneralForm> {
         absorbing: evaluationButton,
         child: ElevatedButton(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(

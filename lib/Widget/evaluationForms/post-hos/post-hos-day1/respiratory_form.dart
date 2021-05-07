@@ -51,7 +51,6 @@ class _RespiratoryDay1FormState extends State<RespiratoryDay1Form> {
         absorbing: evaluationButton,
         child: ElevatedButton(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
