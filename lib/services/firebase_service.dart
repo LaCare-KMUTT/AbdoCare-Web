@@ -1005,7 +1005,6 @@ class FirebaseService extends IFirebaseService {
           .get()
           .then((value) => value.docs.first.id)
           .catchError((onError) {});
-      print("Helloooooo$formsCollection");
       if (formsCollection != null) {
         var formsCollection2 = await _firestore
             .collection('Forms')
