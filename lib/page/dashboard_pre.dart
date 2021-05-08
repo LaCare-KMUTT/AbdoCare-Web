@@ -16,8 +16,6 @@ class PreDashboardPage extends StatefulWidget {
 class _PreDashboardPageState extends State<PreDashboardPage> {
   @override
   Widget build(BuildContext context) {
-    //final hn = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       appBar: BaseAppBar(
         title: Text('สรุปผลประจำวัน'),
