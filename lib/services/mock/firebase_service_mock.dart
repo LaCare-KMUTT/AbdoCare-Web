@@ -342,4 +342,13 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
+
+  Future<String> getEvaluationStatus(
+      {@required String hn,
+      @required String formName,
+      @required String patientState,
+      String vitalSignFormTime}) {
+    // TODO: implement getPatientDetail
+    throw UnimplementedError();
+  }
 }

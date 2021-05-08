@@ -1,13 +1,13 @@
 import 'package:AbdoCare_Web/Widget/evaluationForms/ultilities/form_utility/health_status_form_utility.dart';
 import 'package:AbdoCare_Web/Widget/material.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/evaluation_model.dart';
 import 'package:AbdoCare_Web/services/cloud_function_service.dart';
-import 'package:AbdoCare_Web/view_models/evaluate_form/evaluationFormButton_view_model.dart';
+import 'package:AbdoCare_Web/view_models/evaluate_form/evaluation_view_model.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/notification_view_model.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/recoveryReadiness_view_model.dart';
 import 'package:get_it/get_it.dart';
 import '../Widget/evaluationForms/ultilities/form_utility/health_status_form_utility.dart';
 import '../Widget/material.dart';
-import '../view_models/evaluate_form/evaluationFormButton_view_model.dart';
 import '../view_models/evaluate_form/pre_visit_view_model.dart';
 import '../view_models/user_list/post_home_list_view_model.dart';
 import '../view_models/user_list/post_hos_list_view_model.dart';
@@ -34,8 +34,9 @@ void setupServiceLocator({bool isMock = false}) {
   locator.registerLazySingleton<PostHomeViewModel>(() => PostHomeViewModel());
   locator.registerLazySingleton<PostHosViewModel>(() => PostHosViewModel());
   locator.registerLazySingleton<CustomMaterial>(() => CustomMaterial());
-  locator.registerLazySingleton<EvaluationFormViewModel>(
-      () => EvaluationFormViewModel());
+  locator.registerLazySingleton<EvaluationModel>(() => EvaluationModel());
+  locator
+      .registerLazySingleton<EvaluationViewModel>(() => EvaluationViewModel());
   locator
       .registerLazySingleton<HealthStatusUtility>(() => HealthStatusUtility());
   locator.registerLazySingleton<CloudFunctionService>(
