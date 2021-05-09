@@ -1053,7 +1053,21 @@ class FirebaseService extends IFirebaseService {
     return dayInHospital;
   }
 
-  Future<List<Map<String, dynamic>>> getDashboardTable({
+  Future<List<Map<String, dynamic>>> getVitalSignTable({
     @required String hn,
-  }) async {}
+  }) async {
+    var dashboardsCollection = await _firestore
+        .collection('Dashboards')
+        .where('hn', isEqualTo: hn)
+        .where('name', isEqualTo: 'dashboardTable')
+        .orderBy('date')
+        .get()
+        .then((value) => value.docs);
+    List<Map<String, dynamic>> list = [];
+    dashboardsCollection.forEach((element) {
+      Map<String, dynamic> data = element.data();
+      list.add(data);
+    });
+    return list;
+  }
 }

@@ -33,7 +33,8 @@ class _PostHomeDashboardDetailState extends State<PostHomeDashboardDetail> {
                   ),
                 ),
                 SizedBox(
-                  child: ShowDashboard(patientstate: 'Post-Operation@Home'),
+                  child: ShowDashboard(
+                      patientstate: 'Post-Operation@Home', hn: widget.hn),
                 )
               ],
             ),

@@ -5,7 +5,8 @@ import 'radial_gauge_chart .dart';
 
 class ShowDashboard extends StatefulWidget {
   final String patientstate;
-  ShowDashboard({Key key, this.patientstate}) : super(key: key);
+  final String hn;
+  ShowDashboard({Key key, this.patientstate, this.hn}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _ShowDashboardState();
 }
