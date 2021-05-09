@@ -1,10 +1,10 @@
 import 'package:AbdoCare_Web/services/service_locator.dart';
+import 'package:AbdoCare_Web/view_models/evaluate_form/evaluation_view_model.dart';
 import 'package:AbdoCare_Web/view_models/evaluate_form/pre_visit_view_model.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../models/evalutate_form/pre_visit/generalForm_model.dart';
 import '../../../../view_models/evaluate_form/generalForm_view_model.dart';
 import '../../../appbar.dart';
@@ -26,16 +26,17 @@ import 'type_of_anesthesia.dart';
 
 class GeneralForm extends StatefulWidget {
   final String hn;
-  GeneralForm({Key key, @required this.hn}) : super(key: key);
+  final String evaluateStatus;
+  GeneralForm({Key key, @required this.hn, @required this.evaluateStatus})
+      : super(key: key);
   @override
   _GeneralFormState createState() => _GeneralFormState();
 }
 
 class _GeneralFormState extends State<GeneralForm> {
   final _formKey = GlobalKey<FormState>();
-
   final _preVisitViewModel = locator<PreVisitViewModel>();
-
+  EvaluationViewModel _evaluationViewModel = locator<EvaluationViewModel>();
   String _hn;
   String _an;
   String _patientName;
@@ -79,6 +80,47 @@ class _GeneralFormState extends State<GeneralForm> {
 
   @override
   Widget build(BuildContext context) {
+    var evaluationButton =
+        _evaluationViewModel.disableEvaluationformButton(widget.evaluateStatus);
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
+      child: AbsorbPointer(
+        absorbing: evaluationButton,
+        child: ElevatedButton(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  child: evaluationButton
+                      ? Icon(
+                          Icons.check,
+                          color: Colors.green,
+                          size: 20.0,
+                        )
+                      : SizedBox()),
+              Text(" แบบประเมิน", style: TextStyle(fontSize: 15)),
+            ],
+          ),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
+            primary: evaluationButton ? Colors.grey[100] : Colors.grey[300],
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(7.0)),
+            side: BorderSide(color: Colors.grey[200], width: 1),
+            shadowColor: Colors.black,
+            onPrimary: evaluationButton ? Colors.grey[600] : Colors.black,
+          ),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => generaform(context)));
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget generaform(BuildContext context) {
     final format = DateFormat('dd/MM/yyyy');
     return Scaffold(
       appBar: BaseAppBar(
@@ -411,10 +453,10 @@ class _GeneralFormState extends State<GeneralForm> {
                                                                           value;
                                                                     },
                                                                     items: [
-                                                                      '1',
-                                                                      '2',
-                                                                      '3',
-                                                                      '4'
+                                                                      'ศัลยกรรมทั่วไปชาย 1',
+                                                                      'ศัลยกรรมทั่วไปชาย 2',
+                                                                      'ศัลยกรรมทั่วไปหญิง 1',
+                                                                      'ศัลยกรรมทั่วไปหญิง 2'
                                                                     ]
                                                                         .map((label) =>
                                                                             DropdownMenuItem(

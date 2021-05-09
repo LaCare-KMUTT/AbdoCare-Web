@@ -1,11 +1,15 @@
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
+import 'package:AbdoCare_Web/view_models/evaluate_form/evaluation_view_model.dart';
 import 'package:flutter/material.dart';
 
 class RespiratoryDay0Form extends StatefulWidget {
   final String hn;
-  RespiratoryDay0Form({Key key, @required this.hn}) : super(key: key);
+  final String evaluateStatus;
+  RespiratoryDay0Form(
+      {Key key, @required this.hn, @required this.evaluateStatus})
+      : super(key: key);
 
   @override
   _RespiratoryDay0FormState createState() => _RespiratoryDay0FormState();
@@ -13,6 +17,7 @@ class RespiratoryDay0Form extends StatefulWidget {
 
 class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
   IFirebaseService _firebaseService = locator<IFirebaseService>();
+  EvaluationViewModel _evaluationViewModel = locator<EvaluationViewModel>();
   var _value1;
   var _value2;
   var _value3;
@@ -37,13 +42,35 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
 
   @override
   Widget build(BuildContext context) {
+    var evaluationButton =
+        _evaluationViewModel.disableEvaluationformButton(widget.evaluateStatus);
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
-      child: RaisedButton(
-        child: Text("แบบประเมิน", style: TextStyle(fontSize: 15)),
-        padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
+      child: ElevatedButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                child: evaluationButton
+                    ? Icon(
+                        Icons.check,
+                        color: Colors.green,
+                        size: 20.0,
+                      )
+                    : SizedBox()),
+            Text(" แบบประเมิน", style: TextStyle(fontSize: 15)),
+          ],
+        ),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.fromLTRB(40, 15, 40, 15),
+          primary: evaluationButton ? Colors.grey[100] : Colors.grey[300],
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
+          side: BorderSide(color: Colors.grey[200], width: 1),
+          shadowColor: Colors.black,
+          onPrimary: evaluationButton ? Colors.grey[600] : Colors.black,
+        ),
         onPressed: () {
           print('แบบประเมินภาวะแทรกซ้อนระบบทางเดินหายใจ: ${widget.hn}');
           showDialog(
@@ -563,7 +590,6 @@ class _RespiratoryDay0FormState extends State<RespiratoryDay0Form> {
                                                   formId: formId,
                                                   formName: 'Respiratory');
                                             }
-                                            Navigator.pop(context);
                                           }
                                         },
                                       ),
