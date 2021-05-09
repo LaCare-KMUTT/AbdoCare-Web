@@ -110,4 +110,6 @@ abstract class IFirebaseService {
       @required String formName,
       @required String patientState,
       String vitalSignFormTime});
+
+  Future<void> addToDashboardCollection(Map<String, dynamic> data);
 }
