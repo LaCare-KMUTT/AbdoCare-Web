@@ -1058,16 +1058,20 @@ class FirebaseService extends IFirebaseService {
   }) async {
     var dashboardsCollection = await _firestore
         .collection('Dashboards')
+        .orderBy('date')
         .where('hn', isEqualTo: hn)
         .where('name', isEqualTo: 'dashboardTable')
-        .orderBy('date')
         .get()
-        .then((value) => value.docs);
+        .then((value) => value.docs)
+        .catchError((onError) {
+      print('Error in getVitalSignTable = $onError');
+    });
     List<Map<String, dynamic>> list = [];
     dashboardsCollection.forEach((element) {
       Map<String, dynamic> data = element.data();
       list.add(data);
     });
+    print('list = $list');
     return list;
   }
 
@@ -1172,5 +1176,21 @@ class FirebaseService extends IFirebaseService {
           : 0,
     };
     return map;
+  }
+
+  Future<List<Map<String, dynamic>>> getPainChart({@required hn}) async {
+    var a = await _firestore
+        .collection('Forms')
+        .where('hn', isEqualTo: hn)
+        .where('formName', isEqualTo: 'pain')
+        .orderBy('creation')
+        .get();
+    List<Map<String, dynamic>> list = [];
+    a.docs.forEach((data) {
+      var map = data.data();
+      list.add(map);
+    });
+    print('list = $list');
+    return list;
   }
 }

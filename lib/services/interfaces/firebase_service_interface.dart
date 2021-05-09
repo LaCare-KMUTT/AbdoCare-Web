@@ -120,4 +120,6 @@ abstract class IFirebaseService {
   });
 
   Future<Map<String, dynamic>> getAdlTable({@required String hn});
+
+  Future<List<Map<String, dynamic>>> getPainChart({@required hn});
 }
