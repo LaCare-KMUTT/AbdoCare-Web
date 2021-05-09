@@ -96,7 +96,7 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                                   Expanded(
                                     flex: 2,
                                     child: TextFormField(
-                                      maxLength: 6,
+                                      maxLength: 8,
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(
                                             RegExp("[a-zA-Z0-9]"))
@@ -330,9 +330,13 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                                               isEnableDropdown && value == null
                                                   ? 'กรุณาเลือกWard'
                                                   : null,
-                                          items: ['1', '2', '3', '4']
-                                              .map<DropdownMenuItem<String>>(
-                                                  (String value) {
+                                          items: [
+                                            'ศัลยกรรมทั่วไปชาย 1',
+                                            'ศัลยกรรมทั่วไปชาย 2',
+                                            'ศัลยกรรมทั่วไปหญิง 1',
+                                            'ศัลยกรรมทั่วไปหญิง 2'
+                                          ].map<DropdownMenuItem<String>>(
+                                              (String value) {
                                             return DropdownMenuItem<String>(
                                               value: value,
                                               child: Text(value),
