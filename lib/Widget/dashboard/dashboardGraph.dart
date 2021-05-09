@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ADL_chart.dart';
 import 'dashboard_Table.dart';
-import 'radial_gauge_chart .dart';
 
 class ShowDashboard extends StatefulWidget {
   final String patientstate;
@@ -47,37 +46,13 @@ class _ShowDashboardState extends State<ShowDashboard> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.all(10),
-                      child: Text('พัฒนาการในแต่ละหัวข้อ',
+                      child: Text('ผลการประเมินการปฏิบัติกิจวัตรประจำวัน',
                           style: TextStyle(
                               fontSize: 18, color: Color(0xFFC37447))),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
-                      child: ADLChart(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Container(
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text(
-                        'ผลการประเมินการปฏิบัติกิจวัตรประจำวัน',
-                        style:
-                            TextStyle(fontSize: 18, color: Color(0xFFC37447)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
-                      child: PieChart(),
+                      child: ADLChart(hn: widget.hn),
                     ),
                   ],
                 ),
@@ -124,37 +99,13 @@ class _ShowDashboardState extends State<ShowDashboard> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.all(10),
-                      child: Text('พัฒนาการในแต่ละหัวข้อ',
+                      child: Text('ผลการประเมินการปฏิบัติกิจวัตรประจำวัน',
                           style: TextStyle(
                               fontSize: 18, color: Color(0xFFC37447))),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
-                      child: ADLChart(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Container(
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text(
-                        'ผลการประเมินการปฏิบัติกิจวัตรประจำวัน',
-                        style:
-                            TextStyle(fontSize: 18, color: Color(0xFFC37447)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
-                      child: PieChart(),
+                      child: ADLChart(hn: widget.hn),
                     ),
                   ],
                 ),
@@ -179,37 +130,13 @@ class _ShowDashboardState extends State<ShowDashboard> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.all(10),
-                      child: Text('พัฒนาการในแต่ละหัวข้อ',
+                      child: Text('ผลการประเมินการปฏิบัติกิจวัตรประจำวัน',
                           style: TextStyle(
                               fontSize: 18, color: Color(0xFFC37447))),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
-                      child: ADLChart(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: Container(
-              child: Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text(
-                        'ผลการประเมินการปฏิบัติกิจวัตรประจำวัน',
-                        style:
-                            TextStyle(fontSize: 18, color: Color(0xFFC37447)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(50, 0, 50, 20),
-                      child: PieChart(),
+                      child: ADLChart(hn: widget.hn),
                     ),
                   ],
                 ),

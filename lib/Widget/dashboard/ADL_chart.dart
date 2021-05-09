@@ -1,13 +1,19 @@
+import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
+import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
+import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ADLChart extends StatefulWidget {
+  final String hn;
+  ADLChart({Key key, this.hn}) : super(key: key);
   @override
   _ADLChartState createState() => _ADLChartState();
 }
 
 class _ADLChartState extends State<ADLChart> {
+  final _firebaseService = locator<IFirebaseService>();
   double score;
   String topic;
 
@@ -87,14 +93,19 @@ class _ADLChartState extends State<ADLChart> {
     );
   }
 
-  Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+  Widget build(BuildContext context) {
+    return FutureBuilder<Map<String, dynamic>>(
+        future: _firebaseService.getAdlTable(hn: widget.hn),
+        builder: (context, snap) {
+          if (!snap.hasData) {
+            return ProgressBar.circularProgressIndicator(context);
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -118,15 +129,11 @@ class _ADLChartState extends State<ADLChart> {
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText2))),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -138,27 +145,23 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Feeding", score = 2),
+                      child: adlRadialGaugeCriteria(context, topic = "Feeding",
+                          score = snap.data['PreOpFeeding']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Feeding", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Feeding",
+                          score = snap.data['PostHosFeeding']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Feeding", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Feeding",
+                          score = snap.data['PostHomeFeeding']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -172,25 +175,23 @@ class _ADLChartState extends State<ADLChart> {
                     ),
                     Expanded(
                         child: adlRadialGaugeCriteria(
-                            context, topic = "Grooming", score = 1)),
+                            context,
+                            topic = "Grooming",
+                            score = snap.data['PreOpGrooming'])),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Grooming", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Grooming",
+                          score = snap.data['PostHosGrooming']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Grooming", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Grooming",
+                          score = snap.data['PostHomeGrooming']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -202,27 +203,23 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Transfer", score = 3),
+                      child: adlRadialGaugeCriteria(context, topic = "Transfer",
+                          score = snap.data['PreOpTransfer']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Transfer", score = 2),
+                      child: adlRadialGaugeCriteria(context, topic = "Transfer",
+                          score = snap.data['PostHosTransfer']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Transfer", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Transfer",
+                          score = snap.data['PostHomeTransfer']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -234,27 +231,23 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Toilet", score = 2),
+                      child: adlRadialGaugeCriteria(context, topic = "Toilet",
+                          score = snap.data['PreOpToilet']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Toilet", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Toilet",
+                          score = snap.data['PostHosToilet']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Toilet", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Toilet",
+                          score = snap.data['PostHomeToilet']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -266,27 +259,23 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Dressing", score = 2),
+                      child: adlRadialGaugeCriteria(context, topic = "Dressing",
+                          score = snap.data['PreOpDressing']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Dressing", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Dressing",
+                          score = snap.data['PostHosDressing']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Dressing", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Dressing",
+                          score = snap.data['PostHomeDressing']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -298,27 +287,23 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Mobility", score = 2),
+                      child: adlRadialGaugeCriteria(context, topic = "Mobility",
+                          score = snap.data['PreOpMobility']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Mobility", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Mobility",
+                          score = snap.data['PostHospMobility']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Mobility", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Mobility",
+                          score = snap.data['PostHomeMobility']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -330,27 +315,23 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Stairs", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Stairs",
+                          score = snap.data['PreOpStairs']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Stairs", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Stairs",
+                          score = snap.data['PostHosStairs']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Stairs", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Stairs",
+                          score = snap.data['PostHomeStairs']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -362,27 +343,23 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bathing", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Bathing",
+                          score = snap.data['PreOpBathing']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bathing", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Bathing",
+                          score = snap.data['PostHosBathing']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bathing", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Bathing",
+                          score = snap.data['PostHomeBathing']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -394,27 +371,23 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bowels", score = 2),
+                      child: adlRadialGaugeCriteria(context, topic = "Bowels",
+                          score = snap.data['PreOpBowels']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bowels", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Bowels",
+                          score = snap.data['PostHosBowels']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bowels", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Bowels",
+                          score = snap.data['PostHomeBowels']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -426,34 +399,30 @@ class _ADLChartState extends State<ADLChart> {
                       ),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bladder", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Bladder",
+                          score = snap.data['PreOpBladder']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bladder", score = 1),
+                      child: adlRadialGaugeCriteria(context, topic = "Bladder",
+                          score = snap.data['PostHosBladder']),
                     ),
                     Expanded(
-                      child: adlRadialGaugeCriteria(
-                          context, topic = "Bladder", score = 0),
+                      child: adlRadialGaugeCriteria(context, topic = "Bladder",
+                          score = snap.data['PostHomeBladder']),
                     ),
                   ],
-                )
-              ],
-            ),
-          ),
-          Divider(
-            color: Color(0xFFC37447),
-            height: 20,
-            thickness: 1,
-            indent: 10,
-            endIndent: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-            child: Column(
-              children: [
-                Row(
+                ),
+              ),
+              Divider(
+                color: Color(0xFFC37447),
+                height: 20,
+                thickness: 1,
+                indent: 10,
+                endIndent: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
@@ -467,27 +436,63 @@ class _ADLChartState extends State<ADLChart> {
                     ),
                     Expanded(
                         child: Container(
-                            child: Text('16',
+                            child: Text('${snap.data['PreOpTotal']}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 18, color: Color(0xFFC37447))))),
                     Expanded(
                         child: Container(
-                            child: Text('12',
+                            child: Text('${snap.data['PostHosTotal']}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 18, color: Color(0xFFC37447))))),
                     Expanded(
                         child: Container(
-                            child: Text('0',
+                            child: Text('${snap.data['PostHomeTotal']}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 18, color: Color(0xFFC37447))))),
                   ],
-                )
-              ],
-            ),
-          ),
-        ],
-      );
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'การแปลผล',
+                      style: TextStyle(color: Color(0xFFC37447)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 40),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '12 คะแนนขึ้นไป = mild independence',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                          Text(
+                            '9-11 คะแนน = moderately independence',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                          Text(
+                            '5-8 คะแนน = severe independence',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                          Text(
+                            '0-4 คะแนน = total independence',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
+  }
 }

@@ -118,4 +118,6 @@ abstract class IFirebaseService {
   Future<List<Map<String, dynamic>>> getVitalSignTable({
     @required String hn,
   });
+
+  Future<Map<String, dynamic>> getAdlTable({@required String hn});
 }

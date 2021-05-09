@@ -124,7 +124,8 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                   ),
                 ),
                 SizedBox(
-                  child: ShowDashboard(patientstate: 'Pre-Operation'),
+                  child: ShowDashboard(
+                      patientstate: 'Pre-Operation', hn: widget.hn),
                 )
               ],
             ),
