@@ -110,4 +110,6 @@ abstract class IFirebaseService {
       @required String formName,
       @required String patientState,
       String vitalSignFormTime});
+
+  Future<Map<String, dynamic>> getAdlTable({@required String hn});
 }

@@ -351,4 +351,9 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
+
+  Future<Map<String, dynamic>> getAdlTable({@required String hn}) {
+    // TODO: implement getPatientDetail
+    throw UnimplementedError();
+  }
 }

@@ -1029,4 +1029,107 @@ class FirebaseService extends IFirebaseService {
     }
     return evaluationStatus;
   }
+
+  Future<Map<dynamic, dynamic>> getFormDataByLastFormId(
+      String formName, String patientState, String hn) async {
+    var mapData = {};
+    var formId = await _firestore
+        .collection('Forms')
+        .where('hn', isEqualTo: hn)
+        .where('formName', isEqualTo: formName)
+        .where('patientState', isEqualTo: patientState)
+        .get()
+        .then((value) => value.docs.first.id)
+        .catchError((onError) {});
+
+    if (formId != null) {
+      await _firestore.collection('Forms').doc(formId).get().then((value) {
+        mapData.addAll(value.data());
+      }).catchError((onError) {
+        print('$onError Cann\'t find $formName form');
+      });
+    }
+    return mapData;
+  }
+
+  Future<Map<String, dynamic>> getAdlTable({@required String hn}) async {
+    var preOpAdlData =
+        await getFormDataByLastFormId('ADL', 'Pre-Operation', hn);
+    var postHosData =
+        await getFormDataByLastFormId('ADL', 'Post-Operation@Hospital', hn);
+    var postHomeData =
+        await getFormDataByLastFormId('ADL', 'Post-Operation@Home', hn);
+    var map = {
+      'PreOpGrooming':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Grooming'] : 2,
+      'PreOpBathing':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Bathing'] : 2,
+      'PreOpFeeding':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Feeding'] : 3,
+      'PreOpToilet':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Toilet'] : 3,
+      'PreOpDressing':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Dressing'] : 3,
+      'PreOpStairs':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Stairs'] : 3,
+      'PreOpBowels':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Bowels'] : 3,
+      'PreOpBladder':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Bladder'] : 3,
+      'PreOpTransfer':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Transfer'] : 4,
+      'PreOpMobility':
+          preOpAdlData.length != 0 ? preOpAdlData['formData']['Mobility'] : 4,
+      'PreOpTotal': preOpAdlData.length != 0
+          ? preOpAdlData['formData']['TotalScoreADL']
+          : 0,
+      'PostHosGrooming':
+          postHosData.length != 0 ? postHosData['formData']['Grooming'] : 2,
+      'PostHosBathing':
+          postHosData.length != 0 ? postHosData['formData']['Bathing'] : 2,
+      'PostHosFeeding':
+          postHosData.length != 0 ? postHosData['formData']['Feeding'] : 3,
+      'PostHosToilet':
+          postHosData.length != 0 ? postHosData['formData']['Toilet'] : 3,
+      'PostHosDressing':
+          postHosData.length != 0 ? postHosData['formData']['Dressing'] : 3,
+      'PostHosStairs':
+          postHosData.length != 0 ? postHosData['formData']['Stairs'] : 3,
+      'PostHosBowels':
+          postHosData.length != 0 ? postHosData['formData']['Bowels'] : 3,
+      'PostHosBladder':
+          postHosData.length != 0 ? postHosData['formData']['Bladder'] : 3,
+      'PostHosTransfer':
+          postHosData.length != 0 ? postHosData['formData']['Transfer'] : 4,
+      'PostHosMobility':
+          postHosData.length != 0 ? postHosData['formData']['Mobility'] : 4,
+      'PostHosTotal': postHosData.length != 0
+          ? postHosData['formData']['TotalScoreADL']
+          : 0,
+      'PostHomeGrooming':
+          postHomeData.length != 0 ? postHomeData['formData']['Grooming'] : 2,
+      'PostHomeBathing':
+          postHomeData.length != 0 ? postHomeData['formData']['Bathing'] : 2,
+      'PostHomeFeeding':
+          postHomeData.length != 0 ? postHomeData['formData']['Feeding'] : 3,
+      'PostHomeToilet':
+          postHomeData.length != 0 ? postHomeData['formData']['Toilet'] : 3,
+      'PostHomeDressing':
+          postHomeData.length != 0 ? postHomeData['formData']['Dressing'] : 3,
+      'PostHomeStairs':
+          postHomeData.length != 0 ? postHomeData['formData']['Stairs'] : 3,
+      'PostHomeBowels':
+          postHomeData.length != 0 ? postHomeData['formData']['Bowels'] : 3,
+      'PostHomeBladder':
+          postHomeData.length != 0 ? postHomeData['formData']['Bladder'] : 3,
+      'PostHomeTransfer':
+          postHomeData.length != 0 ? postHomeData['formData']['Transfer'] : 4,
+      'PostHomeMobility':
+          postHomeData.length != 0 ? postHomeData['formData']['Mobility'] : 4,
+      'PostHomeTotal': postHomeData.length != 0
+          ? postHomeData['formData']['TotalScoreADL']
+          : 0,
+    };
+    return map;
+  }
 }
