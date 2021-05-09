@@ -582,6 +582,7 @@ class FirebaseService extends IFirebaseService {
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
+
       var map = {
         'hn': hnToMap,
         'name': nameToMap,
@@ -1034,4 +1035,25 @@ class FirebaseService extends IFirebaseService {
       print("Add $data to Dashboard Collection");
     });
   }
+
+  Future<int> getDayInHospital(
+      {@required String hn, DateTime dateToCompare}) async {
+    if (dateToCompare == null) {
+      dateToCompare = _calculationService.formatDate(date: DateTime.now());
+    }
+    var userCollection =
+        await _firestore.collection('Users').where('hn', isEqualTo: hn).get();
+    var anSubCollection = await this
+        .getLatestAnSubCollection(docId: userCollection.docs.first.id);
+
+    var operationDate = anSubCollection['operationDate'].toDate();
+    var dayInHospital = _calculationService.calculateDayDifference(
+        day: operationDate, compareTo: dateToCompare);
+    print('day in Hospital $dayInHospital');
+    return dayInHospital;
+  }
+
+  Future<List<Map<String, dynamic>>> getDashboardTable({
+    @required String hn,
+  }) async {}
 }

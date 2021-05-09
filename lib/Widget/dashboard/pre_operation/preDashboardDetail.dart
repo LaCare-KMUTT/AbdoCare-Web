@@ -29,7 +29,6 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
 
   initData() async {
     patientState = await _firebaseService.getPatientState(hn: widget.hn);
-    print(' patientState: $patientState');
   }
 
   @override

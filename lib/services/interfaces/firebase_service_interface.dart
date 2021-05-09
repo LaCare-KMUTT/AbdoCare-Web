@@ -112,4 +112,6 @@ abstract class IFirebaseService {
       String vitalSignFormTime});
 
   Future<void> addToDashboardCollection(Map<String, dynamic> data);
+
+  Future<int> getDayInHospital({@required String hn, DateTime dateToCompare});
 }

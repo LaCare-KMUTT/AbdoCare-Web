@@ -351,4 +351,16 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> addToDashboardCollection(Map<String, dynamic> data) {
+    // TODO: implement addToDashboardCollection
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<int> getDayInHospital({String hn, DateTime dateToCompare}) {
+    // TODO: implement getDayInHospital
+    throw UnimplementedError();
+  }
 }

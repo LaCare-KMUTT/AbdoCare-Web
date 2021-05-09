@@ -59,6 +59,26 @@ class _VitalSignFormState extends State<VitalSignForm> {
     });
   }
 
+  Future<void> addToDashboardData() async {
+    var date = _calculationService.formatDate(date: DateTime.now());
+    var operation = await _firebaseService.getDayInCurrentState(hn: widget.hn);
+    var admission = await _firebaseService.getDayInHospital(
+        hn: widget.hn, dateToCompare: date);
+    Map<String, dynamic> dashboardData = {
+      'hn': widget.hn,
+      'name': 'dashboardTable',
+      'Date': date,
+      'Time': widget.formTime,
+      'BloodPressure': "$_systolic/$_diastolic",
+      'O2Sat': _o2sat,
+      'RespirationsRate': _rr,
+      'Operation': operation,
+      'Admission': admission,
+    };
+
+    await _firebaseService.addToDashboardCollection(dashboardData);
+  }
+
   bool checkPainNotificationCriteria(String hn, int score) {
     var shouldNotifyPain = PainFormUtility()
         .withState(_getpatientState)
@@ -512,25 +532,8 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                           formName:
                                                               'Vital Sign');
                                                 }
-                                                // Add to dashboard collection\
-
-                                                var date = _calculationService
-                                                    .formatDate(
-                                                        date: DateTime.now());
-
-                                                Map<String, dynamic>
-                                                    dashboardData = {
-                                                  'Date': date,
-                                                  'Time': widget.formTime,
-                                                  'BloodPressure':
-                                                      "$_systolic/$_diastolic",
-                                                  'O2Sat': _o2sat,
-                                                  'RespirationsRate': _rr,
-                                                };
-
-                                                await _firebaseService
-                                                    .addToDashboardCollection(
-                                                        dashboardData);
+                                                // Add to dashboard collection
+                                                await addToDashboardData();
                                               } else if (_getpatientState ==
                                                   "Post-Operation@Hospital") {
                                                 var formId2 =
