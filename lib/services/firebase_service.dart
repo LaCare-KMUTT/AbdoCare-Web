@@ -362,9 +362,7 @@ class FirebaseService extends IFirebaseService {
       userForm.forEach((form) {
         if (form['formName'] == formName) {
           list.add(form);
-        } else {
-          print('$userId does not have $formName');
-        }
+        } else {}
       });
     } else {
       print('userForm = null');
@@ -870,6 +868,7 @@ class FirebaseService extends IFirebaseService {
       var notiCollection = await this
           .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
       var docId = notiCollection['userId'];
+      var patientStateToMap = notiCollection['patientState'];
       var seen = notiCollection['seen'];
       if (seen == false) {
         seen = "ยังไม่ได้ดำเนินการ";
@@ -901,7 +900,6 @@ class FirebaseService extends IFirebaseService {
       });
       var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
       var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var patientStateToMap = anSubCollection['state'] ?? '-';
       var map = {
         'hn': hnToMap ?? '-',
         'name': nameToMap ?? '-',
@@ -912,10 +910,11 @@ class FirebaseService extends IFirebaseService {
         'formTime': formTimeToShow ?? '-',
         'formDateTimeSort': formTime ?? '-',
         'formDate': formDateToShow ?? '-',
-        'seen': seen ?? '-',
+        'seen': seen ?? 'ยังไม่ได้ดำเนินการ',
         'notiId': user.id ?? '-',
         'imgURL': '-'
       };
+
       if (patientStateToMap == "Post-Operation@Home") {
         var imgURL = notiCollection['imgURL'] ?? '-';
         map.addAll({'imgURL': imgURL ?? '-'});
@@ -933,19 +932,100 @@ class FirebaseService extends IFirebaseService {
   Future<int> getNoticounter() async {
     int count = 0;
     var notiList = await this.getNotificationList("AllState");
-    var returnList = notiList.map((user) async {
-      var notiCollection = await this
-          .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
-      var seen = notiCollection['seen'];
-      if (seen == false) {
-        seen = "ยังไม่ได้ดำเนินการ";
-        count = count + 1;
-      }
-      return count;
-    });
-    var futureList = Future.wait(returnList);
-    var returnValue = await futureList;
-    count = returnValue.last;
+    if (notiList.isNotEmpty) {
+      var returnList = notiList.map((user) async {
+        var notiCollection = await this
+            .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
+        var seen = notiCollection['seen'];
+        if (seen == false) {
+          seen = "ยังไม่ได้ดำเนินการ";
+          count = count + 1;
+        }
+        return count;
+      });
+      var futureList = Future.wait(returnList);
+      var returnValue = await futureList;
+      count = returnValue.last;
+    } else {
+      count = 0;
+    }
     return count;
+  }
+
+  Future<String> getEvaluationStatus(
+      {@required String hn,
+      @required String formName,
+      @required String patientState,
+      String vitalSignFormTime}) async {
+    var formCreation;
+    var evaluationStatus = "notCompleted";
+    var formDateToShow;
+    var dateCompare;
+    var formTime;
+    var dateToCompare;
+    var userId = await _firestore
+        .collection('Users')
+        .where('hn', isEqualTo: hn)
+        .get()
+        .then((value) => value.docs.first.id)
+        .catchError((onError) {
+      print('$onError Cannot find user');
+    });
+    if (vitalSignFormTime == null) {
+      var formStatus = await getFormListInAnBasedOnState(
+          userId: userId, patientState: patientState, formName: formName);
+      if (formStatus.isNotEmpty) {
+        var formsCollection = await _firestore
+            .collection('Forms')
+            .doc(formStatus.last['formId'])
+            .get()
+            .then((value) => value.data())
+            .catchError((onError) {
+          print('$onError no formsCollection');
+        });
+        formCreation = formsCollection['creation'] ?? '-';
+        formTime = DateTime.fromMicrosecondsSinceEpoch(
+            formCreation.microsecondsSinceEpoch);
+        formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
+        dateToCompare = _calculationService.formatDate(date: DateTime.now());
+        dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
+        if (formDateToShow == dateCompare) {
+          evaluationStatus = "completed";
+        }
+      } else {
+        evaluationStatus = "notCompleted";
+      }
+    } else if (vitalSignFormTime != null) {
+      var formsCollection = await _firestore
+          .collection('Forms')
+          .where('formTime', isEqualTo: vitalSignFormTime)
+          .where('hn', isEqualTo: hn)
+          .where('formName', isEqualTo: formName)
+          .get()
+          .then((value) => value.docs.first.id)
+          .catchError((onError) {});
+      if (formsCollection != null) {
+        var formsCollection2 = await _firestore
+            .collection('Forms')
+            .doc(formsCollection)
+            .get()
+            .then((value) => value.data())
+            .catchError((onError) {
+          print('$onError no formsCollection');
+        });
+        formCreation = formsCollection2['creation'] ?? '-';
+        formTime = DateTime.fromMicrosecondsSinceEpoch(
+            formCreation.microsecondsSinceEpoch);
+        formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
+        dateToCompare = _calculationService.formatDate(date: DateTime.now());
+        dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
+        if (formDateToShow == dateCompare) {
+          evaluationStatus = "completed";
+        }
+      } else {
+        evaluationStatus = "notCompleted";
+      }
+    }
+    return evaluationStatus;
   }
 }
