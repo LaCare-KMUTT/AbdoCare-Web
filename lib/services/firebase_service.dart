@@ -1028,4 +1028,10 @@ class FirebaseService extends IFirebaseService {
     }
     return evaluationStatus;
   }
+
+  Future<void> addToDashboardCollection(Map<String, dynamic> data) async {
+    await _firestore.collection('Dashboard').add(data).then((value) {
+      print("Add $data to Dashboard Collection");
+    });
+  }
 }
