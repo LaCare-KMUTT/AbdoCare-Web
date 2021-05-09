@@ -30,7 +30,9 @@ class _ShowDashboardState extends State<ShowDashboard> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                      child: DashboardTable(),
+                      child: DashboardTable(
+                        hn: widget.hn,
+                      ),
                     ),
                   ],
                 ),
@@ -83,7 +85,9 @@ class _ShowDashboardState extends State<ShowDashboard> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                      child: DashboardTable(),
+                      child: DashboardTable(
+                        hn: widget.hn,
+                      ),
                     ),
                   ],
                 ),
