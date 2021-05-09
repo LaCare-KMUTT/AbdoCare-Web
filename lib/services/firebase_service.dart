@@ -1190,7 +1190,6 @@ class FirebaseService extends IFirebaseService {
       var map = data.data();
       list.add(map);
     });
-    print('list = $list');
     return list;
   }
 }
