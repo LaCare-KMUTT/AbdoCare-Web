@@ -21,8 +21,6 @@ class _DashboardTableState extends State<DashboardTable> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final _scrollController = ScrollController();
 
-  List<Map<String, dynamic>> dashboardTable = [];
-
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
