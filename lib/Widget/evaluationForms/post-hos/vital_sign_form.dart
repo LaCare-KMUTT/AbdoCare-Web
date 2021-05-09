@@ -51,7 +51,6 @@ class _VitalSignFormState extends State<VitalSignForm> {
   void initData() async {
     dayInCurrentState =
         await _firebaseService.getDayInCurrentState(hn: widget.hn);
-    print('dayInCurrentState $dayInCurrentState');
     patientState = await _firebaseService.getPatientState(hn: widget.hn);
     setState(() {
       _getdayInCurrentState = dayInCurrentState;
