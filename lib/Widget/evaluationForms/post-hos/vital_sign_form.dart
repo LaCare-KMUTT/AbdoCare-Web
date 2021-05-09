@@ -512,6 +512,25 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                           formName:
                                                               'Vital Sign');
                                                 }
+                                                // Add to dashboard collection\
+
+                                                var date = _calculationService
+                                                    .formatDate(
+                                                        date: DateTime.now());
+
+                                                Map<String, dynamic>
+                                                    dashboardData = {
+                                                  'Date': date,
+                                                  'Time': widget.formTime,
+                                                  'BloodPressure':
+                                                      "$_systolic/$_diastolic",
+                                                  'O2Sat': _o2sat,
+                                                  'RespirationsRate': _rr,
+                                                };
+
+                                                await _firebaseService
+                                                    .addToDashboardCollection(
+                                                        dashboardData);
                                               } else if (_getpatientState ==
                                                   "Post-Operation@Hospital") {
                                                 var formId2 =
