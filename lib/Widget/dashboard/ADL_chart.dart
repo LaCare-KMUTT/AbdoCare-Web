@@ -98,7 +98,8 @@ class _ADLChartState extends State<ADLChart> {
         future: _firebaseService.getAdlTable(hn: widget.hn),
         builder: (context, snap) {
           if (!snap.hasData) {
-            return ProgressBar.circularProgressIndicator(context);
+            return Center(
+                child: ProgressBar.circularProgressIndicator(context));
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
