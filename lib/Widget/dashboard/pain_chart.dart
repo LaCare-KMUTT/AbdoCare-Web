@@ -1,11 +1,11 @@
-import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
-import 'package:AbdoCare_Web/services/interfaces/firebase_service_interface.dart';
-import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
-
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../../services/interfaces/firebase_service_interface.dart';
+import '../../services/service_locator.dart';
+import '../shared/progress_bar.dart';
 
 class PainChart extends StatefulWidget {
   final hn;
@@ -33,7 +33,6 @@ class _PainChartState extends State<PainChart> {
             String date = '$format\n$formTime';
             data.add(_PainData(day: date, painscore: painScore));
           });
-
           return Container(
             child: SfCartesianChart(
                 primaryXAxis: CategoryAxis(),
