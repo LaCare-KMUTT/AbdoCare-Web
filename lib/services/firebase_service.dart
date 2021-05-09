@@ -1031,7 +1031,7 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<void> addToDashboardCollection(Map<String, dynamic> data) async {
-    await _firestore.collection('Dashboard').add(data).then((value) {
+    await _firestore.collection('Dashboards').add(data).then((value) {
       print("Add $data to Dashboard Collection");
     });
   }
