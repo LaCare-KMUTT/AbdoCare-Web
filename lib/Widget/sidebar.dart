@@ -129,7 +129,7 @@ class SideBar extends StatelessWidget {
                                                               context));
                                                 } else {
                                                   return Text(
-                                                      'Ward ${snapshot.data}',
+                                                      '${snapshot.data}',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
