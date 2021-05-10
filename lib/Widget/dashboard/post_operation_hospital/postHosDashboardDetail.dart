@@ -57,35 +57,43 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Card(
-                      child: Scrollbar(
-                        isAlwaysShown: false,
-                        controller: controller,
-                        child: ListView(
-                          controller: controller,
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(
-                                    'แบบประเมิน',
-                                    style: TextStyle(
-                                        fontSize: 18, color: Color(0xFFC37447)),
-                                  ),
-                                ),
-                                FutureBuilder<Map<String, Widget>>(
-                                    future: _evaluationViewModel.getevaluations(
-                                        context,
-                                        widget.hn,
-                                        "Post-Operation@Hospital"),
-                                    builder: (context, snapshot) {
-                                      if (!snapshot.hasData) {
-                                        return ProgressBar
-                                            .circularProgressIndicator(context);
-                                      }
-                                      return Row(
+                      child: FutureBuilder<Map<String, Widget>>(
+                          future: _evaluationViewModel.getevaluations(
+                              context, widget.hn, "Post-Operation@Hospital"),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                      child:
+                                          ProgressBar.circularProgressIndicator(
+                                              context)),
+                                ],
+                              );
+                            }
+                            return Scrollbar(
+                              isAlwaysShown: false,
+                              controller: controller,
+                              child: ListView(
+                                controller: controller,
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text(
+                                          'แบบประเมิน',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color(0xFFC37447)),
+                                        ),
+                                      ),
+                                      Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -124,13 +132,13 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                             ],
                                           ),
                                         ],
-                                      );
-                                    }),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                     ),
                   ),
                 ),
