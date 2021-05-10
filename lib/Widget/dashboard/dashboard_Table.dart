@@ -41,8 +41,11 @@ class _DashboardTableState extends State<DashboardTable> {
                   if (!snapshot.hasData) {
                     return ProgressBar.circularProgressIndicator(context);
                   }
+                  if (snapshot.data.length == 0) {
+                    screenheight = 30;
+                    return Text('There is no data yet');
+                  }
                   final formatter = DateFormat('dd/MM/yyyy');
-
                   _length = snapshot.data.length + 1;
                   return Container(
                     child: Column(
