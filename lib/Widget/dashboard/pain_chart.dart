@@ -19,7 +19,7 @@ class _PainChartState extends State<PainChart> {
     final formatter = DateFormat('dd/MM/yyyy');
 
     widget.snapshot.data.forEach((element) {
-      var painScore = element['pulseRate'];
+      var painScore = element['PainScore'] ?? 0;
       var dateFromDb = element['Date'].toDate();
       var formattedDate = formatter.format(dateFromDb);
       var formTime = element['Time'];

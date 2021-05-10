@@ -493,6 +493,8 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                   'hn in Virtal-Sign = ${widget.hn}');
                                               print(
                                                   'Value in pain_form = $_pain ');
+                                              // Add to dashboard collection
+                                              await addToDashboardData();
 
                                               if (_getpatientState ==
                                                   "Pre-Operation") {
@@ -534,8 +536,6 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                           formName:
                                                               'Vital Sign');
                                                 }
-                                                // Add to dashboard collection
-                                                await addToDashboardData();
                                               } else if (_getpatientState ==
                                                   "Post-Operation@Hospital") {
                                                 var formId2 =
