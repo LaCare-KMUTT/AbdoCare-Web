@@ -24,7 +24,12 @@ class PostHomePatientDetail extends StatelessWidget {
                   future: _firebaseService.getPatientDetail(hn: hn),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return ProgressBar.circularProgressIndicator(context);
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ProgressBar.circularProgressIndicator(context),
+                        ],
+                      );
                     }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
