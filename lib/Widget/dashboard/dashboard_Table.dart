@@ -33,7 +33,7 @@ class _DashboardTableState extends State<DashboardTable> {
                   child: ProgressBar.circularProgressIndicator(context));
             }
             if (snapshot.data.length == 0) {
-              return Text('There is no data yet');
+              return Text('ไม่มีข้อมูลจากแบบฟอร์ม Vital Sign');
             }
             final formatter = DateFormat('dd/MM/yyyy');
             _length = snapshot.data.length + 1;
