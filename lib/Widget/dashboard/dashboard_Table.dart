@@ -20,14 +20,26 @@ class DashboardTable extends StatefulWidget {
 class _DashboardTableState extends State<DashboardTable> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  int screenheight = 1200;
+  var getVitalSignTable;
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  initData() async {
+    getVitalSignTable = await _firebaseService.getVitalSignTable(hn: widget.hn);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     var _length = 0;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20.0),
-      height: screenheight.toDouble(),
+      height: getVitalSignTable == null || getVitalSignTable.length == 0
+          ? 30
+          : 1180,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
@@ -42,7 +54,6 @@ class _DashboardTableState extends State<DashboardTable> {
                     return ProgressBar.circularProgressIndicator(context);
                   }
                   if (snapshot.data.length == 0) {
-                    screenheight = 30;
                     return Text('There is no data yet');
                   }
                   final formatter = DateFormat('dd/MM/yyyy');
