@@ -63,13 +63,10 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
                               return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Center(
-                                      child:
-                                          ProgressBar.circularProgressIndicator(
-                                              context)),
+                                  ProgressBar.circularProgressIndicator(
+                                      context),
                                 ],
                               );
                             }
@@ -97,40 +94,33 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                width: 400,
-                                                height: 420,
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        30, 10, 30, 10),
-                                                child: Card(
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10.0),
-                                                        child: Text(
-                                                          "แบบประเมินสัญญาณชีพ",
-                                                          style: TextStyle(
-                                                              fontSize: 18),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                        ),
-                                                      ),
-                                                      snapshot.data[
-                                                          'vitalSignShow'],
-                                                    ],
+                                          Container(
+                                            width: 400,
+                                            height: 420,
+                                            padding: const EdgeInsets.fromLTRB(
+                                                30, 10, 30, 10),
+                                            child: Card(
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    child: Text(
+                                                      "แบบประเมินสัญญาณชีพ",
+                                                      style: TextStyle(
+                                                          fontSize: 18),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
                                                   ),
-                                                ),
+                                                  snapshot
+                                                      .data['vitalSignShow'],
+                                                ],
                                               ),
-                                              snapshot.data['mustShow'],
-                                            ],
+                                            ),
                                           ),
+                                          snapshot.data['mustShow'],
                                         ],
                                       ),
                                     ],
