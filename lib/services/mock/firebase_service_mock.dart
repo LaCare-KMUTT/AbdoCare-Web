@@ -374,10 +374,4 @@ class FirebaseServiceMock extends IFirebaseService {
     // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
-
-  @override
-  Future<List<Map<String, dynamic>>> getPainChart({hn}) {
-    // TODO: implement getPainChart
-    throw UnimplementedError();
-  }
 }

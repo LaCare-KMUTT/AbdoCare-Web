@@ -68,11 +68,14 @@ class _VitalSignFormState extends State<VitalSignForm> {
       'name': 'dashboardTable',
       'Date': date,
       'Time': widget.formTime,
-      'BloodPressure': "$_systolic/$_diastolic",
+      'BloodPressure': '$_systolic/$_diastolic',
+      'pulseRate': _pr,
       'O2Sat': _o2sat,
       'RespirationsRate': _rr,
       'Operation': operation,
       'Admission': admission,
+      'PainScore': _pain,
+      'BodyTemperature': _bt,
     };
 
     await _firebaseService.addToDashboardCollection(dashboardData);

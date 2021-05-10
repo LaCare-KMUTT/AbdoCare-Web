@@ -1,52 +1,56 @@
 import 'package:flutter/cupertino.dart';
-
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class PulseRateChart extends StatefulWidget {
+  final AsyncSnapshot<List<Map<String, dynamic>>> snapshot;
+
+  PulseRateChart({this.snapshot});
+
   @override
   _PulseRateChartState createState() => _PulseRateChartState();
 }
 
 class _PulseRateChartState extends State<PulseRateChart> {
-  List<_PulseRateData> data = [
-    // _PulseRateData('10/03/64\n02.00น', 80),
-    // _PulseRateData('10/03/64\n06.00น', 60),
-    // _PulseRateData('10/03/64\n10.00น', 60),
-    // _PulseRateData('10/03/64\n14.00น', 76),
-    // _PulseRateData('10/03/64\n18.00น', 66),
-    // _PulseRateData('10/03/64\n22.00น', 94),
-    // _PulseRateData('11/03/64\n02.00น', 90),
-    // _PulseRateData('11/03/64\n06.00น', 86),
-    // _PulseRateData('11/03/64\n10.00น', 106),
-    // _PulseRateData('11/03/64\n14.00น', 112),
-    // _PulseRateData('11/03/64\n18.00น', 96),
-    // _PulseRateData('11/03/64\n22.00น', 90),
-    // _PulseRateData('12/03/64\n02.00น', 80),
-    // _PulseRateData('12/03/64\n06.00น', 86),
-    // _PulseRateData('12/03/64\n10.00น', 78),
-    // _PulseRateData('12/03/64\n14.00น', 90),
-    // _PulseRateData('12/03/64\n18.00น', 100),
-    // _PulseRateData('12/03/64\n22.00น', 104),
-  ];
+  List<_PulseRateData> data = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final formatter = DateFormat('dd/MM/yyyy');
+
+    widget.snapshot.data.forEach((element) {
+      var pulseRate = element['pulseRate'];
+      var dateFromDb = element['Date'].toDate();
+      var formattedDate = formatter.format(dateFromDb);
+      var formTime = element['Time'];
+      var date = '$formattedDate\n$formTime';
+      data.add(_PulseRateData(day: date, pulseRate: pulseRate));
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SfCartesianChart(
-          primaryXAxis: CategoryAxis(),
-          legend: Legend(isVisible: false),
-          tooltipBehavior: TooltipBehavior(enable: true),
-          series: <ChartSeries<_PulseRateData, String>>[
-            LineSeries<_PulseRateData, String>(
-                dataSource: data,
-                xValueMapper: (pulse, _) => pulse.day,
-                yValueMapper: (pulse, _) => pulse.pulseRate,
-                name: 'Pulse Rate',
-                color: Colors.red,
-                dataLabelSettings: DataLabelSettings(isVisible: true))
-          ]),
-    );
+        child: SfCartesianChart(
+            primaryXAxis: CategoryAxis(),
+            legend: Legend(isVisible: false),
+            tooltipBehavior: TooltipBehavior(enable: true),
+            series: <ChartSeries<_PulseRateData, String>>[
+          LineSeries<_PulseRateData, String>(
+              dataSource: data,
+              xValueMapper: (pulse, _) => pulse.day,
+              yValueMapper: (pulse, _) => pulse.pulseRate,
+              name: 'Pulse Rate',
+              color: Colors.red,
+              dataLabelSettings: DataLabelSettings(isVisible: true))
+        ]));
   }
 }
 
