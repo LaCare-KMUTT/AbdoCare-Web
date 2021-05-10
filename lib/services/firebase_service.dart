@@ -2,7 +2,6 @@ import 'package:AbdoCare_Web/models/notification_list/formName_Notification_mode
 import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -583,6 +582,7 @@ class FirebaseService extends IFirebaseService {
         oxygenRateToMap = formsCollection['formData']['oxygen'] ?? '-';
         status = formsCollection['formData']['status'] ?? '-';
       }
+
       var map = {
         'hn': hnToMap,
         'name': nameToMap,
@@ -1028,6 +1028,51 @@ class FirebaseService extends IFirebaseService {
       }
     }
     return evaluationStatus;
+  }
+
+  Future<void> addToDashboardCollection(Map<String, dynamic> data) async {
+    await _firestore.collection('Dashboards').add(data).then((value) {
+      print("Add $data to Dashboard Collection");
+    });
+  }
+
+  Future<int> getDayInHospital(
+      {@required String hn, DateTime dateToCompare}) async {
+    if (dateToCompare == null) {
+      dateToCompare = _calculationService.formatDate(date: DateTime.now());
+    }
+    var userCollection =
+        await _firestore.collection('Users').where('hn', isEqualTo: hn).get();
+    var anSubCollection = await this
+        .getLatestAnSubCollection(docId: userCollection.docs.first.id);
+
+    var operationDate = anSubCollection['operationDate'].toDate();
+    var dayInHospital = _calculationService.calculateDayDifference(
+        day: operationDate, compareTo: dateToCompare);
+    print('day in Hospital $dayInHospital');
+    return dayInHospital;
+  }
+
+  Future<List<Map<String, dynamic>>> getVitalSignTable({
+    @required String hn,
+  }) async {
+    var dashboardsCollection = await _firestore
+        .collection('Dashboards')
+        .orderBy('Date')
+        .where('hn', isEqualTo: hn)
+        .where('name', isEqualTo: 'dashboardTable')
+        .get()
+        .then((value) {
+      return value.docs;
+    }).catchError((onError) {
+      print('Error in getVitalSignTable = $onError');
+    });
+    List<Map<String, dynamic>> list = [];
+    dashboardsCollection.forEach((element) {
+      Map<String, dynamic> data = element.data();
+      list.add(data);
+    });
+    return list;
   }
 
   Future<Map<dynamic, dynamic>> getFormDataByLastFormId(

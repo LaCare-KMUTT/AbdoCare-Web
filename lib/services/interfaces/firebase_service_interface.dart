@@ -111,5 +111,13 @@ abstract class IFirebaseService {
       @required String patientState,
       String vitalSignFormTime});
 
+  Future<void> addToDashboardCollection(Map<String, dynamic> data);
+
+  Future<int> getDayInHospital({@required String hn, DateTime dateToCompare});
+
+  Future<List<Map<String, dynamic>>> getVitalSignTable({
+    @required String hn,
+  });
+
   Future<Map<String, dynamic>> getAdlTable({@required String hn});
 }

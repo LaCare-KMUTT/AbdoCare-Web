@@ -51,12 +51,34 @@ class _VitalSignFormState extends State<VitalSignForm> {
   void initData() async {
     dayInCurrentState =
         await _firebaseService.getDayInCurrentState(hn: widget.hn);
-    print('dayInCurrentState $dayInCurrentState');
     patientState = await _firebaseService.getPatientState(hn: widget.hn);
     setState(() {
       _getdayInCurrentState = dayInCurrentState;
       _getpatientState = patientState;
     });
+  }
+
+  Future<void> addToDashboardData() async {
+    var date = _calculationService.formatDate(date: DateTime.now());
+    var operation = await _firebaseService.getDayInCurrentState(hn: widget.hn);
+    var admission = await _firebaseService.getDayInHospital(
+        hn: widget.hn, dateToCompare: date);
+    Map<String, dynamic> dashboardData = {
+      'hn': widget.hn,
+      'name': 'dashboardTable',
+      'Date': date,
+      'Time': widget.formTime,
+      'BloodPressure': '$_systolic/$_diastolic',
+      'pulseRate': _pr,
+      'O2Sat': _o2sat,
+      'RespirationsRate': _rr,
+      'Operation': operation,
+      'Admission': admission,
+      'PainScore': _pain,
+      'BodyTemperature': _bt,
+    };
+
+    await _firebaseService.addToDashboardCollection(dashboardData);
   }
 
   bool checkPainNotificationCriteria(String hn, int score) {
@@ -471,6 +493,8 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                   'hn in Virtal-Sign = ${widget.hn}');
                                               print(
                                                   'Value in pain_form = $_pain ');
+                                              // Add to dashboard collection
+                                              await addToDashboardData();
 
                                               if (_getpatientState ==
                                                   "Pre-Operation") {

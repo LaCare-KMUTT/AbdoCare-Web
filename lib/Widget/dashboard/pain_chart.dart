@@ -1,36 +1,33 @@
 import 'package:flutter/cupertino.dart';
-
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
-class LineChart extends StatefulWidget {
+class PainChart extends StatefulWidget {
+  final AsyncSnapshot<List<Map<String, dynamic>>> snapshot;
+  PainChart({this.snapshot});
   @override
-  _LineChartState createState() => _LineChartState();
+  _PainChartState createState() => _PainChartState();
 }
 
-class _LineChartState extends State<LineChart> {
-  List<_PainData> data = [
-    _PainData('10/03/64\n02.00น', 9),
-    _PainData('10/03/64\n06.00น', 9),
-    _PainData('10/03/64\n10.00น', 8),
-    _PainData('10/03/64\n14.00น', 8),
-    _PainData('10/03/64\n18.00น', 8),
-    _PainData('10/03/64\n22.00น', 8),
-    _PainData('11/03/64\n02.00น', 7),
-    _PainData('11/03/64\n06.00น', 9),
-    _PainData('11/03/64\n10.00น', 9),
-    _PainData('11/03/64\n14.00น', 7),
-    _PainData('11/03/64\n18.00น', 6),
-    _PainData('11/03/64\n22.00น', 6),
-    _PainData('12/03/64\n02.00น', 6),
-    _PainData('12/03/64\n06.00น', 6),
-    _PainData('12/03/64\n10.00น', 7),
-    _PainData('12/03/64\n14.00น', 6),
-    _PainData('12/03/64\n18.00น', 5),
-    _PainData('12/03/64\n22.00น', 5),
-  ];
+class _PainChartState extends State<PainChart> {
+  List<_PainData> data = [];
 
   @override
+  void initState() {
+    super.initState();
+    final formatter = DateFormat('dd/MM/yyyy');
+
+    widget.snapshot.data.forEach((element) {
+      var painScore = element['PainScore'] ?? 0;
+      var dateFromDb = element['Date'].toDate();
+      var formattedDate = formatter.format(dateFromDb);
+      var formTime = element['Time'];
+      var date = '$formattedDate\n$formTime';
+      data.add(_PainData(day: date, painScore: painScore));
+    });
+  }
+
   Widget build(BuildContext context) {
     return Container(
       child: SfCartesianChart(
@@ -40,8 +37,8 @@ class _LineChartState extends State<LineChart> {
           series: <ChartSeries<_PainData, String>>[
             LineSeries<_PainData, String>(
                 dataSource: data,
-                xValueMapper: (pain, _) => pain.painscore,
-                yValueMapper: (pain, _) => pain.day,
+                xValueMapper: (pain, _) => pain.day,
+                yValueMapper: (pain, _) => pain.painScore,
                 name: 'Pain score',
                 color: Colors.red,
                 dataLabelSettings: DataLabelSettings(isVisible: true))
@@ -51,7 +48,7 @@ class _LineChartState extends State<LineChart> {
 }
 
 class _PainData {
-  _PainData(this.painscore, this.day);
-  final String painscore;
-  final double day;
+  _PainData({this.painScore, this.day});
+  final String day;
+  final double painScore;
 }

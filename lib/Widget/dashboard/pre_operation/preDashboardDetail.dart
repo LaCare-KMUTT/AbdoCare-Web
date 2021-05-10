@@ -29,7 +29,6 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
 
   initData() async {
     patientState = await _firebaseService.getPatientState(hn: widget.hn);
-    print(' patientState: $patientState');
   }
 
   @override
@@ -56,33 +55,40 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                     child: Card(
-                      child: Scrollbar(
-                        isAlwaysShown: false,
-                        controller: controller,
-                        child: ListView(
-                          controller: controller,
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(
-                                    'แบบประเมิน',
-                                    style: TextStyle(
-                                        fontSize: 18, color: Color(0xFFC37447)),
-                                  ),
-                                ),
-                                FutureBuilder<Map<String, Widget>>(
-                                    future: _evaluationViewModel.getevaluations(
-                                        context, widget.hn, "Pre-Operation"),
-                                    builder: (context, snapshot) {
-                                      if (!snapshot.hasData) {
-                                        return ProgressBar
-                                            .circularProgressIndicator(context);
-                                      }
-                                      return Row(
+                      child: FutureBuilder<Map<String, Widget>>(
+                          future: _evaluationViewModel.getevaluations(
+                              context, widget.hn, "Pre-Operation"),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ProgressBar.circularProgressIndicator(
+                                      context),
+                                ],
+                              );
+                            }
+                            return Scrollbar(
+                              isAlwaysShown: false,
+                              controller: controller,
+                              child: ListView(
+                                controller: controller,
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text(
+                                          'แบบประเมิน',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color(0xFFC37447)),
+                                        ),
+                                      ),
+                                      Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
@@ -114,13 +120,13 @@ class _PreDashboardDetailState extends State<PreDashboardDetail> {
                                               ),
                                             ),
                                             snapshot.data['mustShow'],
-                                          ]);
-                                    }),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                                          ]),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                     ),
                   ),
                 ),
