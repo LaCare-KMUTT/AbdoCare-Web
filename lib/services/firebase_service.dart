@@ -953,6 +953,23 @@ class FirebaseService extends IFirebaseService {
     return count;
   }
 
+  Future<String> checkRecoveryReadinessStatus(String hn) async {
+    var recoveryReadiness;
+    var state = 'noPass';
+
+    var recoveryFormData = await getFormDataByLastFormId(
+        "Recovery Readiness", 'Post-Operation@Hospital', hn);
+    if (recoveryFormData.isNotEmpty) {
+      recoveryReadiness =
+          recoveryFormData['formData']['recoveryReadiness'] ?? '-';
+      if (recoveryReadiness == 'พร้อมฟื้นสภาพหลังผ่าตัด') {
+        state = "Pass";
+      }
+    }
+
+    return state;
+  }
+
   Future<String> getEvaluationStatus(
       {@required String hn,
       @required String formName,
@@ -964,7 +981,6 @@ class FirebaseService extends IFirebaseService {
     var dateCompare;
     var formTime;
     var dateToCompare;
-    var recoveryReadiness;
     var userId = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
@@ -974,35 +990,60 @@ class FirebaseService extends IFirebaseService {
       print('$onError Cannot find user');
     });
     if (vitalSignFormTime == null) {
-      var formStatus = await getFormListInAnBasedOnState(
-          userId: userId, patientState: patientState, formName: formName);
-      if (formStatus.isNotEmpty) {
-        var formsCollection = await _firestore
-            .collection('Forms')
-            .doc(formStatus.last['formId'])
-            .get()
-            .then((value) => value.data())
-            .catchError((onError) {
-          print('$onError no formsCollection');
-        });
-        formCreation = formsCollection['creation'] ?? '-';
-        formTime = DateTime.fromMicrosecondsSinceEpoch(
-            formCreation.microsecondsSinceEpoch);
-        formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
-        dateToCompare = _calculationService.formatDate(date: DateTime.now());
-        dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
-        recoveryReadiness =
-            formsCollection['formData']['recoveryReadiness'] ?? '-';
-        if (formName == 'Recovery Readiness' &&
-            recoveryReadiness == 'พร้อมฟื้นสภาพหลังผ่าตัด' &&
-            formDateToShow == dateCompare) {
-          evaluationStatus = "completed";
+      if (patientState == "Post-Operation@Hospital") {
+        var state = await checkRecoveryReadinessStatus(hn);
+        if (state == "Pass") {
+          var formStatus = await getFormListInAnBasedOnState(
+              userId: userId, patientState: patientState, formName: formName);
+          if (formStatus.isNotEmpty) {
+            var formsCollection = await _firestore
+                .collection('Forms')
+                .doc(formStatus.last['formId'])
+                .get()
+                .then((value) => value.data())
+                .catchError((onError) {
+              print('$onError no formsCollection');
+            });
+            formCreation = formsCollection['creation'] ?? '-';
+            formTime = DateTime.fromMicrosecondsSinceEpoch(
+                formCreation.microsecondsSinceEpoch);
+            formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
+            dateToCompare =
+                _calculationService.formatDate(date: DateTime.now());
+            dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
+            if (formDateToShow == dateCompare) {
+              evaluationStatus = "completed";
+            }
+          }
         }
-        if (formName != 'Recovery Readiness' && formDateToShow == dateCompare) {
-          evaluationStatus = "completed";
+        if (state != "Pass") {
+          evaluationStatus = "noPassRecoveryReadiness";
         }
       } else {
-        evaluationStatus = "notCompleted";
+        var formStatus = await getFormListInAnBasedOnState(
+            userId: userId, patientState: patientState, formName: formName);
+        if (formStatus.isNotEmpty) {
+          var formsCollection = await _firestore
+              .collection('Forms')
+              .doc(formStatus.last['formId'])
+              .get()
+              .then((value) => value.data())
+              .catchError((onError) {
+            print('$onError no formsCollection');
+          });
+          formCreation = formsCollection['creation'] ?? '-';
+          formTime = DateTime.fromMicrosecondsSinceEpoch(
+              formCreation.microsecondsSinceEpoch);
+          formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
+          dateToCompare = _calculationService.formatDate(date: DateTime.now());
+          dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
+
+          if (formDateToShow == dateCompare) {
+            evaluationStatus = "completed";
+          }
+        } else {
+          evaluationStatus = "notCompleted";
+        }
       }
     } else if (vitalSignFormTime != null) {
       var formsCollection = await _firestore
@@ -1035,6 +1076,7 @@ class FirebaseService extends IFirebaseService {
         evaluationStatus = "notCompleted";
       }
     }
+    print(evaluationStatus);
     return evaluationStatus;
   }
 
@@ -1097,7 +1139,7 @@ class FirebaseService extends IFirebaseService {
         .where('formName', isEqualTo: formName)
         .where('patientState', isEqualTo: patientState)
         .get()
-        .then((value) => value.docs.first.id)
+        .then((value) => value.docs.last.id)
         .catchError((onError) {});
 
     if (formId != null) {
