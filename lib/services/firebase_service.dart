@@ -27,10 +27,10 @@ class FirebaseService extends IFirebaseService {
         .doc(docId)
         .set(data)
         .then((value) {
-      print("Success on adding $data to $docId in collection $collection");
+      print("Success on set $data to $docId in collection $collection");
       return true;
     }).catchError((onError) {
-      print("Failed on adding $data to $docId in collection $collection");
+      print("Failed on set $data to $docId in collection $collection");
       print(onError);
       return false;
     });

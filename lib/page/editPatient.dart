@@ -78,6 +78,16 @@ class _EditPatientPageState extends State<EditPatientPage> {
         'latestStateChange': latestStateChange,
       },
     );
+
+//updateData to patientState
+
+    await _firebaseService.updateDataToCollectionField(
+        collection: 'PatientState',
+        docId: userCollectionId,
+        data: {
+          'state': state,
+          'latestStateChange': latestStateChange,
+        });
   }
 
   @override
