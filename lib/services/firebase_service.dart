@@ -1137,6 +1137,7 @@ class FirebaseService extends IFirebaseService {
         .where('hn', isEqualTo: hn)
         .where('formName', isEqualTo: formName)
         .where('patientState', isEqualTo: patientState)
+        .limit(1)
         .get()
         .then((value) {
       mapData.addAll(value.docs.last.data());
