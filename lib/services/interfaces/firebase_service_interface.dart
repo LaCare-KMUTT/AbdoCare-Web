@@ -115,9 +115,8 @@ abstract class IFirebaseService {
 
   Future<int> getDayInHospital({@required String hn, DateTime dateToCompare});
 
-  Future<List<Map<String, dynamic>>> getVitalSignTable({
-    @required String hn,
-  });
+  Future<List<Map<String, dynamic>>> getVitalSignTable(
+      {@required String hn, @required String dashboardState});
 
   Future<Map<String, dynamic>> getAdlTable({@required String hn});
 }

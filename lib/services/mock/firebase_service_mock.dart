@@ -365,7 +365,8 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getVitalSignTable({String hn}) {
+  Future<List<Map<String, dynamic>>> getVitalSignTable(
+      {String hn, String dashboardState}) {
     // TODO: implement getVitalSignTable
     throw UnimplementedError();
   }
