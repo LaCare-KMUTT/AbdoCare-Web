@@ -6,6 +6,7 @@ import 'package:AbdoCare_Web/models/user_list/post_hos_list_model.dart';
 import 'package:AbdoCare_Web/view_models/user_list/post_hos_list_view_model.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../services/service_locator.dart';
 import '../material.dart';
@@ -27,7 +28,7 @@ class _PostHosTableState extends State<PostHosTable> {
   bool _sortBloodPressureAsc = true;
   bool _sortTemperatureAsc = true;
   bool _sortStatusAsc = true;
-  int _sortColumnIndex = 11;
+  int _sortColumnIndex;
 
   FutureBuilder dataBody() {
     var screenSize = MediaQuery.of(context).size;
@@ -257,9 +258,13 @@ class _PostHosTableState extends State<PostHosTable> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(
-                        0, screenSize.height / 20, screenSize.height / 70, 0),
+                        0, screenSize.height / 20, screenSize.height / 22, 0),
                     child: Container(
                       child: TextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp("[a-zA-Z0-9]"))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder: const OutlineInputBorder(
@@ -273,26 +278,13 @@ class _PostHosTableState extends State<PostHosTable> {
                             hintText: 'HN'),
                         onChanged: (val) {
                           setState(() {
-                            _postHosViewModel.search(val);
+                            _postHosViewModel.search(val.toUpperCase());
                           });
                         },
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  0, screenSize.height / 20, screenSize.height / 9, 0),
-              child: Container(
-                child: RaisedButton(
-                  child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
-                  padding: EdgeInsets.all(15),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  onPressed: () {},
-                ),
               ),
             ),
           ]),
