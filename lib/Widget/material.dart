@@ -125,7 +125,7 @@ class CustomMaterial {
     } else if (adlScore >= 5 && adlScore <= 8) {
       return Colors.orange;
     } else if (adlScore >= 9 && adlScore <= 11) {
-      return Colors.yellow;
+      return Colors.amber;
     }
     return Colors.green;
   }
