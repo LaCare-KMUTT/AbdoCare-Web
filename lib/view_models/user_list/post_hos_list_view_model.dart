@@ -13,36 +13,45 @@ class PostHosViewModel {
     if (postHosList != null) {
       postHosList.forEach((mapData) {
         userList.add(PostHosData(map: mapData));
-        sortBy('status', true);
       });
+      sortBy('status', true);
     }
   }
 
   Future<List<PostHosData>> getUsers() async {
-    userList.clear();
-    await _initialize();
+    // userList.clear();
+    if (userList.isEmpty) await _initialize();
+    print('getUsers is called');
     userList.forEach((element) {
-      print(element.name);
+      print('In view Model ${element.name}');
     });
+
     return userList;
   }
 
   List<PostHosData> sortBy(String key, bool isAsc) {
+    print('Key = $key, Bool = $isAsc');
     switch (key) {
       case 'temperature':
-        userList.sort((a, b) => a.temperature.compareTo(b.temperature));
+        userList.sort((a, b) =>
+            a.temperature.toString().compareTo(b.temperature.toString()));
         break;
       case 'respirationRate':
-        userList.sort((a, b) => a.respirationRate.compareTo(b.respirationRate));
+        userList.sort((a, b) => a.respirationRate
+            .toString()
+            .compareTo(b.respirationRate.toString()));
         break;
       case 'pulseRate':
-        userList.sort((a, b) => a.pulseRate.compareTo(b.pulseRate));
+        userList.sort(
+            (a, b) => a.pulseRate.toString().compareTo(b.pulseRate.toString()));
         break;
       case 'bloodPressure':
-        userList.sort((a, b) => a.bloodPressure.compareTo(b.bloodPressure));
+        userList.sort((a, b) =>
+            a.bloodPressure.toString().compareTo(b.bloodPressure.toString()));
         break;
       case 'oxygenRate':
-        userList.sort((a, b) => a.oxygenRate.compareTo(b.oxygenRate));
+        userList.sort((a, b) =>
+            a.oxygenRate.toString().compareTo(b.oxygenRate.toString()));
         break;
       case 'status':
         userList.sort((a, b) => a.status.compareTo(b.status));

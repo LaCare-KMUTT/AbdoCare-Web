@@ -36,13 +36,18 @@ class _PostHosTableState extends State<PostHosTable> {
     return FutureBuilder<List<PostHosData>>(
         future: _postHosViewModel.getUsers(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+          if (!snapshot.hasData ||
+              snapshot.connectionState != ConnectionState.done) {
             return ProgressBar.circularProgressIndicator(context);
           } else {
             if (users.isNotEmpty) {
+              print('List is cleared');
               users.clear();
             }
             users.addAll(snapshot.data);
+            users.forEach((element) {
+              print('In postHosTalbe = ${element.name}');
+            });
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 35,
@@ -75,7 +80,7 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
-                  numeric: true,
+                  // numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -90,23 +95,28 @@ class _PostHosTableState extends State<PostHosTable> {
                   },
                 ),
                 DataColumn(
-                  label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
-                  numeric: true,
-                  onSort: (columnIndex, sortAscending) {
-                    setState(() {
-                      if (columnIndex == _sortColumnIndex) {
-                        _sortAsc = _sortTemperatureAsc = sortAscending;
-                      } else {
-                        _sortColumnIndex = columnIndex;
-                        _sortAsc = _sortTemperatureAsc;
-                      }
-                      _postHosViewModel.sortBy('temperature', sortAscending);
-                    });
-                  },
-                ),
+                    label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
+                    // numeric: true,
+                    onSort: (columnIndex, sortAscending) {
+                      setState(() {
+                        if (columnIndex == _sortColumnIndex) {
+                          _sortAsc = _sortTemperatureAsc = sortAscending;
+                        } else {
+                          _sortColumnIndex = columnIndex;
+                          _sortAsc = _sortTemperatureAsc;
+                        }
+                        _postHosViewModel.sortBy('temperature', sortAscending);
+                      });
+                    }
+                    // onSort: (columnIndex, sortAscending) {
+                    //   print(
+                    //       'ColumnIndex = $columnIndex, SortAscending = $sortAscending');
+                    //   _postHosViewModel.sortBy('temperature', sortAscending);
+                    // } // },
+                    ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('ชีพจร'))),
-                  numeric: true,
+                  // numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -121,7 +131,7 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('ความดัน'))),
-                  numeric: true,
+                  // numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -136,7 +146,7 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Text('ออกซิเจน')),
-                  numeric: true,
+                  // numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
