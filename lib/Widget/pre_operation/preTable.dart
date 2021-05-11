@@ -20,7 +20,6 @@ class _PreTableState extends State<PreTable> {
   final PreOpViewModel _preOpViewModel = locator<PreOpViewModel>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
-  List<PreOpData> users = [];
   bool _sortAsc = true;
   bool _sortRespirationRateAsc = true;
   bool _sortPulseRateAsc = true;
@@ -38,10 +37,6 @@ class _PreTableState extends State<PreTable> {
           if (!snapshot.hasData) {
             return ProgressBar.circularProgressIndicator(context);
           } else {
-            if (users.isNotEmpty) {
-              users.clear();
-            }
-            users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 41,
@@ -167,7 +162,7 @@ class _PreTableState extends State<PreTable> {
                   },
                 ),
               ],
-              rows: users.map((user) {
+              rows: snapshot.data.map((user) {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');

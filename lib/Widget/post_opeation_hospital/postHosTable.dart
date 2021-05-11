@@ -20,7 +20,6 @@ class _PostHosTableState extends State<PostHosTable> {
   final PostHosViewModel _postHosViewModel = locator<PostHosViewModel>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
-  List<PostHosData> users = [];
   bool _sortAsc = true;
   bool _sortRespirationRateAsc = true;
   bool _sortPulseRateAsc = true;
@@ -38,16 +37,9 @@ class _PostHosTableState extends State<PostHosTable> {
         builder: (context, snapshot) {
           if (!snapshot.hasData ||
               snapshot.connectionState != ConnectionState.done) {
-            return ProgressBar.circularProgressIndicator(context);
+            return Container(
+                child: ProgressBar.circularProgressIndicator(context));
           } else {
-            if (users.isNotEmpty) {
-              print('List is cleared');
-              users.clear();
-            }
-            users.addAll(snapshot.data);
-            users.forEach((element) {
-              print('In postHosTalbe = ${element.name}');
-            });
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 35,
@@ -80,7 +72,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
-                  // numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -96,7 +87,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                     label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
-                    // numeric: true,
                     onSort: (columnIndex, sortAscending) {
                       setState(() {
                         if (columnIndex == _sortColumnIndex) {
@@ -107,16 +97,9 @@ class _PostHosTableState extends State<PostHosTable> {
                         }
                         _postHosViewModel.sortBy('temperature', sortAscending);
                       });
-                    }
-                    // onSort: (columnIndex, sortAscending) {
-                    //   print(
-                    //       'ColumnIndex = $columnIndex, SortAscending = $sortAscending');
-                    //   _postHosViewModel.sortBy('temperature', sortAscending);
-                    // } // },
-                    ),
+                    }),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('ชีพจร'))),
-                  // numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -131,7 +114,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('ความดัน'))),
-                  // numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -146,7 +128,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Text('ออกซิเจน')),
-                  // numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -161,7 +142,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Text('สถานะ')),
-                  numeric: false,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -175,11 +155,10 @@ class _PostHosTableState extends State<PostHosTable> {
                   },
                 ),
               ],
-              rows: users.map((user) {
+              rows: snapshot.data.map((user) {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
-
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -294,7 +273,7 @@ class _PostHosTableState extends State<PostHosTable> {
                             hintText: 'HN'),
                         onChanged: (val) {
                           setState(() {
-                            // hn = val;
+                            _postHosViewModel.search(val);
                           });
                         },
                       ),

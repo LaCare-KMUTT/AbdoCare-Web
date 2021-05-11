@@ -6,31 +6,25 @@ class PostHosViewModel {
   PostHosViewModel();
   final _firebaseService = locator<IFirebaseService>();
   List<PostHosData> userList = [];
-
+  List<PostHosData> storedList = [];
   Future<void> _initialize() async {
     var postHosList = await _firebaseService.getPostHosList();
     print('initList');
     if (postHosList != null) {
       postHosList.forEach((mapData) {
         userList.add(PostHosData(map: mapData));
+        storedList.add(PostHosData(map: mapData));
       });
       sortBy('status', true);
     }
   }
 
   Future<List<PostHosData>> getUsers() async {
-    // userList.clear();
-    if (userList.isEmpty) await _initialize();
-    print('getUsers is called');
-    userList.forEach((element) {
-      print('In view Model ${element.name}');
-    });
-
+    if (userList.isEmpty && storedList.isEmpty) await _initialize();
     return userList;
   }
 
-  List<PostHosData> sortBy(String key, bool isAsc) {
-    print('Key = $key, Bool = $isAsc');
+  void sortBy(String key, bool isAsc) {
     switch (key) {
       case 'temperature':
         userList.sort((a, b) =>
@@ -60,7 +54,10 @@ class PostHosViewModel {
     if (isAsc) {
       userList = userList.reversed.toList();
     }
+  }
 
-    return userList;
+  void search(String value) {
+    userList = storedList;
+    userList = userList.where((element) => element.hn.contains(value)).toList();
   }
 }

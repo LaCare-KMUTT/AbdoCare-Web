@@ -20,7 +20,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
   final PostHomeViewModel _postHomeViewModel = locator<PostHomeViewModel>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
-  List<PostHomeData> users = [];
   bool _sortAsc = true;
   bool _sortPainScore = true;
   bool _sortWoundImgAsc = true;
@@ -34,10 +33,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
           if (!snapshot.hasData) {
             return ProgressBar.circularProgressIndicator(context);
           } else {
-            if (users.isNotEmpty) {
-              users.clear();
-            }
-            users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 20,
@@ -68,7 +63,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('คะแนนความปวด'))),
-                  numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -83,7 +77,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('รูปแผลผ่าตัด'))),
-                  numeric: false,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -102,7 +95,7 @@ class _PostHomeTableState extends State<PostHomeTable> {
                   numeric: true,
                 ),
               ],
-              rows: users.map((user) {
+              rows: snapshot.data.map((user) {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
@@ -197,7 +190,7 @@ class _PostHomeTableState extends State<PostHomeTable> {
                             hintText: 'HN'),
                         onChanged: (val) {
                           setState(() {
-                            // hn = val;
+                            _postHomeViewModel.search(val);
                           });
                         },
                       ),
