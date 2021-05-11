@@ -80,7 +80,6 @@ class _EditPatientPageState extends State<EditPatientPage> {
     );
 
 //updateData to patientState
-
     await _firebaseService.updateDataToCollectionField(
         collection: 'PatientState',
         docId: userCollectionId,
