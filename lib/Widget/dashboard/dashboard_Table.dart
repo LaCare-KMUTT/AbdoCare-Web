@@ -26,7 +26,8 @@ class _DashboardTableState extends State<DashboardTable> {
     var _length = 0;
     return Container(
       child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: _firebaseService.getVitalSignTable(hn: widget.hn),
+          future: _firebaseService.getVitalSignTable(
+              hn: widget.hn, dashboardState: "Post-Operation@Hospital"),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(
