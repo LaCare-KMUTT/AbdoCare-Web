@@ -291,7 +291,7 @@ class _PreTableState extends State<PreTable> {
                             hintText: 'HN'),
                         onChanged: (val) {
                           setState(() {
-                            // hn = val;
+                            _preOpViewModel.search(val);
                           });
                         },
                       ),
