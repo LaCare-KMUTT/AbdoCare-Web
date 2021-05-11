@@ -23,7 +23,7 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   String _adviceDetail = '-';
-  int _severity = 0;
+  String _severity = 'ปกติ';
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -225,15 +225,12 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
                                       ),
                                       labelText: 'ระบุระดับความรุนแรง'),
                                   onSaved: (value) {
-                                    _severity = int.parse(value);
+                                    _severity = value;
                                   },
                                   items: [
-                                    '0',
-                                    '1',
-                                    '2',
-                                    '3',
-                                    '4',
-                                    '5',
+                                    'ปกติ',
+                                    'มีความเสี่ยงต่อการติดเชื้อ',
+                                    'แผลมีลักษณะของการติดเชื้อ',
                                   ]
                                       .map((label) => DropdownMenuItem(
                                             child: Text(label),
@@ -242,7 +239,7 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
                                       .toList(),
                                   onChanged: (value) {
                                     setState(() {
-                                      _severity = int.parse(value);
+                                      _severity = value;
                                     });
                                   },
                                 ),
