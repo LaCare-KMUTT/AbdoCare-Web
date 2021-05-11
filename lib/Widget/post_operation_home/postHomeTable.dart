@@ -6,6 +6,7 @@ import 'package:AbdoCare_Web/models/user_list/post_home_list_model.dart';
 import 'package:AbdoCare_Web/view_models/user_list/post_home_list_view_model.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../services/service_locator.dart';
 import '../material.dart';
@@ -20,11 +21,10 @@ class _PostHomeTableState extends State<PostHomeTable> {
   final PostHomeViewModel _postHomeViewModel = locator<PostHomeViewModel>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
-  List<PostHomeData> users = [];
   bool _sortAsc = true;
   bool _sortPainScore = true;
   bool _sortWoundImgAsc = true;
-  int _sortColumnIndex = 7;
+  int _sortColumnIndex;
 
   FutureBuilder dataBody() {
     var screenSize = MediaQuery.of(context).size;
@@ -34,10 +34,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
           if (!snapshot.hasData) {
             return ProgressBar.circularProgressIndicator(context);
           } else {
-            if (users.isNotEmpty) {
-              users.clear();
-            }
-            users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 20,
@@ -68,7 +64,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('คะแนนความปวด'))),
-                  numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -83,7 +78,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('รูปแผลผ่าตัด'))),
-                  numeric: false,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -102,7 +96,7 @@ class _PostHomeTableState extends State<PostHomeTable> {
                   numeric: true,
                 ),
               ],
-              rows: users.map((user) {
+              rows: snapshot.data.map((user) {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
@@ -181,9 +175,13 @@ class _PostHomeTableState extends State<PostHomeTable> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(
-                        0, screenSize.height / 20, screenSize.height / 70, 0),
+                        0, screenSize.height / 20, screenSize.height / 22, 0),
                     child: Container(
                       child: TextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp("[a-zA-Z0-9]"))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder: const OutlineInputBorder(
@@ -197,26 +195,13 @@ class _PostHomeTableState extends State<PostHomeTable> {
                             hintText: 'HN'),
                         onChanged: (val) {
                           setState(() {
-                            // hn = val;
+                            _postHomeViewModel.search(val.toUpperCase());
                           });
                         },
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  0, screenSize.height / 20, screenSize.height / 9, 0),
-              child: Container(
-                child: RaisedButton(
-                  child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
-                  padding: EdgeInsets.all(15),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  onPressed: () {},
-                ),
               ),
             ),
           ]),

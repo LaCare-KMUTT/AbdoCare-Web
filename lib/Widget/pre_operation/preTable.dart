@@ -6,6 +6,7 @@ import 'package:AbdoCare_Web/models/user_list/pre_op_list_model.dart';
 import 'package:AbdoCare_Web/view_models/user_list/pre_op_list_view_model.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../services/service_locator.dart';
 import '../material.dart';
@@ -20,7 +21,6 @@ class _PreTableState extends State<PreTable> {
   final PreOpViewModel _preOpViewModel = locator<PreOpViewModel>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
-  List<PreOpData> users = [];
   bool _sortAsc = true;
   bool _sortRespirationRateAsc = true;
   bool _sortPulseRateAsc = true;
@@ -28,7 +28,7 @@ class _PreTableState extends State<PreTable> {
   bool _sortBloodPressureAsc = true;
   bool _sortTemperatureAsc = true;
   bool _sortStatusAsc = true;
-  int _sortColumnIndex = 11;
+  int _sortColumnIndex;
 
   FutureBuilder dataBody() {
     var screenSize = MediaQuery.of(context).size;
@@ -38,10 +38,6 @@ class _PreTableState extends State<PreTable> {
           if (!snapshot.hasData) {
             return ProgressBar.circularProgressIndicator(context);
           } else {
-            if (users.isNotEmpty) {
-              users.clear();
-            }
-            users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 41,
@@ -167,7 +163,7 @@ class _PreTableState extends State<PreTable> {
                   },
                 ),
               ],
-              rows: users.map((user) {
+              rows: snapshot.data.map((user) {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
@@ -280,9 +276,13 @@ class _PreTableState extends State<PreTable> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(
-                        0, screenSize.height / 20, screenSize.height / 70, 0),
+                        0, screenSize.height / 20, screenSize.height / 22, 0),
                     child: Container(
                       child: TextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp("[a-zA-Z0-9]"))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder: const OutlineInputBorder(
@@ -296,26 +296,13 @@ class _PreTableState extends State<PreTable> {
                             hintText: 'HN'),
                         onChanged: (val) {
                           setState(() {
-                            // hn = val;
+                            _preOpViewModel.search(val.toUpperCase());
                           });
                         },
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  0, screenSize.height / 20, screenSize.height / 9, 0),
-              child: Container(
-                child: RaisedButton(
-                  child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
-                  padding: EdgeInsets.all(15),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  onPressed: () {},
-                ),
               ),
             ),
           ]),

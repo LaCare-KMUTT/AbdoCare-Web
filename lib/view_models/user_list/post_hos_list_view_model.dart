@@ -6,43 +6,46 @@ class PostHosViewModel {
   PostHosViewModel();
   final _firebaseService = locator<IFirebaseService>();
   List<PostHosData> userList = [];
-
+  List<PostHosData> storedList = [];
   Future<void> _initialize() async {
     var postHosList = await _firebaseService.getPostHosList();
     print('initList');
     if (postHosList != null) {
       postHosList.forEach((mapData) {
         userList.add(PostHosData(map: mapData));
-        sortBy('status', true);
+        storedList.add(PostHosData(map: mapData));
       });
+      sortBy('status', true);
     }
   }
 
   Future<List<PostHosData>> getUsers() async {
-    userList.clear();
-    await _initialize();
-    userList.forEach((element) {
-      print(element.name);
-    });
+    if (userList.isEmpty && storedList.isEmpty) await _initialize();
     return userList;
   }
 
-  List<PostHosData> sortBy(String key, bool isAsc) {
+  void sortBy(String key, bool isAsc) {
     switch (key) {
       case 'temperature':
-        userList.sort((a, b) => a.temperature.compareTo(b.temperature));
+        userList.sort((a, b) =>
+            a.temperature.toString().compareTo(b.temperature.toString()));
         break;
       case 'respirationRate':
-        userList.sort((a, b) => a.respirationRate.compareTo(b.respirationRate));
+        userList.sort((a, b) => a.respirationRate
+            .toString()
+            .compareTo(b.respirationRate.toString()));
         break;
       case 'pulseRate':
-        userList.sort((a, b) => a.pulseRate.compareTo(b.pulseRate));
+        userList.sort(
+            (a, b) => a.pulseRate.toString().compareTo(b.pulseRate.toString()));
         break;
       case 'bloodPressure':
-        userList.sort((a, b) => a.bloodPressure.compareTo(b.bloodPressure));
+        userList.sort((a, b) =>
+            a.bloodPressure.toString().compareTo(b.bloodPressure.toString()));
         break;
       case 'oxygenRate':
-        userList.sort((a, b) => a.oxygenRate.compareTo(b.oxygenRate));
+        userList.sort((a, b) =>
+            a.oxygenRate.toString().compareTo(b.oxygenRate.toString()));
         break;
       case 'status':
         userList.sort((a, b) => a.status.compareTo(b.status));
@@ -51,7 +54,10 @@ class PostHosViewModel {
     if (isAsc) {
       userList = userList.reversed.toList();
     }
+  }
 
-    return userList;
+  void search(String value) {
+    userList = storedList;
+    userList = userList.where((element) => element.hn.contains(value)).toList();
   }
 }
