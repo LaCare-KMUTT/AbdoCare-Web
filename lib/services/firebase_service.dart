@@ -1133,22 +1133,16 @@ class FirebaseService extends IFirebaseService {
   Future<Map<dynamic, dynamic>> getFormDataByLastFormId(
       String formName, String patientState, String hn) async {
     var mapData = {};
-    var formId = await _firestore
+    await _firestore
         .collection('Forms')
         .where('hn', isEqualTo: hn)
         .where('formName', isEqualTo: formName)
         .where('patientState', isEqualTo: patientState)
         .get()
-        .then((value) => value.docs.last.id)
-        .catchError((onError) {});
-
-    if (formId != null) {
-      await _firestore.collection('Forms').doc(formId).get().then((value) {
-        mapData.addAll(value.data());
-      }).catchError((onError) {
-        print('$onError Cann\'t find $formName form');
-      });
-    }
+        .then((value) {
+      mapData.addAll(value.docs.last.data());
+      return mapData;
+    }).catchError((onError) {});
     return mapData;
   }
 
