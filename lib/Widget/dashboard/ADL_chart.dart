@@ -4,6 +4,7 @@ import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import '../material.dart';
 
 class ADLChart extends StatefulWidget {
   final String hn;
@@ -14,6 +15,7 @@ class ADLChart extends StatefulWidget {
 
 class _ADLChartState extends State<ADLChart> {
   final _firebaseService = locator<IFirebaseService>();
+  final CustomMaterial _customMaterial = locator<CustomMaterial>();
   double score;
   String topic;
 
@@ -440,19 +442,25 @@ class _ADLChartState extends State<ADLChart> {
                             child: Text('${snap.data['PreOpTotal']}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 18, color: Color(0xFFC37447))))),
+                                    fontSize: 18,
+                                    color: _customMaterial.getADLColor(
+                                        snap.data['PreOpTotal']))))),
                     Expanded(
                         child: Container(
                             child: Text('${snap.data['PostHosTotal']}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 18, color: Color(0xFFC37447))))),
+                                    fontSize: 18,
+                                    color: _customMaterial.getADLColor(
+                                        snap.data['PostHosTotal']))))),
                     Expanded(
                         child: Container(
                             child: Text('${snap.data['PostHomeTotal']}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 18, color: Color(0xFFC37447))))),
+                                    fontSize: 18,
+                                    color: _customMaterial.getADLColor(
+                                        snap.data['PostHomeTotal']))))),
                   ],
                 ),
               ),

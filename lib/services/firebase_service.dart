@@ -964,6 +964,7 @@ class FirebaseService extends IFirebaseService {
     var dateCompare;
     var formTime;
     var dateToCompare;
+    var recoveryReadiness;
     var userId = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
@@ -990,7 +991,14 @@ class FirebaseService extends IFirebaseService {
         formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
         dateToCompare = _calculationService.formatDate(date: DateTime.now());
         dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
-        if (formDateToShow == dateCompare) {
+        recoveryReadiness =
+            formsCollection['formData']['recoveryReadiness'] ?? '-';
+        if (formName == 'Recovery Readiness' &&
+            recoveryReadiness == 'พร้อมฟื้นสภาพหลังผ่าตัด' &&
+            formDateToShow == dateCompare) {
+          evaluationStatus = "completed";
+        }
+        if (formName != 'Recovery Readiness' && formDateToShow == dateCompare) {
           evaluationStatus = "completed";
         }
       } else {
@@ -1053,14 +1061,19 @@ class FirebaseService extends IFirebaseService {
     return dayInHospital;
   }
 
-  Future<List<Map<String, dynamic>>> getVitalSignTable({
-    @required String hn,
-  }) async {
+  Future<List<Map<String, dynamic>>> getVitalSignTable(
+      {@required String hn, @required String dashboardState}) async {
+    var fieldName;
+    if (dashboardState == "Post-Operation@Home") {
+      fieldName = 'painGraph';
+    } else {
+      fieldName = 'dashboardTable';
+    }
     var dashboardsCollection = await _firestore
         .collection('Dashboards')
         .orderBy('Date')
         .where('hn', isEqualTo: hn)
-        .where('name', isEqualTo: 'dashboardTable')
+        .where('name', isEqualTo: fieldName)
         .get()
         .then((value) {
       return value.docs;
