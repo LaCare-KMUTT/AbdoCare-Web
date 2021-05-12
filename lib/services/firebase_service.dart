@@ -955,7 +955,6 @@ class FirebaseService extends IFirebaseService {
   Future<String> checkRecoveryReadinessStatus(String hn) async {
     var recoveryReadiness;
     var state = 'noPass';
-
     var recoveryFormData = await getFormDataByLastFormId(
         "Recovery Readiness", 'Post-Operation@Hospital', hn);
     if (recoveryFormData.isNotEmpty) {
@@ -965,7 +964,6 @@ class FirebaseService extends IFirebaseService {
         state = "Pass";
       }
     }
-
     return state;
   }
 
@@ -1075,7 +1073,6 @@ class FirebaseService extends IFirebaseService {
         evaluationStatus = "notCompleted";
       }
     }
-    print(evaluationStatus);
     return evaluationStatus;
   }
 
@@ -1134,6 +1131,7 @@ class FirebaseService extends IFirebaseService {
     var mapData = {};
     await _firestore
         .collection('Forms')
+        .orderBy('creation', descending: true)
         .where('hn', isEqualTo: hn)
         .where('formName', isEqualTo: formName)
         .where('patientState', isEqualTo: patientState)
@@ -1141,7 +1139,6 @@ class FirebaseService extends IFirebaseService {
         .get()
         .then((value) {
       mapData.addAll(value.docs.last.data());
-      return mapData;
     }).catchError((onError) {});
     return mapData;
   }
