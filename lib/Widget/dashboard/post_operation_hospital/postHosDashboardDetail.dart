@@ -52,83 +52,101 @@ class _PostHosDashboardDetailState extends State<PostHosDashboardDetail> {
                     child: PostHosPatientDetail(
                   hn: widget.hn,
                 )),
-                SizedBox(
-                  height: 500,
+                Container(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Card(
-                      child: FutureBuilder<Map<String, Widget>>(
-                          future: _evaluationViewModel.getevaluations(
-                              context, widget.hn, "Post-Operation@Hospital"),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ProgressBar.circularProgressIndicator(
-                                      context),
-                                ],
-                              );
-                            }
-                            return Scrollbar(
-                              isAlwaysShown: false,
-                              controller: controller,
-                              child: ListView(
-                                controller: controller,
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Text(
-                                          'แบบประเมิน',
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              color: Color(0xFFC37447)),
-                                        ),
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            width: 400,
-                                            height: 420,
-                                            padding: const EdgeInsets.fromLTRB(
-                                                30, 10, 30, 10),
-                                            child: Card(
-                                              child: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10.0),
-                                                    child: Text(
-                                                      "แบบประเมินสัญญาณชีพ",
-                                                      style: TextStyle(
-                                                          fontSize: 18),
-                                                      textAlign:
-                                                          TextAlign.center,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            child: Text('แบบประเมิน',
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(0xFFC37447))),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 420,
+                                child: FutureBuilder<Map<String, Widget>>(
+                                    future: _evaluationViewModel.getevaluations(
+                                        context,
+                                        widget.hn,
+                                        "Post-Operation@Hospital"),
+                                    builder: (context, snapshot) {
+                                      if (!snapshot.hasData) {
+                                        return Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            ProgressBar
+                                                .circularProgressIndicator(
+                                                    context),
+                                          ],
+                                        );
+                                      }
+                                      return Scrollbar(
+                                        isAlwaysShown: false,
+                                        controller: controller,
+                                        child: ListView(
+                                          controller: controller,
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      width: 400,
+                                                      height: 420,
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          30, 10, 30, 10),
+                                                      child: Card(
+                                                        child: Column(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .all(
+                                                                      10.0),
+                                                              child: Text(
+                                                                "แบบประเมินสัญญาณชีพ",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                            ),
+                                                            snapshot.data[
+                                                                'vitalSignShow'],
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  snapshot
-                                                      .data['vitalSignShow'],
-                                                ],
-                                              ),
+                                                    snapshot.data['mustShow'],
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                          snapshot.data['mustShow'],
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                          ],
+                                        ),
+                                      );
+                                    }),
                               ),
-                            );
-                          }),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
