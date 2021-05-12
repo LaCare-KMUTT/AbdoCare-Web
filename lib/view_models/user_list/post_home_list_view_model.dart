@@ -6,35 +6,41 @@ class PostHomeViewModel {
   PostHomeViewModel();
   final _firebaseService = locator<IFirebaseService>();
   List<PostHomeData> userList = [];
+  List<PostHomeData> storedList = [];
 
   Future<void> _initialize() async {
     var postHomeList = await _firebaseService.getPostHomeList();
     postHomeList.forEach((mapData) {
       userList.add(PostHomeData(map: mapData));
-      sortBy('woundImg', true);
+      storedList.add(PostHomeData(map: mapData));
     });
+    sortBy('woundImg', true);
   }
 
   Future<List<PostHomeData>> getUsers() async {
-    userList.clear();
-    await _initialize();
+    if (userList.isEmpty && storedList.isEmpty) await _initialize();
     return userList;
   }
 
-  List<PostHomeData> sortBy(String key, bool isAsc) {
+  void sortBy(String key, bool isAsc) {
     userList.sort((a, b) => b.woundImg.compareTo(a.woundImg));
     switch (key) {
       case 'painScore':
-        userList.sort((a, b) => a.painScore.compareTo(b.painScore));
+        userList.sort(
+            (a, b) => a.painScore.toString().compareTo(b.painScore.toString()));
         break;
       case 'woundImg':
-        userList.sort((a, b) => a.woundImg.compareTo(b.woundImg));
+        userList.sort(
+            (a, b) => a.woundImg.toString().compareTo(b.woundImg.toString()));
         break;
     }
     if (isAsc) {
       userList = userList.reversed.toList();
     }
+  }
 
-    return userList;
+  void search(String value) {
+    userList = storedList;
+    userList = userList.where((element) => element.hn.contains(value)).toList();
   }
 }

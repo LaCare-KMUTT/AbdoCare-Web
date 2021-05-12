@@ -6,6 +6,7 @@ import 'package:AbdoCare_Web/models/user_list/post_hos_list_model.dart';
 import 'package:AbdoCare_Web/view_models/user_list/post_hos_list_view_model.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../services/service_locator.dart';
 import '../material.dart';
@@ -20,7 +21,6 @@ class _PostHosTableState extends State<PostHosTable> {
   final PostHosViewModel _postHosViewModel = locator<PostHosViewModel>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
 
-  List<PostHosData> users = [];
   bool _sortAsc = true;
   bool _sortRespirationRateAsc = true;
   bool _sortPulseRateAsc = true;
@@ -28,7 +28,7 @@ class _PostHosTableState extends State<PostHosTable> {
   bool _sortBloodPressureAsc = true;
   bool _sortTemperatureAsc = true;
   bool _sortStatusAsc = true;
-  int _sortColumnIndex = 11;
+  int _sortColumnIndex;
 
   FutureBuilder dataBody() {
     var screenSize = MediaQuery.of(context).size;
@@ -36,13 +36,11 @@ class _PostHosTableState extends State<PostHosTable> {
     return FutureBuilder<List<PostHosData>>(
         future: _postHosViewModel.getUsers(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return ProgressBar.circularProgressIndicator(context);
+          if (!snapshot.hasData ||
+              snapshot.connectionState != ConnectionState.done) {
+            return Container(
+                child: ProgressBar.circularProgressIndicator(context));
           } else {
-            if (users.isNotEmpty) {
-              users.clear();
-            }
-            users.addAll(snapshot.data);
             return DataTable(
               showCheckboxColumn: false,
               columnSpacing: screenSize.width / 35,
@@ -75,7 +73,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
-                  numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -90,23 +87,20 @@ class _PostHosTableState extends State<PostHosTable> {
                   },
                 ),
                 DataColumn(
-                  label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
-                  numeric: true,
-                  onSort: (columnIndex, sortAscending) {
-                    setState(() {
-                      if (columnIndex == _sortColumnIndex) {
-                        _sortAsc = _sortTemperatureAsc = sortAscending;
-                      } else {
-                        _sortColumnIndex = columnIndex;
-                        _sortAsc = _sortTemperatureAsc;
-                      }
-                      _postHosViewModel.sortBy('temperature', sortAscending);
-                    });
-                  },
-                ),
+                    label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
+                    onSort: (columnIndex, sortAscending) {
+                      setState(() {
+                        if (columnIndex == _sortColumnIndex) {
+                          _sortAsc = _sortTemperatureAsc = sortAscending;
+                        } else {
+                          _sortColumnIndex = columnIndex;
+                          _sortAsc = _sortTemperatureAsc;
+                        }
+                        _postHosViewModel.sortBy('temperature', sortAscending);
+                      });
+                    }),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('ชีพจร'))),
-                  numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -121,7 +115,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('ความดัน'))),
-                  numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -136,7 +129,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Text('ออกซิเจน')),
-                  numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -151,7 +143,6 @@ class _PostHosTableState extends State<PostHosTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Text('สถานะ')),
-                  numeric: false,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -165,11 +156,10 @@ class _PostHosTableState extends State<PostHosTable> {
                   },
                 ),
               ],
-              rows: users.map((user) {
+              rows: snapshot.data.map((user) {
                 return DataRow(
                     onSelectChanged: (newValue) {
                       print('Selected ${user.hn} ${user.name}');
-
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -268,9 +258,13 @@ class _PostHosTableState extends State<PostHosTable> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(
-                        0, screenSize.height / 20, screenSize.height / 70, 0),
+                        0, screenSize.height / 20, screenSize.height / 22, 0),
                     child: Container(
                       child: TextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp("[a-zA-Z0-9]"))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder: const OutlineInputBorder(
@@ -284,26 +278,13 @@ class _PostHosTableState extends State<PostHosTable> {
                             hintText: 'HN'),
                         onChanged: (val) {
                           setState(() {
-                            // hn = val;
+                            _postHosViewModel.search(val.toUpperCase());
                           });
                         },
                       ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  0, screenSize.height / 20, screenSize.height / 9, 0),
-              child: Container(
-                child: RaisedButton(
-                  child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
-                  padding: EdgeInsets.all(15),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  onPressed: () {},
-                ),
               ),
             ),
           ]),

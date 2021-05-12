@@ -411,7 +411,6 @@ class FirebaseService extends IFirebaseService {
           patientState: 'Post-Operation@Hospital',
           formName: 'Vital Sign');
       if (formVitalSign.isNotEmpty) {
-        print('should be here');
         var formsCollection = await _firestore
             .collection('Forms')
             .doc(formVitalSign.last['formId'])
