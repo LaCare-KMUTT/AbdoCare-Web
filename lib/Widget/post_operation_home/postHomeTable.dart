@@ -77,20 +77,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                   },
                 ),
                 DataColumn(
-                  label: Expanded(child: Center(child: Text('รูปแผลผ่าตัด'))),
-                  onSort: (columnIndex, sortAscending) {
-                    setState(() {
-                      if (columnIndex == _sortColumnIndex) {
-                        _sortAsc = _sortWoundImgAsc = sortAscending;
-                      } else {
-                        _sortColumnIndex = columnIndex;
-                        _sortAsc = _sortWoundImgAsc;
-                      }
-                      _postHomeViewModel.sortBy('woundImg', sortAscending);
-                    });
-                  },
-                ),
-                DataColumn(
                   label:
                       Expanded(child: Center(child: Text('ครั้งที่มารักษา'))),
                   numeric: true,
@@ -118,15 +104,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
                             style: TextStyle(
                                 color: _customMaterial
                                     .getPainScoreColor(user.painScore))),
-                      ),
-                      DataCell(
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text('${user.woundImg.toString()}',
-                              style: TextStyle(
-                                  color: _customMaterial
-                                      .getWoundImgColor(user.woundImg))),
-                        ),
                       ),
                       DataCell(
                         Text('${user.admissionCount.toString()}'),

@@ -33,7 +33,8 @@ class _PreNotificationTableState extends State<PreNotificationTable> {
         },
         child: DataTable(
           showCheckboxColumn: false,
-          columnSpacing: screenSize.width / 20,
+          columnSpacing: screenSize.width * 0.02,
+          horizontalMargin: 5,
           headingRowHeight: 50,
           headingTextStyle: TextStyle(
               fontSize: 16,

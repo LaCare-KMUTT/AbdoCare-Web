@@ -459,10 +459,6 @@ class FirebaseService extends IFirebaseService {
           userId: user.id,
           patientState: 'Post-Operation@Home',
           formName: 'pain');
-      var formSurgicalIncision = await getFormListInAnBasedOnState(
-          userId: user.id,
-          patientState: 'Post-Operation@Home',
-          formName: 'Surgical Incision');
       var anSubCollection = await _firestore
           .collection('Users')
           .doc(user.id)
@@ -477,7 +473,6 @@ class FirebaseService extends IFirebaseService {
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: user.id);
       var countAnSubCollection = await getCountANSubCollection(userId: user.id);
-
       var hnToMap = userCollection.data()['hn'] ?? '-';
       var nameToMap =
           '${userCollection.data()['name']} ${userCollection.data()['surname']}';
@@ -487,7 +482,6 @@ class FirebaseService extends IFirebaseService {
           birthDate: userCollection.data()['dob'].toDate());
       var operationTypeToMap = anSubCollection['operationMethod'] ?? '-';
       var painScoreToMap;
-      var woundImgToMap;
       if (formPain != null && formPain.isNotEmpty) {
         var formPainData = await _firestore
             .collection('Forms')
@@ -497,14 +491,6 @@ class FirebaseService extends IFirebaseService {
 
         painScoreToMap = formPainData['formData']['pain'] ?? '-';
       }
-      if (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty) {
-        var formSurgicalIncisionData = await _firestore
-            .collection('Forms')
-            .doc(formSurgicalIncision.last['formId'])
-            .get()
-            .then((value) => value.data());
-        woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
-      }
       var map = {
         'hn': hnToMap,
         'name': nameToMap,
@@ -512,8 +498,7 @@ class FirebaseService extends IFirebaseService {
         'gender': genderToMap,
         'age': ageToMap,
         'painScore': painScoreToMap ?? '-',
-        'operationType': operationTypeToMap ?? '-',
-        'woundImg': woundImgToMap ?? '-',
+        'operationType': operationTypeToMap ?? '-'
       };
       return map;
     });
@@ -921,11 +906,13 @@ class FirebaseService extends IFirebaseService {
       }
       return map;
     });
+
     var futureList = Future.wait(returnList);
     var returnValue = await futureList;
     if (returnValue != null) {
       returnValue.removeWhere((element) => element == null);
     }
+
     return returnValue;
   }
 
@@ -952,6 +939,21 @@ class FirebaseService extends IFirebaseService {
     return count;
   }
 
+  Future<String> checkRecoveryReadinessStatus(String hn) async {
+    var recoveryReadiness;
+    var state = 'noPass';
+    var recoveryFormData = await getFormDataByLastFormId(
+        "Recovery Readiness", 'Post-Operation@Hospital', hn);
+    if (recoveryFormData.isNotEmpty) {
+      recoveryReadiness =
+          recoveryFormData['formData']['recoveryReadiness'] ?? '-';
+      if (recoveryReadiness == 'พร้อมฟื้นสภาพหลังผ่าตัด') {
+        state = "Pass";
+      }
+    }
+    return state;
+  }
+
   Future<String> getEvaluationStatus(
       {@required String hn,
       @required String formName,
@@ -963,7 +965,6 @@ class FirebaseService extends IFirebaseService {
     var dateCompare;
     var formTime;
     var dateToCompare;
-    var recoveryReadiness;
     var userId = await _firestore
         .collection('Users')
         .where('hn', isEqualTo: hn)
@@ -990,38 +991,32 @@ class FirebaseService extends IFirebaseService {
         formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
         dateToCompare = _calculationService.formatDate(date: DateTime.now());
         dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
-        recoveryReadiness =
-            formsCollection['formData']['recoveryReadiness'] ?? '-';
-        if (formName == 'Recovery Readiness' &&
-            recoveryReadiness == 'พร้อมฟื้นสภาพหลังผ่าตัด' &&
-            formDateToShow == dateCompare) {
+        if (formDateToShow == dateCompare) {
           evaluationStatus = "completed";
         }
-        if (formName != 'Recovery Readiness' && formDateToShow == dateCompare) {
-          evaluationStatus = "completed";
+      }
+      if (patientState == "Post-Operation@Hospital") {
+        var state = await checkRecoveryReadinessStatus(hn);
+        if (state != "Pass") {
+          evaluationStatus = "noPassRecoveryReadiness";
         }
-      } else {
-        evaluationStatus = "notCompleted";
       }
     } else if (vitalSignFormTime != null) {
       var formsCollection = await _firestore
           .collection('Forms')
+          .orderBy('creation', descending: true)
           .where('formTime', isEqualTo: vitalSignFormTime)
           .where('hn', isEqualTo: hn)
           .where('formName', isEqualTo: formName)
+          .limit(1)
           .get()
-          .then((value) => value.docs.first.id)
-          .catchError((onError) {});
+          .then((value) {
+        return value.docs.last.data();
+      }).catchError((onError) {
+        print('$onError Cannot find formsCollection in $vitalSignFormTime');
+      });
       if (formsCollection != null) {
-        var formsCollection2 = await _firestore
-            .collection('Forms')
-            .doc(formsCollection)
-            .get()
-            .then((value) => value.data())
-            .catchError((onError) {
-          print('$onError no formsCollection');
-        });
-        formCreation = formsCollection2['creation'] ?? '-';
+        formCreation = formsCollection['creation'] ?? '-';
         formTime = DateTime.fromMicrosecondsSinceEpoch(
             formCreation.microsecondsSinceEpoch);
         formDateToShow = DateFormat('yyyy-MM-dd').format(formTime);
@@ -1090,22 +1085,22 @@ class FirebaseService extends IFirebaseService {
   Future<Map<dynamic, dynamic>> getFormDataByLastFormId(
       String formName, String patientState, String hn) async {
     var mapData = {};
-    var formId = await _firestore
+    var formData = await _firestore
         .collection('Forms')
+        .orderBy('creation', descending: true)
         .where('hn', isEqualTo: hn)
         .where('formName', isEqualTo: formName)
         .where('patientState', isEqualTo: patientState)
+        .limit(1)
         .get()
-        .then((value) => value.docs.first.id)
-        .catchError((onError) {});
-
-    if (formId != null) {
-      await _firestore.collection('Forms').doc(formId).get().then((value) {
-        mapData.addAll(value.data());
-      }).catchError((onError) {
-        print('$onError Cann\'t find $formName form');
-      });
-    }
+        .then((value) {
+      return value.docs;
+    }).catchError((onError) {
+      print('$onError Cannot find formData');
+    });
+    formData.forEach((element) {
+      mapData = element.data();
+    });
     return mapData;
   }
 
