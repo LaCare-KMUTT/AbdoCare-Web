@@ -32,7 +32,8 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
         },
         child: DataTable(
           showCheckboxColumn: false,
-          columnSpacing: screenSize.width / 25,
+          columnSpacing: screenSize.width * 0.02,
+          horizontalMargin: 5,
           headingRowHeight: 50,
           headingTextStyle: TextStyle(
               fontSize: 16,

@@ -101,13 +101,6 @@ class CustomMaterial {
     return Colors.green;
   }
 
-  Color getWoundImgColor(String woundImg) {
-    if (woundImg == 'ได้รับรูปภาพ') {
-      return Colors.lightBlue;
-    }
-    return Color(0xFFC37447);
-  }
-
   Color getNotiStatusColor(dynamic notiStatus) {
     if (notiStatus == '-') {
       return Color(0xFFC37447);
@@ -125,7 +118,7 @@ class CustomMaterial {
     } else if (adlScore >= 5 && adlScore <= 8) {
       return Colors.orange;
     } else if (adlScore >= 9 && adlScore <= 11) {
-      return Colors.yellow;
+      return Colors.amber;
     }
     return Colors.green;
   }

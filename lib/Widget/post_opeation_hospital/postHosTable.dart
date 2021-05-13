@@ -43,7 +43,8 @@ class _PostHosTableState extends State<PostHosTable> {
           } else {
             return DataTable(
               showCheckboxColumn: false,
-              columnSpacing: screenSize.width / 35,
+              columnSpacing: screenSize.width * 0.03,
+              horizontalMargin: 5,
               headingRowHeight: 50,
               headingTextStyle: TextStyle(
                   fontSize: 18,
@@ -60,7 +61,7 @@ class _PostHosTableState extends State<PostHosTable> {
                   label: Expanded(child: Text('ชื่อ-นามสกุล')),
                 ),
                 DataColumn(
-                  label: Expanded(child: Center(child: Text('เพศ'))),
+                  label: Expanded(child: Center(child: Text(' เพศ '))),
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('อายุ'))),
@@ -72,6 +73,7 @@ class _PostHosTableState extends State<PostHosTable> {
                   label: Expanded(child: Center(child: Text('เตียง'))),
                 ),
                 DataColumn(
+                  numeric: true,
                   label: Expanded(child: Center(child: Text('อัตราการหายใจ'))),
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
@@ -87,6 +89,7 @@ class _PostHosTableState extends State<PostHosTable> {
                   },
                 ),
                 DataColumn(
+                    numeric: true,
                     label: Expanded(child: Center(child: Text('อุณหภูมิ'))),
                     onSort: (columnIndex, sortAscending) {
                       setState(() {
@@ -100,6 +103,7 @@ class _PostHosTableState extends State<PostHosTable> {
                       });
                     }),
                 DataColumn(
+                  numeric: true,
                   label: Expanded(child: Center(child: Text('ชีพจร'))),
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
@@ -114,6 +118,7 @@ class _PostHosTableState extends State<PostHosTable> {
                   },
                 ),
                 DataColumn(
+                  numeric: true,
                   label: Expanded(child: Center(child: Text('ความดัน'))),
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
@@ -128,6 +133,7 @@ class _PostHosTableState extends State<PostHosTable> {
                   },
                 ),
                 DataColumn(
+                  numeric: true,
                   label: Expanded(child: Text('ออกซิเจน')),
                   onSort: (columnIndex, sortAscending) {
                     setState(() {

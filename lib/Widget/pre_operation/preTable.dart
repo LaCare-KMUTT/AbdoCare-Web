@@ -40,7 +40,8 @@ class _PreTableState extends State<PreTable> {
           } else {
             return DataTable(
               showCheckboxColumn: false,
-              columnSpacing: screenSize.width / 41,
+              columnSpacing: screenSize.width * 0.03,
+              horizontalMargin: 5,
               headingRowHeight: 50,
               headingTextStyle: TextStyle(
                   fontSize: 18,
@@ -57,7 +58,7 @@ class _PreTableState extends State<PreTable> {
                   label: Expanded(child: Text('ชื่อ-นามสกุล')),
                 ),
                 DataColumn(
-                  label: Expanded(child: Center(child: Text('เพศ'))),
+                  label: Expanded(child: Center(child: Text(' เพศ '))),
                 ),
                 DataColumn(
                   label: Expanded(child: Center(child: Text('อายุ'))),
@@ -99,11 +100,7 @@ class _PreTableState extends State<PreTable> {
                   },
                 ),
                 DataColumn(
-                  label: Expanded(
-                      child: Center(
-                          child: Text(
-                    'ชีพจร',
-                  ))),
+                  label: Expanded(child: Center(child: Text('ชีพจร'))),
                   numeric: true,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
@@ -149,7 +146,6 @@ class _PreTableState extends State<PreTable> {
                 ),
                 DataColumn(
                   label: Expanded(child: Text('สถานะ')),
-                  numeric: false,
                   onSort: (columnIndex, sortAscending) {
                     setState(() {
                       if (columnIndex == _sortColumnIndex) {
@@ -178,48 +174,42 @@ class _PreTableState extends State<PreTable> {
                       DataCell(Text(user.hn)),
                       DataCell(Text(user.name)),
                       DataCell(Text(user.gender)),
-                      DataCell(Center(
-                          child: Text(
-                        user.age,
-                        style: TextStyle(
-                          fontSize: 17,
-                        ),
-                      ))),
+                      DataCell(Center(child: Text(user.age))),
                       DataCell(Center(child: Text(user.roomNumber))),
                       DataCell(Center(child: Text(user.bedNumber))),
                       DataCell(
                         Text('${user.respirationRate.toString()}',
                             style: TextStyle(
-                                fontSize: 17,
+                                //fontSize: 17,
                                 color: _customMaterial.getRespirationRateColor(
                                     user.respirationRate))),
                       ),
                       DataCell(
                         Text('${user.temperature.toString()}',
                             style: TextStyle(
-                                fontSize: 17,
+                                // fontSize: 17,
                                 color: _customMaterial
                                     .getTemperatureColor(user.temperature))),
                       ),
                       DataCell(
                         Text('${user.pulseRate.toString()}',
                             style: TextStyle(
-                                fontSize: 17,
+                                // fontSize: 17,
                                 color: _customMaterial
                                     .getPulseRateColor(user.pulseRate))),
                       ),
                       DataCell(
                         Text('${user.bloodPressure.toString()}',
                             style: TextStyle(
-                                fontSize: 17,
+                                // fontSize: 17,
                                 color: _customMaterial.getBloodPressureColor(
-                                  user.bloodPressure,
-                                ))),
+                              user.bloodPressure,
+                            ))),
                       ),
                       DataCell(
                         Text('${user.oxygenRate.toString()}',
                             style: TextStyle(
-                                fontSize: 17,
+                                //fontSize: 17,
                                 color: _customMaterial
                                     .getOxygenRateColor(user.oxygenRate))),
                       ),
