@@ -101,13 +101,6 @@ class CustomMaterial {
     return Colors.green;
   }
 
-  Color getWoundImgColor(String woundImg) {
-    if (woundImg == 'ได้รับรูปภาพ') {
-      return Colors.deepOrangeAccent;
-    }
-    return Color(0xFFC37447);
-  }
-
   Color getNotiStatusColor(dynamic notiStatus) {
     if (notiStatus == '-') {
       return Color(0xFFC37447);

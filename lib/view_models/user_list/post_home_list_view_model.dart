@@ -10,11 +10,14 @@ class PostHomeViewModel {
 
   Future<void> _initialize() async {
     var postHomeList = await _firebaseService.getPostHomeList();
-    postHomeList.forEach((mapData) {
-      userList.add(PostHomeData(map: mapData));
-      storedList.add(PostHomeData(map: mapData));
-    });
-    sortBy('woundImg', true);
+    print('initList');
+    if (postHomeList != null) {
+      postHomeList.forEach((mapData) {
+        userList.add(PostHomeData(map: mapData));
+        storedList.add(PostHomeData(map: mapData));
+      });
+      sortBy('painScore', true);
+    }
   }
 
   Future<List<PostHomeData>> getUsers() async {
@@ -23,15 +26,10 @@ class PostHomeViewModel {
   }
 
   void sortBy(String key, bool isAsc) {
-    userList.sort((a, b) => b.woundImg.compareTo(a.woundImg));
     switch (key) {
       case 'painScore':
         userList.sort(
             (a, b) => a.painScore.toString().compareTo(b.painScore.toString()));
-        break;
-      case 'woundImg':
-        userList.sort(
-            (a, b) => a.woundImg.toString().compareTo(b.woundImg.toString()));
         break;
     }
     if (isAsc) {

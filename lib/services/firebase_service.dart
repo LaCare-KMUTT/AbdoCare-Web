@@ -459,10 +459,6 @@ class FirebaseService extends IFirebaseService {
           userId: user.id,
           patientState: 'Post-Operation@Home',
           formName: 'pain');
-      var formSurgicalIncision = await getFormListInAnBasedOnState(
-          userId: user.id,
-          patientState: 'Post-Operation@Home',
-          formName: 'Surgical Incision');
       var anSubCollection = await _firestore
           .collection('Users')
           .doc(user.id)
@@ -477,7 +473,6 @@ class FirebaseService extends IFirebaseService {
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: user.id);
       var countAnSubCollection = await getCountANSubCollection(userId: user.id);
-
       var hnToMap = userCollection.data()['hn'] ?? '-';
       var nameToMap =
           '${userCollection.data()['name']} ${userCollection.data()['surname']}';
@@ -487,7 +482,6 @@ class FirebaseService extends IFirebaseService {
           birthDate: userCollection.data()['dob'].toDate());
       var operationTypeToMap = anSubCollection['operationMethod'] ?? '-';
       var painScoreToMap;
-      var woundImgToMap;
       if (formPain != null && formPain.isNotEmpty) {
         var formPainData = await _firestore
             .collection('Forms')
@@ -497,16 +491,6 @@ class FirebaseService extends IFirebaseService {
 
         painScoreToMap = formPainData['formData']['pain'] ?? '-';
       }
-      if (formSurgicalIncision != null && formSurgicalIncision.isNotEmpty) {
-        var formSurgicalIncisionData = await _firestore
-            .collection('Forms')
-            .doc(formSurgicalIncision.last['formId'])
-            .get()
-            .then((value) => value.data());
-        woundImgToMap = formSurgicalIncisionData['formData']['imgURL'] != null
-            ? 'ได้รับรูปภาพ'
-            : '-';
-      }
       var map = {
         'hn': hnToMap,
         'name': nameToMap,
@@ -514,8 +498,7 @@ class FirebaseService extends IFirebaseService {
         'gender': genderToMap,
         'age': ageToMap,
         'painScore': painScoreToMap ?? '-',
-        'operationType': operationTypeToMap ?? '-',
-        'woundImg': woundImgToMap ?? '-',
+        'operationType': operationTypeToMap ?? '-'
       };
       return map;
     });
