@@ -989,12 +989,6 @@ class FirebaseService extends IFirebaseService {
       print('$onError Cannot find user');
     });
     if (vitalSignFormTime == null) {
-      if (patientState == "Post-Operation@Hospital") {
-        var state = await checkRecoveryReadinessStatus(hn);
-        if (state != "Pass") {
-          evaluationStatus = "noPassRecoveryReadiness";
-        }
-      }
       var formStatus = await getFormListInAnBasedOnState(
           userId: userId, patientState: patientState, formName: formName);
       if (formStatus.isNotEmpty) {
@@ -1014,6 +1008,12 @@ class FirebaseService extends IFirebaseService {
         dateCompare = DateFormat('yyyy-MM-dd').format(dateToCompare);
         if (formDateToShow == dateCompare) {
           evaluationStatus = "completed";
+        }
+      }
+      if (patientState == "Post-Operation@Hospital") {
+        var state = await checkRecoveryReadinessStatus(hn);
+        if (state != "Pass") {
+          evaluationStatus = "noPassRecoveryReadiness";
         }
       }
     } else if (vitalSignFormTime != null) {
