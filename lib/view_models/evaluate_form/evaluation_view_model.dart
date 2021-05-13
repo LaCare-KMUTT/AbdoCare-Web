@@ -35,13 +35,12 @@ class EvaluationViewModel {
     Column mustShowToColumn2 = Column();
     Column vitalSignToColumn = Column();
     Row mustShow = Row();
-
-    var dayInCurrentState = await _firebaseService.getDayInCurrentState(hn: hn);
-
     if (patientState == "Pre-Operation") {
       mustShowList.addAll(_evaluationModel.preOpHos);
       vitalSignList.addAll(_evaluationModel.vitalSignList);
     } else if (patientState == "Post-Operation@Hospital") {
+      var dayInCurrentState =
+          await _firebaseService.getDayInCurrentState(hn: hn);
       if (dayInCurrentState == 0) {
         mustShowList.addAll(_evaluationModel.postOpHospitalDay0List);
         mustShowList2.addAll(_evaluationModel.postOpHospitalDay0List2);

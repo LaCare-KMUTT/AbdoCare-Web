@@ -921,11 +921,13 @@ class FirebaseService extends IFirebaseService {
       }
       return map;
     });
+
     var futureList = Future.wait(returnList);
     var returnValue = await futureList;
     if (returnValue != null) {
       returnValue.removeWhere((element) => element == null);
     }
+
     return returnValue;
   }
 
