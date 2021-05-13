@@ -503,7 +503,9 @@ class FirebaseService extends IFirebaseService {
             .doc(formSurgicalIncision.last['formId'])
             .get()
             .then((value) => value.data());
-        woundImgToMap = formSurgicalIncisionData['imgURL'] ?? '-';
+        woundImgToMap = formSurgicalIncisionData['formData']['imgURL'] != null
+            ? 'ได้รับรูปภาพ'
+            : '-';
       }
       var map = {
         'hn': hnToMap,

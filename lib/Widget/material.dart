@@ -103,7 +103,7 @@ class CustomMaterial {
 
   Color getWoundImgColor(String woundImg) {
     if (woundImg == 'ได้รับรูปภาพ') {
-      return Colors.lightBlue;
+      return Colors.deepOrangeAccent;
     }
     return Color(0xFFC37447);
   }
