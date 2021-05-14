@@ -376,6 +376,23 @@ class SideBar extends StatelessWidget {
                       ),
                     ),
                     Expanded(
+                      flex: 2,
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            ListTile(
+                              // Access the fields as defined in FireStore
+                              title: Text(
+                                '${snapshot.data['patientState']} ',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(7.0)),
