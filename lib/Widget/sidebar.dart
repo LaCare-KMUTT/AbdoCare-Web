@@ -189,21 +189,21 @@ class SideBar extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.insert_invitation),
-                      title: Text("ตารางนัด",
-                          style: Theme.of(context).textTheme.bodyText2),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/appointment_page');
-                        print('This is appointment_page button');
-                      },
-                    ),
-                    ListTile(
                       leading: Icon(Icons.autorenew_rounded),
                       title: Text("Re-Admit",
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () async {
                         reAdmitCard(context);
                         print('This is Re-Admit button');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.insert_invitation),
+                      title: Text("ตารางนัด",
+                          style: Theme.of(context).textTheme.bodyText2),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/appointment_page');
+                        print('This is appointment_page button');
                       },
                     ),
                     const Expanded(child: SizedBox()),
@@ -230,8 +230,6 @@ class SideBar extends StatelessWidget {
 
   Future<void> reAdmitCard(BuildContext context) async {
     var hn;
-    bool pressed = false;
-    var dischargedList;
     var patientState;
     return await showDialog(
       context: context,
@@ -324,7 +322,7 @@ class SideBar extends StatelessWidget {
               actions: <Widget>[
                 FlatButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text("ยกเลิก"),
+                  child: Text("ยกเลิก", style: TextStyle(fontSize: 18)),
                 ),
               ],
             );
