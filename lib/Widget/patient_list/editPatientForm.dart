@@ -1270,7 +1270,8 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                                       items: [
                                                         'Pre-Operation',
                                                         'Post-Operation@Hospital',
-                                                        'Post-Operation@Home'
+                                                        'Post-Operation@Home',
+                                                        'Discharged'
                                                       ]
                                                           .map((label) =>
                                                               DropdownMenuItem(
