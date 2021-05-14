@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/page/reAdmit_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         '/appointment_page': (context) => AppointmentPage(),
         '/addMedicalTeam_page': (context) => AddMedicalTeamPage(),
         '/notification_page': (context) => NotificationPage(),
+        '/reAdmit_page': (context) => ReAdmitPage(),
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
