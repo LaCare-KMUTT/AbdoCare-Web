@@ -76,6 +76,17 @@ class _AddPatientPageState extends State<AddPatientPage> {
         'latestStateChange': latestStateChange,
       },
     );
+
+//setData to patientState
+    await _firebaseService.setDataToCollectionWithSpecificDoc(
+        collection: 'PatientState',
+        docId: patientUid,
+        data: {
+          'uid': patientUid,
+          'hn': hn,
+          'state': 'Pre-Operation',
+          'latestStateChange': latestStateChange,
+        });
   }
 
   @override
