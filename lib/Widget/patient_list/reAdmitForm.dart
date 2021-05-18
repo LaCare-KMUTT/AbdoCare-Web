@@ -143,7 +143,7 @@ class _ReAdmitFormState extends State<ReAdmitForm> {
             collection: 'DischargedPatient', field: 'hn', fieldValue: hn),
         builder: (context, userCollection) {
           if (!userCollection.hasData) {
-            print('userCollection does\'t have data in editPatientForm');
+            print('userCollection does\'t have data in re-admit ');
             return Center(
                 child: ProgressBar.circularProgressIndicator(context));
           } else {
