@@ -435,8 +435,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           Map<String, dynamic> dataToDB = {
                                             'hn': _hn,
                                             'an': _an,
-                                            'date': _calculationService
-                                                .formatDate(date: _date),
+                                            'date': _date,
                                             'time': _time
                                                 .toString()
                                                 .substring(10, 15),
