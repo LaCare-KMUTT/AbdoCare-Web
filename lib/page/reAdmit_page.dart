@@ -74,9 +74,19 @@ class _ReAdmitPageState extends State<ReAdmitPage> {
       print(currentHn);
     });
     return Scaffold(
-      appBar: BaseAppBar(
-        title: Text('Re-Admit'),
-        appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'Re-Admit',
+          style: TextStyle(fontSize: 24),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () => Navigator.pushNamed(context, '/patientList_page'),
+        ),
       ),
       body: ReAdmitForm(
         _submitReAdmitForm,
