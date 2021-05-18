@@ -502,7 +502,8 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
       _time = TimeOfDay(
           hour: int.parse(time.split(":")[0]),
           minute: int.parse(time.split(":")[1]));
-      return Text('$time น.');
+      return Text('$time น.',
+          style: TextStyle(fontSize: 18, color: Color(0xFFC37447)));
     } else {
       return Text(
         "${_time.hour.toString().padLeft(2, '0')}:${_time.minute.toString().padLeft(2, '0')} น.",

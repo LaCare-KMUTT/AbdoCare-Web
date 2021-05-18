@@ -2,6 +2,7 @@ import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:intl/intl.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/interfaces/firebase_service_interface.dart';
@@ -26,6 +27,14 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
   String _hn = '';
   String _reason = '';
   String _preparation = '';
+  var formDateToShow;
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      formDateToShow = DateFormat('dd/MM/yyyy').format(_date);
+    });
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime pickedDate = await showRoundedDatePicker(
@@ -247,11 +256,22 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           padding: const EdgeInsets.fromLTRB(
                                               20, 0, 20, 0),
                                           child: Center(
-                                            child: Text(
-                                              "${_calculationService.formatDateToThaiString(date: _date, isBuddhist: true)}",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Color(0xFFC37447)),
+                                            child: Container(
+                                              child: DateFormat('dd/MM/yyyy')
+                                                          .format(_date) ==
+                                                      formDateToShow
+                                                  ? Text(
+                                                      '${_calculationService.formatDateToThaiString(date: _date, isBuddhist: false)}',
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Color(
+                                                              0xFFC37447)))
+                                                  : Text(
+                                                      "${_calculationService.formatDateToThaiString(date: _date, isBuddhist: true)}",
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          color: Color(
+                                                              0xFFC37447))),
                                             ),
                                           ),
                                         ),
@@ -415,8 +435,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           Map<String, dynamic> dataToDB = {
                                             'hn': _hn,
                                             'an': _an,
-                                            'date': _calculationService
-                                                .formatDate(date: _date),
+                                            'date': _date,
                                             'time': _time
                                                 .toString()
                                                 .substring(10, 15),

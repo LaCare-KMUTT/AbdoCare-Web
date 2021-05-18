@@ -311,9 +311,6 @@ class _ReAdmitFormState extends State<ReAdmitForm> {
                                                               ? 'กรุณากรอกหมายเลขAN'
                                                               : null;
                                                         },
-                                                        initialValue:
-                                                            anSubCollection
-                                                                .data['an'],
                                                         decoration:
                                                             InputDecoration(
                                                                 enabledBorder:
@@ -957,11 +954,6 @@ class _ReAdmitFormState extends State<ReAdmitForm> {
                                                     child: Container(
                                                       width: 300,
                                                       child: DateTimeField(
-                                                          initialValue:
-                                                              anSubCollection
-                                                                  .data[
-                                                                      'operationDate']
-                                                                  .toDate(),
                                                           validator: (DateTime
                                                               dateTime) {
                                                             if (dateTime ==
@@ -1416,7 +1408,7 @@ class _ReAdmitFormState extends State<ReAdmitForm> {
                                     onPressed: () async {
                                       if (_formKey.currentState.validate()) {
                                         _trySubmit();
-                                        Navigator.pushNamed(
+                                        Navigator.popAndPushNamed(
                                             context, '/patientList_page');
                                       } else {
                                         Dialogs.alertToCompleteForm(context);
