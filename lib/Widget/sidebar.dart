@@ -230,7 +230,7 @@ class SideBar extends StatelessWidget {
 
   Future<void> reAdmitCard(BuildContext context) async {
     var hn;
-    var patientState;
+    bool isSearch = false;
     return await showDialog(
       context: context,
       builder: (context) {
@@ -297,24 +297,16 @@ class SideBar extends StatelessWidget {
                               padding: EdgeInsets.all(15),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(7.0)),
-                              onPressed: () async {
-                                patientState = await _firebaseService
-                                    .getPatientState(hn: hn);
-                                setState(() {});
+                              onPressed: () {
+                                setState(() {
+                                  isSearch = true;
+                                });
                               },
                             ),
                           ),
                         ],
                       ),
-                      patientState == 'Discharged'
-                          ? reAdmitList(context, hn)
-                          : Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: Text(
-                                " ไม่มีข้อมูล ",
-                                style: TextStyle(color: Colors.black45),
-                              ),
-                            ),
+                      if (isSearch) reAdmitList(context, hn),
                     ],
                   ),
                 );
@@ -334,7 +326,7 @@ class SideBar extends StatelessWidget {
 
   Widget reAdmitList(BuildContext context, var hn) {
     return FutureBuilder<Map<String, dynamic>>(
-        future: _firebaseService.getPatientDetail(hn: hn),
+        future: _firebaseService.getDischargedPatient(hn: hn),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Padding(
@@ -349,7 +341,7 @@ class SideBar extends StatelessWidget {
                             ListTile(
                               // Access the fields as defined in FireStore
                               title: Text(
-                                snapshot.data['HN'],
+                                snapshot.data['hn'],
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
@@ -366,7 +358,7 @@ class SideBar extends StatelessWidget {
                             ListTile(
                               // Access the fields as defined in FireStore
                               title: Text(
-                                '${snapshot.data['fullName']} ',
+                                '${snapshot.data['name']} ${snapshot.data['surname']} ',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
@@ -383,7 +375,7 @@ class SideBar extends StatelessWidget {
                             ListTile(
                               // Access the fields as defined in FireStore
                               title: Text(
-                                '${snapshot.data['patientState']} ',
+                                '${snapshot.data['hn']} ',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
@@ -401,7 +393,7 @@ class SideBar extends StatelessWidget {
                         child: Text('Re-Admit', style: TextStyle(fontSize: 18)),
                         onPressed: () {
                           Navigator.pushNamed(context, '/reAdmit_page',
-                              arguments: snapshot.data['HN']);
+                              arguments: snapshot.data['hn']);
                         },
                       ),
                     ),
@@ -411,8 +403,12 @@ class SideBar extends StatelessWidget {
             );
           } else if (snapshot.connectionState == ConnectionState.done &&
               !snapshot.hasData) {
-            return Center(
-              child: Text("No users found."),
+            return Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Text(
+                " ไม่มีข้อมูล ",
+                style: TextStyle(color: Colors.black45),
+              ),
             );
           } else {
             return ProgressBar.circularProgressIndicator(context);

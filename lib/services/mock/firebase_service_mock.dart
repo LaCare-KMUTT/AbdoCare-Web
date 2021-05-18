@@ -75,7 +75,7 @@ class FirebaseServiceMock extends IFirebaseService {
 
   @override
   String getUserId() {
-    // TODO: implement getUserId
+    // : implement getUserId
     throw UnimplementedError();
   }
 
@@ -183,7 +183,7 @@ class FirebaseServiceMock extends IFirebaseService {
 
   @override
   Future<Map<String, dynamic>> getLatestAnSubCollection({String docId}) {
-    // TODO: implement getAnSubCollection
+    //  : implement getAnSubCollection
     throw UnimplementedError();
   }
 
@@ -216,7 +216,7 @@ class FirebaseServiceMock extends IFirebaseService {
 
   @override
   Future<List<Map<String, dynamic>>> getPostHosList() {
-    // TODO: implement getPostHosList
+    //  : implement getPostHosList
     throw UnimplementedError();
   }
 
@@ -241,13 +241,11 @@ class FirebaseServiceMock extends IFirebaseService {
       String subCollection,
       String subCollectionDoc,
       Map<String, dynamic> data}) {
-    // TODO: implement updateFieldToSubCollection
     throw UnimplementedError();
   }
 
   @override
   Future<List<Map<String, dynamic>>> getPostHomeList() {
-    // TODO: implement getPostHomeList
     throw UnimplementedError();
   }
 
@@ -257,18 +255,16 @@ class FirebaseServiceMock extends IFirebaseService {
       String docId,
       String subCollection,
       String subCollectionDocId}) {
-    // TODO: implement getSubCollectionSnapshot
+    throw UnimplementedError();
   }
 
   Future<List<QueryDocumentSnapshot>> getAppointmentList(
       {@required DateTime currentDate}) {
-    // TODO: implement getAppointmentList
     throw UnimplementedError();
   }
 
   @override
   Future<List<Map<String, dynamic>>> getPreOpList() {
-    // TODO: implement getPreOpList
     throw UnimplementedError();
   }
 
@@ -278,38 +274,32 @@ class FirebaseServiceMock extends IFirebaseService {
       String formName,
       String hn,
       String formTime}) {
-    // TODO: implement addDataToFormsCollection
     throw UnimplementedError();
   }
 
   @override
   Future<String> getMedicalTeamSignature() {
-    // TODO: implement getMedicalTeamSignature
     throw UnimplementedError();
   }
 
   @override
   Future<String> getMedicalTeamWard() {
-    // TODO: implement getMedicalTeamWard
     throw UnimplementedError();
   }
 
   @override
   Future<String> getMedicalTeamRole() {
-    // TODO: implement getMedicalTeamRole
     throw UnimplementedError();
   }
 
   @override
   Future<Map<String, dynamic>> getCollectionMap(
       {String collection, String docId}) {
-    // TODO: implement getCollectionMap
     throw UnimplementedError();
   }
 
   @override
   Future<int> getDayInCurrentState({String hn}) {
-    // TODO: implement getCollectionMap
     throw UnimplementedError();
   }
 
@@ -317,29 +307,24 @@ class FirebaseServiceMock extends IFirebaseService {
       {@required String hn,
       @required String formId,
       @required String formName}) {
-    // TODO: implement getCollectionMap
     throw UnimplementedError();
   }
 
   Future<String> getPatientState({@required String hn}) {
-    // TODO: implement getCollectionMap
     throw UnimplementedError();
   }
 
   @override
   Future<List<Map<String, dynamic>>> getNotification(
       {@required String patientState}) {
-    // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
 
   Future<Map<String, dynamic>> getPatientDetail({String hn}) {
-    // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
 
   Future<int> getNoticounter() {
-    // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
 
@@ -348,31 +333,31 @@ class FirebaseServiceMock extends IFirebaseService {
       @required String formName,
       @required String patientState,
       String vitalSignFormTime}) {
-    // TODO: implement getPatientDetail
     throw UnimplementedError();
   }
 
   @override
   Future<void> addToDashboardCollection(Map<String, dynamic> data) {
-    // TODO: implement addToDashboardCollection
     throw UnimplementedError();
   }
 
   @override
   Future<int> getDayInHospital({String hn, DateTime dateToCompare}) {
-    // TODO: implement getDayInHospital
     throw UnimplementedError();
   }
 
   @override
   Future<List<Map<String, dynamic>>> getVitalSignTable(
       {String hn, String dashboardState}) {
-    // TODO: implement getVitalSignTable
     throw UnimplementedError();
   }
 
   Future<Map<String, dynamic>> getAdlTable({@required String hn}) {
-    // TODO: implement getPatientDetail
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, dynamic>> getDischargedPatient({hn}) {
     throw UnimplementedError();
   }
 }

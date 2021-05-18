@@ -119,4 +119,6 @@ abstract class IFirebaseService {
       {@required String hn, @required String dashboardState});
 
   Future<Map<String, dynamic>> getAdlTable({@required String hn});
+
+  Future<Map<String, dynamic>> getDischargedPatient({@required hn});
 }

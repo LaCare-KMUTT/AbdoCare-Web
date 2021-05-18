@@ -1,6 +1,7 @@
-import 'package:AbdoCare_Web/Widget/appbar.dart';
 import 'package:AbdoCare_Web/Widget/patient_list/reAdmitForm.dart';
+import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:flutter/material.dart';
+
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
 
@@ -13,6 +14,8 @@ class ReAdmitPage extends StatefulWidget {
 
 class _ReAdmitPageState extends State<ReAdmitPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final CloudFunctionService _cloudFunctionService =
+      locator<CloudFunctionService>();
 
   var _currentHn = '';
   void _submitReAdmitForm({
@@ -39,11 +42,11 @@ class _ReAdmitPageState extends State<ReAdmitPage> {
     @required DateTime latestStateChange,
   }) async {
     var document = await _firebaseService.searchDocumentByField(
-        collection: 'Users', field: 'hn', fieldValue: _currentHn);
+        collection: 'Discharged', field: 'hn', fieldValue: _currentHn);
     var userCollectionId = document.docs.first.id;
 
     await _firebaseService.addSubCollection(
-      collection: 'Users',
+      collection: 'Discharged',
       docId: userCollectionId,
       subCollection: 'an',
       data: {

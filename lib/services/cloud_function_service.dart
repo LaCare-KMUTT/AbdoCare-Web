@@ -8,7 +8,7 @@ class CloudFunctionService {
 
   HttpsCallable _dischargeUserCallable = FirebaseFunctions.instance
       .httpsCallable('moveDocument',
-          options: HttpsCallableOptions(timeout: Duration(seconds: 5)));
+          options: HttpsCallableOptions(timeout: Duration(seconds: 10)));
 
   Future<String> createUser({
     @required String email,
@@ -46,16 +46,8 @@ class CloudFunctionService {
       'userId': userId,
     };
     try {
-      await _dischargeUserCallable(data).then((response) => {
-            if (response.data['status'] == 'success')
-              {
-                print('GOOD GOOD'),
-              }
-            else
-              {
-                print(response.data['message']),
-              }
-          });
+      await _dischargeUserCallable(data)
+          .then((response) => {print(response.data['message'] + userId)});
     } on FirebaseFunctionsException catch (e) {
       print('Error in dischargeUser: $e');
     }
