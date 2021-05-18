@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!--
+  <head>
+    <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -11,70 +11,76 @@
     Fore more details:
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
   -->
-  <base href="/">
-  
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Platform to support continuous care for abdominal surgery patients.">
+    <base href="/" />
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="myapp">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta
+      name="description"
+      content="Platform to support continuous care for abdominal surgery patients."
+    />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="icons/abdocare_logo.png"/>
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="myapp" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
-  <title>Abdocare</title>
-  <link rel="manifest" href="manifest.json">
-</head>
-<body>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="icons/abdocare_logo.png" />
 
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-functions.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-messaging.js"></script>
+    <title>Abdocare</title>
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-functions.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-messaging.js"></script>
 
-
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
 
-<script>
-  if ('serviceWorker' in navigator) {
-   window.addEventListener('load', function () {
-     navigator.serviceWorker.register("/firebase-messaging-sw.js");
-  });
- }
- </script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/firebase-messaging-sw.js");
+        });
+      }
+    </script>
 
-<script type="module" src="./firebase-config.js"></script>
-<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  
- //import { firebaseConfig } from './firebase-config.js';
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  //firebase.analytics();
-</script>
-  <!-- This script installs service_worker.js to provide PWA functionality to
+    <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+      var firebaseConfig = {
+        apiKey: "AIzaSyDu8_HYCIsMBc8PkNs5oddKhjcJLFoNaVk",
+        authDomain: "abdocare-bdab0.firebaseapp.com",
+        databaseURL: "https://abdocare-bdab0.firebaseio.com",
+        projectId: "abdocare-bdab0",
+        storageBucket: "abdocare-bdab0.appspot.com",
+        messagingSenderId: "611491873650",
+        appId: "1:611491873650:web:7c3d372d1cdf8f314393eb",
+        measurementId: "G-Q85QT7BLYL",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      //firebase.analytics();
+    </script>
+    <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
-       
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('flutter-first-frame', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js');
-      });
-    }
-  </script>
-  <script src="main.dart.js" type="application/javascript"></script>
-  
 
-</body>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("flutter-first-frame", function () {
+          navigator.serviceWorker.register("flutter_service_worker.js");
+        });
+      }
+    </script>
+    <script src="main.dart.js" type="application/javascript"></script>
+  </body>
 </html>
