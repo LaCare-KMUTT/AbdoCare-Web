@@ -1,5 +1,7 @@
 import * as admin from "firebase-admin";
-import * as createUser from "./modules/createUser";
+import { createUser } from "./modules/createUser";
+import { moveDocument } from "./modules/moveDocument";
 
 admin.initializeApp();
-exports.createUser = createUser.createUser;
+exports.createUser = createUser;
+exports.moveDocument = moveDocument;

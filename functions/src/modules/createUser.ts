@@ -1,9 +1,8 @@
 import * as functions from "firebase-functions";
-import * as admin from'firebase-admin';
+import * as admin from "firebase-admin";
 
-// Use this when cloud_function is able to use.
 export const createUser = functions.https.onCall(async (data, context) => {
-  var firebaseError = "";
+  let firebaseError = "";
   console.log(
     "function was called by user with id : " + context.auth?.uid || null
   );
