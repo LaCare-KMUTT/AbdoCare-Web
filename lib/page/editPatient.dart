@@ -1,3 +1,4 @@
+import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:flutter/material.dart';
 import '../Widget/patient_list/editPatientForm.dart';
 import '../services/interfaces/firebase_service_interface.dart';
@@ -12,6 +13,8 @@ class EditPatientPage extends StatefulWidget {
 
 class _EditPatientPageState extends State<EditPatientPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  final CloudFunctionService _cloudFunctionService =
+      locator<CloudFunctionService>();
 
   var _currentHn = '';
   void _submitEditPatientForm({
@@ -78,6 +81,8 @@ class _EditPatientPageState extends State<EditPatientPage> {
         'latestStateChange': latestStateChange,
       },
     );
+    if (state == 'Discharged')
+      await _cloudFunctionService.dischargeUser(userId: userCollectionId);
   }
 
   @override
