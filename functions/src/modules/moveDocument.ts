@@ -13,8 +13,8 @@ export const moveDocument = functions.https.onCall(async (data, context) => {
     };
   }
   const userId = data.userId;
-  const collectionFrom = "Users";
-  const collectionTo = "DischargedPatient";
+  const collectionFrom = data.collectionFrom;
+  const collectionTo = data.collectionTo;
 
   const copied = await copyDoc(collectionFrom, userId, collectionTo, {}, true);
 

@@ -66,6 +66,7 @@ class _ReAdmitPageState extends State<ReAdmitPage> {
         'latestStateChange': latestStateChange,
       },
     );
+    await _cloudFunctionService.restoreUser(userId: userCollectionId);
   }
 
   @override

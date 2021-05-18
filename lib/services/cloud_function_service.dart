@@ -6,7 +6,7 @@ class CloudFunctionService {
       'createUser',
       options: HttpsCallableOptions(timeout: Duration(seconds: 5)));
 
-  HttpsCallable _dischargeUserCallable = FirebaseFunctions.instance
+  HttpsCallable _moveDocumentCallable = FirebaseFunctions.instance
       .httpsCallable('moveDocument',
           options: HttpsCallableOptions(timeout: Duration(seconds: 10)));
 
@@ -44,9 +44,26 @@ class CloudFunctionService {
     print('Discharge user $userId');
     Map<String, dynamic> data = {
       'userId': userId,
+      'collectionFrom': 'Users',
+      'collectionTo': 'DisChargedPatient'
     };
     try {
-      await _dischargeUserCallable(data)
+      await _moveDocumentCallable(data)
+          .then((response) => {print(response.data['message'] + userId)});
+    } on FirebaseFunctionsException catch (e) {
+      print('Error in dischargeUser: $e');
+    }
+  }
+
+  Future<void> restoreUser({@required String userId}) async {
+    print('restore user $userId');
+    Map<String, dynamic> data = {
+      'userId': userId,
+      'collectionFrom': 'DisChargedPatient',
+      'collectionTo': 'Users',
+    };
+    try {
+      await _moveDocumentCallable(data)
           .then((response) => {print(response.data['message'] + userId)});
     } on FirebaseFunctionsException catch (e) {
       print('Error in dischargeUser: $e');
