@@ -113,6 +113,7 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          contentPadding: EdgeInsets.zero,
           content: Builder(
             builder: (context) {
               var height = MediaQuery.of(context).size.height;
@@ -123,9 +124,12 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    Text('หมายเหตุการแจ้งเตือน',
-                        style:
-                            TextStyle(fontSize: 24, color: Color(0xFFC37447))),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 8, 30, 8),
+                      child: Text('หมายเหตุการแจ้งเตือน',
+                          style: TextStyle(
+                              fontSize: 24, color: Color(0xFFC37447))),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text("ผู้ป่วย$formName",
@@ -272,7 +276,7 @@ class _PostHomeNotificationTableState extends State<PostHomeNotificationTable> {
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 20, bottom: 20),
+                                    const EdgeInsets.only(top: 10, bottom: 20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
