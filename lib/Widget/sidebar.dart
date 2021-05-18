@@ -331,6 +331,9 @@ class SideBar extends StatelessWidget {
         future: _firebaseService.getDischargedPatient(hn: hn),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            String age = _calculationService
+                .calculateAge(birthDate: snapshot.data['dob'].toDate())
+                .toString();
             return Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Container(
@@ -377,7 +380,7 @@ class SideBar extends StatelessWidget {
                             ListTile(
                               // Access the fields as defined in FireStore
                               title: Text(
-                                '${_calculationService.calculateAge(birthDate: snapshot.data['dob'].toDate()).toString()} ',
+                                age,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
