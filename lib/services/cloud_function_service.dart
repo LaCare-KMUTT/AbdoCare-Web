@@ -45,7 +45,7 @@ class CloudFunctionService {
     Map<String, dynamic> data = {
       'userId': userId,
       'collectionFrom': 'Users',
-      'collectionTo': 'DisChargedPatient'
+      'collectionTo': 'DischargedPatient'
     };
     try {
       await _moveDocumentCallable(data)
@@ -59,7 +59,7 @@ class CloudFunctionService {
     print('restore user $userId');
     Map<String, dynamic> data = {
       'userId': userId,
-      'collectionFrom': 'DisChargedPatient',
+      'collectionFrom': 'DischargedPatient',
       'collectionTo': 'Users',
     };
     try {
