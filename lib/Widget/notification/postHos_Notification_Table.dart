@@ -34,7 +34,7 @@ class _PostHosNotificationTableState extends State<PostHosNotificationTable> {
         },
         child: DataTable(
           showCheckboxColumn: false,
-          columnSpacing: screenSize.width * 0.03,
+          columnSpacing: screenSize.width * 0.02,
           horizontalMargin: 5,
           headingRowHeight: 50,
           headingTextStyle: TextStyle(

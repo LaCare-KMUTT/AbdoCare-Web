@@ -1,23 +1,24 @@
+import 'package:AbdoCare_Web/Widget/patient_list/reAdmitForm.dart';
 import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:flutter/material.dart';
-import '../Widget/patient_list/editPatientForm.dart';
+
 import '../services/interfaces/firebase_service_interface.dart';
 import '../services/service_locator.dart';
 
-class EditPatientPage extends StatefulWidget {
+class ReAdmitPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _EditPatientPageState();
+    return _ReAdmitPageState();
   }
 }
 
-class _EditPatientPageState extends State<EditPatientPage> {
+class _ReAdmitPageState extends State<ReAdmitPage> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final CloudFunctionService _cloudFunctionService =
       locator<CloudFunctionService>();
 
   var _currentHn = '';
-  void _submitEditPatientForm({
+  void _submitReAdmitForm({
     @required String hn,
     @required String an,
     @required String patientName,
@@ -41,29 +42,13 @@ class _EditPatientPageState extends State<EditPatientPage> {
     @required DateTime latestStateChange,
   }) async {
     var document = await _firebaseService.searchDocumentByField(
-        collection: 'Users', field: 'hn', fieldValue: _currentHn);
+        collection: 'DischargedPatient', field: 'hn', fieldValue: _currentHn);
     var userCollectionId = document.docs.first.id;
-    var subCollection = await _firebaseService.getLatestAnSubCollection(
-        docId: userCollectionId);
-    var subCollectionId = subCollection['id'];
 
-    await _firebaseService.updateDataToCollectionField(
-        collection: 'Users',
-        docId: userCollectionId,
-        data: {
-          'hn': hn,
-          'name': patientName,
-          'surname': patientSurname,
-          'address': address,
-          'gender': gender,
-          'dob': dob,
-          'patientTel': patientTel,
-        });
-    await _firebaseService.updateFieldToSubCollection(
-      collection: 'Users',
+    await _firebaseService.addSubCollection(
+      collection: 'DischargedPatient',
       docId: userCollectionId,
       subCollection: 'an',
-      subCollectionDoc: subCollectionId,
       data: {
         'an': an,
         'careTakerName': careTakerName,
@@ -81,8 +66,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
         'latestStateChange': latestStateChange,
       },
     );
-    if (state == 'Discharged')
-      await _cloudFunctionService.dischargeUser(userId: userCollectionId);
+    await _cloudFunctionService.restoreUser(userId: userCollectionId);
   }
 
   @override
@@ -91,11 +75,12 @@ class _EditPatientPageState extends State<EditPatientPage> {
         ModalRoute.of(context).settings.arguments as String;
     setState(() {
       _currentHn = currentHn;
+      print(currentHn);
     });
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'แก้ไขข้อมูลผู้ป่วย',
+          'Re-Admit',
           style: TextStyle(fontSize: 24),
         ),
         leading: IconButton(
@@ -107,8 +92,8 @@ class _EditPatientPageState extends State<EditPatientPage> {
           onPressed: () => Navigator.pushNamed(context, '/patientList_page'),
         ),
       ),
-      body: EditPatientForm(
-        _submitEditPatientForm,
+      body: ReAdmitForm(
+        _submitReAdmitForm,
       ),
     );
   }

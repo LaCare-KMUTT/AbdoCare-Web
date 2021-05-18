@@ -581,7 +581,6 @@ class FirebaseService extends IFirebaseService {
         'oxygenRate': oxygenRateToMap ?? '-',
         'status': status ?? '-',
       };
-      print('MAP in pre-op list $map');
       return map;
     });
     var futureList = Future.wait(returnList);
@@ -1183,5 +1182,20 @@ class FirebaseService extends IFirebaseService {
           : 0,
     };
     return map;
+  }
+
+  Future<Map<String, dynamic>> getDischargedPatient({@required hn}) async {
+    var dischargePatient = await _firestore
+        .collection('DischargedPatient')
+        .where('hn', isEqualTo: hn)
+        .limit(1)
+        .get()
+        .then((value) {
+      return value.docs.first.data();
+    }).catchError((onError) {
+      print('$onError getDischargedPatient');
+      return null;
+    });
+    return dischargePatient;
   }
 }
