@@ -42,11 +42,11 @@ class _ReAdmitPageState extends State<ReAdmitPage> {
     @required DateTime latestStateChange,
   }) async {
     var document = await _firebaseService.searchDocumentByField(
-        collection: 'Discharged', field: 'hn', fieldValue: _currentHn);
+        collection: 'DischargedPatient', field: 'hn', fieldValue: _currentHn);
     var userCollectionId = document.docs.first.id;
 
     await _firebaseService.addSubCollection(
-      collection: 'Discharged',
+      collection: 'DischargedPatient',
       docId: userCollectionId,
       subCollection: 'an',
       data: {
