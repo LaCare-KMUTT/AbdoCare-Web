@@ -377,7 +377,7 @@ class SideBar extends StatelessWidget {
                             ListTile(
                               // Access the fields as defined in FireStore
                               title: Text(
-                                '${_calculationService.calculateAge(birthDate: snapshot.data['dob'].toDate())} ',
+                                '${_calculationService.calculateAge(birthDate: snapshot.data['dob'].toDate()).toString()} ',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
