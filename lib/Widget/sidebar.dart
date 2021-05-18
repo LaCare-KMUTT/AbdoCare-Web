@@ -1,5 +1,5 @@
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +10,8 @@ import 'material.dart';
 class SideBar extends StatelessWidget {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   final CustomMaterial _customMaterial = locator<CustomMaterial>();
+  final ICalculationService _calculationService =
+      locator<ICalculationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -375,7 +377,7 @@ class SideBar extends StatelessWidget {
                             ListTile(
                               // Access the fields as defined in FireStore
                               title: Text(
-                                '${snapshot.data['hn']} ',
+                                '${_calculationService.calculateAge(birthDate: snapshot.data['dob'].toDate())} ',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
