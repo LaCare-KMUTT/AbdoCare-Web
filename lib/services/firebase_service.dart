@@ -1210,7 +1210,7 @@ class FirebaseService extends IFirebaseService {
           _firestore.collection('Appointments');
 
       deleteAppointments.docs.forEach((doc) async {
-        appointmentRef.doc(doc.id).delete().then((value) {
+        await appointmentRef.doc(doc.id).delete().then((value) {
           print('Successfully delete $hn appointments data');
         }).catchError((onError) {
           print('$onError in deleteAppointment');
