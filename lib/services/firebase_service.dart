@@ -1057,22 +1057,36 @@ class FirebaseService extends IFirebaseService {
   Future<List<Map<String, dynamic>>> getVitalSignTable(
       {@required String hn, @required String dashboardState}) async {
     var fieldName;
+    var dashboardsCollection;
     if (dashboardState == "Post-Operation@Home") {
       fieldName = 'painGraph';
+      dashboardsCollection = await _firestore
+          .collection('Dashboards')
+          .orderBy('Date')
+          .where('hn', isEqualTo: hn)
+          .where('name', isEqualTo: fieldName)
+          .get()
+          .then((value) {
+        return value.docs;
+      }).catchError((onError) {
+        print('Error in getVitalSignTable = $onError');
+      });
     } else {
       fieldName = 'dashboardTable';
+      dashboardsCollection = await _firestore
+          .collection('Dashboards')
+          .orderBy('Date', descending: false)
+          .orderBy('Time', descending: false)
+          .where('hn', isEqualTo: hn)
+          .where('name', isEqualTo: fieldName)
+          .get()
+          .then((value) {
+        return value.docs;
+      }).catchError((onError) {
+        print('Error in getVitalSignTable = $onError');
+      });
     }
-    var dashboardsCollection = await _firestore
-        .collection('Dashboards')
-        .orderBy('Date')
-        .where('hn', isEqualTo: hn)
-        .where('name', isEqualTo: fieldName)
-        .get()
-        .then((value) {
-      return value.docs;
-    }).catchError((onError) {
-      print('Error in getVitalSignTable = $onError');
-    });
+
     List<Map<String, dynamic>> list = [];
     dashboardsCollection.forEach((element) {
       Map<String, dynamic> data = element.data();
