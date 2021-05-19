@@ -1198,4 +1198,24 @@ class FirebaseService extends IFirebaseService {
     });
     return dischargePatient;
   }
+
+  Future<void> deleteAppointments({@required hn}) async {
+    var deleteAppointments = await _firestore
+        .collection('Appointments')
+        .where('hn', isEqualTo: hn)
+        .get();
+
+    if (deleteAppointments != null) {
+      CollectionReference appointmentRef =
+          _firestore.collection('Appointments');
+
+      deleteAppointments.docs.forEach((doc) async {
+        appointmentRef.doc(doc.id).delete().then((value) {
+          print('Successfully delete $hn appointments data');
+        }).catchError((onError) {
+          print('$onError in deleteAppointment');
+        });
+      });
+    }
+  }
 }

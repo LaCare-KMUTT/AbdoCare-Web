@@ -81,8 +81,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
         'latestStateChange': latestStateChange,
       },
     );
-    if (state == 'Discharged')
+    if (state == 'Discharged') {
       await _cloudFunctionService.dischargeUser(userId: userCollectionId);
+      await _firebaseService.deleteAppointments(hn: hn);
+    }
   }
 
   @override
