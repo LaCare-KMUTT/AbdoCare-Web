@@ -33,6 +33,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
     super.initState();
     setState(() {
       formDateToShow = DateFormat('dd/MM/yyyy').format(_date);
+      _date = _calculationService.formatDate(date: _date);
     });
   }
 
@@ -435,8 +436,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                           Map<String, dynamic> dataToDB = {
                                             'hn': _hn,
                                             'an': _an,
-                                            'date': _calculationService
-                                                .formatDate(date: _date),
+                                            'date': _date,
                                             'time': _time
                                                 .toString()
                                                 .substring(10, 15),
