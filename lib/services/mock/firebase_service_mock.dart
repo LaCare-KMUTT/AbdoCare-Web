@@ -363,7 +363,11 @@ class FirebaseServiceMock extends IFirebaseService {
 
   @override
   Future<void> deleteAppointments({hn}) {
-    // TODO: implement deleteAppointments
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteNotifications({@required userId}) {
     throw UnimplementedError();
   }
 }

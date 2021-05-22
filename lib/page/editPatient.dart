@@ -83,6 +83,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
     );
     if (state == 'Discharged') {
       await _cloudFunctionService.dischargeUser(userId: userCollectionId);
+      await _firebaseService.deleteNotifications(userId: userCollectionId);
       await _firebaseService.deleteAppointments(hn: hn);
     }
   }
