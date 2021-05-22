@@ -65,7 +65,7 @@ class _ADLChartState extends State<ADLChart> {
     return Container(child: child);
   }
 
-  Widget adlRadialGauge(double result) {
+  Widget adlRadialGauge(dynamic result) {
     return Container(
       height: 100,
       width: 10,
@@ -85,8 +85,8 @@ class _ADLChartState extends State<ADLChart> {
               annotations: <GaugeAnnotation>[
                 GaugeAnnotation(
                     widget: Container(
-                        child:
-                            Text('$result %', style: TextStyle(fontSize: 16))),
+                        child: Text('${result.toDouble()} %',
+                            style: TextStyle(fontSize: 16))),
                     angle: 90,
                     positionFactor: 0.2)
               ]),
