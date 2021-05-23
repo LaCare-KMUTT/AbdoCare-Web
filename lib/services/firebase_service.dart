@@ -1147,7 +1147,7 @@ class FirebaseService extends IFirebaseService {
           preOpAdlData.length != 0 ? preOpAdlData['formData']['Mobility'] : 4,
       'PreOpTotal': preOpAdlData.length != 0
           ? preOpAdlData['formData']['TotalScoreADL']
-          : '0',
+          : '-',
       'PostHosGrooming':
           postHosData.length != 0 ? postHosData['formData']['Grooming'] : 2,
       'PostHosBathing':
