@@ -29,7 +29,7 @@ class _ADLChartState extends State<ADLChart> {
       } else if (score == 1) {
         child = adlRadialGauge(100);
       } else {
-        child = adlRadialGauge(0);
+        child = adlRadialGauge(200);
       }
     } // For 3 choice
     else if (topic == "Feeding" ||
@@ -45,7 +45,7 @@ class _ADLChartState extends State<ADLChart> {
       } else if (score == 2) {
         child = adlRadialGauge(100);
       } else {
-        child = adlRadialGauge(0);
+        child = adlRadialGauge(200);
       }
     }
     // For 4 choice
@@ -59,13 +59,13 @@ class _ADLChartState extends State<ADLChart> {
       } else if (score == 3) {
         child = adlRadialGauge(100);
       } else {
-        child = adlRadialGauge(0);
+        child = adlRadialGauge(200);
       }
     }
     return Container(child: child);
   }
 
-  Widget adlRadialGauge(dynamic result) {
+  Widget adlRadialGauge(double result) {
     return Container(
       height: 100,
       width: 10,
@@ -80,13 +80,18 @@ class _ADLChartState extends State<ADLChart> {
               showTicks: false,
               showLabels: false,
               pointers: <GaugePointer>[
-                RangePointer(value: result, width: 20, color: Color(0xFFC37447))
+                RangePointer(
+                    value: result == 200 ? 0 : result,
+                    width: 20,
+                    color: Color(0xFFC37447))
               ],
               annotations: <GaugeAnnotation>[
                 GaugeAnnotation(
                     widget: Container(
-                        child: Text('${result.toDouble()} %',
-                            style: TextStyle(fontSize: 16))),
+                        child: result == 200
+                            ? Text('-')
+                            : Text('${result.toDouble()} %',
+                                style: TextStyle(fontSize: 16))),
                     angle: 90,
                     positionFactor: 0.2)
               ]),
