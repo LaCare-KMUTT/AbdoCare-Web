@@ -317,6 +317,35 @@ class FirebaseService extends IFirebaseService {
     return data.docs;
   }
 
+  Stream<QuerySnapshot> getUserStream() {
+    var snapshot = _firestore.collection('Users').snapshots();
+    return snapshot;
+  }
+
+  Stream<DocumentSnapshot> getAnSubCollectionSnapshot(
+      {@required String userId, @required String anId}) {
+    return _firestore
+        .collection('Users')
+        .doc(userId)
+        .collection('an')
+        .doc(anId)
+        .snapshots();
+  }
+
+  Stream<Map<String, dynamic>> getLatestAnSubCollectionSnapshot(
+      {@required String docId}) {
+    var anSubCollection = _firestore
+        .collection('Users')
+        .doc(docId)
+        .collection('an')
+        .orderBy('operationDate', descending: true)
+        .limit(1)
+        .snapshots();
+    var returnMapAsStream =
+        anSubCollection.first.then((value) => value.docs.first.data());
+    return returnMapAsStream.asStream();
+  }
+
   Future<Map<String, dynamic>> getLatestAnSubCollection({
     @required String docId,
   }) async {

@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:ui';
 
+import 'package:AbdoCare_Web/Widget/patient_list/patientList_view_model.dart';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
+import 'package:AbdoCare_Web/models/user_list/patient_list_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +18,16 @@ class PatientListTable extends StatefulWidget {
 
 class _PatientListTableState extends State<PatientListTable> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
+  StreamController<List> _streamController = StreamController<List>();
+  Stream<List> get _stream => _streamController.stream;
+  final PatientListViewModel _patientListViewModel =
+      locator<PatientListViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   String hn = '';
   @override
   Widget build(BuildContext context) {
@@ -48,7 +61,6 @@ class _PatientListTableState extends State<PatientListTable> {
                             child: Text('ลงทะเบียนผู้ป่วย',
                                 style: TextStyle(fontSize: 18)),
                             onPressed: () {
-                              print('This is add patient button');
                               setState(() {});
                               Navigator.pushNamed(context, '/addPatient_page');
                             },
@@ -186,8 +198,8 @@ class _PatientListTableState extends State<PatientListTable> {
                             indent: 0,
                             endIndent: 0,
                           ),
-                          FutureBuilder<List<QueryDocumentSnapshot>>(
-                            future: _firebaseService.getUserList(),
+                          FutureBuilder<List<PatientListModel>>(
+                            future: _patientListViewModel.getUsers(),
                             builder: buildUserList,
                           ),
                         ],
@@ -203,15 +215,22 @@ class _PatientListTableState extends State<PatientListTable> {
     );
   }
 
-  Widget buildUserList(BuildContext context,
-      AsyncSnapshot<List<QueryDocumentSnapshot>> snapshot) {
-    if (snapshot.hasData) {
+  Widget buildUserList(
+      BuildContext context, AsyncSnapshot<List<PatientListModel>> snapshot) {
+    if (snapshot.connectionState != ConnectionState.done ||
+        !snapshot.hasData ||
+        snapshot.data == null) {
+      return ProgressBar.circularProgressIndicator(context);
+    } else {
+      print('Data inside = ${snapshot.data.length}');
       return ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
-          DocumentSnapshot user = snapshot.data[index];
+          PatientListModel user = snapshot.data[index];
+
+          print('user = ${user.name}');
           return Row(
             children: <Widget>[
               Expanded(
@@ -220,9 +239,8 @@ class _PatientListTableState extends State<PatientListTable> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        // Access the fields as defined in FireStore
                         title: Text(
-                          user.get('hn'),
+                          user.hn,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
@@ -237,9 +255,8 @@ class _PatientListTableState extends State<PatientListTable> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        // Access the fields as defined in FireStore
                         title: Text(
-                          '${user.get('name')} ${user.get('surname')}',
+                          '${user.name} ${user.surname}',
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
@@ -252,30 +269,18 @@ class _PatientListTableState extends State<PatientListTable> {
                 flex: 2,
                 child: Column(
                   children: <Widget>[
-                    FutureBuilder<Map<String, dynamic>>(
-                        future: _firebaseService.getLatestAnSubCollection(
-                            docId: user.id),
-                        builder: (context, anSnapshot) {
-                          if (!anSnapshot.hasData) {
-                            return Text(
-                              'loading...',
+                    ListTile(
+                      title: user.state != null
+                          ? Text(
+                              user.state,
                               textAlign: TextAlign.center,
-                            );
-                          }
-                          return ListTile(
-                            title: anSnapshot.data['state'] != null
-                                ? Text(
-                                    anSnapshot.data['state'],
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                  )
-                                : Text(
-                                    '-',
-                                    textAlign: TextAlign.center,
-                                  ),
-                          );
-                        }),
+                              style: Theme.of(context).textTheme.bodyText2,
+                            )
+                          : Text(
+                              '-',
+                              textAlign: TextAlign.center,
+                            ),
+                    ),
                   ],
                 ),
               ),
@@ -289,7 +294,7 @@ class _PatientListTableState extends State<PatientListTable> {
                   child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
                   onPressed: () {
                     Navigator.pushNamed(context, '/editPatient_page',
-                        arguments: user.get('hn'));
+                        arguments: user.hn);
                   },
                 ),
               ),
@@ -297,13 +302,6 @@ class _PatientListTableState extends State<PatientListTable> {
           );
         },
       );
-    } else if (snapshot.connectionState == ConnectionState.done &&
-        !snapshot.hasData) {
-      return Center(
-        child: Text("No users found."),
-      );
-    } else {
-      return ProgressBar.circularProgressIndicator(context);
     }
   }
 }

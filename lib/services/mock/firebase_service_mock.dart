@@ -370,4 +370,22 @@ class FirebaseServiceMock extends IFirebaseService {
   Future<void> deleteNotifications({@required userId}) {
     throw UnimplementedError();
   }
+
+  @override
+  Stream<QuerySnapshot> getUserStream() {
+    // TODO: implement getUserStream
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<Map<String, dynamic>> getLatestAnSubCollectionSnapshot({String docId}) {
+    // TODO: implement getLatestAnSubCollectionSnapshot
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<DocumentSnapshot> getAnSubCollectionSnapshot({userId, anId}) {
+    // TODO: implement getAnSubCollectionSnapshot
+    throw UnimplementedError();
+  }
 }
