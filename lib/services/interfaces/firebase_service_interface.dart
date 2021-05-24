@@ -121,4 +121,8 @@ abstract class IFirebaseService {
   Future<Map<String, dynamic>> getAdlTable({@required String hn});
 
   Future<Map<String, dynamic>> getDischargedPatient({@required hn});
+
+  Future<void> deleteAppointments({@required hn});
+
+  Future<void> deleteNotifications({@required userId});
 }
