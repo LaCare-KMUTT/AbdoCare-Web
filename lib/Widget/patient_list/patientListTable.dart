@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
+import 'package:AbdoCare_Web/models/user_list/patient_list_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
@@ -15,7 +18,17 @@ class PatientListTable extends StatefulWidget {
 
 class _PatientListTableState extends State<PatientListTable> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  String hn = '';
+  Stream<QuerySnapshot> _list;
+  String queryHN = '';
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _list = _firebaseService.getUserStream();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -48,7 +61,6 @@ class _PatientListTableState extends State<PatientListTable> {
                             child: Text('ลงทะเบียนผู้ป่วย',
                                 style: TextStyle(fontSize: 18)),
                             onPressed: () {
-                              print('This is add patient button');
                               setState(() {});
                               Navigator.pushNamed(context, '/addPatient_page');
                             },
@@ -90,6 +102,10 @@ class _PatientListTableState extends State<PatientListTable> {
                               0),
                           child: Container(
                             child: TextField(
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp("[a-zA-Z0-9]"))
+                              ],
                               decoration: InputDecoration(
                                   isDense: true,
                                   enabledBorder: const OutlineInputBorder(
@@ -103,7 +119,7 @@ class _PatientListTableState extends State<PatientListTable> {
                                   hintText: 'HN'),
                               onChanged: (val) {
                                 setState(() {
-                                  hn = val;
+                                  queryHN = val.toUpperCase();
                                 });
                               },
                             ),
@@ -186,8 +202,8 @@ class _PatientListTableState extends State<PatientListTable> {
                             indent: 0,
                             endIndent: 0,
                           ),
-                          FutureBuilder<List<QueryDocumentSnapshot>>(
-                            future: _firebaseService.getUserList(),
+                          StreamBuilder<QuerySnapshot>(
+                            stream: _list,
                             builder: buildUserList,
                           ),
                         ],
@@ -204,106 +220,109 @@ class _PatientListTableState extends State<PatientListTable> {
   }
 
   Widget buildUserList(BuildContext context,
-      AsyncSnapshot<List<QueryDocumentSnapshot>> snapshot) {
-    if (snapshot.hasData) {
-      return ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: snapshot.data.length,
-        itemBuilder: (context, index) {
-          DocumentSnapshot user = snapshot.data[index];
-          return Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        // Access the fields as defined in FireStore
-                        title: Text(
-                          user.get('hn'),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        // Access the fields as defined in FireStore
-                        title: Text(
-                          '${user.get('name')} ${user.get('surname')}',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: <Widget>[
-                    FutureBuilder<Map<String, dynamic>>(
-                        future: _firebaseService.getLatestAnSubCollection(
-                            docId: user.id),
-                        builder: (context, anSnapshot) {
-                          if (!anSnapshot.hasData) {
-                            return Text(
-                              'loading...',
-                              textAlign: TextAlign.center,
-                            );
-                          }
-                          return ListTile(
-                            title: anSnapshot.data['state'] != null
-                                ? Text(
-                                    anSnapshot.data['state'],
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2,
-                                  )
-                                : Text(
-                                    '-',
-                                    textAlign: TextAlign.center,
-                                  ),
-                          );
-                        }),
-                  ],
-                ),
-              ),
-              Container(
-                width: 100,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  textColor: Colors.white,
-                  color: Color(0xFFF69E51),
-                  child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/editPatient_page',
-                        arguments: user.get('hn'));
-                  },
-                ),
-              ),
-            ],
-          );
-        },
-      );
-    } else if (snapshot.connectionState == ConnectionState.done &&
-        !snapshot.hasData) {
-      return Center(
-        child: Text("No users found."),
-      );
-    } else {
+      AsyncSnapshot<QuerySnapshot> userCollectionSnapshot) {
+    if (userCollectionSnapshot.connectionState == ConnectionState.waiting ||
+        !userCollectionSnapshot.hasData) {
       return ProgressBar.circularProgressIndicator(context);
+    } else {
+      List<PatientListModel> patientListModels =
+          userCollectionSnapshot.data.docs.map((patient) {
+        PatientListModel model = PatientListModel(map: {
+          'hn': patient.data()['hn'],
+          'name': patient.data()['name'],
+          'surname': patient.data()['surname'],
+          'userId': patient.id,
+          'anId': patient.data()['an'].last['an'],
+        });
+
+        return model;
+      }).toList();
+      patientListModels = patientListModels
+          .where((patient) => patient.hn.contains(queryHN))
+          .toList();
+
+      return ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: patientListModels.length,
+          itemBuilder: (context, index) {
+            return _buildPatientRow(patientListModels[index], context);
+          });
     }
+  }
+
+  Widget _buildPatientRow(PatientListModel patientModel, BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    patientModel.hn,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    '${patientModel.name} ${patientModel.surname}',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: FutureBuilder<String>(
+              future: _firebaseService.getStateForPatientList(
+                  anId: patientModel.anId, userId: patientModel.userId),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Container();
+                }
+                return Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(
+                        snapshot.data,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ),
+                  ],
+                );
+              }),
+        ),
+        Container(
+          width: 100,
+          child: RaisedButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(7.0)),
+            textColor: Colors.white,
+            color: Color(0xFFF69E51),
+            child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
+            onPressed: () {
+              Navigator.pushNamed(context, '/editPatient_page',
+                  arguments: patientModel.hn);
+            },
+          ),
+        ),
+      ],
+    );
   }
 }

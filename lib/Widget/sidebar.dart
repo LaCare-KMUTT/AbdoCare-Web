@@ -160,7 +160,6 @@ class SideBar extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
                         Navigator.pushNamed(context, '/patientList_page');
-                        print('This is patientList button');
                       },
                     ),
                     ListTile(
@@ -169,7 +168,6 @@ class SideBar extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
                         Navigator.pushNamed(context, '/pre_page');
-                        print('This is pre_page button');
                       },
                     ),
                     ListTile(
@@ -178,7 +176,6 @@ class SideBar extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
                         Navigator.pushNamed(context, '/postHos_page');
-                        print('This is postHos_page button');
                       },
                     ),
                     ListTile(
@@ -187,7 +184,6 @@ class SideBar extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () {
                         Navigator.pushNamed(context, '/postHome_page');
-                        print('This is postHome_page button');
                       },
                     ),
                     ListTile(
@@ -196,7 +192,6 @@ class SideBar extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyText2),
                       onTap: () async {
                         reAdmitCard(context);
-                        print('This is Re-Admit button');
                       },
                     ),
                     ListTile(
