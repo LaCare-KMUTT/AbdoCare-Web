@@ -21,7 +21,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: new AppBar(
         title: Text(
           'AbdoCare',
@@ -34,7 +36,26 @@ class _LoginPageState extends State<LoginPage> {
           shrinkWrap: true,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(300, 200, 300, 0),
+              padding: EdgeInsets.fromLTRB(
+                  screenSize.width / 4, 0, screenSize.width / 4, 0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/abdocare_logo.png',
+                        height: 300,
+                        width: 300,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  screenSize.width / 3, 0, screenSize.width / 3, 0),
               child: TextField(
                 controller: _usernameController,
                 textAlign: TextAlign.center,
@@ -46,7 +67,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(300, 20, 300, 0),
+              padding: EdgeInsets.fromLTRB(
+                  screenSize.width / 3, 20, screenSize.width / 3, 0),
               child: TextField(
                 controller: _passwordController,
                 obscureText: true,
@@ -106,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
+
             // Column(
             //   children: <Widget>[
             //     Row(
