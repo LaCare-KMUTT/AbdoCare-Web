@@ -360,4 +360,14 @@ class FirebaseServiceMock extends IFirebaseService {
   Future<Map<String, dynamic>> getDischargedPatient({hn}) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> deleteAppointments({hn}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteNotifications({@required userId}) {
+    throw UnimplementedError();
+  }
 }
