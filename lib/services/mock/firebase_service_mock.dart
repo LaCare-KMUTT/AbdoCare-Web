@@ -370,4 +370,16 @@ class FirebaseServiceMock extends IFirebaseService {
   Future<void> deleteNotifications({@required userId}) {
     throw UnimplementedError();
   }
+
+  @override
+  Stream<QuerySnapshot> getUserStream() {
+    // TODO: implement getUserStream
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> getStateForPatientList({userId, anId}) {
+    // TODO: implement getAnSubCollectionSnapshot
+    throw UnimplementedError();
+  }
 }
