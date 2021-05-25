@@ -18,7 +18,7 @@ class PatientListTable extends StatefulWidget {
 class _PatientListTableState extends State<PatientListTable> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
   Stream<QuerySnapshot> _list;
-  String hn = '';
+  String queryHN = '';
 
   @override
   void initState() {
@@ -114,7 +114,7 @@ class _PatientListTableState extends State<PatientListTable> {
                                   hintText: 'HN'),
                               onChanged: (val) {
                                 setState(() {
-                                  hn = val;
+                                  queryHN = val;
                                 });
                               },
                             ),
@@ -221,19 +221,19 @@ class _PatientListTableState extends State<PatientListTable> {
       return ProgressBar.circularProgressIndicator(context);
     } else {
       List<PatientListModel> patientListModels =
-          userCollectionSnapshot.data.docs.map((e) {
+          userCollectionSnapshot.data.docs.map((patient) {
         PatientListModel model = PatientListModel(map: {
-          'hn': e.data()['hn'],
-          'name': e.data()['name'],
-          'surname': e.data()['surname'],
-          'userId': e.id,
-          'anId': e.data()['an'].last['an'],
+          'hn': patient.data()['hn'],
+          'name': patient.data()['name'],
+          'surname': patient.data()['surname'],
+          'userId': patient.id,
+          'anId': patient.data()['an'].last['an'],
         });
 
         return model;
       }).toList();
       patientListModels = patientListModels
-          .where((element) => element.hn.contains(hn))
+          .where((patient) => patient.hn.contains(queryHN))
           .toList();
 
       return ListView.builder(
