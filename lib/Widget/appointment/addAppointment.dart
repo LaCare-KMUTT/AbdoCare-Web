@@ -33,6 +33,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
     super.initState();
     setState(() {
       formDateToShow = DateFormat('dd/MM/yyyy').format(_date);
+      _date = _calculationService.formatDate(date: _date);
     });
   }
 

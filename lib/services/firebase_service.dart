@@ -1057,22 +1057,36 @@ class FirebaseService extends IFirebaseService {
   Future<List<Map<String, dynamic>>> getVitalSignTable(
       {@required String hn, @required String dashboardState}) async {
     var fieldName;
+    var dashboardsCollection;
     if (dashboardState == "Post-Operation@Home") {
       fieldName = 'painGraph';
+      dashboardsCollection = await _firestore
+          .collection('Dashboards')
+          .orderBy('Date')
+          .where('hn', isEqualTo: hn)
+          .where('name', isEqualTo: fieldName)
+          .get()
+          .then((value) {
+        return value.docs;
+      }).catchError((onError) {
+        print('Error in getVitalSignTable = $onError');
+      });
     } else {
       fieldName = 'dashboardTable';
+      dashboardsCollection = await _firestore
+          .collection('Dashboards')
+          .orderBy('Date', descending: false)
+          .orderBy('Time', descending: false)
+          .where('hn', isEqualTo: hn)
+          .where('name', isEqualTo: fieldName)
+          .get()
+          .then((value) {
+        return value.docs;
+      }).catchError((onError) {
+        print('Error in getVitalSignTable = $onError');
+      });
     }
-    var dashboardsCollection = await _firestore
-        .collection('Dashboards')
-        .orderBy('Date')
-        .where('hn', isEqualTo: hn)
-        .where('name', isEqualTo: fieldName)
-        .get()
-        .then((value) {
-      return value.docs;
-    }).catchError((onError) {
-      print('Error in getVitalSignTable = $onError');
-    });
+
     List<Map<String, dynamic>> list = [];
     dashboardsCollection.forEach((element) {
       Map<String, dynamic> data = element.data();
@@ -1133,7 +1147,7 @@ class FirebaseService extends IFirebaseService {
           preOpAdlData.length != 0 ? preOpAdlData['formData']['Mobility'] : 4,
       'PreOpTotal': preOpAdlData.length != 0
           ? preOpAdlData['formData']['TotalScoreADL']
-          : 0,
+          : '-',
       'PostHosGrooming':
           postHosData.length != 0 ? postHosData['formData']['Grooming'] : 2,
       'PostHosBathing':
@@ -1156,7 +1170,7 @@ class FirebaseService extends IFirebaseService {
           postHosData.length != 0 ? postHosData['formData']['Mobility'] : 4,
       'PostHosTotal': postHosData.length != 0
           ? postHosData['formData']['TotalScoreADL']
-          : 0,
+          : '-',
       'PostHomeGrooming':
           postHomeData.length != 0 ? postHomeData['formData']['Grooming'] : 2,
       'PostHomeBathing':
@@ -1179,7 +1193,7 @@ class FirebaseService extends IFirebaseService {
           postHomeData.length != 0 ? postHomeData['formData']['Mobility'] : 4,
       'PostHomeTotal': postHomeData.length != 0
           ? postHomeData['formData']['TotalScoreADL']
-          : 0,
+          : '-',
     };
     return map;
   }
@@ -1197,5 +1211,45 @@ class FirebaseService extends IFirebaseService {
       return null;
     });
     return dischargePatient;
+  }
+
+  Future<void> deleteAppointments({@required hn}) async {
+    var deleteAppointments = await _firestore
+        .collection('Appointments')
+        .where('hn', isEqualTo: hn)
+        .get();
+
+    if (deleteAppointments != null) {
+      CollectionReference appointmentRef =
+          _firestore.collection('Appointments');
+
+      deleteAppointments.docs.forEach((doc) async {
+        await appointmentRef.doc(doc.id).delete().then((value) {
+          print('Successfully delete $hn appointments data');
+        }).catchError((onError) {
+          print('$onError in deleteAppointment');
+        });
+      });
+    }
+  }
+
+  Future<void> deleteNotifications({@required userId}) async {
+    var deleteNotifications = await _firestore
+        .collection('Notifications')
+        .where('userId', isEqualTo: userId)
+        .get();
+
+    if (deleteNotifications != null) {
+      CollectionReference notificationsRef =
+          _firestore.collection('Notifications');
+
+      deleteNotifications.docs.forEach((doc) async {
+        await notificationsRef.doc(doc.id).delete().then((value) {
+          print('Successfully delete $userId Notification data');
+        }).catchError((onError) {
+          print('$onError in deleteNotifications');
+        });
+      });
+    }
   }
 }

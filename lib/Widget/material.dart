@@ -113,7 +113,9 @@ class CustomMaterial {
   }
 
   Color getADLColor(dynamic adlScore) {
-    if (adlScore <= 4) {
+    if (adlScore == '-') {
+      return Colors.black;
+    } else if (adlScore <= 4) {
       return Colors.red;
     } else if (adlScore >= 5 && adlScore <= 8) {
       return Colors.orange;
