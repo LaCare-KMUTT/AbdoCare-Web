@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/models/notification_list/formName_Notification_model.dart';
+import 'package:AbdoCare_Web/models/user_list/patient_list_model.dart';
 import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -315,6 +316,22 @@ class FirebaseService extends IFirebaseService {
   Future<List<QueryDocumentSnapshot>> getUserList() async {
     var data = await _firestore.collection('Users').get();
     return data.docs;
+  }
+
+  Stream<QuerySnapshot> getUserStream() {
+    var snapshot = _firestore.collection('Users').snapshots();
+    return snapshot;
+  }
+
+  Future<String> getStateForPatientList(
+      {@required String userId, @required String anId}) {
+    return _firestore
+        .collection('Users')
+        .doc(userId)
+        .collection('an')
+        .doc(anId)
+        .get()
+        .then((value) => value.get('state'));
   }
 
   Future<Map<String, dynamic>> getLatestAnSubCollection({
@@ -732,6 +749,7 @@ class FirebaseService extends IFirebaseService {
     });
   }
 
+//Too expensive function
   Future<String> getPatientState({@required String hn}) async {
     var userId = await _firestore
         .collection('Users')

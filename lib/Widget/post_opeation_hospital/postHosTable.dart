@@ -1,10 +1,9 @@
 import 'dart:ui';
+
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
-import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
-
 import 'package:AbdoCare_Web/models/user_list/post_hos_list_model.dart';
+import 'package:AbdoCare_Web/page/dashboard_postHos.dart';
 import 'package:AbdoCare_Web/view_models/user_list/post_hos_list_view_model.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -32,7 +31,6 @@ class _PostHosTableState extends State<PostHosTable> {
 
   FutureBuilder dataBody() {
     var screenSize = MediaQuery.of(context).size;
-
     return FutureBuilder<List<PostHosData>>(
         future: _postHosViewModel.getUsers(),
         builder: (context, snapshot) {

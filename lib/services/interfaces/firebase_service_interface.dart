@@ -43,9 +43,13 @@ abstract class IFirebaseService {
   });
   Future<List<QueryDocumentSnapshot>> getUserList();
 
+  Stream<QuerySnapshot> getUserStream();
+
   Future<Map<String, dynamic>> getLatestAnSubCollection({
     @required String docId,
   });
+  Future<String> getStateForPatientList(
+      {@required String userId, @required String anId});
 
   Future<List<Map<String, dynamic>>> getPostHosList();
 
@@ -96,6 +100,7 @@ abstract class IFirebaseService {
       {@required String hn,
       @required String formId,
       @required String formName});
+
   Future<String> getPatientState({@required String hn});
 
   Future<List<Map<String, dynamic>>> getNotification(
