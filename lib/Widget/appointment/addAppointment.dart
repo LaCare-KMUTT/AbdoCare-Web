@@ -437,9 +437,9 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                             'hn': _hn,
                                             'an': _an,
                                             'date': _date,
-                                            'time': _time
-                                                .toString()
-                                                .substring(10, 15),
+                                            'time': _time,
+                                            // .toString()
+                                            // .substring(10, 15),
                                             'reason': _reason,
                                             'preparation': _preparation,
                                           };
