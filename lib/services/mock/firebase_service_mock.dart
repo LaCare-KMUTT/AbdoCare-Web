@@ -378,21 +378,8 @@ class FirebaseServiceMock extends IFirebaseService {
   }
 
   @override
-  Stream<Map<String, dynamic>> getLatestAnSubCollectionSnapshot(
-      {String docId}) {
-    // TODO: implement getLatestAnSubCollectionSnapshot
-    throw UnimplementedError();
-  }
-
-  @override
   Future<String> getStateForPatientList({userId, anId}) {
     // TODO: implement getAnSubCollectionSnapshot
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream searchPatientList(String queryString) {
-    // TODO: implement searchPatientList
     throw UnimplementedError();
   }
 }

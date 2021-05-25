@@ -1,15 +1,15 @@
 class PatientListModel {
   String hn;
-  String an;
   String name;
   String surname;
-  String state;
+  String userId;
+  String anId;
 
   PatientListModel({Map<String, dynamic> map}) {
     this.hn = map['hn'];
-    this.an = map['an'];
     this.name = map['name'];
     this.surname = map['surname'];
-    this.state = map['state'];
+    this.userId = map['userId'];
+    this.anId = map['anId'];
   }
 }

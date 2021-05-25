@@ -319,22 +319,7 @@ class FirebaseService extends IFirebaseService {
   }
 
   Stream<QuerySnapshot> getUserStream() {
-    print('getUserStream is called?');
     var snapshot = _firestore.collection('Users').snapshots();
-    return snapshot;
-  }
-
-  Stream<QuerySnapshot> searchPatientList(String queryString) {
-    print('QueryString here = $queryString');
-    var snapshot = _firestore
-        .collection('Users')
-        .where('hn', arrayContains: queryString)
-        .snapshots();
-
-    snapshot.forEach((element) {
-      print('length = ${element.size}');
-    });
-
     return snapshot;
   }
 
@@ -347,20 +332,6 @@ class FirebaseService extends IFirebaseService {
         .doc(anId)
         .get()
         .then((value) => value.get('state'));
-  }
-
-  Stream<Map<String, dynamic>> getLatestAnSubCollectionSnapshot(
-      {@required String docId}) {
-    var anSubCollection = _firestore
-        .collection('Users')
-        .doc(docId)
-        .collection('an')
-        .orderBy('operationDate', descending: true)
-        .limit(1)
-        .snapshots();
-    var returnMapAsStream =
-        anSubCollection.first.then((value) => value.docs.first.data());
-    return returnMapAsStream.asStream();
   }
 
   Future<Map<String, dynamic>> getLatestAnSubCollection({
@@ -778,6 +749,7 @@ class FirebaseService extends IFirebaseService {
     });
   }
 
+//Too expensive function
   Future<String> getPatientState({@required String hn}) async {
     var userId = await _firestore
         .collection('Users')

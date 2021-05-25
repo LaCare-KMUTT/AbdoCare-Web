@@ -45,15 +45,11 @@ abstract class IFirebaseService {
 
   Stream<QuerySnapshot> getUserStream();
 
-  Stream searchPatientList(String queryString);
   Future<Map<String, dynamic>> getLatestAnSubCollection({
     @required String docId,
   });
   Future<String> getStateForPatientList(
       {@required String userId, @required String anId});
-
-  Stream<Map<String, dynamic>> getLatestAnSubCollectionSnapshot(
-      {@required String docId});
 
   Future<List<Map<String, dynamic>>> getPostHosList();
 
