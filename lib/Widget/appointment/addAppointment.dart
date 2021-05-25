@@ -439,7 +439,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                             'date': _date,
                                             'time': _time
                                                 .toString()
-                                                .substring(10, 15),
+                                                .substring(11, 15),
                                             'reason': _reason,
                                             'preparation': _preparation,
                                           };
