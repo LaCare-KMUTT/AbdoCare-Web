@@ -5,6 +5,7 @@ import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:AbdoCare_Web/models/user_list/patient_list_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../services/interfaces/firebase_service_interface.dart';
 import '../../services/service_locator.dart';
@@ -101,6 +102,10 @@ class _PatientListTableState extends State<PatientListTable> {
                               0),
                           child: Container(
                             child: TextField(
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp("[a-zA-Z0-9]"))
+                              ],
                               decoration: InputDecoration(
                                   isDense: true,
                                   enabledBorder: const OutlineInputBorder(
@@ -114,7 +119,7 @@ class _PatientListTableState extends State<PatientListTable> {
                                   hintText: 'HN'),
                               onChanged: (val) {
                                 setState(() {
-                                  queryHN = val;
+                                  queryHN = val.toUpperCase();
                                 });
                               },
                             ),
