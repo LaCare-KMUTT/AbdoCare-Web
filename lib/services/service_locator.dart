@@ -46,6 +46,6 @@ void setupServiceLocator({bool isMock = false}) {
   locator.registerLazySingleton<PreVisitViewModel>(() => PreVisitViewModel());
   locator.registerLazySingleton<RecoveryReadinessFormViewModel>(
       () => RecoveryReadinessFormViewModel());
-  locator.registerLazySingleton<PatientListViewModel>(
-      () => PatientListViewModel());
+  // locator.registerLazySingleton<PatientListViewModel>(
+  //     () => PatientListViewModel());
 }

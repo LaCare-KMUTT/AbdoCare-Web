@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:AbdoCare_Web/Widget/patient_list/patientList_view_model.dart';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:AbdoCare_Web/models/user_list/patient_list_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,17 +17,18 @@ class PatientListTable extends StatefulWidget {
 
 class _PatientListTableState extends State<PatientListTable> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  StreamController<List> _streamController = StreamController<List>();
-  Stream<List> get _stream => _streamController.stream;
-  final PatientListViewModel _patientListViewModel =
-      locator<PatientListViewModel>();
+  // StreamController<List<PatientListModel>> _streamController;
+  Stream<QuerySnapshot> _list;
+  String hn = '';
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _list = _firebaseService.getUserStream();
+    });
   }
 
-  String hn = '';
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -198,8 +198,10 @@ class _PatientListTableState extends State<PatientListTable> {
                             indent: 0,
                             endIndent: 0,
                           ),
-                          FutureBuilder<List<PatientListModel>>(
-                            future: _patientListViewModel.getUsers(),
+                          StreamBuilder<QuerySnapshot>(
+                            stream: (hn.isEmpty && hn != null)
+                                ? _list
+                                : _firebaseService.searchPatientList(hn),
                             builder: buildUserList,
                           ),
                         ],
@@ -215,91 +217,106 @@ class _PatientListTableState extends State<PatientListTable> {
     );
   }
 
-  Widget buildUserList(
-      BuildContext context, AsyncSnapshot<List<PatientListModel>> snapshot) {
-    if (snapshot.connectionState != ConnectionState.done ||
-        !snapshot.hasData ||
-        snapshot.data == null) {
+  Widget buildUserList(BuildContext context,
+      AsyncSnapshot<QuerySnapshot> userCollectionSnapshot) {
+    if (userCollectionSnapshot.connectionState == ConnectionState.waiting ||
+        !userCollectionSnapshot.hasData) {
       return ProgressBar.circularProgressIndicator(context);
     } else {
-      print('Data inside = ${snapshot.data.length}');
+      print(
+          'snapshot ConnectionState = ${userCollectionSnapshot.connectionState}');
+      print('Search hn = [$hn]');
       return ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: snapshot.data.length,
+        itemCount: userCollectionSnapshot.data.docs.length,
         itemBuilder: (context, index) {
-          PatientListModel user = snapshot.data[index];
+          QueryDocumentSnapshot user = userCollectionSnapshot.data.docs[index];
 
-          print('user = ${user.name}');
-          return Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          user.hn,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          '${user.name} ${user.surname}',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
+          print('user = ${user.data()['name']}');
+          print('an = ${user.data()['an'].last['an']}');
+
+          return FutureBuilder<String>(
+              future: _firebaseService.getStateForPatientList(
+                  userId: user.id, anId: user.data()['an'].last['an']),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return ProgressBar.circularProgressIndicator(context);
+                }
+                print(
+                    '${user.data()['name']} ${user.data()['surname']} state ${snapshot.data}');
+
+                return Row(
                   children: <Widget>[
-                    ListTile(
-                      title: user.state != null
-                          ? Text(
-                              user.state,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyText2,
-                            )
-                          : Text(
-                              '-',
-                              textAlign: TextAlign.center,
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            ListTile(
+                              title: Text(
+                                user.data()['hn'],
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            ListTile(
+                              title: Text(
+                                '${user.data()['name']} ${user.data()['surname']}',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            title: snapshot.data != null
+                                ? Text(
+                                    snapshot.data,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  )
+                                : Text(
+                                    '-',
+                                    textAlign: TextAlign.center,
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 100,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0)),
+                        textColor: Colors.white,
+                        color: Color(0xFFF69E51),
+                        child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/editPatient_page',
+                              arguments: user.data()['hn']);
+                        },
+                      ),
                     ),
                   ],
-                ),
-              ),
-              Container(
-                width: 100,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0)),
-                  textColor: Colors.white,
-                  color: Color(0xFFF69E51),
-                  child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/editPatient_page',
-                        arguments: user.hn);
-                  },
-                ),
-              ),
-            ],
-          );
+                );
+              });
         },
       );
     }

@@ -1,4 +1,5 @@
 import 'package:AbdoCare_Web/models/notification_list/formName_Notification_model.dart';
+import 'package:AbdoCare_Web/models/user_list/patient_list_model.dart';
 import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -318,18 +319,34 @@ class FirebaseService extends IFirebaseService {
   }
 
   Stream<QuerySnapshot> getUserStream() {
+    print('getUserStream is called?');
     var snapshot = _firestore.collection('Users').snapshots();
     return snapshot;
   }
 
-  Stream<DocumentSnapshot> getAnSubCollectionSnapshot(
+  Stream<QuerySnapshot> searchPatientList(String queryString) {
+    print('QueryString here = $queryString');
+    var snapshot = _firestore
+        .collection('Users')
+        .where('hn', arrayContains: queryString)
+        .snapshots();
+
+    snapshot.forEach((element) {
+      print('length = ${element.size}');
+    });
+
+    return snapshot;
+  }
+
+  Future<String> getStateForPatientList(
       {@required String userId, @required String anId}) {
     return _firestore
         .collection('Users')
         .doc(userId)
         .collection('an')
         .doc(anId)
-        .snapshots();
+        .get()
+        .then((value) => value.get('state'));
   }
 
   Stream<Map<String, dynamic>> getLatestAnSubCollectionSnapshot(
