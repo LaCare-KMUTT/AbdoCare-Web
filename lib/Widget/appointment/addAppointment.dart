@@ -77,7 +77,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
           data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
           child: Localizations.override(
             context: context,
-            locale: Locale('th'),
+            locale: Locale('th', 'TH'),
             child: child,
           ),
         );
@@ -92,6 +92,7 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = MaterialLocalizations.of(context);
     return RaisedButton(
       child: Text("เพิ่มนัด", style: TextStyle(fontSize: 18)),
       color: Colors.lightGreen,
@@ -437,9 +438,10 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                             'hn': _hn,
                                             'an': _an,
                                             'date': _date,
-                                            'time': _time
-                                                .toString()
-                                                .substring(10, 15),
+                                            'time': localizations
+                                                .formatTimeOfDay(_time,
+                                                    alwaysUse24HourFormat:
+                                                        true),
                                             'reason': _reason,
                                             'preparation': _preparation,
                                           };
