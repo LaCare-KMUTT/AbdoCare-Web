@@ -375,7 +375,7 @@ class SideBar extends StatelessWidget {
                             ListTile(
                               // Access the fields as defined in FireStore
                               title: Text(
-                                age,
+                                '$age ปี',
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
