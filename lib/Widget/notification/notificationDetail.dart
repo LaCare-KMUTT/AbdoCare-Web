@@ -1,12 +1,13 @@
-import 'package:AbdoCare_Web/models/notification_list/notification_model.dart';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
+import 'package:AbdoCare_Web/models/notification_list/notification_model.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:AbdoCare_Web/view_models/notification_list/notification_view_model.dart';
 import 'package:flutter/material.dart';
+
+import 'all_Notification_Table.dart';
 import 'postHome_Notification_Table.dart';
 import 'postHos_Notification_Table.dart';
 import 'pre_Notification_Table.dart';
-import 'all_Notification_Table.dart';
 
 class NotificationDetail extends StatefulWidget {
   NotificationDetail({Key key}) : super(key: key);
@@ -137,19 +138,21 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
                             5, 0, screenSize.height / 50, 0),
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7.0)),
+                              primary: pressAllState
+                                  ? Color(0xFFC37447)
+                                  : Colors.grey[300],
+                            ),
                             child: Text("ทั้งหมด",
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: pressAllState
                                         ? Colors.white
                                         : Colors.black)),
-                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7.0)),
-                            color: pressAllState
-                                ? Color(0xFFC37447)
-                                : Colors.grey[300],
                             onPressed: () {
                               setState(() {
                                 pressAllState = true;
@@ -167,7 +170,15 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(screenSize.height / 50, 0,
                             screenSize.height / 50, 0),
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7.0)),
+                              primary: pressPreOpState
+                                  ? Color(0xFFC37447)
+                                  : Colors.grey[300],
+                            ),
                             child: Text(
                               "Pre-Operation",
                               style: TextStyle(
@@ -176,12 +187,6 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                       ? Colors.white
                                       : Colors.black),
                             ),
-                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7.0)),
-                            color: pressPreOpState
-                                ? Color(0xFFC37447)
-                                : Colors.grey[300],
                             onPressed: () {
                               setState(() {
                                 pressPreOpState = true;
@@ -199,19 +204,21 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(screenSize.height / 50, 0,
                             screenSize.height / 50, 0),
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7.0)),
+                              primary: pressPostOpHospitalState
+                                  ? Color(0xFFC37447)
+                                  : Colors.grey[300],
+                            ),
                             child: Text("Post-Operation@Hospital",
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: pressPostOpHospitalState
                                         ? Colors.white
                                         : Colors.black)),
-                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7.0)),
-                            color: pressPostOpHospitalState
-                                ? Color(0xFFC37447)
-                                : Colors.grey[300],
                             onPressed: () {
                               setState(() {
                                 pressPostOpHospitalState = true;
@@ -229,19 +236,21 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
                             screenSize.height / 50, 0, 5, 0),
-                        child: RaisedButton(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7.0)),
+                              primary: pressPostOpHomeState
+                                  ? Color(0xFFC37447)
+                                  : Colors.grey[300],
+                            ),
                             child: Text("Post-Operation@Home",
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: pressPostOpHomeState
                                         ? Colors.white
                                         : Colors.black)),
-                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7.0)),
-                            color: pressPostOpHomeState
-                                ? Color(0xFFC37447)
-                                : Colors.grey[300],
                             onPressed: () {
                               setState(() {
                                 pressPostOpHomeState = true;

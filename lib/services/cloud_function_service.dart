@@ -32,7 +32,9 @@ class CloudFunctionService {
                 else
                   {print(response.data['message']), uid = '0'}
               })
-          .catchError((onError) => {print('Error! :' + onError.toString())});
+          .catchError((onError) {
+        print('Error! :' + onError.toString());
+      });
     } on FirebaseFunctionsException catch (e) {
       print('Error in createUser: $e');
       uid = '0';

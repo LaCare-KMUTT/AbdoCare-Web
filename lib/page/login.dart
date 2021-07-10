@@ -65,12 +65,14 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Container(
                     width: 150,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.0)),
-                      textColor: Colors.white,
-                      padding: EdgeInsets.all(15),
-                      color: Color(0xFF2ED47A),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0)),
+                        onPrimary: Colors.white,
+                        primary: Color(0xFF2ED47A),
+                        padding: EdgeInsets.all(15),
+                      ),
                       child:
                           Text('เข้าสู่ระบบ', style: TextStyle(fontSize: 18)),
                       onPressed: () async {

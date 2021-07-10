@@ -165,12 +165,16 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                   padding: EdgeInsets.fromLTRB(
                       0, screenSize.height / 20, screenSize.height / 9, 0),
                   child: Container(
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
-                      padding: EdgeInsets.all(15),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.0)),
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0)),
+                      ),
+                      onPressed: () {
+//TODO Add Search on appointmentListTable
+                      },
                     ),
                   ),
                 ),

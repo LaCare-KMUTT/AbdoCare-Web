@@ -525,14 +525,16 @@ class _BloodClotFormState extends State<BloodClotForm> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          child: RaisedButton(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          7.0)),
-                                              textColor: Colors.white,
-                                              padding: EdgeInsets.all(15),
-                                              color: Color(0xFF2ED47A),
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            7.0),
+                                                  ),
+                                                  padding: EdgeInsets.all(15),
+                                                  onPrimary: Colors.white,
+                                                  primary: Color(0xFF2ED47A)),
                                               child: Text('ยืนยัน',
                                                   style:
                                                       TextStyle(fontSize: 18)),
