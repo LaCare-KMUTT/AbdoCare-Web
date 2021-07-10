@@ -10,8 +10,9 @@ class RecoveryReadinessFormViewModel {
     var userCollection = await _firebaseService
         .searchDocumentByField(collection: 'Users', field: 'hn', fieldValue: hn)
         .then((value) {
+      Map<String, dynamic> userCollection = value.docs.first.data();
       return {
-        ...value.docs.first.data(),
+        ...userCollection,
         'id': value.docs.first.id,
       };
     });

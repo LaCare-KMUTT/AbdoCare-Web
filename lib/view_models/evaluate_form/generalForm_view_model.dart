@@ -9,7 +9,7 @@ class GeneralFormViewModel {
   String hn;
   static GeneralFormModel _generalFormModel;
   final _firebaseService = locator<IFirebaseService>();
-  var userCollection;
+  Map<String, dynamic> userCollection;
   var anSubCollection;
 
   GeneralFormViewModel();
@@ -27,8 +27,9 @@ class GeneralFormViewModel {
     userCollection = await _firebaseService
         .searchDocumentByField(collection: 'Users', field: 'hn', fieldValue: hn)
         .then((value) {
+      Map<String, dynamic> userCollection = value.docs.first.data();
       return {
-        ...value.docs.first.data(),
+        ...userCollection,
         'id': value.docs.first.id,
       };
     });

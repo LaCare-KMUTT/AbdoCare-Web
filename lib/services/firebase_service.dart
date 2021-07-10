@@ -1,5 +1,4 @@
 import 'package:AbdoCare_Web/models/notification_list/formName_Notification_model.dart';
-import 'package:AbdoCare_Web/models/user_list/patient_list_model.dart';
 import 'package:AbdoCare_Web/services/cloud_function_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -392,12 +391,11 @@ class FirebaseService extends IFirebaseService {
     var returnList = userList.map((user) async {
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: user.id);
-      var hnToMap = userCollection.data()['hn'] ?? '-';
-      var nameToMap =
-          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-      var genderToMap = userCollection.data()['gender'] ?? '-';
+      var hnToMap = userCollection['hn'] ?? '-';
+      var nameToMap = '${userCollection['name']} ${userCollection['surname']}';
+      var genderToMap = userCollection['gender'] ?? '-';
       var ageToMap = _calculationService.calculateAge(
-              birthDate: userCollection.data()['dob'].toDate()) ??
+              birthDate: userCollection['dob'].toDate()) ??
           '-';
 
       var anSubCollection = await _firestore
@@ -490,13 +488,12 @@ class FirebaseService extends IFirebaseService {
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: user.id);
       var countAnSubCollection = await getCountANSubCollection(userId: user.id);
-      var hnToMap = userCollection.data()['hn'] ?? '-';
-      var nameToMap =
-          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var hnToMap = userCollection['hn'] ?? '-';
+      var nameToMap = '${userCollection['name']} ${userCollection['surname']}';
       var admissionCountToMap = countAnSubCollection ?? '-';
-      var genderToMap = userCollection.data()['gender'] ?? '-';
+      var genderToMap = userCollection['gender'] ?? '-';
       var ageToMap = _calculationService.calculateAge(
-          birthDate: userCollection.data()['dob'].toDate());
+          birthDate: userCollection['dob'].toDate());
       var operationTypeToMap = anSubCollection['operationMethod'] ?? '-';
       var painScoreToMap;
       if (formPain != null && formPain.isNotEmpty) {
@@ -532,12 +529,11 @@ class FirebaseService extends IFirebaseService {
     var returnList = userList.map((user) async {
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: user.id);
-      var hnToMap = userCollection.data()['hn'] ?? '-';
-      var nameToMap =
-          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
-      var genderToMap = userCollection.data()['gender'] ?? '-';
+      var hnToMap = userCollection['hn'] ?? '-';
+      var nameToMap = '${userCollection['name']} ${userCollection['surname']}';
+      var genderToMap = userCollection['gender'] ?? '-';
       var ageToMap = _calculationService.calculateAge(
-              birthDate: userCollection.data()['dob'].toDate()) ??
+              birthDate: userCollection['dob'].toDate()) ??
           '-';
 
       var anSubCollection = await _firestore
@@ -886,9 +882,8 @@ class FirebaseService extends IFirebaseService {
       var formTimeToShow = DateFormat.Hm().format(formTime).toString() + " น.";
       var userCollection =
           await this.searchDocumentByDocId(collection: 'Users', docId: docId);
-      var hnToMap = userCollection.data()['hn'] ?? '-';
-      var nameToMap =
-          '${userCollection.data()['name']} ${userCollection.data()['surname']}';
+      var hnToMap = userCollection['hn'] ?? '-';
+      var nameToMap = '${userCollection['name']} ${userCollection['surname']}';
       var anSubCollection = await _firestore
           .collection('Users')
           .doc(docId)

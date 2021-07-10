@@ -228,11 +228,11 @@ class _PatientListTableState extends State<PatientListTable> {
       List<PatientListModel> patientListModels =
           userCollectionSnapshot.data.docs.map((patient) {
         PatientListModel model = PatientListModel(map: {
-          'hn': patient.data()['hn'],
-          'name': patient.data()['name'],
-          'surname': patient.data()['surname'],
+          'hn': patient['hn'],
+          'name': patient['name'],
+          'surname': patient['surname'],
           'userId': patient.id,
-          'anId': patient.data()['an'].last['an'],
+          'anId': patient['an'].last['an'],
         });
 
         return model;
