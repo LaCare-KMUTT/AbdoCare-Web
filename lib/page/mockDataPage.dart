@@ -42,14 +42,14 @@ class _MockDataPageState extends State<MockDataPage> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(7.0),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(7.0)),
+                onPrimary: Colors.white,
+                primary: Color(0xFF2ED47A),
+                padding: EdgeInsets.all(15),
               ),
-              textColor: Colors.white,
-              color: Color(0xFF2ED47A),
-              child:
-                  Text('สร้าง Patient Account', style: TextStyle(fontSize: 18)),
               onPressed: () async {
                 var mockedUserCollection = _mockFirestore.mockUsersCollection();
                 var patientId = await _firebaseService.createPatient(
@@ -63,16 +63,16 @@ class _MockDataPageState extends State<MockDataPage> {
                     subCollection: 'an',
                     data: mockedAnSubCollection);
               },
+              child:
+                  Text('สร้าง Patient Account', style: TextStyle(fontSize: 18)),
             ),
-            RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(7.0),
-              ),
-              textColor: Colors.white,
-              color: Color(0xFF2ED47A),
-              child: Text(
-                'สร้าง Medical Team Account',
-                style: TextStyle(fontSize: 18),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7.0),
+                ),
+                onPrimary: Colors.white,
+                primary: Color(0xFF2ED47A),
               ),
               onPressed: () async {
                 var mockedMedicalTeamCollection =
@@ -80,6 +80,10 @@ class _MockDataPageState extends State<MockDataPage> {
                 await _firebaseService.createMedicalTeam(
                     data: mockedMedicalTeamCollection);
               },
+              child: Text(
+                'สร้าง Medical Team Account',
+                style: TextStyle(fontSize: 18),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 20, 20, 150),
@@ -109,12 +113,14 @@ class _MockDataPageState extends State<MockDataPage> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                   ),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                      onPrimary: Colors.white,
+                      primary: Color(0xFF2ED47A),
                     ),
-                    textColor: Colors.white,
-                    color: Color(0xFF2ED47A),
                     onPressed: _buttonEnabled
                         ? () async {
                             var mockFormCollection =
@@ -159,7 +165,7 @@ class _MockDataPageState extends State<MockDataPage> {
                           }
                         : null,
                     child: Text('Create form by provided HN AN '),
-                  ),
+                  )
                 ],
               ),
             ),

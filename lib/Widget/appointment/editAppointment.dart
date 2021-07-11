@@ -3,7 +3,7 @@ import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/interfaces/firebase_service_interface.dart';
@@ -91,10 +91,12 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
-      textColor: Colors.white,
-      color: Color(0xFFF69E51),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
+          onPrimary: Colors.white,
+          primary: Color(0xFFF69E51)),
       child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
       onPressed: () {
         showDialog(
@@ -440,8 +442,9 @@ class _EditAppointmentPageState extends State<EditAppointmentPage> {
                                         child: Padding(
                                           padding:
                                               const EdgeInsets.only(top: 20),
-                                          child: RaisedButton(
-                                            padding: EdgeInsets.all(15),
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                padding: EdgeInsets.all(15)),
                                             child: Text(
                                               'ยืนยัน',
                                               style: Theme.of(context)

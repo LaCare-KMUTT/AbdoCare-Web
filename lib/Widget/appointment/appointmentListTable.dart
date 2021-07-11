@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:AbdoCare_Web/Widget/shared/progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
 import '../../services/interfaces/firebase_service_interface.dart';
@@ -165,12 +165,16 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                   padding: EdgeInsets.fromLTRB(
                       0, screenSize.height / 20, screenSize.height / 9, 0),
                   child: Container(
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
-                      padding: EdgeInsets.all(15),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.0)),
-                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.all(15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0)),
+                      ),
+                      onPressed: () {
+//TODO Add Search on appointmentListTable
+                      },
                     ),
                   ),
                 ),
@@ -408,7 +412,7 @@ class _AppointmentListTableState extends State<AppointmentListTable> {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                  '${user.data.docs.first.data()['name']} ${user.data.docs.first.data()['surname']}'),
+                                  '${user.data.docs.first['name']} ${user.data.docs.first['surname']}'),
                             ],
                           ),
                         ),

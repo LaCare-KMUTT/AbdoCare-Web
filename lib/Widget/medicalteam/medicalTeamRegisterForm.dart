@@ -360,11 +360,15 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
               child: Container(
                 width: 100,
                 margin: EdgeInsets.all(20),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0),
+                    ),
+                    padding: EdgeInsets.all(15),
+                    onPrimary: Colors.white,
+                    primary: Color(0xFF2ED47A),
                   ),
-                  padding: EdgeInsets.all(15),
                   onPressed: () async {
                     const MED_ID_LENGTH = 4;
                     if (_formKey.currentState.validate()) {
@@ -387,8 +391,6 @@ class _MedicalTeamRegisterFormState extends State<MedicalTeamRegisterForm> {
                       Dialogs.alertToCompleteForm(context);
                     }
                   },
-                  textColor: Colors.white,
-                  color: Color(0xFF2ED47A),
                   child: Text(
                     'ยืนยัน',
                     style: TextStyle(fontSize: 18),

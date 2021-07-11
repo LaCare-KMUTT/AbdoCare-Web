@@ -63,8 +63,8 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                         ._firebaseService
                         .searchDocumentByDocId(
                             collection: "Notifications", docId: user.notiId);
-                    var serverity = notiCollection.data()['severity'];
-                    var advice = notiCollection.data()['advice'];
+                    var serverity = notiCollection['severity'];
+                    var advice = notiCollection['advice'];
                     alertSuccessfullyChangeStatusPostHome(
                         context,
                         user.notiId,

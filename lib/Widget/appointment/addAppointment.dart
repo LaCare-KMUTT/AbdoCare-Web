@@ -1,7 +1,7 @@
 import 'package:AbdoCare_Web/Widget/shared/alert_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
@@ -93,12 +93,14 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = MaterialLocalizations.of(context);
-    return RaisedButton(
+    return ElevatedButton(
       child: Text("เพิ่มนัด", style: TextStyle(fontSize: 18)),
-      color: Colors.lightGreen,
-      textColor: Colors.white,
-      padding: EdgeInsets.all(15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
+        padding: EdgeInsets.all(15),
+        onPrimary: Colors.white,
+        primary: Colors.lightGreen,
+      ),
       onPressed: () {
         showDialog(
             context: context,
@@ -423,8 +425,9 @@ class _AddAppointmentPageState extends State<AddAppointmentPage> {
                                 Container(
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 20),
-                                    child: RaisedButton(
-                                      padding: EdgeInsets.all(15),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.all(15)),
                                       child: Text(
                                         'ยืนยัน',
                                         style: Theme.of(context)

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../services/interfaces/calculation_service_interface.dart';
@@ -1409,11 +1409,16 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                 child: Container(
                                   width: 100,
                                   margin: EdgeInsets.all(30),
-                                  child: RaisedButton(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(7.0),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(7.0),
+                                      ),
+                                      padding: EdgeInsets.all(15),
+                                      onPrimary: Colors.white,
+                                      primary: Color(0xFF2ED47A),
                                     ),
-                                    padding: EdgeInsets.all(15),
                                     onPressed: () async {
                                       if (_formKey.currentState.validate()) {
                                         _trySubmit();
@@ -1423,8 +1428,6 @@ class _EditPatientFormState extends State<EditPatientForm> {
                                         Dialogs.alertToCompleteForm(context);
                                       }
                                     },
-                                    textColor: Colors.white,
-                                    color: Color(0xFF2ED47A),
                                     child: Text(
                                       'ยืนยัน',
                                       style: TextStyle(fontSize: 18),

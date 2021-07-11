@@ -2,7 +2,7 @@ import 'package:AbdoCare_Web/Widget/material.dart';
 import 'package:AbdoCare_Web/services/interfaces/calculation_service_interface.dart';
 import 'package:AbdoCare_Web/services/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
 class RoundedDatePicker {
   ICalculationService _calculationService = locator<ICalculationService>();
