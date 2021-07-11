@@ -4,12 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import '../interfaces/firebase_service_interface.dart';
-import 'mock_data.dart';
 
 class FirebaseServiceMock extends IFirebaseService {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
-  final _mockFireStore = new MockFirestore();
 
   Future<FirebaseApp> _createTempApp() async {
     return await Firebase.initializeApp(
