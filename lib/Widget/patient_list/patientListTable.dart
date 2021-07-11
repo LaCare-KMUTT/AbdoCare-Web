@@ -52,12 +52,14 @@ class _PatientListTableState extends State<PatientListTable> {
                             screenSize.height / 20, screenSize.height / 70, 0),
                         child: Container(
                           width: 180,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7.0)),
-                            textColor: Colors.white,
-                            color: Colors.lightGreen,
-                            padding: EdgeInsets.all(15),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7.0)),
+                              padding: EdgeInsets.all(15),
+                              onPrimary: Colors.white,
+                              primary: Colors.lightGreen,
+                            ),
                             child: Text('ลงทะเบียนผู้ป่วย',
                                 style: TextStyle(fontSize: 18)),
                             onPressed: () {
@@ -132,11 +134,13 @@ class _PatientListTableState extends State<PatientListTable> {
                     padding: EdgeInsets.fromLTRB(
                         0, screenSize.height / 20, screenSize.height / 9, 0),
                     child: Container(
-                      child: RaisedButton(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0)),
+                        ),
                         child: Text("ค้นหา", style: TextStyle(fontSize: 18)),
-                        padding: EdgeInsets.all(15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7.0)),
                         onPressed: () {},
                       ),
                     ),
@@ -310,11 +314,13 @@ class _PatientListTableState extends State<PatientListTable> {
         ),
         Container(
           width: 100,
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(7.0)),
-            textColor: Colors.white,
-            color: Color(0xFFF69E51),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7.0)),
+              onPrimary: Colors.white,
+              primary: Color(0xFFF69E51),
+            ),
             child: Text('แก้ไข', style: TextStyle(fontSize: 18)),
             onPressed: () {
               Navigator.pushNamed(context, '/editPatient_page',

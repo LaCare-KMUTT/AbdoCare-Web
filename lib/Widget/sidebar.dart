@@ -288,12 +288,14 @@ class SideBar extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            child: RaisedButton(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.all(15),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7.0)),
+                              ),
                               child:
                                   Text("ค้นหา", style: TextStyle(fontSize: 18)),
-                              padding: EdgeInsets.all(15),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7.0)),
                               onPressed: () {
                                 setState(() {
                                   isSearch = true;
@@ -309,7 +311,7 @@ class SideBar extends StatelessWidget {
                 );
               }),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text("ยกเลิก", style: TextStyle(fontSize: 18)),
                 ),
@@ -385,11 +387,13 @@ class SideBar extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7.0)),
-                        textColor: Colors.white,
-                        color: Color(0xFFF69E51),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7.0)),
+                          onPrimary: Colors.white,
+                          primary: Color(0xFFF69E51),
+                        ),
                         child: Text('Re-Admit', style: TextStyle(fontSize: 18)),
                         onPressed: () {
                           Navigator.pushNamed(context, '/reAdmit_page',

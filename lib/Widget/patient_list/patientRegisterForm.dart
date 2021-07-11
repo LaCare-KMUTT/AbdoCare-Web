@@ -132,9 +132,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
     }
   }
 
-  bool _isNumeric(String input) =>
-      input == null ? false : double.tryParse(input) != null;
-
   @override
   void dispose() {
     controller.dispose();
@@ -786,11 +783,15 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
               child: Center(
                 child: Container(
                   width: 100,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                      padding: EdgeInsets.all(15),
+                      onPrimary: Colors.white,
+                      primary: Color(0xFF2ED47A),
                     ),
-                    padding: EdgeInsets.all(15),
                     onPressed: () async {
                       _uniqueKey = _generateUniqueKey(6);
 
@@ -801,8 +802,6 @@ class _PatientRegisterFormState extends State<PatientRegisterForm> {
                         Dialogs.alertToCompleteForm(context);
                       }
                     },
-                    textColor: Colors.white,
-                    color: Color(0xFF2ED47A),
                     child: Text(
                       'ยืนยัน',
                       style: TextStyle(fontSize: 18),

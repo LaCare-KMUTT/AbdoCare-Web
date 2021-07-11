@@ -1207,11 +1207,14 @@ class _ReAdmitFormState extends State<ReAdmitForm> {
                         child: Container(
                           width: 100,
                           margin: EdgeInsets.all(30),
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7.0)),
+                              padding: EdgeInsets.all(15),
+                              onPrimary: Colors.white,
+                              primary: Color(0xFF2ED47A),
                             ),
-                            padding: EdgeInsets.all(15),
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 _trySubmit();
@@ -1221,8 +1224,6 @@ class _ReAdmitFormState extends State<ReAdmitForm> {
                                 Dialogs.alertToCompleteForm(context);
                               }
                             },
-                            textColor: Colors.white,
-                            color: Color(0xFF2ED47A),
                             child: Text(
                               'ยืนยัน',
                               style: TextStyle(fontSize: 18),
