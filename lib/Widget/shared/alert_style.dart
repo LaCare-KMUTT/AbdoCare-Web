@@ -16,7 +16,7 @@ class Dialogs {
                 style: Theme.of(context).textTheme.bodyText2,
                 textAlign: TextAlign.center),
             actions: [
-              FlatButton(
+              TextButton(
                 child: Text('ตกลง'),
                 onPressed: () {
                   Navigator.pop(context);
@@ -73,7 +73,7 @@ class Dialogs {
                 style: Theme.of(context).textTheme.bodyText2,
                 textAlign: TextAlign.center),
             actions: [
-              FlatButton(
+              TextButton(
                 child: Text('ตกลง'),
                 onPressed: () {
                   Navigator.pop(context);
@@ -95,7 +95,7 @@ class Dialogs {
                 style: Theme.of(context).textTheme.bodyText2,
                 textAlign: TextAlign.center),
             actions: [
-              FlatButton(
+              TextButton(
                 child: Text('ตกลง'),
                 onPressed: () {
                   Navigator.pop(context);
