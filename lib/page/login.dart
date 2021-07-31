@@ -18,6 +18,12 @@ class _LoginPageState extends State<LoginPage> {
   bool _validateUsername = false;
   bool _validatePassword = false;
   bool _signInResult;
+  bool _obscureText = true;
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,24 @@ class _LoginPageState extends State<LoginPage> {
           shrinkWrap: true,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(300, 200, 300, 0),
+              padding: const EdgeInsets.fromLTRB(50, 50, 50, 0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/abdocare_logo2.png',
+                        height: 200,
+                        width: 200,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(300, 30, 300, 0),
               child: TextField(
                 controller: _usernameController,
                 textAlign: TextAlign.center,
@@ -49,9 +72,14 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.fromLTRB(300, 20, 300, 0),
               child: TextField(
                 controller: _passwordController,
-                obscureText: true,
+                obscureText: _obscureText,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off),
+                    onPressed: _toggle,
+                  ),
                   border: OutlineInputBorder(),
                   labelText: 'Password',
                   errorText: _validatePassword ? 'กรุณากรอก password' : null,
