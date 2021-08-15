@@ -43,14 +43,14 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
           columns: [
             DataColumn(
                 label: Expanded(child: Center(child: Text('สถานะการดูแล')))),
+            DataColumn(label: Expanded(child: Center(child: Text('วันที่')))),
+            DataColumn(label: Expanded(child: Center(child: Text(' เวลา ')))),
             DataColumn(label: Expanded(child: Center(child: Text('HN')))),
             DataColumn(
                 label: Expanded(child: Center(child: Text('ชื่อ-นามสกุล')))),
             DataColumn(label: Expanded(child: Center(child: Text('ห้อง')))),
             DataColumn(label: Expanded(child: Center(child: Text('เตียง')))),
             DataColumn(label: Expanded(child: Center(child: Text('หมายเหตุ')))),
-            DataColumn(label: Expanded(child: Center(child: Text(' เวลา ')))),
-            DataColumn(label: Expanded(child: Center(child: Text('วันที่')))),
             DataColumn(
                 label: Expanded(child: Center(child: Text('ขั้นตอนการรักษา')))),
           ],
@@ -97,6 +97,12 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                               color: _customMaterial
                                   .getNotiStatusColor(user.seen))))),
                   DataCell(Center(
+                      child:
+                          Text(user.formDate, style: TextStyle(fontSize: 15)))),
+                  DataCell(Center(
+                      child:
+                          Text(user.formTime, style: TextStyle(fontSize: 15)))),
+                  DataCell(Center(
                       child: Text(user.hn, style: TextStyle(fontSize: 16)))),
                   DataCell(Text(user.name, style: TextStyle(fontSize: 16))),
                   DataCell(Center(
@@ -106,12 +112,6 @@ class _AllNotificationTableState extends State<AllNotificationTable> {
                       child: Text(user.bedNumber,
                           style: TextStyle(fontSize: 15)))),
                   DataCell(Text(user.formName, style: TextStyle(fontSize: 16))),
-                  DataCell(Center(
-                      child:
-                          Text(user.formTime, style: TextStyle(fontSize: 15)))),
-                  DataCell(Center(
-                      child:
-                          Text(user.formDate, style: TextStyle(fontSize: 15)))),
                   DataCell(Center(
                       child: Text(user.patientState,
                           style: TextStyle(fontSize: 16)))),
