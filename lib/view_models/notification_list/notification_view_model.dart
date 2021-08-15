@@ -14,8 +14,7 @@ class NotiViewModel {
     if (allNotiList != null) {
       allNotiList.forEach((mapData) {
         userList.add(NotiData(map: mapData));
-        sortBy("formDateTimeSort", true);
-        sortBy("seen", true);
+        sortTableData();
       });
     }
   }
@@ -27,19 +26,12 @@ class NotiViewModel {
     return userList;
   }
 
-  List<NotiData> sortBy(String key, bool isAsc) {
-    switch (key) {
-      case 'seen':
-        userList.sort((a, b) => a.seen.compareTo(b.seen));
-        break;
-      case 'formDateTimeSort':
-        userList
-            .sort((a, b) => a.formDateTimeSort.compareTo(b.formDateTimeSort));
-        break;
-    }
-    if (isAsc) {
-      userList = userList.reversed.toList();
-    }
+  List<NotiData> sortTableData() {
+    userList.sort((a, b) {
+      var cmp = b.seen.compareTo(a.seen);
+      if (cmp != 0) return cmp;
+      return b.formDateTimeSort.compareTo(a.formDateTimeSort);
+    });
 
     return userList;
   }
