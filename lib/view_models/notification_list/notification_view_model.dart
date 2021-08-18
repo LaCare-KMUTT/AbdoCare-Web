@@ -30,7 +30,7 @@ class NotiViewModel {
     userList.sort((a, b) {
       var cmp = b.seen.compareTo(a.seen);
       if (cmp != 0) return cmp;
-      return b.formDateTimeSort.compareTo(a.formDateTimeSort);
+      return a.formDateTimeSort.compareTo(b.formDateTimeSort);
     });
 
     return userList;
