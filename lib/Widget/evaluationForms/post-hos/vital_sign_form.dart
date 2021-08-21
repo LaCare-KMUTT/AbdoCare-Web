@@ -184,7 +184,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text('$dateToShow'),
-                                          Text('\tเวลา $timeToShow น.'),
+                                          Text('  เวลา $timeToShow น.'),
                                         ],
                                       ),
                                     ),
@@ -195,7 +195,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                         children: <Widget>[
                                           Expanded(
                                             flex: 1,
-                                            child: Text('BT:\t\t',
+                                            child: Text('BT:',
                                                 textAlign: TextAlign.end),
                                           ),
                                           Expanded(
@@ -218,8 +218,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                   _bt = double.parse(value),
                                             ),
                                           ),
-                                          Expanded(
-                                              flex: 1, child: Text('\t\t °C'))
+                                          Expanded(flex: 1, child: Text(' °C'))
                                         ],
                                       ),
                                     ),
@@ -230,7 +229,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                         children: <Widget>[
                                           Expanded(
                                             flex: 1,
-                                            child: Text('PR:\t\t',
+                                            child: Text('PR:',
                                                 textAlign: TextAlign.end),
                                           ),
                                           Expanded(
@@ -253,8 +252,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                   _pr = double.parse(value),
                                             ),
                                           ),
-                                          Expanded(
-                                              flex: 1, child: Text('\t\t bpm'))
+                                          Expanded(flex: 1, child: Text(' bpm'))
                                         ],
                                       ),
                                     ),
@@ -265,7 +263,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                         children: <Widget>[
                                           Expanded(
                                             flex: 1,
-                                            child: Text('RR:\t\t',
+                                            child: Text('RR:',
                                                 textAlign: TextAlign.end),
                                           ),
                                           Expanded(
@@ -288,9 +286,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                   _rr = double.parse(value),
                                             ),
                                           ),
-                                          Expanded(
-                                              flex: 1,
-                                              child: Text('\t\t bpm\t\t'))
+                                          Expanded(flex: 1, child: Text(' bpm'))
                                         ],
                                       ),
                                     ),
@@ -301,7 +297,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                         children: <Widget>[
                                           Expanded(
                                             flex: 1,
-                                            child: Text('BP:\t\t',
+                                            child: Text('BP:',
                                                 textAlign: TextAlign.end),
                                           ),
                                           Expanded(
@@ -362,7 +358,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                         children: <Widget>[
                                           Expanded(
                                             flex: 1,
-                                            child: Text('O2sat:\t\t',
+                                            child: Text('O2sat:',
                                                 textAlign: TextAlign.end),
                                           ),
                                           Expanded(
@@ -385,8 +381,7 @@ class _VitalSignFormState extends State<VitalSignForm> {
                                                   _o2sat = double.parse(value),
                                             ),
                                           ),
-                                          Expanded(
-                                              flex: 1, child: Text('\t\t %'))
+                                          Expanded(flex: 1, child: Text(' %'))
                                         ],
                                       ),
                                     ),
