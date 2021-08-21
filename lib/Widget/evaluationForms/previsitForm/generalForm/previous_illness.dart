@@ -1,4 +1,4 @@
-import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_radio_list.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_checkbox_list.dart';
 import 'package:flutter/material.dart';
 
 class PreviousIllness extends StatefulWidget {
@@ -20,29 +20,62 @@ class _PreviousIllnessState extends State<PreviousIllness> {
   List list1 = getPreviousIllnessList1();
   List list2 = getPreviousIllnessList2();
   String _toSave = '-';
-  int _id;
 
   List<Widget> _getWidget(List list) {
-    const int CHOICE_OTHER = 8;
+    //const int CHOICE_OTHER = 8;
     return list.map((e) {
       return Expanded(
         child: Container(
-          child: RadioListTile(
+          child: CheckboxListTile(
             contentPadding: EdgeInsets.zero,
-            title: Text('${e.text}'),
-            value: e.index,
-            groupValue: _id,
+            value: e.value,
+            selected: e.value,
+            controlAffinity: ListTileControlAffinity.leading,
+            activeColor: Color(0xFFC37447),
+            title: Text('${e.title}'),
+            //value: e.index,
             onChanged: (newValue) {
               setState(() {
-                if (newValue == CHOICE_OTHER) {
-                  isEnableTextField = true;
-                } else {
-                  isEnableTextField = false;
-                  _toSave = e.text;
+                e.value = newValue;
+                if (newValue) {
+                  _toSave = e.title;
                   _controller.clear();
                   onSaved(_toSave);
+                  print(_toSave);
+// print(
+//                                 'Check ${e.title}   ${e.value} is ${e.value} value = $newValue');
+//                             switch (e.title) {
+//                               case 'DM':
+//                                 widget.healthStatusModel.cv_Normal =
+//                                     e.value;
+//                                 break;
+//                               case 'HT':
+//                                 widget.healthStatusModel.cv_ChestPain =
+//                                     e.value;
+//                                 break;
+//                               case 'DLP':
+//                                 widget.healthStatusModel.cv_Palpitations =
+//                                     e.value;
+//                                 break;
+//                               case 'Heart disease':
+//                                 widget.healthStatusModel.cv_Murmur =
+//                                     e.value;
+//                                 break;
+//                               case 'Lung disease':
+//                                 widget.healthStatusModel.cv_PNDOrthopnea =
+//                                     e.value;
+//                                 break;
+//                               case 'Hematologic abnormality':
+//                                 widget.healthStatusModel.cv_LEswelling =
+//                                     e.value;
+//                                 break;
+//                               case 'Renal disease':
+//                                 widget.healthStatusModel.cv_LEswelling =
+//                                     e.value;
+//                                 break;
+//                             }
+//                           });
                 }
-                _id = e.index;
               });
             },
           ),
@@ -77,6 +110,21 @@ class _PreviousIllnessState extends State<PreviousIllness> {
                   child: SizedBox(width: 0),
                 ),
                 ..._getWidget(list2),
+                Expanded(
+                  child: CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: isEnableTextField,
+                    selected: isEnableTextField,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    activeColor: Color(0xFFC37447),
+                    onChanged: (value) {
+                      setState(() {
+                        isEnableTextField = value;
+                      });
+                    },
+                    title: Text('Other:'),
+                  ),
+                ),
                 Expanded(
                   child: TextFormField(
                     enabled: isEnableTextField,

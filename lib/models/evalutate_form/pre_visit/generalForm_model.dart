@@ -15,7 +15,14 @@ class GeneralFormModel {
   int _bw; /* weight for field in db*/
   int _high; /* height for field in db*/
 
-  String _previousIllness;
+  String _previousIllness_DM;
+  String _previousIllness_HT;
+  String _previousIllness_DLP;
+  String _previousIllness_HeartDisease;
+  String _previousIllness_LungDisease;
+  String _previousIllness_HematologicAbnormality;
+  String _previousIllness_RenalDisease;
+  String _previousIllness_Other;
 
   String _consentSigned;
   String _preMedication;
@@ -51,7 +58,7 @@ class GeneralFormModel {
   int get weight => _weight;
   int get bw => _bw;
   int get high => _high;
-  String get previousIllness => _previousIllness;
+  //String get previousIllness => _previousIllness;
   String get consentSigned => _consentSigned;
   String get preMedication => _preMedication;
   String get typeOfAnesthesia => _typeOfAnesthesia;
@@ -98,8 +105,8 @@ class GeneralFormModel {
 
   set high(int high) => this._high = high;
 
-  set previousIllness(String previousIllness) =>
-      this._previousIllness = previousIllness;
+  // set previousIllness(String previousIllness) =>
+  //     this._previousIllness = previousIllness;
 
   set consentSigned(String consentSigned) =>
       this._consentSigned = consentSigned;
@@ -164,7 +171,7 @@ class GeneralFormModel {
     _weight = map['oldWeight'] ?? 0;
     _bw = map['weight'] ?? 0;
     _high = map['height'] ?? 0;
-    _previousIllness = map['previousIllness'] ?? '-';
+    //_previousIllness = map['previousIllness'] ?? '-';
     return this;
   }
 
@@ -190,7 +197,7 @@ class GeneralFormModel {
     _consentSigned = map['consentSigned'];
     _preMedication = map['preMedication'];
     _typeOfAnesthesia = map['typeOfAnesthesia'];
-    _previousIllness = map['previousIllness'];
+    //_previousIllness = map['previousIllness'];
     _drugUsed = map['drugUsed'];
     _asaClass = map['asaClass'];
     _bw = map['weight'];
