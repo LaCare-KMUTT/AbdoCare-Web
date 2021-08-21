@@ -58,7 +58,15 @@ class GeneralFormModel {
   int get weight => _weight;
   int get bw => _bw;
   int get high => _high;
-  //String get previousIllness => _previousIllness;
+  String get previousIllness_DM => _previousIllness_DM;
+  String get previousIllness_HT => _previousIllness_HT;
+  String get previousIllness_DLP => _previousIllness_DLP;
+  String get previousIllness_HeartDisease => _previousIllness_HeartDisease;
+  String get previousIllness_LungDisease => _previousIllness_LungDisease;
+  String get previousIllness_HematologicAbnormality =>
+      _previousIllness_HematologicAbnormality;
+  String get previousIllness_RenalDisease => _previousIllness_RenalDisease;
+  String get previousIllness_Other => _previousIllness_Other;
   String get consentSigned => _consentSigned;
   String get preMedication => _preMedication;
   String get typeOfAnesthesia => _typeOfAnesthesia;
@@ -105,8 +113,17 @@ class GeneralFormModel {
 
   set high(int high) => this._high = high;
 
-  // set previousIllness(String previousIllness) =>
-  //     this._previousIllness = previousIllness;
+  set previousIllness(String previousIllness) {
+    this._previousIllness_DM = previousIllness_DM;
+    this._previousIllness_HT = previousIllness_HT;
+    this._previousIllness_DLP = previousIllness_DLP;
+    this._previousIllness_HeartDisease = previousIllness_HeartDisease;
+    this._previousIllness_LungDisease = previousIllness_LungDisease;
+    this._previousIllness_HematologicAbnormality =
+        previousIllness_HematologicAbnormality;
+    this._previousIllness_RenalDisease = previousIllness_RenalDisease;
+    this._previousIllness_Other = previousIllness_Other;
+  }
 
   set consentSigned(String consentSigned) =>
       this._consentSigned = consentSigned;
@@ -171,7 +188,17 @@ class GeneralFormModel {
     _weight = map['oldWeight'] ?? 0;
     _bw = map['weight'] ?? 0;
     _high = map['height'] ?? 0;
-    //_previousIllness = map['previousIllness'] ?? '-';
+    _previousIllness_DM = map['previousIllness_DM'] ?? false;
+    _previousIllness_HT = map['previousIllness_HT'] ?? false;
+    _previousIllness_DLP = map['previousIllness_DLP'] ?? false;
+    _previousIllness_HeartDisease =
+        map['previousIllness_HeartDisease'] ?? false;
+    _previousIllness_LungDisease = map['previousIllness_LungDisease'] ?? false;
+    _previousIllness_HematologicAbnormality =
+        map['previousIllness_HematologicAbnormality'] ?? false;
+    _previousIllness_RenalDisease =
+        map['previousIllness_RenalDisease'] ?? false;
+    _previousIllness_Other = map['previousIllness_Other'] ?? '-';
     return this;
   }
 
@@ -197,7 +224,15 @@ class GeneralFormModel {
     _consentSigned = map['consentSigned'];
     _preMedication = map['preMedication'];
     _typeOfAnesthesia = map['typeOfAnesthesia'];
-    //_previousIllness = map['previousIllness'];
+    _previousIllness_DM = map['previousIllness_DM'];
+    _previousIllness_HT = map['previousIllness_HT'];
+    _previousIllness_DLP = map['previousIllness_DLP'];
+    _previousIllness_HeartDisease = map['previousIllness_HeartDisease'];
+    _previousIllness_LungDisease = map['previousIllness_LungDisease'];
+    _previousIllness_HematologicAbnormality =
+        map['previousIllness_HematologicAbnormality'];
+    _previousIllness_RenalDisease = map['previousIllness_RenalDisease'];
+    _previousIllness_Other = map['previousIllness_Other'];
     _drugUsed = map['drugUsed'];
     _asaClass = map['asaClass'];
     _bw = map['weight'];
