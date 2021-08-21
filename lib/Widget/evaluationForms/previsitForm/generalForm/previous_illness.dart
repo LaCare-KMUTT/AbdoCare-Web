@@ -19,10 +19,11 @@ class _PreviousIllnessState extends State<PreviousIllness> {
   bool isEnableTextField = false;
   List list1 = getPreviousIllnessList1();
   List list2 = getPreviousIllnessList2();
-  String _toSave = '-';
-
+  String _toSave = '';
+  List previousIllness = [];
+  int count = 0;
+  String stringList;
   List<Widget> _getWidget(List list) {
-    //const int CHOICE_OTHER = 8;
     return list.map((e) {
       return Expanded(
         child: Container(
@@ -33,48 +34,31 @@ class _PreviousIllnessState extends State<PreviousIllness> {
             controlAffinity: ListTileControlAffinity.leading,
             activeColor: Color(0xFFC37447),
             title: Text('${e.title}'),
-            //value: e.index,
             onChanged: (newValue) {
               setState(() {
+                count++;
                 e.value = newValue;
-                if (newValue) {
-                  _toSave = e.title;
+                if (newValue == true) {
+                  if (count == 1) {
+                    previousIllness.add(e.title);
+                    stringList = previousIllness.join("");
+                    _toSave = stringList;
+                  } else if (count > 1) {
+                    previousIllness.add(e.title);
+                    stringList = previousIllness
+                        .reduce((value, element) => value + ',' + element);
+                    _toSave = stringList;
+                  }
                   _controller.clear();
                   onSaved(_toSave);
-                  print(_toSave);
-// print(
-//                                 'Check ${e.title}   ${e.value} is ${e.value} value = $newValue');
-//                             switch (e.title) {
-//                               case 'DM':
-//                                 widget.healthStatusModel.cv_Normal =
-//                                     e.value;
-//                                 break;
-//                               case 'HT':
-//                                 widget.healthStatusModel.cv_ChestPain =
-//                                     e.value;
-//                                 break;
-//                               case 'DLP':
-//                                 widget.healthStatusModel.cv_Palpitations =
-//                                     e.value;
-//                                 break;
-//                               case 'Heart disease':
-//                                 widget.healthStatusModel.cv_Murmur =
-//                                     e.value;
-//                                 break;
-//                               case 'Lung disease':
-//                                 widget.healthStatusModel.cv_PNDOrthopnea =
-//                                     e.value;
-//                                 break;
-//                               case 'Hematologic abnormality':
-//                                 widget.healthStatusModel.cv_LEswelling =
-//                                     e.value;
-//                                 break;
-//                               case 'Renal disease':
-//                                 widget.healthStatusModel.cv_LEswelling =
-//                                     e.value;
-//                                 break;
-//                             }
-//                           });
+                }
+                if (newValue == false) {
+                  previousIllness.remove(e.title);
+                  stringList = previousIllness
+                      .reduce((value, element) => value + ',' + element);
+                  _toSave = stringList;
+                  _controller.clear();
+                  onSaved(_toSave);
                 }
               });
             },
