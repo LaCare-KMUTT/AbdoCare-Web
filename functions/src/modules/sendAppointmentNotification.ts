@@ -21,15 +21,23 @@ export const sendAppointmentNotification = functions.pubsub
       .where("date", "<", end)
       .get();
 
-    const tokensCollection =  (await admin.firestore().collection("Tokens").get()).docs;
+    const tokensCollection = (
+      await admin.firestore().collection("Tokens").get()
+    ).docs;
     appointmentsCollection.docs.forEach((appointment) => {
-      const sameHnDocs = tokensCollection.find(
+      const sameHnDoc = tokensCollection.find(
         (tokenDocs) => tokenDocs.data().hn === appointment.data().hn
       );
-      const token = sameHnDocs ? sameHnDocs.data().token : null;
-      const title = "";
-      const body = "";
-      sendNotification(token, title, body);
+      if (sameHnDoc != null) {
+        const token = sameHnDoc.data().token;
+        const date = appointment.data().date;
+        const time = appointment.data().time;
+        const reason = appointment.data().reason;
+        const preparation = appointment.data().preparation;
+        const title = "คุณมีนัด";
+        const body = "";
+        sendNotification(token, title, body);
+      }
     });
   });
 
