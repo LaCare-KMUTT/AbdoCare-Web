@@ -354,7 +354,7 @@ class _HealthStatusFormState extends State<HealthStatusForm> {
 
                                       var isChecked = _healthStatusUtility
                                           .getValidateHealthStatus(model);
-                                      if (isChecked == false) {
+                                      if (!isChecked) {
                                         Dialogs.alertToCompleteEvalutation(
                                             context);
                                       } else {
