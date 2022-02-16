@@ -1,4 +1,4 @@
-import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_radio_list.dart';
+import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/generalForm_checkbox_list.dart';
 import 'package:flutter/material.dart';
 
 class PreviousIllness extends StatefulWidget {
@@ -19,30 +19,47 @@ class _PreviousIllnessState extends State<PreviousIllness> {
   bool isEnableTextField = false;
   List list1 = getPreviousIllnessList1();
   List list2 = getPreviousIllnessList2();
-  String _toSave = '-';
-  int _id;
-
+  String _toSave = '';
+  List previousIllness = [];
+  int count = 0;
+  String stringList;
   List<Widget> _getWidget(List list) {
-    const int CHOICE_OTHER = 8;
     return list.map((e) {
       return Expanded(
         child: Container(
-          child: RadioListTile(
+          child: CheckboxListTile(
             contentPadding: EdgeInsets.zero,
-            title: Text('${e.text}'),
-            value: e.index,
-            groupValue: _id,
+            value: e.value,
+            selected: e.value,
+            controlAffinity: ListTileControlAffinity.leading,
+            activeColor: Color(0xFFC37447),
+            title: Text('${e.title}'),
             onChanged: (newValue) {
               setState(() {
-                if (newValue == CHOICE_OTHER) {
-                  isEnableTextField = true;
-                } else {
-                  isEnableTextField = false;
-                  _toSave = e.text;
+                count++;
+                e.value = newValue;
+                if (newValue == true) {
+                  if (count == 1) {
+                    previousIllness.add(e.title);
+                    stringList = previousIllness.join("");
+                    _toSave = stringList;
+                  } else if (count > 1) {
+                    previousIllness.add(e.title);
+                    stringList = previousIllness
+                        .reduce((value, element) => value + ',' + element);
+                    _toSave = stringList;
+                  }
                   _controller.clear();
                   onSaved(_toSave);
                 }
-                _id = e.index;
+                if (newValue == false) {
+                  previousIllness.remove(e.title);
+                  stringList = previousIllness
+                      .reduce((value, element) => value + ',' + element);
+                  _toSave = stringList;
+                  _controller.clear();
+                  onSaved(_toSave);
+                }
               });
             },
           ),
@@ -77,6 +94,21 @@ class _PreviousIllnessState extends State<PreviousIllness> {
                   child: SizedBox(width: 0),
                 ),
                 ..._getWidget(list2),
+                Expanded(
+                  child: CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: isEnableTextField,
+                    selected: isEnableTextField,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    activeColor: Color(0xFFC37447),
+                    onChanged: (value) {
+                      setState(() {
+                        isEnableTextField = value;
+                      });
+                    },
+                    title: Text('Other:'),
+                  ),
+                ),
                 Expanded(
                   child: TextFormField(
                     enabled: isEnableTextField,
