@@ -314,6 +314,7 @@ class FirebaseService extends IFirebaseService {
 
   Future<List<QueryDocumentSnapshot>> getUserList() async {
     var medWard = await getMedicalTeamWard();
+    var medicalRole = await getMedicalTeamRole();
     var userCollection = await _firestore.collection('Users').get();
     var userList = userCollection.docs.map((e) async {
       var anSubCollection = await _firestore
@@ -328,7 +329,7 @@ class FirebaseService extends IFirebaseService {
         print('$onError no anSubCollection on ${e.id}');
       });
       var ward = anSubCollection['ward'];
-      if (medWard == ward) {
+      if (medWard == ward || medicalRole == 'Medical Admin') {
         return e;
       }
     });
@@ -749,12 +750,14 @@ class FirebaseService extends IFirebaseService {
     });
     var anSubCollection = await getLatestAnSubCollection(docId: userId);
     var patientState = anSubCollection['state'];
+    var ward = anSubCollection['ward'];
     Map<String, dynamic> dataToAdd = {
       'formName': formName,
       'formId': formId,
       'userId': userId,
       'creation': creation,
       'patientState': patientState,
+      'ward': ward,
       'seen': false,
       'patientSeen': false
     };
@@ -884,6 +887,8 @@ class FirebaseService extends IFirebaseService {
 
   Future<List<Map<String, dynamic>>> getNotification(
       {@required String patientState}) async {
+    var medicalWard = await getMedicalTeamWard();
+    var medRole = await getMedicalTeamRole();
     var notiList = await this.getNotificationList(patientState);
     var returnList = notiList.map((user) async {
       var notiCollection = await this
@@ -918,28 +923,33 @@ class FirebaseService extends IFirebaseService {
           .catchError((onError) {
         print('$onError no anSubCollection on ${user.id}');
       });
-      var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
-      var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
-      var map = {
-        'hn': hnToMap ?? '-',
-        'name': nameToMap ?? '-',
-        'roomNumber': roomNumberToMap ?? '-',
-        'bedNumber': bedNumberToMap ?? '-',
-        'patientState': patientStateToMap ?? '-',
-        'formName': formName ?? '-',
-        'formTime': formTimeToShow ?? '-',
-        'formDateTimeSort': formTime ?? '-',
-        'formDate': formDateToShow ?? '-',
-        'seen': seen ?? 'ยังไม่ได้ดำเนินการ',
-        'notiId': user.id ?? '-',
-        'imgURL': '-'
-      };
+      if (anSubCollection['ward'] == medicalWard ||
+          medRole == 'Medical Admin') {
+        var roomNumberToMap = anSubCollection['roomNumber'] ?? '-';
+        var bedNumberToMap = anSubCollection['bedNumber'] ?? '-';
+        var map = {
+          'hn': hnToMap ?? '-',
+          'name': nameToMap ?? '-',
+          'roomNumber': roomNumberToMap ?? '-',
+          'bedNumber': bedNumberToMap ?? '-',
+          'patientState': patientStateToMap ?? '-',
+          'formName': formName ?? '-',
+          'formTime': formTimeToShow ?? '-',
+          'formDateTimeSort': formTime ?? '-',
+          'formDate': formDateToShow ?? '-',
+          'seen': seen ?? 'ยังไม่ได้ดำเนินการ',
+          'notiId': user.id ?? '-',
+          'imgURL': '-'
+        };
 
-      if (patientStateToMap == "Post-Operation@Home") {
-        var imgURL = notiCollection['imgURL'] ?? '-';
-        map.addAll({'imgURL': imgURL ?? '-'});
+        if (patientStateToMap == "Post-Operation@Home") {
+          var imgURL = notiCollection['imgURL'] ?? '-';
+          map.addAll({'imgURL': imgURL ?? '-'});
+        }
+        return map;
+      } else {
+        return null;
       }
-      return map;
     });
 
     var futureList = Future.wait(returnList);
@@ -954,12 +964,15 @@ class FirebaseService extends IFirebaseService {
   Future<int> getNotiCounter() async {
     int count = 0;
     var notiList = await this.getNotificationList("AllState");
+    var medWard = await getMedicalTeamWard();
+    var medRole = await getMedicalTeamRole();
     if (notiList.isNotEmpty) {
       var returnList = notiList.map((user) async {
         var notiCollection = await this
             .searchDocumentByDocId(collection: 'Notifications', docId: user.id);
         var seen = notiCollection['seen'];
-        if (seen == false) {
+        var ward = notiCollection['ward'];
+        if (seen == false || ward == medWard || medRole == 'Medical Admin') {
           seen = "ยังไม่ได้ดำเนินการ";
           count = count + 1;
         }
