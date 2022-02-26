@@ -1,7 +1,44 @@
 import 'package:AbdoCare_Web/models/evalutate_form/pre_visit/healthStatusForm_model.dart';
 
 class HealthStatusUtility {
+  var general;
+  var heent;
+  var cv;
+  var pulmonary;
+  var gynuro;
+  var neuro;
+  var gi;
+  var ms;
+  var endocrine;
+  var hemeLymph;
   bool getValidateHealthStatus(HealthStatusFormModel model) {
+    general = generalValidate(model);
+    heent = heentValidate(model);
+    cv = cvValidate(model);
+    pulmonary = pulmonaryValidate(model);
+    gynuro = gynuroValidate(model);
+    neuro = neuroValidate(model);
+    gi = giValidate(model);
+    ms = msValidate(model);
+    endocrine = endocrineValidate(model);
+    hemeLymph = hemeLymphValidate(model);
+    if (general ||
+        heent ||
+        cv ||
+        pulmonary ||
+        gynuro ||
+        neuro ||
+        gi ||
+        ms ||
+        endocrine ||
+        hemeLymph) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool generalValidate(HealthStatusFormModel model) {
     if (model.general_Normal == false &&
         model.general_AbnormalWeightLost == false &&
         model.general_AbnormalWeightGain == false &&
@@ -10,7 +47,13 @@ class HealthStatusUtility {
         model.general_ChillsSweats == false &&
         model.general_Other == '-') {
       return false;
-    } else if (model.heent_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool heentValidate(HealthStatusFormModel model) {
+    if (model.heent_Normal == false &&
         model.heent_Headache == false &&
         model.heent_BlurredVision == false &&
         model.heent_Tinnitus == false &&
@@ -18,7 +61,13 @@ class HealthStatusUtility {
         model.heent_Epistaxis == false &&
         model.heent_Other == '-') {
       return false;
-    } else if (model.cv_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool cvValidate(HealthStatusFormModel model) {
+    if (model.cv_Normal == false &&
         model.cv_ChestPain == false &&
         model.cv_Palpitations == false &&
         model.cv_Murmur == false &&
@@ -26,7 +75,13 @@ class HealthStatusUtility {
         model.cv_LEswelling == false &&
         model.cv_Other == '-') {
       return false;
-    } else if (model.pulmonary_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool pulmonaryValidate(HealthStatusFormModel model) {
+    if (model.pulmonary_Normal == false &&
         model.pulmonary_Wheezing == false &&
         model.pulmonary_Cough == false &&
         model.pulmonary_SOB == false &&
@@ -34,7 +89,13 @@ class HealthStatusUtility {
         model.pulmonary_Sputum == false &&
         model.pulmonary_Other == '-') {
       return false;
-    } else if (model.gynuro_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool gynuroValidate(HealthStatusFormModel model) {
+    if (model.gynuro_Normal == false &&
         model.gynuro_Dysuria == false &&
         model.gynuro_Frequency == false &&
         model.gynuro_Urgency == false &&
@@ -42,7 +103,13 @@ class HealthStatusUtility {
         model.gynuro_PelvicPain == false &&
         model.gynuro_Other == '-') {
       return false;
-    } else if (model.neuro_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool neuroValidate(HealthStatusFormModel model) {
+    if (model.neuro_Normal == false &&
         model.neuro_Migraine == false &&
         model.neuro_Seizure == false &&
         model.neuro_TiaStorke == false &&
@@ -50,7 +117,13 @@ class HealthStatusUtility {
         model.neuro_SensoryImpairment == false &&
         model.neuro_Other == '-') {
       return false;
-    } else if (model.gi_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool giValidate(HealthStatusFormModel model) {
+    if (model.gi_Normal == false &&
         model.gi_GERD == false &&
         model.gi_NauseaVomiting == false &&
         model.gi_DiarrheaConstipation == false &&
@@ -58,7 +131,13 @@ class HealthStatusUtility {
         model.gi_Melena == false &&
         model.gi_Other == '-') {
       return false;
-    } else if (model.ms_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool msValidate(HealthStatusFormModel model) {
+    if (model.ms_Normal == false &&
         model.ms_JointSwellingPain == false &&
         model.ms_LimitationsNeckMobility == false &&
         model.ms_GaitDifficulty == false &&
@@ -66,7 +145,13 @@ class HealthStatusUtility {
         model.ms_ProstheticDevices == false &&
         model.ms_Other == '-') {
       return false;
-    } else if (model.endocrine_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool endocrineValidate(HealthStatusFormModel model) {
+    if (model.endocrine_Normal == false &&
         model.endocrine_HairLoss == false &&
         model.endocrine_ExcessiveSweat == false &&
         model.endocrine_ExcessiveThirst == false &&
@@ -74,7 +159,13 @@ class HealthStatusUtility {
         model.endocrine_ColdIntolerance == false &&
         model.endocrine_Other == '-') {
       return false;
-    } else if (model.hemeLymph_Normal == false &&
+    } else {
+      return true;
+    }
+  }
+
+  bool hemeLymphValidate(HealthStatusFormModel model) {
+    if (model.hemeLymph_Normal == false &&
         model.hemeLymph_BleedingTendency == false &&
         model.hemeLymph_DVTHistory == false &&
         model.hemeLymph_EnlargedNodes == false &&

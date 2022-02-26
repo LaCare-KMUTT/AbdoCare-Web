@@ -16,7 +16,6 @@ class GeneralFormModel {
   int _high; /* height for field in db*/
 
   String _previousIllness;
-
   String _consentSigned;
   String _preMedication;
   String _typeOfAnesthesia;

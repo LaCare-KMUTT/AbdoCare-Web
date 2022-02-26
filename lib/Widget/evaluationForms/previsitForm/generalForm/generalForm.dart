@@ -657,15 +657,11 @@ class _GeneralFormState extends State<GeneralForm> {
                                                             child: ConsentSign(
                                                                 onSaved:
                                                                     (value) {
-                                                                  print(
-                                                                      "Value in Consent $value");
-                                                                  _consentSigned =
-                                                                      value;
-                                                                },
-                                                                consentFromDb:
-                                                                    snapshot
-                                                                        .data
-                                                                        .consentSigned),
+                                                              print(
+                                                                  "Value in Consent $value");
+                                                              _consentSigned =
+                                                                  value;
+                                                            }),
                                                           ),
                                                         ),
                                                         // Pre-medication

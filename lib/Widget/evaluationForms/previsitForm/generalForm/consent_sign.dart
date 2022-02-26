@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 
 class ConsentSign extends StatefulWidget {
   final FormFieldSetter<String> onSaved;
-  final String consentFromDb;
-  ConsentSign({this.onSaved, this.consentFromDb});
+  ConsentSign({this.onSaved});
   @override
-  _ConsentSignState createState() =>
-      _ConsentSignState(onSaved: onSaved, consentFromDb: consentFromDb);
+  _ConsentSignState createState() => _ConsentSignState(onSaved: onSaved);
 }
 
 class _ConsentSignState extends State<ConsentSign> {
   FormFieldSetter<String> onSaved;
-  String consentFromDb;
-  _ConsentSignState({this.onSaved, this.consentFromDb});
+  _ConsentSignState({this.onSaved});
 
   final TextEditingController _controller = TextEditingController();
 
@@ -52,24 +49,6 @@ class _ConsentSignState extends State<ConsentSign> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    int init;
-    if (consentFromDb == 'Patient') {
-      init = 1;
-      isEnabled = false;
-      item = 'Patient';
-    } else {
-      init = 2;
-      isEnabled = true;
-      item = 'Others';
-    }
-    setState(() {
-      _id = init;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
@@ -81,7 +60,6 @@ class _ConsentSignState extends State<ConsentSign> {
           flex: 3,
           child: TextFormField(
             enabled: isEnabled,
-            initialValue: consentFromDb == 'Others' ? null : consentFromDb,
             controller: _controller,
             validator: (value) {
               if (isEnabled && value.isEmpty) {
