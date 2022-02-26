@@ -313,8 +313,31 @@ class FirebaseService extends IFirebaseService {
   }
 
   Future<List<QueryDocumentSnapshot>> getUserList() async {
-    var data = await _firestore.collection('Users').get();
-    return data.docs;
+    var medWard = await getMedicalTeamWard();
+    var userCollection = await _firestore.collection('Users').get();
+    var userList = userCollection.docs.map((e) async {
+      var anSubCollection = await _firestore
+          .collection('Users')
+          .doc(e.id)
+          .collection('an')
+          .orderBy('operationDate', descending: true)
+          .limit(1)
+          .get()
+          .then((value) => value.docs.first.data())
+          .catchError((onError) {
+        print('$onError no anSubCollection on ${e.id}');
+      });
+      var ward = anSubCollection['ward'];
+      if (medWard == ward) {
+        return e;
+      }
+    });
+    var futureList = Future.wait(userList);
+    var returnValue = await futureList;
+    if (returnValue != null) {
+      returnValue.removeWhere((element) => element == null);
+    }
+    return returnValue;
   }
 
   Stream<QuerySnapshot> getUserStream() {
@@ -928,7 +951,7 @@ class FirebaseService extends IFirebaseService {
     return returnValue;
   }
 
-  Future<int> getNoticounter() async {
+  Future<int> getNotiCounter() async {
     int count = 0;
     var notiList = await this.getNotificationList("AllState");
     if (notiList.isNotEmpty) {

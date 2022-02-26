@@ -18,14 +18,14 @@ class PatientListTable extends StatefulWidget {
 
 class _PatientListTableState extends State<PatientListTable> {
   final IFirebaseService _firebaseService = locator<IFirebaseService>();
-  Stream<QuerySnapshot> _list;
+  Future<List<QueryDocumentSnapshot>> _list;
   String queryHN = '';
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      _list = _firebaseService.getUserStream();
+      _list = _firebaseService.getUserList();
     });
   }
 
@@ -206,8 +206,8 @@ class _PatientListTableState extends State<PatientListTable> {
                             indent: 0,
                             endIndent: 0,
                           ),
-                          StreamBuilder<QuerySnapshot>(
-                            stream: _list,
+                          FutureBuilder<List<QueryDocumentSnapshot>>(
+                            future: _list,
                             builder: buildUserList,
                           ),
                         ],
@@ -224,13 +224,13 @@ class _PatientListTableState extends State<PatientListTable> {
   }
 
   Widget buildUserList(BuildContext context,
-      AsyncSnapshot<QuerySnapshot> userCollectionSnapshot) {
+      AsyncSnapshot<List<QueryDocumentSnapshot>> userCollectionSnapshot) {
     if (userCollectionSnapshot.connectionState == ConnectionState.waiting ||
         !userCollectionSnapshot.hasData) {
       return ProgressBar.circularProgressIndicator(context);
     } else {
       List<PatientListModel> patientListModels =
-          userCollectionSnapshot.data.docs.map((patient) {
+          userCollectionSnapshot.data.map((patient) {
         PatientListModel model = PatientListModel(map: {
           'hn': patient['hn'],
           'name': patient['name'],

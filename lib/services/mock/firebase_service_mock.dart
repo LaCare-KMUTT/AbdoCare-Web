@@ -322,7 +322,7 @@ class FirebaseServiceMock extends IFirebaseService {
     throw UnimplementedError();
   }
 
-  Future<int> getNoticounter() {
+  Future<int> getNotiCounter() {
     throw UnimplementedError();
   }
 
@@ -371,13 +371,11 @@ class FirebaseServiceMock extends IFirebaseService {
 
   @override
   Stream<QuerySnapshot> getUserStream() {
-    // TODO: implement getUserStream
     throw UnimplementedError();
   }
 
   @override
   Future<String> getStateForPatientList({userId, anId}) {
-    // TODO: implement getAnSubCollectionSnapshot
     throw UnimplementedError();
   }
 }
