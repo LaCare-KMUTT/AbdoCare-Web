@@ -22,7 +22,8 @@ class CloudFunctionService {
     };
     String uid = '0';
     try {
-      await _createUserCallable(data)
+      await _createUserCallable
+          .call(data)
           .then((response) => {
                 if (response.data['status'] == 'success')
                   {
