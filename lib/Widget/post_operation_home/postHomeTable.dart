@@ -22,7 +22,6 @@ class _PostHomeTableState extends State<PostHomeTable> {
 
   bool _sortAsc = true;
   bool _sortPainScore = true;
-  bool _sortWoundImgAsc = true;
   int _sortColumnIndex;
 
   FutureBuilder dataBody() {

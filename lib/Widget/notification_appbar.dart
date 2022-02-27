@@ -30,8 +30,7 @@ class _NotiIconState extends State<NotiIcon> {
   }
 
   initData() async {
-    notiCounter = await _firebaseService.getNoticounter();
-    print(notiCounter);
+    notiCounter = await _firebaseService.getNotiCounter();
     setState(() {
       _notiCounter = notiCounter;
     });

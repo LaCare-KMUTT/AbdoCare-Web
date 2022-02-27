@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CloudFunctionService {
   HttpsCallable _createUserCallable = FirebaseFunctions.instance.httpsCallable(
       'createUser',
-      options: HttpsCallableOptions(timeout: Duration(seconds: 5)));
+      options: HttpsCallableOptions(timeout: Duration(seconds: 10)));
 
   HttpsCallable _moveDocumentCallable = FirebaseFunctions.instance
       .httpsCallable('moveDocument',
@@ -22,7 +22,8 @@ class CloudFunctionService {
     };
     String uid = '0';
     try {
-      await _createUserCallable(data)
+      await _createUserCallable
+          .call(data)
           .then((response) => {
                 if (response.data['status'] == 'success')
                   {
@@ -30,7 +31,11 @@ class CloudFunctionService {
                     uid = response.data['uid']
                   }
                 else
-                  {print(response.data['message']), uid = '0'}
+                  {
+                    print(response.data['status']),
+                    print(response.data['message']),
+                    uid = '0'
+                  }
               })
           .catchError((onError) {
         print('Error! :' + onError.toString());
