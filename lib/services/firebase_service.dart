@@ -974,7 +974,7 @@ class FirebaseService extends IFirebaseService {
         var ward = notiCollection.data().toString().contains('ward')
             ? notiCollection.get('ward')
             : '';
-        if (seen == false && (ward == medWard || medRole == 'Medical Admin')) {
+        if (seen == false || ward == medWard || medRole == 'Medical Admin') {
           seen = "ยังไม่ได้ดำเนินการ";
           count = count + 1;
         }
